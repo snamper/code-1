@@ -1,0 +1,93 @@
+{%extends "./layout.html"%}
+{%block title%}Equalbets.io{%endblock%}
+{%block link%}
+	 <script type="text/javascript" src="/js/index.js"></script>
+     <link rel="stylesheet" href="/css/index.css" />  
+	 <script type="text/javascript" src="/js/jquery.fragmentFly.js"></script>	 
+	 <script type="text/javascript" src="/js/lang.js"></script>	 
+{%endblock%}
+{%block content%}
+     <div class="pageWrap">
+	     <div class="page1 content" id="home">
+		     <img src="/images/home_01.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/home_02.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/home_03.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/home_04.jpg" alt="" class="item_img" onload="addIndex()"/> 
+			 <div class="clear"></div>
+			 <div class="page1_content contentNew">
+			 	<p class="p1"><span lang-text='homeContent1'>An open and fair and game platform</span>
+			    <span lang-text='homeContent2'>An autonomous and sustainable ecosystem based on blockchain technology</span></p>
+			 </div>
+			 <!-- <img src="/images/home.jpg" alt="" style="width:100%;"/> -->			 
+		 </div>
+		 <div class="page2 content" id="player">
+		     <img src="/images/player_01.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/player_02.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/player_03.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/player_04.jpg" alt="" class="item_img" onload="addIndex()"/> 
+			 <div class="clear"></div>
+			 <div class="page2_content contentNew">
+			     <h3 class="h3" lang-text='playerTitle'>Next generation game system,innovative game experience</h3>			 		     			     
+			 </div>
+			 <div class="page2_title_wrap">
+				 <p class="title page2_first">
+				     <span lang-text='playerSmallTitle1'>Fund security :</span>
+				     <span lang-text='playerContent1'>No more deposit, no more withdraw</span>
+				 </p>			     
+			     <p class="title">
+				     <span lang-text='playerSmallTitle2'>Fair game : </span>
+				     <span lang-text='playerContent2'>Collaborated random number generator,game information isolation</span>
+				 </p>			     
+			     <p class="title">
+				     <span lang-text='playerSmallTitle3'>Builtin exchange :</span> 
+					 <span lang-text='playerContent3'>Flexible and convenient asset conversion</span>
+				 </p>
+			 </div>	
+		 </div>
+		 <div class="page3 content" id="developer">
+		     <img src="/images/developer_01.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/developer_02.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/developer_03.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/developer_04.jpg" alt="" class="item_img" onload="addIndex()"/> 
+			 <div class="clear"></div>
+			 <div class="page3_content contentNew">
+			     <h3 lang-text='developerTitle'>Realize your talent, monetize your effort</h3>
+			     <p class="p1" lang-text='developerContent1'>Provide with plug-n-play game container, featured with front-end Javascript SDK and on-chain sandbox</p>
+			     <p class="p2" lang-text='developerContent2'>Well designed process for game submission and fee model customization</p>
+			 </div>
+		 </div>
+		 <div class="page4 content" id="operator">
+		     <img src="/images/operator_01.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/operator_02.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/operator_03.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/operator_04.jpg" alt="" class="item_img" onload="addIndex()"/> 
+			 <div class="clear"></div>
+			 <div class="page4_content contentNew">
+			     <h3 lang-text='operatorTitle'>Dream fulfilled - Open your own house</h3>
+			     <p class="p1" lang-text='operatorContent1'>Operate your own game hall, game room or game table with minimum efforts and flexible operating modes</p>
+			     <p class="p2" lang-text='operatorContent2'>Choose games from game market and customize the game settings</p>
+			 </div>
+		 </div>
+		 <div class="page5 content" id="paper">
+		     <img src="/images/paper_01.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/paper_02.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/paper_03.jpg" alt="" class="item_img" onload="addIndex()"/>
+		     <img src="/images/paper_04.jpg" alt="" class="item_img" onload="addIndex()"/> 
+			 <div class="clear"></div>
+			 <div class="page5_content contentNew">
+			     <h3 lang-text='paperTitle'>White paper and Equal Chain Coin(ECC)</h3>
+			 </div>
+			 <div class="page5_dw">
+                  <a class="a1" href="javascript:;"><span class="lightLine"></span><span class="lightLine1"></span><p lang-text='paperBtn1'>White Paper</p></a>
+                  <a class="a2" href="javascript:;"><span class="lightLine"></span><span class="lightLine1"></span><p lang-text='paperBtn2'>ECC Structure</p></a>
+             </div>
+		 </div>
+		 <div class="info hide">
+		 	<div class="info_main"></div>
+		 	<div class="info_message fadeInDown animated infinte">
+		 		Coming soon
+		 		<div class="close"><a href="javascript:;">X</a></div>
+		 	</div>
+		 </div>		
+	 </div>
+{%endblock%}

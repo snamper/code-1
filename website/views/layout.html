@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+     <head>
+	     <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+		 <link rel="stylesheet" href="/css/font.css" />
+		 <link rel="stylesheet" href="/css/layout.css" />
+		 <meta charset="utf-8"/>
+		 <title>{%block title%}{%endblock%}</title>
+		 {%block link%}{%endblock%}
+	 </head>
+	 <body class="body_init">
+	     <div class="loading">
+		     <div class="loading_wrap">
+			     <div class="loading_icon"></div>
+				 <div class="loading_content">Loading...</div>
+			 </div>
+		 </div>
+	     <div class="nav_wrap">
+		     <div class="nav">		          
+		         <ul class="nav_link left">  
+			         <li><a class="home" href="javascript:void(0)" onClick="goToByScroll('home')" lang-text='nav1'></a></li>
+                     <li><a class="player" href="javascript:void(0)" onClick="goToByScroll('player')" lang-text='nav2'>FOR PLAYER</a></li>
+                     <li><a class="developer" href="javascript:void(0)" onClick="goToByScroll('developer')" lang-text='nav3'>FOR DEVELOPER</a></li>
+                     <li><a class="operator" href="javascript:void(0)" onClick="goToByScroll('operator')" lang-text='nav4'>FOR OPERATOR</a></li>
+                     <li><a class="paper" href="javascript:void(0)" onClick="goToByScroll('paper')" lang-text='nav5'>WHITE PAPER</a></li> 
+					 <div class="clear"></div>
+			     </ul>		     
+				 <div class="clear"></div>
+		     </div>
+			 <div class="logo_wrap">
+			     <img src="/images/logoNew.png" alt="logo" />				   
+			 </div>
+			 <a href="javascript:void(0)" onclick="changeLang($(this))" class="changeLan" lang-text='language'>中文</a>
+			 <div class="clear"></div>
+		 </div>
+	     
+	     {%block content%}
+		  
+		 {%endblock%}
+		 <div class="footer_wrap">
+		     <div class="footer">
+			     <ul>
+				     <li class="first_item">
+					     Copyright&copy2018
+					 </li>
+					 <li>
+					    <a href="javascript:;" onclick="modalAlert.show($(this))" style="color: white;" lang-text='contactUs'>Contact Us</a>
+					 </li>
+					 <li>
+					     Equalbets.Io
+					 </li>
+					 <div class="clear"></div>
+				 </ul>
+			 </div>
+		 </div>
+	 </body>
+	 <script src="/js/modal.js" type="text/javascript" charset="utf-8"></script>
+</html>
