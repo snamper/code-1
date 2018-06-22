@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="./../css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="./../css/taskCss/draw.css"/>
+		<title>签到抽奖</title>
+	</head>
+	<body>
+        <div class="drawContent">
+            <div class="drawTop">
+            	<div class="embelish"></div>
+                <div class="drawTopPoint clear">
+                   <!--<p class="sign">连续签到<span class="signDay"></span>天，奖励<span class="signPoint"></span>积分!</p>-->
+                   <p class="sign sign1">签到成功奖励<span class="signPoint">20</span>积分</p>
+                   <p class="sign hide sign2">明日签到可奖励<span class="signPointTomorrow">30</span>积分</p>
+                   <div class="icon"></div>
+                </div>
+            </div>
+            <div id="test">
+               <div class="progress">
+               	<ul>
+               		<li class="first">
+               			<p class="dayShow0">+<span class="day0">0</span></p>
+               			<div class="circle0 circle"></div>
+               			<p class="dayShow">1天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day1">0</span></p>
+               			<div class="circle1 circle"></div>
+               			<p class="dayShow">2天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day2">0</span></p>
+               			<div class="circle2 circle"></div>
+               			<p class="dayShow">3天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day3">0</span></p>
+               			<div class="circle3 circle"></div>
+               			<p class="dayShow">4天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day4">0</span></p>
+               			<div class="circle4 circle"></div>
+               			<p class="dayShow">5天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day5">0</span></p>
+               			<div class="circle5 circle"></div>
+               			<p class="dayShow">6天</p>
+               		</li>
+               		<li>
+               			<p class="dayShow0">+<span class="day6">0</span></p>
+               			<div class="circle6 circle"></div>
+               			<p class="dayShow">7天</p>
+               		</li>
+               		
+               	</ul>
+               	<div class="progressbar">
+               		<div class="barShow"></div>
+               	</div>
+               </div>
+           </div>
+            <div class="main">
+                <div class="mainContent">
+                    <p class="drawNum">您有<span class="numberDraw"></span>次抽奖机会</p>
+                    <div id="lottery">
+                        <table>
+                            <tr>
+                                <td class="lottery-unit lottery-unit-0"><img class="img0" src="./../images/getPoint.png" alt=""><p></p></td>
+                                <td class="lottery-unit lottery-unit-1"><img class="img1" src="./../images/getPoint.png" alt=""><p></p></td>
+                                <td class="lottery-unit lottery-unit-2"><img class="img2" src="./../images/getPoint.png" alt=""><p></p></td>
+                            </tr>
+                            <tr>
+                                <td class="lottery-unit lottery-unit-7"><img class="img7" src="./../images/getPoint.png" alt=""><p></p></td>
+                                <td class="middleTd">
+                                    <a href="javascript:;"></a>
+                                </td>
+                                <td class="lottery-unit lottery-unit-3"><img class="img3" src="./../images/getPoint.png" alt=""><p></p></td>
+                            </tr>
+                            <tr>
+                                <td class="lottery-unit lottery-unit-6"><img class="img6" src="./../images/getPoint.png" alt=""><p></p></td>
+                                <td class="lottery-unit lottery-unit-5"><img class="img5" src="./../images/getPoint.png" alt=""><p></p></td>
+                                <td class="lottery-unit lottery-unit-4"><img class="img4" src="./../images/getPoint.png" alt=""><p></p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+			</div>
+            <div class="bottom">
+                <a href="javascript:;"></a>
+                <div class="embelishBottom"></div>
+            </div>
+            <div class="content">
+                <p>1 ) 连续签到抽奖: </p>
+                <ul class="praise">
+                    <li>连续签到1天用户可抽奖<span class="one"></span>次</li>
+                    <li>连续签到2天用户可抽奖<span class="two"></span>次</li>
+                    <li>连续签到3天用户可抽奖<span class="three"></span>次</li>
+                    <li>连续签到4天用户可抽奖<span class="four"></span>次</li>
+                    <li>连续签到5天用户可抽奖<span class="five"></span>次</li>
+                    <li>连续签到6天用户可抽奖<span class="six"></span>次</li>
+                    <li>连续签到7天用户可抽奖<span class="seven"></span>次</li>
+                </ul>
+                <p>2 ) 奖品兑换：</p>
+                <ul class="praise">
+                    <li>积分奖励直接存入积分账户</li>
+                    <li>商品奖励放入卡包自行兑换（具体使用方法以各商品详细使用方法为准）</li>
+                </ul>
+                <p class="drawActive">3 ) 活动说明：</p>
+                <ul class="praise drawActive">
+                    <li>签到抽奖活动与苹果公司无关，所有奖品由赚动提供，最终解释权归赚动APP所有。</li>
+                </ul>
+            </div>
+		</div>
+		<div class="middleMask hide"></div>
+		<div class="getPoint hide">
+			<div class="getPointMain">
+				<p><span class="pointNum"></span></p>
+			</div>
+			<div class="lilqPoint"><a href="javascript:;"></a></div>
+		</div>
+
+		<div class="getGoods hide">
+			<div class="getGoodsMain">
+				<img src="../images/fail.png" alt="">
+				<p><span class="shopName"></span></p>
+			</div>
+			<div class="addCard"><a href="javascript:;">放入卡包</a></div>
+		</div>
+
+		<div class="nodraw hide">
+			<div class="nodrawMain"></div>
+			<div class="keepTry"><a href="javascript:;">继续努力</a></div>
+		</div>
+
+		<div class="noTime hide">
+			<div class="noTimeMain">
+				<p>今天的抽奖机会用完了！</p>
+			</div>
+			<div class="returnTask"><a href="javascript:;">明天再来</a></div>
+		</div>
+
+		<div class="systemErr hide">
+			<div class="systemErrMain">
+				<p>系统繁忙！</p>
+			</div>
+			<div class="returnTask"><a href="javascript:;">返回</a></div>
+		</div>
+		
+	</body>
+</html>
+ <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth/3.75+'px'
+</script> 
+<!--<script src="../js/fastclick.js"></script>-->
+<script type="text/javascript" src="./../js/jquery-1.11.3.min.js"></script>
+<script src="./../js/zepto.min.js"></script>
+<script type="text/javascript">
+	var drawTimes = $(".numberDraw").text()
+	var html = $(".drawContent").height()
+	var bbb = $(".drawContent").width()
+	var nowDraw = '';
+	var drawIndex = '';
+	var lottery = {
+		index: -1, //当前转动到哪个位置 0代表1 -1代表没选中
+		count: 0, //总共有多少个位置
+		timer: 0, //setTimeout的ID，用clearTimeout清除
+		speed: 200, //初始转动速度
+		times: 0, //转动次数
+		cycle: 30, //转动基本次数：即至少需要转动多少次再进入抽奖环节
+		prize: -1, //中奖位置
+		init: function(id) {
+			if($("#" + id).find(".lottery-unit").length > 0) {
+				$lottery = $("#" + id);
+				$units = $lottery.find(".lottery-unit");
+				this.obj = $lottery;
+				this.count = $units.length;
+				$lottery.find(".lottery-unit-" + this.index).addClass("active");
+			};
+		},
+		roll: function() {
+			var index = this.index;
+			var count = this.count;
+			var lottery = this.obj;
+			$(lottery).find(".lottery-unit-" + index).removeClass("active");
+			index += 1;
+			if(index > count - 1) {
+				index = 0;
+			};
+			$(lottery).find(".lottery-unit-" + index).addClass("active");
+			this.index = index;
+			return false;
+		},
+		stop: function(index) {
+			this.prize = index;
+			return false;
+		}
+	};
+
+	function roll() {
+		lottery.times += 1;
+		lottery.roll();
+		if(lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) { // 抽奖结束
+			clearTimeout(lottery.timer);
+			lottery.prize = -1;
+			lottery.times = 0;
+			click = false;
+
+			// $("#lottery").find(".lottery-unit-" + drawIndex).removeClass("active"); // 抽奖完 位置不显示
+			setTimeout(function(){
+				if ( drawType == "3" ) {
+					$(".nodraw").removeClass("hide");
+					$(".middleMask").removeClass("hide");
+				}
+				if ( drawType == "1"  ) {
+					$(".getPoint").removeClass("hide");
+					$(".pointNum").html(drawMessage);
+					$(".middleMask").removeClass("hide");
+					var uri = '/appMsg/taskHtml/draw.html?type=2&userId='+userId;
+					var state=({url: uri});
+				    history.pushState(state,"",uri);		
+				}
+				if (drawType == "2"  ) {
+					$(".getGoodsMain").find("img").attr("src", drawList[drawIndex].draw_image )
+					$(".shopName").text(drawMessage);
+					$(".getGoods").removeClass("hide");
+					$(".middleMask").removeClass("hide");
+				}
+				},500)
+			
+		} else {
+			if(lottery.times < lottery.cycle) {
+				lottery.speed -= 10;
+			} else if(lottery.times == lottery.cycle) {
+				lottery.prize = drawlocation - 1; //中奖位置设置
+				drawIndex = lottery.prize ;
+			
+			} else { 
+				if(lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+					lottery.speed += 110;
+				} else {
+					lottery.speed += 20;
+				}
+			}
+			if(lottery.speed < 40) {
+				lottery.speed = 40;
+			};
+			lottery.timer = setTimeout(roll, lottery.speed);
+		}
+		return false;
+	}
+	var click = false;
+	function getQueryString(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = window.location.search.substr(1).match(reg);
+		if(r != null) {
+			return decodeURI(r[2]);
+		}
+		return null;
+	};
+	var userId = getQueryString("userId");
+	var pageData = {
+		userId: userId
+	};
+	var isDrawType = getQueryString("type");
+	if( isDrawType == "2" ) {  //不是第一次进入
+		$('.sign1').hide()
+		$('.sign2').show()
+	} else {
+		$('.sign2').hide()
+		$('.sign1').show()
+	}
+	var signDayRecord = 0, isSignSuccess = false;
+	function getSignInfoAll() { //获取签到天数对应获取积分所有信息
+		$.ajax({
+			type:"get",
+			url:"/share/task/sign/set/record/list.do?userId="+userId,
+			success:function(data){
+				if(data.message != "成功"){
+					return;
+				}else {
+					var signScoreInfo = data.data.todayRecord;
+					var signInfoData = data.data.taskSignList;
+					if( signScoreInfo ) {
+						isSignSuccess = true;
+						signDayRecord = signScoreInfo.signDay - 1;
+						var tomorrowIndex = signScoreInfo.signDay;
+						$(".signPoint").html( signInfoData[tomorrowIndex-1].sign_score ); // 今日签到获得积分
+						$(".signPointTomorrow").html( signInfoData[tomorrowIndex].sign_score ) // 明日签到可获得积分
+					}else{
+						$(".signPoint").html( 0 ); // 今日签到获得积分
+						$(".signPointTomorrow").html( 0 ) // 明日签到可获得积分
+					}
+					for( var i = 0; i<signInfoData.length; i++ ){
+						$(".day"+i).html(signInfoData[i].sign_score)
+					}
+				} 
+			}
+		})
+	}
+	getSignInfoAll() //获取签到天数对应获取积分所有信息
+	var drawlocation = 1, drawType = 0, drawMessage = '';
+	var drawList="";
+	function getDrawInfo() {
+		$.ajax({
+			dataType:"json",
+			type:"get",
+			url:"/share/app/task/lucky/draw/detail.do?userId="+userId,
+			success:function(data){
+				if(data.message != "成功"){
+					return;
+				}else {
+					drawList = data.data.list;
+					drawTimes = data.data.map.draw_count_limit ? data.data.map.draw_count_limit : 0;
+					$(".numberDraw").html(drawTimes)
+					for(var i=0; i<drawList.length;i++) {
+						$(".img" + i ).attr("src", drawList[i].draw_image);
+						if (drawList[i].type == "1") {
+							$(".img" + i ).next("p").html( "奖励"+ drawList[i].lacky_draw+"积分")
+						} else if( drawList[i].type == "2" ) {
+							$(".img" + i ).next("p").html(  drawList[i].lacky_draw )
+						} else {
+							$(".img" + i ).next("p").html("谢谢惠顾")
+						}
+					}
+				} 
+			}
+		})
+	}
+	getDrawInfo()   // 获取奖品的信息
+	function getRuleData() {
+        $.ajax({
+            dataType:"json",
+            type:"get",
+            url:"/share/task/sign/info/list.do",
+            success:function(data){
+                if(data.message != "成功"){
+                    return;
+                } else {
+                    var praisData = data.data.taskSignList;
+                    var vipRankInfo = data.data.vipRankInfo_list;
+                    $(".one").text(praisData[0].drawLimit)
+                    $(".two").text(praisData[1].drawLimit)
+                    $(".three").text(praisData[2].drawLimit)
+                    $(".four").text(praisData[3].drawLimit)
+                    $(".five").text(praisData[4].drawLimit)
+                    $(".six").text(praisData[5].drawLimit)
+                    $(".seven").text(praisData[6].drawLimit)
+                    var html=""
+                    if(vipRankInfo.length>0) {
+                        for(var i=0; i<vipRankInfo.length; i++) {
+                            html+='<li>'+vipRankInfo[i].name+'可抽奖'+ vipRankInfo[i].draw_count +'次</li>'
+                        }
+                        $(".vipRankInfo").empty().html(html)
+                    } else{
+                        $(".vipRankInfo").empty().html("<li>无<li>")
+                    }
+                    
+                }
+            }
+        }); 
+    }
+    getRuleData() // 活动规则数据请求
+	function getEquipment(){
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		if(isAndroid) return 'android'
+		else if(isiOS) return 'ios'
+	}
+
+    window.onload = function() {
+		document.documentElement.style.fontSize = document.documentElement.clientWidth/3.75+'px'
+		var mainWidth = $(".main").width();
+		var bodyWidth = $("body").width();
+		if( bodyWidth - mainWidth > 70) {
+			document.documentElement.style.fontSize = "120px"
+		}
+		lottery.init('lottery');
+		$("#lottery a").click(function() {
+			$(".middleMask").addClass("hide");
+			if(click) {
+				return false;
+			} else {
+				if(drawTimes <= 0) {
+					$(".noTime").removeClass("hide");
+					$(".middleMask").removeClass("hide");
+					return false;
+				}
+				$.ajax({
+					dataType:"json",
+					type:"post",
+					url:"/share/app/task/lucky/draw.do",
+					data:{
+						userId:userId
+					},
+					success:function(data){
+						if(data.message != "成功"){
+							return;
+						}else {	
+							drawlocation = data.data.location;
+							drawType = data.data.type;
+							drawMessage = data.data.message;
+
+							drawTimes--;
+							$(".numberDraw").text(drawTimes);
+							lottery.speed = 100;
+							roll();
+							click = true;	
+							return false;	
+						} 
+					},
+					error: function(data) {
+						alert("系统繁忙");
+						return false;
+					}
+				})
+			}
+		});
+	
+		$(".lilqPoint a").on('tap', function(e) {
+			e.preventDefault();
+			$(".getPoint").addClass("hide");
+			$(".middleMask").addClass("hide");
+		})
+		
+		$(".keepTry a").on('tap', function(e) {
+			e.preventDefault();
+			$(".nodraw").addClass("hide");
+			$(".middleMask").addClass("hide");
+		})
+
+		$(".addCard a").on('tap', function(e) {
+			e.preventDefault();
+			$(".getGoods").addClass("hide");
+			$(".middleMask").addClass("hide");
+		})
+		$(".returnTask a").on('tap', function(e) {
+			e.preventDefault();
+			$(".noTime").addClass("hide");
+			$(".middleMask").addClass("hide");
+
+//			if(getEquipment() == "android") window.androidjs.goBack()
+//          else goBack()
+		})
+		var numSet = 0, timer, timerOut,numStart=0;
+		$(".drawTopPoint").on('tap', function(e) {
+			e.preventDefault();
+			if($('.icon').hasClass("tranfrom")){
+				$('.icon').removeClass("tranfrom");
+				$('#test').addClass('activeLeave')
+				$('#test').removeClass('activeIn')
+				
+				numStart=0;
+				numSet=0;
+				clearInterval(timer)
+				timerOut = setTimeout(function(){
+					$(".barShow").width(0)
+					$('.circle').removeClass("circleActive")
+				},400)
+			}else{
+				$('.icon').addClass("tranfrom");
+				$('#test').addClass('activeIn')
+				$('#test').removeClass('activeLeave')
+				if( !isSignSuccess ){
+					return false;
+				}
+				var runNumber = signDayRecord*17
+				timer = setInterval(function(){
+					numStart++;
+					if(numStart>21){
+						switch(numSet){
+							case 0: $(".circle0").addClass("circleActive")
+							  break;
+							case 17: $(".circle1").addClass("circleActive")
+							  break;
+							case 34: $(".circle2").addClass("circleActive")
+							  break;
+							case 51: $(".circle3").addClass("circleActive")
+							  break;
+							case 68: $(".circle4").addClass("circleActive")
+							  break;
+							case 85: $(".circle5").addClass("circleActive")
+							  break;
+							case 100: $(".circle6").addClass("circleActive")
+							  break;
+						}
+						if(numSet < runNumber && numSet<100) {
+							numSet += 1
+							$(".barShow").width(numSet +"%")
+						}else{
+							clearInterval(timer)
+						}
+						
+					}
+				},25)
+			}
+		})
+		if(getEquipment() == "android") {
+			$(".drawActive").hide()
+		}
+	};
+
+
+</script>

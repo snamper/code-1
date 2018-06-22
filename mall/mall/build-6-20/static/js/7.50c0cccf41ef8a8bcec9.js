@@ -1,0 +1,2 @@
+webpackJsonp([7],{JGmR:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});n("i1M9");var r={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"cpsDetail"},[t("iframe",{ref:"iframe",attrs:{src:this.url}})])},staticRenderFns:[]},i=n("Z0/y")({name:"cpsDetail",data:function(){return{url:""}},created:function(){this.url=this.$route.query.entranceUrl},mounted:function(){}},r,!1,null,null,null);t.default=i.exports},i1M9:function(e,t){}});
+//# sourceMappingURL=7.50c0cccf41ef8a8bcec9.js.map

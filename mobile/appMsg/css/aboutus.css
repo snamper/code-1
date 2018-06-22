@@ -1,0 +1,9 @@
+.aboutCenter{background-color: #fff;padding-top: 1.88rem;position: relative;color: rgb(51,51,51);}
+.aboutCenter .usLogoBox span{display: block;}
+.usLogoBox .iconLogo, .usLogoBox .iconLogo img{width: 1.44rem;height: 1.44rem;}
+.usLogoBox .iconLogo{margin: 0 auto;}
+.usLogoBox .iconText{text-align: center;margin-top: 0.34rem;font-size: 0.4rem;font-weight: bold;}
+.aboutCenter .usBrief{padding-top: 0.54rem;}
+.usBrief .briefText{line-height: 0.4rem;font-size: 0.28rem;width: 6rem;margin: 0 auto;text-indent: 0.65rem;letter-spacing:0.05rem;text-align: justify;word-break: break-all;}
+.aboutCenter .footerBox{position: fixed;bottom: 1.28rem;width: 100%;}
+.aboutCenter .footerBox span{display: block;text-align: center;font-size: 0.22rem;line-height: 0.4rem;}

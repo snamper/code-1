@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/swipeslider.css"/>
+		<script src="./js/jquery-1.9.1.min.js"></script>
+		<title>商城</title>
+	</head>
+	<body>
+		<div class="header">
+			<figure id="full_feature" class="swipslider" style="padding-top: 0">		
+				<ul class="sw-slides">
+					<li class="sw-slide"><a href="active.html"><img src="./img/index/banner1.png"/></a></li>
+					<li class="sw-slide"><a href="shopGroup.html"><img src="./img/index/banner2.png"/></a></li>
+				</ul>
+		</div>
+		<div class="nav_list">
+			<a class="newWelfareLink" href="newWelfare.html"></a>
+			<a class="exchangeLink" href="exchange.html"></a>
+			<a class="allShopLink" href="allShop.html"></a>
+		</div>
+		<div class="wish_list">
+			<img src="img/index/heart.png"/>
+		</div>
+		<div class="seckill">
+			<figure id="full_feature" class="swipslider full_feature2" style="padding-top: 0">		
+				<ul class="sw-slides">
+					<li class="sw-slide"><img src="./img/index/seckill.png"/></li>
+					<li class="sw-slide"><img src="./img/index/seckill2.png"/></li>
+				</ul>
+			</figure>
+		</div>
+		<div class="hot_active">
+			<a class="activeLink" href="active.html"></a>
+			<a class="shopGroupLink" href="shopGroup.html"></a>
+		</div>
+		<div class="active_main">
+			<img class="shop_img1" src="img/index/hot_shop01.png"/>
+			<img class="shop_img2" src="img/index/hot_shop02.png"/>
+			<img class="shop_img3" src="img/index/hot_shop03.png"/>
+		</div>
+		<div class="footer">
+			<img src="img/index/footer.png"/>
+		</div>
+	</body>
+</html>
+<script>
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 3.75 + 'px'
+</script>
+<script src="./js/zepto.min.js"></script>
+<script src="./js/swipeslider.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$('#full_feature').swipeslider();
+	$('.full_feature2').swipeslider();
+    $('#content_slider').swipeslider({
+        observer: true,
+        observeParents: true,
+        transitionDuration: 500,
+        autoSwipe: true,
+        speed: 3000,
+        transitionType: "linear",
+        sliderHeight: '300px',
+        lazyLoad: true,
+        continuousScroll: true,
+    });
+    $("#full_feature").css('padding-top',0)
+    $(".full_feature2").css('padding-top',0)
+</script>

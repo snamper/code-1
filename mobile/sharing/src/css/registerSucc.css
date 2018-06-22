@@ -1,0 +1,49 @@
+input,button{outline:none}
+input{
+	-webkit-user-drag: text;
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+input::-webkit-input-placeholder{color: #fff}
+input:-moz-placeholder{color: #fff}
+input::-moz-placeholder{color: #fff}
+input:-ms-input-placeholde{color: #fff}
+html,body{width: 100%;height: 100%;}
+.wrapSiginPage{
+	width: 100%;
+	height: 100%;
+	background: url(../images/register/back.png) no-repeat;
+	background-size:100% ;
+	background-position:0 0;
+}
+.register{width: 100%;height: 100%;}
+.register > img{max-height: 8.5rem;float: right;}
+.register_area{width: 100%;max-height: 5.1rem;min-height: 4.7rem;z-index: 4;position: fixed;bottom: 0;left: 0;background: url(../images/register/bottom.png) no-repeat;background-size:100% 100%;}
+
+.toDownload{width: 4.93rem;height: .74rem;display: block;margin:0 auto;background: url(../images/register/btn.png) no-repeat; border-radius: 0.1rem;background-size: 100% 100%;border: 0;color: #fff;font-size: .3rem;text-spacing: .01rem;}
+.register_tips{width: 6rem;height: .3rem;color: red;font-size: .22rem;margin: .1rem auto;}
+
+.register_goods{width: 100%;height: auto;padding:0 .34rem;padding-top: .5rem}
+.goods_top{width: 100%;font-size: .3rem;color: #fef6f5;height: .3rem;position: relative;}
+.goods_top > li{display: inline-block;float: left;position: absolute;top: 0;}
+.goods_top > li:nth-child(1){width: 20%;height: 0.02rem;background-color: #fef6f5;left: 0;}
+.goods_top > li:nth-child(3){width: 20%;height: 0.02rem;background-color: #fef6f5;right: 0;}
+.goods_top > li:nth-child(2){width: 60%;text-align: center;letter-spacing: .02rem;line-height: .3rem;top: -0.15rem;left: 1.3rem;}
+.goods_content{width: 6.14rem;height: auto;margin: 0 auto;margin-top: .1rem;}
+.goods_content > li{width: 2.82rem;height: auto;float: left;margin-right: .5rem;}
+.goods_content > li:nth-child(2),.goods_content > li:nth-child(4),.goods_content > li:nth-child(6){margin-right: 0;}
+.goods_content > li > img{width: 100%;display: block;margin-bottom: .15rem;}
+.goods_content > li > h3{font-weight: 100;color: #fef6f5;font-size: .3rem;width: 100%;text-align: center;margin-bottom: .15rem;}
+.goods_cover{width: 100%;height: 4.9rem;}
+.succMessage_area{max-height: 4.1rem;min-height: 3.5rem;}
+.succMessage{width: 100%;text-align: center;font-size: .3rem;color: #fff;margin-bottom: .12rem;letter-spacing: .01rem;}
+.succMessage:nth-child(1){margin-top: 1.2rem;}
+.succMessage:nth-child(2){margin-bottom: .3rem;}
+
+.share_tips{background: rgba(0,0,0,0.8); text-align: center; position: fixed; left:0; top: 0; width: 100%; height: 100%; z-index: 998 !important; }
+.share_tips > .tips_icon{width: 90%;height: 100%;background: url(../images/live_weixin.png) no-repeat;background-size: 100% ;margin-left: 10%;}
+.share_tips_close{float: left;margin: .24rem;width: .6rem;height: .6rem;}
+/*.wxtip-icon{width: 52px; height: 67px; background: url(weixin-tip.png) no-repeat; display: block; position: absolute; right: 20px; top: 20px;}*/
+/*.wxtip-txt{margin-top: 107px; color: #fff; font-size: 16px; line-height: 1.5;}*/

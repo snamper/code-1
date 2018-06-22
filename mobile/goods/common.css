@@ -1,0 +1,12 @@
+body {background-color:#fff; }
+body,h1,h2,h3,h4,h5,h6,p,ol,ul,dl,dt,dd,li,cite,fieldset { margin:0px; padding:0px; list-style:none;font-family:"Microsoft Yahei","SimHei","SimSun";}
+sup,sub { vertical-align:baseline; }
+a{text-decoration:none;outline:none;outline:0;-webkit-touch-callout:none;border: none;}
+a:link{color:inherit;outline:none;outline:0;}
+a:visited{color:inherit;outline:none;outline:0;}
+a:hover{color:inherit;outline:none;outline:0;}
+.clear{clear:both}
+img{border:none;}
+.inline-block{display:inline-block}
+.left{float:left}
+.right{float:right}

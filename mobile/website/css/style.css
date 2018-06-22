@@ -1,0 +1,214 @@
+@media (min-width:400px) {
+	html {
+		font-size: 53.333px;
+	}
+}
+
+
+/* Reset - Mobile */
+
+
+/* All */
+
+html {
+	font-size: 42.666px;
+}
+
+
+/* iPhone 4/5 */
+
+@media (min-width:320px) {
+	html {
+		font-size: 42.666px;
+	}
+}
+
+
+/* Android */
+
+@media (min-width:360px) {
+	html {
+		font-size: 48px;
+	}
+}
+
+
+/* iPhone6 */
+
+@media (min-width:375px) {
+	html {
+		font-size: 50px;
+	}
+}
+
+
+/* iPhone6 Plus */
+
+@media (min-width:414px) {
+	html {
+		font-size: 55.2px;
+	}
+	/*.foot{width: 100%;}
+				.foot-one{width: 100%;}
+				.foot-two{width: 100%;}
+				.foot-three{width: 100%;}*/
+}
+
+@media (min-width:480px) {
+	html {
+		font-size: 64px;
+	}
+}
+
+@media (min-width:768px) {
+	html {
+		font-size: 102.4px;
+	}
+}
+
+@media (min-width:1024px) {
+	html {
+		font-size: 136.5333px;
+	}
+}
+
+.hello {
+	width: 100%;
+}
+
+.hello-one img {
+	width: 100%;
+	position: relative;
+}
+
+.hello-two {
+	width: 100%;
+	position: absolute;
+	top: 12%;
+	left: 0%;
+	font-family: "微软雅黑";
+	font-weight: bold;
+}
+
+.content {
+	width: 100%;
+	position: relative;
+}
+
+.content img {
+	width: 100%;
+}
+
+.content-word {
+	width: 44%;
+	position: absolute;
+	top: 50%;
+	right: 14%;
+	text-align: center;
+	color: #333333;
+	margin-top: -1rem;
+}
+
+.content-word-one-two {
+	width: 42%;
+	position: absolute;
+	top: 50%;
+	left: 16%;
+	text-align: center;
+	color: #333333;
+	margin-top: -1rem;
+}
+
+.content-word-one-three {
+	width: 44%;
+	position: absolute;
+	top: 50%;
+	left: 14%;
+	text-align: center;
+	color: #333333;
+	margin-top: -1rem;
+}
+
+.word-one {
+	font-size: 0.36rem;
+	margin-bottom: 0.3rem;
+}
+
+.word-two {
+	font-size: 0.2rem;
+}
+
+.content-one {
+	width: 100%;
+	text-align: center;
+	background-color: #f1ffff;
+}
+
+.content-one p {
+	padding-top: 0.4rem;
+	margin: 0;
+	font-size: 0.45rem;
+}
+
+.content-img {
+	background-color: #f1ffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	/*padding: 0 14%;*/
+	padding: 0.4rem 14% 0.3rem 14%;
+	/*margin: 1rem 0 0.9rem 0;*/
+}
+
+.content-img img {
+	width: 15%;
+}
+
+.sidebar {
+	position: fixed;
+	top: 35%;
+	right: 0rem;
+	z-index: 6;
+	text-align: center;
+}
+
+.ce {
+	width: 1.5rem;
+    height: 1.5rem;
+	position: absolute;
+	top: -0.5rem;
+	right: 0.7rem;
+	display: none;
+}
+
+.bian {
+	background: #eaeaea;
+	width: 0.5rem;
+}
+
+.de {
+	width: 0.5rem;
+}
+
+.lan {
+	width: 1.5rem;
+    height: 1.5rem;
+	position: absolute;
+	top: 0.4rem;
+	right: 0.7rem;
+	display: none;
+}
+
+.sidebar-one:hover .ce {
+	display: block;
+}
+
+.sidebar-two:hover .lan {
+	display: block;
+}
+
+.color {
+	padding: 0.2rem 0.1rem;
+	background: #eaeaea;
+}

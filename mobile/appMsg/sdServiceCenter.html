@@ -1,0 +1,273 @@
+<!DOCtype html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>客服中心</title>
+		<link rel="stylesheet" href="css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="css/service.css" />
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="service_center">
+			<div class="service">
+				<div class="service_header">
+					<img src="images/service/service.png" alt="" />
+				</div>
+				<div class="service_content">
+					<div class="service_title">
+						我猜您想了解：
+					</div>
+					<ul class="service_message">
+						<li>
+							<h2>联系我们</h2>
+							<p>客服电话：<span><a href="tel:400-888-5275">400-888-5275</a></span></p>
+							<p>
+								<i>微信账号：zhuandong2018</i> 
+								<a href="wx:zhuandong2018"><img src="images/service/copy.png" alt="" /></a>
+							</p>
+							<p>工作时间：正常工作日 9:00-18:00</p>
+							<div class="liBorder"></div>
+						</li>
+						<li attr-source="beforeSale" class="question">
+							<h2>售前问题<img src="images/service/arrow.png" alt="" /></h2>
+						</li>
+						<li attr-source="afterSale" class="question">
+							<h2>售后问题<img src="images/service/arrow.png" alt="" /></h2>
+						</li>
+						<li attr-source="exchange" class="question">
+							<h2>兑换问题<img src="images/service/arrow.png" alt="" /></h2>
+						</li>
+					</ul>
+				</div>
+				<div style="clear:both;height:0;overflow:hidden;"></div>
+			</div>
+			
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		$("body").delegate(".question","click",function(e){
+//			var event = window.event || e;
+//			event.stopPropagation();
+			var source = $(this).attr("attr-source");
+			var className = "."+source;
+			if($(".customer")){
+				for(var i = 0; i < $(".customer").length; i++){
+					if($($(".customer")[i]).hasClass(source)){
+				        var $top = $(className).offset().top;
+				        $("body,html").animate({
+				          scrollTop: $top
+				        }, 500);
+						return;
+					}
+				}
+			}
+			for(var i = 0; i < json.length; i++){
+				if(json[i][0] == source){
+					$(".service_center").append(json[i][1])
+					var content = json[i][2],
+						content1 = json[i][3]
+					setTimeout(function() {
+						$(".service_center").append(content)
+						setTimeout(function() {
+							$(className).find(".service_content").html(content1)
+						},1000)
+					},200)
+					var $top = $(className).offset().top;
+			        $("body,html").animate({
+			          scrollTop: $top
+			        }, 500);
+				}
+			}
+		})
+		var json = [
+			[	"beforeSale",
+				'<div class="customer beforeSale">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">售前问题<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service beforeSale">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">售前问题：</div>'+
+				'<ul class="service_message">'+
+					'<li attr-source="getCode" class="question">'+
+						'<h2>如何购买商品？<img src="images/service/arrow.png" alt="" /></h2>'+
+					'</li>'+
+					'<li attr-source="codeDetail" class="question">'+
+						'<h2>支付方式？<img src="images/service/arrow.png" alt="" /></h2>'+
+					'</li>'+
+				'</ul>'
+			],[	'getCode',
+				'<div class="customer getCode" >'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">如何购买商品？<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>	',
+				'<div class="service getCode">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">如何购买商品：</div>'+
+				'<ul class="service_answer">'+
+					'<li>用户可在首页和商城页面使用积分购买商品，首次购买商品需设置交易密码，或通过“我的”—“我的账户”进行设置和密码修改。</li>'+
+				'</ul>'
+			],[	'codeDetail',
+				'<div class="customer codeDetail">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message" >支付方式？<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service codeDetail">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">支付方式：</div>'+
+				'<ul class="service_answer">'+
+					'<li>平台支持的支付方式分为三种：积分支付、微信支付、以及积分+微信。</li>'+
+				'</ul>'
+			],[	"afterSale",
+				'<div class="customer afterSale">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">售后问题<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service afterSale">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">售后问题：</div>'+
+				'<ul class="service_message">'+
+					'<li attr-source="buyGoods" class="question">'+
+						'<h2>如何查看已购买商品？<img src="images/service/arrow.png" alt="" /></h2>'+
+					'</li>'+
+					'<li attr-source="refundGoods" class="question">'+
+						'<h2>退货退款？<img src="images/service/arrow.png" alt="" /></h2>'+
+					'</li>'+
+				'</ul>'
+			],[	'buyGoods',
+				'<div class="customer buyGoods" >'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">如何查看已购买商品？<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>	',
+				'<div class="service buyGoods">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">如何查看已购买商品：</div>'+
+				'<ul class="service_answer">'+
+					'<li>虚拟类商品： “我的”-“我的卡包”中查看并使用。</li>'+
+				'</ul>'
+			],[	'refundGoods',
+				'<div class="customer refundGoods">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message" >退货退款？<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service refundGoods">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">退货退款：</div>'+
+				'<ul class="service_answer">'+
+					'<li>虚拟商品，已经出售概不退换。</li>'+
+				'</ul>'
+			],[	'exchange',
+				'<div class="customer exchange">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">兑换问题<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service exchange">'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">兑换问题：</div>'+
+				'<ul class="service_message">'+
+					'<li class="question" attr-source="codeBack">'+
+						'<h2>商品兑换失败，积分什么时候退回？<img src="images/service/arrow.png" alt="" /></h2>'+
+					'</li>'+
+				'</ul>'
+			],[	'codeBack',
+				'<div class="customer codeBack">'+
+					'<div class="customer_header">'+
+						'<img src="images/service/customer.png" alt="" />'+
+					'</div>'+
+					'<div class="customer_message">商品兑换失败，积分什么时候退回？<img src="images/service/jiao.svg" alt="" /></div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service codeBack" >'+
+					'<div class="service_header">'+
+						'<img src="images/service/service.png" alt="" />'+
+					'</div>'+
+					'<div class="service_content">'+
+						'<img class="loadding" src="images/service/loadding.gif" alt="" />'+
+					'</div>'+
+					'<div style="clear:both;height:0;overflow:hidden;"></div>'+
+				'</div>',
+				'<div class="service_title">商品兑换失败，积分什么时候退回：</div>'+
+				'<ul class="service_answer">'+
+					'<li>1.因系统或商家原因导致用户购买商品后无法正常兑换使用，经系统核实后积分将立即返还，现金支付金额部分将在3-5个工作日内返还（不可抗因素除外）。</li>'+
+					'<li>2.因用户自身原因导致兑换账号错误，无法正常使用已兑换商品，积分及支付金额不予退还。</li>'+
+					'<li>3.如遇兑换提示异常，我们将在1个工作日内处理，请您耐心等候。</li>'+
+				'</ul>'
+			]
+		]
+	</script>
+
+</html>

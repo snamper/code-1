@@ -1,0 +1,75 @@
+{
+  "menuList":[
+    {
+      "key": "1",
+      "icon": "switcher",
+      "name": "商户管理",
+      "children":[{
+        "key":"merchantAccountManager",
+        "name": "商户账号管理",
+        "route": "/platform/merchantAccount"
+      },{
+        "key":"merchantChannelManager",
+        "name": "商户渠道管理",
+        "route": "/platform/merchantChannelManager"
+      },{
+        "key":"supplierManager",
+        "name": "供货商管理",
+        "route": "/platform/supplierManager"
+      }]
+    },{
+      "key": "memberManage",
+      "icon": "profile",
+      "name": "会员管理",
+      "route": "/platform/memberManage",
+      "children":[]
+    },{
+      "key": "2",
+      "icon": "api",
+      "name": "商品管理",
+      "children":[
+        {
+          "key":"platemGoodsManager",
+          "name": "选品库",
+          "route": "/platform/platemGoodsManager"
+        },
+        {
+          "key":"platemAddGoods",
+          "name": "新增商品",
+          "route": "/platform/platemAddGoods"
+        },
+        {
+          "key":"platemGoodsHouse",
+          "name": "管理商品库",
+          "route": "/platform/platemGoodsHouse"
+        },{
+          "key":"checkPendingGoods",
+          "name": "待审核商品",
+          "route": "/platform/checkPendingGoods"
+        },{
+          "key":"goodsRecycle",
+          "name": "商品回收站",
+          "route": "/platform/goodsRecycle"
+        }
+      ]
+    },{
+      "key": "platemOrderManage",
+      "icon": "profile",
+      "name": "订单管理",
+      "route": "/platform/platemOrderManage",
+      "children":[]
+    },{
+      "key": "platemStoreManage",
+      "icon": "profile",
+      "name": "库存管理",
+      "route": "/platform/platemStoreManage",
+      "children":[]
+    },{
+      "key": "platemCateManage",
+      "icon": "profile",
+      "name": "分类管理",
+      "route": "/platform/platemCateManage",
+      "children":[]
+    }
+  ]
+}

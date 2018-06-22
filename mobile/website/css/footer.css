@@ -1,0 +1,132 @@
+/* nav */
+.navbar-nav li{
+	width: 148px;
+	text-align: center;
+	height: 70px;
+}
+/*.navbar-default .navbar-nav>li>a{
+	line-height: 40px;
+}*/
+.header,.navbar-default{
+	height: 70px;
+	overflow: hidden;
+}
+.navbar-nav li a{
+	color: black;
+	font-size: 0.12rem;
+}
+.header {
+	width: 100%;
+}
+
+.header,
+.navbar-default {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 8;
+}
+.hello{
+	margin-top: 70px;
+}
+
+.box {
+	padding: 0 !important;
+}
+
+.navbar-default {
+	width: 100%;
+	padding-left: 12%;
+	background-color: white;
+	border: none;
+	margin: 0;
+}
+
+.active a {
+	background: none !important;
+}
+
+.navbar-default .navbar-nav>li>a {
+	line-height: 0.35rem;
+}
+
+.navbar>.container .navbar-brand,
+.navbar>.container-fluid .navbar-brand {
+	margin: 5% 0;
+}
+
+.navbar-brand {
+	padding: 0;
+	margin: 0;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+	background-color: white;
+}
+/* footer */
+.foot{
+	width: 100%;
+	padding: 2% 14%;
+	background: #383838;
+	color: #8b8b8b;
+}
+.foot-one{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #8b8b8b;
+	margin-bottom: 0.2rem;
+}
+.one-one{
+	width: 50%;
+	margin-bottom: 0.2rem;
+}
+.one-one p{
+	font-size: 0.13rem;
+}
+.ont-two{
+	width: 44%;
+}
+.one-three{
+	width: 100%;
+	display: flex;
+}
+.one-three img{
+	margin: 0.1rem 0.2rem 0 0;
+}
+.qq{
+	position: relative;
+}
+.ww{
+	display: none;
+	width: 1rem;
+	position: absolute;
+	bottom: 0rem;
+	left: 0.3rem;
+}
+.qq:hover .ww{
+	display: block;
+}
+.foot-two{
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+.two-one{
+	width: 45%;
+	font-size: 0.13rem;
+}
+.two-one li{
+	margin-bottom: 0.15rem;
+}
+.two-two{
+	width: 36%;
+	text-align: center;
+	font-size: 0.13rem;
+}
+.two-two img{
+	width: 1.3rem;
+	margin-bottom: 0.15rem;
+}

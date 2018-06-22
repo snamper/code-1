@@ -1,0 +1,66 @@
+{
+  "menuList":[
+    {
+      "key": "1",
+      "icon": "switcher",
+      "name": "账号管理",
+      "children":[{
+        "key":"merchantAccount",
+        "name": "账号管理",
+        "route": "/merchant/merchantAccount"
+      },{
+        "key":"merchantMessage",
+        "name": "商户信息",
+        "route": "/merchant/merchantMessage"
+      }]
+    },{
+      "key": "merchantMemberManage",
+      "icon": "profile",
+      "name": "会员管理",
+      "route": "/merchant/merchantMemberManage",
+      "children":[]
+    },{
+      "key": "2",
+      "icon": "api",
+      "name": "商品管理",
+      "children":[
+        {
+          "key":"merchantChooseGoods",
+          "name": "选品商品",
+          "route": "/merchant/merchantChooseGoods"
+        },{
+          "key":"merchantCancelGoods",
+          "name": "取消选品",
+          "route": "/merchant/merchantCancelGoods"
+        },{
+          "key":"merchantGoodsManage",
+          "name": "管理商品",
+          "route": "/merchant/merchantGoodsManage"
+        },{
+          "key":"goodsPackMan",
+          "name": "商品打包管理",
+          "route": "/merchant/goodsPackMan"
+        }
+      ]
+    },{
+      "key": "platemOrderManage",
+      "icon": "profile",
+      "name": "订单管理",
+      "route": "/merchant/platemOrderManage",
+      "children":[]
+    },{
+      "key": "3",
+      "icon": "switcher",
+      "name": "运营管理",
+      "children":[{
+        "key":"merchantRecommendGoods",
+        "name": "推荐商品管理",
+        "route": "/merchant/merchantRecommendGoods"
+      },{
+        "key":"merchantBannerManager",
+        "name": "轮播图管理",
+        "route": "/merchant/merchantBannerManager"
+      }]
+    }
+  ]
+}

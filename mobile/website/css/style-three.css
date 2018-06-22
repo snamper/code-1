@@ -1,0 +1,170 @@
+@media (min-width:400px) {
+	html {
+		font-size: 53.333px;
+	}
+}
+
+
+/* Reset - Mobile */
+
+
+/* All */
+
+html {
+	font-size: 42.666px;
+}
+
+
+/* iPhone 4/5 */
+
+@media (min-width:320px) {
+	html {
+		font-size: 42.666px;
+	}
+}
+
+
+/* Android */
+
+@media (min-width:360px) {
+	html {
+		font-size: 48px;
+	}
+}
+
+
+/* iPhone6 */
+
+@media (min-width:375px) {
+	html {
+		font-size: 50px;
+	}
+}
+
+
+/* iPhone6 Plus */
+
+@media (min-width:414px) {
+	html {
+		font-size: 55.2px;
+	}
+}
+
+@media (min-width:480px) {
+	html {
+		font-size: 64px;
+	}
+}
+
+@media (min-width:768px) {
+	html {
+		font-size: 102.4px;
+	}
+}
+
+@media (min-width:1024px) {
+	html {
+		font-size: 136.5333px;
+	}
+}
+
+.box {
+	padding: 0 !important;
+}
+
+.clear:after {
+	display: block;
+	clear: both;
+	content: "";
+	visibility: hidden;
+	height: 0
+}
+
+.clear {
+	zoom: 1
+}
+
+.content {
+	width: 100%;
+	position: relative;
+}
+
+.content img {
+	width: 100%;
+}
+
+.word {
+	width: 44%;
+	position: absolute;
+	top: 50%;
+	left: 15%;
+	text-align: center;
+	color: #333333;
+	margin-top: -1rem;
+}
+
+.word-one {
+	width: 41%;
+	position: absolute;
+	top: 50%;
+	right: 18%;
+	text-align: center;
+	font-size: 44px;
+	color: #333333;
+	margin-top: -1rem;
+}
+
+.zi-one {
+	font-size: 0.36rem;
+	color: #ff6767;
+	margin-bottom: 0.3rem;
+}
+
+.word-two {
+	font-size: 0.2rem;
+}
+
+
+/*.hello .zi-one {
+	font-size: 42px;
+	color: #ff6767;
+}*/
+
+
+/*.content p {
+	font-size: 32px;
+}*/
+
+
+/*
+.textCont {
+	width: 750px;
+	position: absolute;
+	top: 0;
+}
+
+.textContRight {
+	right: 80px;
+}
+
+.textContLeft {
+	left: 80px;
+}*/
+
+
+/*.zi {
+	width:750px;
+	position: absolute;
+	top: 50%;
+	left: 43%;
+	text-align: center;
+	font-size: 44px;
+	color: #333333;
+}*/
+
+
+/*.hello {
+	width: 100%;
+	min-width: 1200px;
+	overflow: hidden;
+}*/

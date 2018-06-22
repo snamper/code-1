@@ -1,0 +1,60 @@
+header {width: 100%; height: 1rem; font-size: 0.36rem; color: #515151; text-align: center; line-height: 1rem; font-weight: bold;border-bottom: 1px solid #666}
+.banner {width: 100%; height: auto; position: relative;}
+.sw-slides, .sw-slide{ width:100%; height: 2rem;}
+.sw-slide img{width:100%; height: 100%;}
+.banner_bottom {width: 100%; height: 0.66rem; font-size: 0.22rem; color: #fff; position: absolute; left: 0; bottom: 0; background-color: rgba(255,0,0,0.5); /* background: #b52828;*/ line-height: 0.33rem; padding-left: 0.2rem;z-index: 10;}
+.content {width: 93.333%; height: auto; margin: 0 auto; }
+.goods_info {width: 100%; height: auto; border-bottom: 1px solid #dbdbdb;}
+.goods_info_box{
+	width: 100%;
+	height: 1.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.05rem;
+	padding: .2rem;
+	margin-top: -.2rem;
+	position: relative;
+	z-index: 10;
+	background-color: #fff;
+}
+.goods_info h2 { width: 100%; height: 0.52rem; font-size: 0.32rem; line-height: 0.52rem;}
+.goods_info .goods_info_main { width: 100%; height: 0.56rem; font-size: 0.28rem; line-height: 0.56rem; color: #808080;}
+.point  span {font-size: 0.26rem; color: #e64d5d; font-weight: 900;}
+.point {float: left; font-size: 0.24rem; }
+.sale {font-size: 0.24rem; float: right;color: #e64d5d;}
+.goods_ensure {width: 100%; height: 0.98rem; font-size: 0.26rem; line-height: 0.98rem; overflow: hidden;}
+.goods_ensure div {float: left;}
+.goods_icon {font-size: 0;width:0.56rem; height: 100%;}
+.goods_icon_main {margin-right: 0.16rem;}
+.goods_ensure div img { width:0.3rem; height: 0.3rem; margin-top: 0.34rem; margin-left: 0.14rem; }
+.notice {width: 100%;}
+.get_notice {width: 100%; height: 0.66rem; line-height: 0.66rem; font-size: 0.26rem; color: #808080; }
+.effective {width: 100%; font-size: 0.26rem; color: #808080;}
+.effective p {width: 100%; height: 0.4rem; line-height: 0.4rem; color: #e64d5d;}
+.effective .time {line-height: 0.46rem; text-indent: 0.4rem;}
+.notice_common {width: 100%; font-size: 0.26rem; color: #808080;}
+.notice_common .name {width: 100%; height: 0.54rem; line-height: 0.54rem; color: #e64d5d;}
+.notice_common_main {width: 100%}
+.notice_common_main p {line-height: 0.36rem; text-indent: 0.4rem; color: #808080; }
+.appDownloadBox{position:fixed;bottom:0rem;left:0;width:100%;height:1.3rem;background-color:#4c4436;z-index: 10;padding:.2rem .28rem;background-color: #F66E6E;}
+.appDownloadBox img:nth-child(1){
+	width: .94rem;
+	height: .94rem;
+	display: block;
+	float: left;
+}
+.appDownloadBox img:nth-child(2){
+	width: 1.86rem;
+	height: .6rem;
+	display: block;
+	float: left;
+	margin: .15rem 0 0 .15rem;
+}
+.appDownloadBox img:nth-child(3){
+	width: 1.73rem;
+	height: .57rem;
+	display: block;
+	float: right;
+	margin-top: .15rem;
+}
+
+.swiper-container .swiper-slide{background: #fff !important;}

@@ -1,0 +1,14 @@
+@charset "utf-8";
+div .ant-menu-submenu-popup ul.ant-menu-vertical{
+  margin-top:10px;
+}
+#goodsCateContainer{
+  height: 500px
+}
+#goodsCateContainer .ant-cascader-menu{
+  width:200px;
+  height: 300px
+}
+#goodsCateContainer .ant-cascader-menu ul{
+  height: 300px
+}

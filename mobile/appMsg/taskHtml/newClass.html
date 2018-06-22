@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="./../css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="./../css/taskCss/activeRule.css"/>
+		<title>新手课堂</title>
+	</head>
+	<body>
+        <div class="newContent">
+            <div class="bottom"><a class="goQuestions" href="javascript:window.location.href='goExam.html?userId='+pageData.userId+'&score='+pageData.score"  style="background: block;"></a></div>
+        </div>    
+	</body>
+</html>
+ <script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth/3.75+'px'
+</script> 
+<script type="text/javascript" src="./../js/jquery-1.11.3.min.js"></script>
+<script src="./../js/zepto.min.js"></script>
+<script>
+	function getQueryString(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = window.location.search.substr(1).match(reg);
+		if(r != null) {
+			return decodeURI(r[2]);
+		}
+		return null;
+	};
+	var pageData = {
+		userId: getQueryString("userId"),
+		score: getQueryString("score")
+	}
+</script>
+

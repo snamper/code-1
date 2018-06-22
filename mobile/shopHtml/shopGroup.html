@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="./css/common.css" />
+		<link rel="stylesheet" type="text/css" href="./css/allshop.css"/>
+		<script src="./js/zepto.min.js"></script>
+		<title>热门活动</title>
+		<style type="text/css">
+			.active_main{background: #EFEFEF;}
+			.active_main .loading{width: 100%; height: 2.05rem; background: url(img/loading.gif) 50% no-repeat;font-size: 0;}
+			.active_main .lazy{display: none;}
+		</style>
+	</head>
+
+	<body>
+		<div class="header">
+			<h3>热门活动</h3>
+			<div class="return">
+				<a href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="active_main">
+			<div class="loading"></div>
+			<div class="active_main_banner">
+				<img class="lazy" src="img/shop/banner.png" onload="addIndex1()"/>
+			</div>
+			<div class="active_main_start">
+				<img class="lazy" src="img/shop/start.png" onload="addIndex1()"/>
+			</div>
+			<div class="active_main_shop">
+				<img class="lazy" src="img/shop/img1.png" onload="addIndex1()">
+			</div>
+			<div class="active_main_shop">
+				<img class="lazy" src="img/shop/img2.png" onload="addIndex1()">
+			</div>
+			<div class="active_main_shop">
+				<img class="lazy" src="img/shop/img3.png" onload="addIndex1()">
+			</div>
+			<div class="active_main_shop">
+				<img class="lazy" src="img/shop/img4.png" onload="addIndex1()">
+			</div>
+			<div class="active_main_bottom">
+				<img class="lazy" src="img/shop/bottom.png" onload="addIndex1()">
+			</div>
+		</div>
+	</body>
+
+</html>
+<script>
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 3.75 + 'px'
+</script>
+<script>
+	var largeLoadeIndex = 0;
+	
+	function addIndex1(){
+		largeLoadeIndex++;
+	    if( largeLoadeIndex > 6){
+	    	$(".loading").hide()
+	    	$(".lazy").show()
+		}
+	}
+	
+	$(".return").on("tap","a",function(){
+		history.back()
+	})
+</script>

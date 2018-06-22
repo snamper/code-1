@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="./../css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="./../css/taskCss/activeRule.css"/>
+        <title>新手考试</title>
+	</head>
+	<body>
+        <div class="exam">
+            <div class="examContent">
+                <div class="first common">
+                    <div class="firstBox">
+                        <input type="checkbox" name="first">
+                        <p><i class="hide one"></i></p>
+                        <span> 一个学习工具</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="first">
+                        <p><i  class="hide one"></i></p>
+                        <span> 动动手钱就有的赚钱软件</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="first">
+                        <p><i class="hide one"></i></p>
+                        <span> 一个阅读软件</span>
+                    </div>  
+                </div>
+                <div class="second common">
+                    <div class="firstBox">
+                        <input type="radio" name="second" value="A">
+                        <p><i class="hide"></i></p>
+                        <span> 有钱任性</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="second" value="B">
+                        <p><i class="hide"></i></p>
+                        <span> 宣传噱头</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="second"  value="C">
+                        <p><i class="hide two"></i></p>
+                        <span> 平台收益</span>
+                    </div>  
+                </div>  
+                <div class="third common">
+                    <div class="firstBox">
+                        <input type="checkbox" name="third">
+                        <p><i class="hide three"></i></p>
+                        <span> 每天登陆</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="third">
+                        <p><i class="hide three"></i></p>
+                        <span> 分享邀请好友</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="third">
+                        <p><i class="hide three"></i></p>
+                        <span> 观看视频</span>
+                    </div> 
+                    <div>
+                        <input type="checkbox" name="third">
+                        <p><i class="hide three"></i></p>
+                        <span> 参与任务和活动</span>
+                    </div>  
+                </div>  
+                <div class="fourth common">
+                    <div class="firstBox">
+                        <input type="radio" name="fourth" value="A">
+                        <p><i class="hide four"></i></p>
+                        <span> 加微信yueduoduo110</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="fourth" value="B">
+                        <p><i class="hide"></i></p>
+                        <span> 大声呼叫</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="fourth" value="C">
+                        <p><i class="hide"></i></p>
+                        <span> 重启</span>
+                    </div>  
+                    <div>
+                        <input type="radio" name="fourth"  value="D">
+                        <p><i class="hide"></i></p>
+                        <span> 生气</span>
+                    </div> 
+                </div>
+                <div class="fifth common">
+                    <div class="firstBox">
+                        <input type="checkbox" name="fifth">
+                        <p><i class="hide five"></i></p>
+                        <span> 收益翻倍提升</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="fifth">
+                        <p><i class="hide five"></i></p>
+                        <span> 炫耀</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="fifth">
+                        <p><i class="hide five"></i></p>
+                        <span> 一起赚钱</span>
+                    </div>  
+                </div>  
+                <div class="bottom"><a class="assignment" href="javascript:;" >交卷</a></div>
+            </div>
+        </div>
+        <div class="popupSuc hide">
+            <div class="popupSucbg">
+                    <div>考试通过了!</div>
+                    <p>奖励<span class="score"></span>积分</p>
+            </div>
+            <div class="lilq"><a href="javascript:;"></a></div>
+        </div>
+        <div class="popupErr hide">
+                <div class="popupErrbg">
+                        <p>成绩不太理想！</p>
+                </div>
+                <p><a class="goStudy" href="javascript:window.location.href='newClass.html?userId='+pageData.userId+'&score='+score;"></a></p>
+                <p><a class="rest" href="javascript:;"></a></p>
+            </div>
+	</body>
+</html>
+<script>
+    document.documentElement.style.fontSize = document.documentElement.clientWidth/3.75+'px'
+</script>
+<script type="text/javascript" src="./../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="./../js/zepto.min.js"></script>
+<script>
+        var firstFlag=false, secondFlag=false,thirdFlag=false,fourthFlag=false,fifthFlag=false;
+        $(".assignment").on("tap", function() {
+   
+            for(var i=0; i< $(".one").length; i++) {
+                if( !$(".one").eq(i).hasClass("hide")  ) {
+                    firstFlag=true;    
+                }
+            }
+
+            for(var i=0; i< $(".three").length; i++) {
+                if( !$(".three").eq(i).hasClass("hide")  ) {
+                    thirdFlag=true;
+                }
+            }
+
+            for(var i=0; i< $(".five").length; i++) {
+                if( !$(".five").eq(i).hasClass("hide")  ) {
+                    fifthFlag=true;
+                }
+            }
+            if( !$(".two").eq(0).hasClass("hide") ) {
+                secondFlag=true ;
+            }else{
+                secondFlag=false ;
+            }
+            if( !$(".four").eq(0).hasClass("hide") ) {
+                fourthFlag=true ;
+            }else{
+                fourthFlag=false; 
+            }
+            if(firstFlag && secondFlag && thirdFlag && fourthFlag && fifthFlag) {
+                $(".popupSuc").removeClass("hide");
+
+                $.ajax({ //完成新手课堂
+                    dataType:"json",
+                    type:"get",
+                    url:"/share/app/task/newhand/finishLesson.do?userId="+pageData.userId,
+                    success:function(data){
+                        if(data.message != "成功"){
+                            return;
+                        } 
+                    }
+                })
+
+            }else {
+                $(".popupErr").removeClass("hide");
+            }
+        })
+        $("input:checkbox").on("tap", function() {
+            if($(this).parent().find("i").hasClass("hide")){
+                $(this).parent().find("i").removeClass("hide")
+            }else {
+                $(this).parent().find("i").addClass("hide")
+            }  
+        })
+
+        $("input:radio").on("tap", function() {
+            if($(this).parent().find("i").hasClass("hide")){
+                $(this).parents(".common").find("i").addClass("hide");
+                $(this).parent().find("i").removeClass("hide");
+            }else {
+                $(this).parents(".common").find("i").addClass("hide");
+                $(this).parent().find("i").addClass("hide")
+            }  
+        })
+        function getQueryString(name) {
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            var r = window.location.search.substr(1).match(reg);
+            if(r != null) {
+                return decodeURI(r[2]);
+            }
+            return null;
+        };
+        var pageData = {
+            type: 5,
+            userId: getQueryString("userId")
+        }
+        var score = getQueryString("score");
+        $(".score").html(score)
+        function getEquipment(){
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if(isAndroid) return 'android'
+            else if(isiOS) return 'ios'
+        }
+
+        $(".lilq").on("tap", function() {   
+            
+            $.ajax({ //领积分
+                dataType:"json",
+                type:"get",
+                url:"/share/app/user/lable/getpoint.do",
+                data:pageData,
+                success:function(data){
+                    if(data.message != "成功"){
+                        return;
+                    }else {
+                        if(getEquipment() == "android") window.androidjs.goBack()
+                        else goBack()
+                    } 
+                }
+            })        
+                
+        })
+        
+        $(".rest").on("tap", function() {
+            if(getEquipment() == "android") window.androidjs.goBack()
+            else goBack()
+        })
+
+</script>
+
+

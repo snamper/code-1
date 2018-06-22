@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link rel="stylesheet" type="text/css" href="css/allshop.css"/>
+		<link rel="stylesheet" type="text/css" href="css/swipeslider.css"/>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+		<script src="./js/zepto.min.js"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>全部商品</title>
+		<style type="text/css">
+			html,body{background: #F1F1F1;overflow: hidden;height: 100%;}
+			.all_shop_main{overflow: hidden;}
+			.swiper-container{width: 100%;height: 100%;}
+			.second_nav_main {position: relative;}
+			.img_main{width: 100%; height: 2rem; background: url(img/loading.gif) 50% no-repeat; }
+			.swiper-slide{font-size: 0.12rem; text-align: center; 
+			  display: -webkit-box;
+		      display: -ms-flexbox;
+		      display: -webkit-flex;
+		      display: flex;
+		      -webkit-box-pack: center;
+		      -ms-flex-pack: center;
+		      -webkit-justify-content: center;
+		      justify-content: center;
+		      -webkit-box-align: center;
+		      -ms-flex-align: center;
+		      -webkit-align-items: center;
+		      align-items: center;}
+		      .shop_show{overflow: auto;}
+		      .shop_show .shop_scroll img{width: 90%;margin-left:5%; background: url(img/loading.gif) 50% no-repeat; }
+		      .shop_show .loading{width: 100%; height: 2.05rem; background: url(img/loading.gif) 50% no-repeat;font-size: 0; }
+		      .shop_scroll{display: none; margin-bottom: 0.5rem;}
+		      #wrapper {width:100%;height: 4rem;position:relative;}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<h3>全部商品</h3>
+			<div class="return">
+				<a href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="all_shop_main">
+			<ul class="left_nav">
+				<li data-id="0" class="active"><span>全部</span</li>
+				<li data-id="1"><span>娱乐影音</span></li>
+				<li data-id="2"><span>移动社交</span></li>
+				<li data-id="3"><span>票务出行</span></li>
+				<li data-id="4"><span>百货电商</span></li>
+				<li data-id="5"><span>城市服务</span></li>
+				<li data-id="6"><span>餐饮商超</span></li>
+				<li data-id="7"><span>智能生活</span></li>
+				<li data-id="8"><span>教育办公</span></li>
+			</ul>
+			<div class="right_main">
+				<div class="image">
+					<figure id="full_feature" class="swipslider" style="padding-top: 0">		
+						<ul class="sw-slides">
+							<li class="sw-slide carousel_first"><img src="img/allShop/banner/banner1.png"/></li>
+							<li class="sw-slide carousel_second"><img src="img/allShop/banner/banner1.png"/></li>
+						</ul>
+					</figure>
+				</div>
+				<div class="second_nav_main">
+					<div class="swiper-container">
+					    <div class="swiper-wrapper"></div>
+					</div>
+				</div>
+				<div class="shop_show">
+					<div class="loading"></div>
+					<div id="wrapper">
+					    <div class="shop_scroll"></div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script>
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 3.75 + 'px';
+	var loadIndex = 0
+	function addIndex(len,index){
+		loadIndex++;
+	    if( len == loadIndex ){
+    		$(".loading").hide();
+    		$(".shop_scroll").show();
+    		var myScroll = new IScroll('#wrapper',{
+    			bounce:false,
+				momentum:true,
+    		});
+		}
+	}
+</script>
+<script src="./js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/swipeslider.min.js"></script>
+<script src="js/data.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+	$(function(){
+		var bodyHight = $("body").height();
+		var hederHeight = $(".header").height()
+		var navHeight = $(".second_nav_main").height()
+		var bannerHeight = $(".image").height()
+		var scrollHight = bodyHight-hederHeight-navHeight-bannerHeight;
+		var scrollHightHigh = bodyHight-hederHeight-bannerHeight;
+		$('.shop_show').height(scrollHight);
+		var  nav_active_id = 0;
+		$(".left_nav").on('tap','li',function(){
+			
+			loadIndex = 0
+			$(".left_nav").find("li").removeClass("active");
+			$(this).addClass("active");
+			var dataId = $(this).attr('data-id');
+			$('.shop_show').scrollTop(0)
+			navList(dataId);
+			$(".carousel_first").find("img").attr("src",nav[dataId].carousel[0]);
+			$(".carousel_second").find("img").attr("src",nav[dataId].carousel[1]);
+			shopList(dataId,0)
+		})
+
+		$(".swiper-wrapper").on('click','.swiper-slide',function(){
+			loadIndex = 0
+			$(".swiper-wrapper").find(".swiper-slide").removeClass("second_active")
+			$(this).addClass("second_active");
+			var img_top = $(this).attr("data-top");
+			var img_main = $(this).attr("data-main");
+			$('.shop_show').scrollTop(0)
+			shopList(img_top,img_main)
+		})
+		
+		function navList(data){
+			var offset = $(".second_nav_main").offset()
+			var str="";
+			var num = data ? data : 0;
+			if(num == 0) {
+				$(".second_nav_main").hide();
+				$('.shop_show').height(scrollHightHigh);
+				$("#wrapper").height(scrollHightHigh)
+
+			}else{
+				$(".second_nav_main").show();
+				$('.shop_show').height(scrollHight);
+				$("#wrapper").height(scrollHight)
+				
+			}
+			$(".img_top").attr("src",nav[num]["nav"][0].img_top);
+			$(".img_bottom").attr("src",nav[num]["nav"][0].img_main);
+			for(var i=0; i<nav[num]["nav"].length; i++){
+				if(i == 0) {
+					str+="<div  class='swiper-slide second_active button li_first' data-top="+ num +" data-main="+ i +">"+ nav[num]["nav"][i].name +"</div>";
+				}else{
+					str+="<div class='swiper-slide button' data-top="+ num +" data-main="+ i +">"+ nav[num]["nav"][i].name +"</div>";
+				}
+			};
+			$(".swiper-wrapper").empty().html(str)
+			$(".swiper-wrapper").css("transform","translate3d(0px, 0px, 0px)")
+			if( nav[num]["nav"].length > 4 ) {
+				var swiper = new Swiper('.swiper-container', {
+			      slidesPerView: 'auto',
+			      spaceBetween: 0,
+			      freeMode: true,
+			      swiperSlide : 'stop-swiping',
+			      pagination: {
+			        el: '.swiper-pagination',
+//			        clickable: true,
+			      },
+			   });
+			   $(".swiper-container").removeClass("swiper-no-swiping")
+			}else{
+				var swiper = new Swiper('.swiper-container', {
+			      slidesPerView: 'auto',
+			      spaceBetween: 0,
+			      freeMode: true,
+			      allowTouchMove:false,
+			      swiperSlide : 'stop-swiping',
+			      pagination: {
+			        el: '.swiper-pagination',
+//			        clickable: true,
+			      },
+			  });
+			   $(".swiper-container").addClass("swiper-no-swiping")
+			}
+		}
+		navList();
+		carouselInit()
+		function carouselInit(){ // 初始化轮播
+			$('#full_feature').swipeslider();
+		    $('#content_slider').swipeslider({
+		        observer: true,
+		        observeParents: true,
+		        transitionDuration: 1000,
+		        autoSwipe: true,
+		        speed: 1000,
+		        transitionType: "linear",
+		        sliderHeight: '300px',
+		        lazyLoad: true,
+		        continuousScroll: true,
+		    });
+		    $("#full_feature").css('padding-top',0)	
+		}
+		
+		function shopList(first,second){
+			$(".loading").show();
+	    	$(".shop_scroll").hide();
+			var html="";
+			var dataList = nav[first].nav[second].img;
+			var flag = true;
+			if(dataList.length%2 == 0 ){
+				flag = true;
+			}else{
+				flag = false;
+			}
+			for(var i=0; i<dataList.length; i++){
+				if( flag ){
+					html+="<img class='img_main' src='"+ dataList[i] +"' onload='addIndex("+ dataList.length +","+i+")'/>";	
+				}else{
+					if(dataList.length < 2){
+						html+="<img class='img_main' src='"+ dataList[i] +"' onload='addIndex("+ dataList.length +","+i+")' />";	
+					}else{
+						if(i == dataList.length-1){
+							html+="<img class='img_main img_spec' src='"+ dataList[i] +"' onload='addIndex("+ dataList.length +","+i+")'/>";	
+						}else{
+							html+="<img class='img_main' src='"+ dataList[i] +"' onload='addIndex("+ dataList.length +","+i+")'/>";	
+						}
+					}
+					
+				}
+					
+			};
+			$(".shop_scroll").empty().html(html)
+			
+			if(first == "1" && second == "3"){
+				$(".img_main").eq(1).addClass("img_spec")
+			}
+			if(first == "3" && second == "1"){
+//				$(".img_main").eq(3).addClass("img_spec")
+			}
+			if(first == "5" && second < 6){
+				$(".img_main").eq(1).addClass("img_spec")
+			}
+			if(first == "6" && second == 1){
+				$(".img_main").eq(1).addClass("img_spec")
+			}
+			if(first == "6" && second == 0){
+				$(".img_main").eq(1).addClass("img_spec")
+				$(".img_main").eq(6).removeClass("img_spec")
+			}
+			if(first == "5" && second == 0){
+				$(".img_main").removeClass("img_spec");
+				$(".img_main").eq(1).addClass("img_spec");
+				$(".img_main").eq(3).addClass("img_spec");
+				$(".img_main").eq(5).addClass("img_spec");
+				$(".img_main").eq(7).addClass("img_spec");
+			}
+			if(first == "7" && second > 2){
+				$(".img_main").eq(0).addClass("img_spec");
+			}
+			if(first == "7" && second == 1){
+				$(".img_main").eq(1).addClass("img_spec");
+			}
+			if(first == "7" && second == 0){
+				$(".img_main").addClass("img_spec");
+				$(".img_main").eq(0).removeClass("img_spec");
+				$(".img_main").eq(2).removeClass("img_spec");
+			}
+			if(first == "8" && second == 1){
+				$(".img_main").eq(1).addClass("img_spec");
+			}
+			if(first == "8" && second == 0){
+				$(".img_main").removeClass("img_spec");
+				$(".img_main").eq(1).addClass("img_spec");
+			}
+//			myScroll.refresh()
+		}
+		shopList(0,0)
+		
+		$(".return").on("tap","a",function(){
+			history.back()
+		})
+		
+	})
+
+
+</script>

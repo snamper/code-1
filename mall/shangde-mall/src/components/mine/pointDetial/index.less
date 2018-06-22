@@ -1,0 +1,286 @@
+.order_content{	
+  width: 100%;
+  overflow: hidden;
+  .fl{
+    float: left;
+  }
+  .fr{
+    float: right;
+  }
+  .no_data_info{
+    width: 6.4rem;
+    height: 0.6rem;
+    font-size: 0.2rem;
+    line-height: 0.4rem;
+    padding: 0.05rem 0;
+    color: #ccc;
+    background: #f8f8f8;
+  }
+  .loading{
+    font-size: 0.17rem;
+    .loading_main{
+      width: 70px;
+      margin: 0 auto;
+      span{
+        float: right;
+        line-height: 20px;
+        color: #999;
+      }
+    }
+    .van-loading{
+      width: 20px;
+      height: 20px;
+      float: left;
+    }
+  }
+  .order_nav{
+    width: 100%;
+    height: 1.7rem;
+    position: fixed;
+    left: 0;
+    top: 0.748rem;
+    // background: url("./../../../../src/assets/test.png") no-repeat left top;
+    // background-size: 100% 100%;
+    z-index: 100;
+    font-size: 0.24rem;
+    color: #fff;
+    .posBg{
+      width: 100%;
+      height: 1.7rem;
+      position: relative;
+      img{
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .pointTypeBox{
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      padding-top: 0.4rem;
+      li{
+        float: left;
+      }
+      .pointType{
+        width: 33%;
+        span{
+          display: block;
+          text-align: center;
+        }
+        span:nth-of-type(1){
+          font-size: 0.32rem;
+          font-weight: bold;
+          margin-bottom: 0.28rem;
+        }
+      }
+      .pointLine{
+        width: 1px;
+        height: 0.78rem;
+        background: #fff;
+      }
+    } 
+  }
+  .selectBox{
+    width: 100%;
+    height: 0.78rem;
+    position: fixed;
+    left: 0;
+    top: 2.448rem;
+    z-index: 100;
+    font-size: 0.22rem;
+    padding-top: 0.12rem;
+    border-bottom: 1px solid #d3d3d3;
+    background: #fff;
+    .dealIcon{
+      display: inline-block;
+      width: 0.28rem;
+      height: 0.14rem;
+      background: url(./../../../../src/assets/pullDownIcon.png) no-repeat left top;
+      background-size: 100% 100%;
+      margin: 0.02rem 0 0 0.18rem;
+      vertical-align: text-top;
+    }
+    .deal{
+      width: 49%;
+      height: 0.56rem;
+      line-height: 0.56rem;
+      text-align: center;
+      position: relative;
+    }
+    .dealLine{
+      width: 1px;
+      height: 0.52rem;
+      background: #d3d3d3;
+    }
+    .pullDownBox{
+      width: 1.75rem;
+      background: #000;
+      position: absolute;
+      left: 0.82rem;
+      top: 0.74rem;
+      color: #fff;
+      .pullLisBox{
+        position: relative;
+        padding: 0.05rem 0.18rem;
+        .pullLisIcon{
+          width: 100%;
+          height: 0.28rem;
+          text-align: center;
+          position: absolute;
+          left: 0;
+          top: -0.2rem;
+          padding-left: 0.635rem;
+          i{
+            width: 0.48rem;
+            height: 0.24rem;
+            background: url(./../../../assets/downArrow.png) no-repeat left top;
+            background-size: 100% 100%;
+            display: block;
+            font-style: normal;
+          }
+        }
+        .pullLis{
+          border-bottom: 1px solid #fff;
+        }
+        .pullLis:last-child{
+          border: 0;
+        }
+      }
+    }
+  }
+  .order_list{
+    margin-top:  3.2rem;
+    width: 100%;
+    height: auto;
+    // background: #f0f0f0;
+    .van-card:not(:first-child) {
+      margin-top: 0;
+    }
+    .van-card{
+      height: 1.36rem;
+      padding: 0.17rem 0.221rem 0.22rem 0.255rem;
+      background: #f8f8f8;
+      .van-card__thumb{
+        width: 0.935rem;
+        height: 0.935rem;
+        left: 0.255rem;
+        top: 0.17rem;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      div{
+        width: 4.76rem;
+        left: 1.4rem;
+        top: 0.425rem;
+        bottom: 0;
+        text-align: left;
+      }
+    }
+    .order_title{
+      width: 100%;
+      height: 0.646rem;
+      background: #fff;
+      font-size: 0.204rem;
+      .title{
+        float: left;
+        height: 0.238rem;
+        font-size: 0.204rem;
+        margin:0.17rem 0 0 0.225rem;
+        color: #0e0e0f;
+      }
+      .state{
+        float: right;
+        height: 0.238rem;
+        font-size: 0.204rem;
+        margin:0.17rem 0.221rem 0 0;
+        color: #0e0e0f;
+      }
+      .abnormal{
+        color: #f66e6e;
+      }
+    }
+    .order_money{
+      height: 0.612rem;
+      padding-right: 0.221rem;
+      line-height: 0.612rem;
+      text-align: right;
+      font-size: 0.204rem;
+      border-bottom: 1px solid #e3e5e9;
+      background: #fff;
+    }
+    .order_button{
+      width: 100%;
+      height: 0.62rem;
+      font-size: 0.17rem;
+      background: #fff;
+      span{
+        float: right;
+        width: 1.1rem;
+        height: 0.36rem;
+        padding: 0.1rem 0 0.08rem;
+        line-height: 0.18rem;
+        border-radius: 0.16rem;
+        background: red;
+        border: 1px solid #f66e6e;
+        margin: 0.13rem 0.24rem 0 0;
+      }
+      .payment{
+        background: #f66e6e;
+        color: #fff;
+      }
+      .cancel_order{
+        background: #fff;
+        color: #f66e6e;
+      }
+    }
+    .margin_bottom{
+      width: 100%;
+      height: 0.12rem;
+      background: #f8f8f8;
+    }
+  }
+  .order_empty{
+    .noDatas{
+      font-size: 0.2rem;
+      color: #ccc;
+      text-align: center;
+      line-height: 1rem;
+    }
+  }
+  .order_list_main{
+    padding: 0.05rem 0.22rem;
+    li{
+      height: 0.84rem;
+      font-size: 0.24rem;
+      border-bottom: 1px solid #efeeee;
+      .approachText{
+        display: inline-block;
+        text-align: left;
+        line-height: 0.84rem;
+      }
+      .approachBox{
+        display: inline-block;
+        span{
+          display: block;
+        }
+        .pointNum{
+          color: red;
+          text-align: right;
+          font-size: 0.2rem;
+          margin-top: 0.24rem;
+        }
+        .getTime{
+          color: #b1b1b1;
+          font-size: 0.16rem;
+        }
+      }
+    }
+  }
+}
+

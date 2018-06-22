@@ -1,0 +1,229 @@
+<!DOCtype html>
+<html>
+     <head>
+	     <meta charset="utf-8"/>
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		 <title>登录</title>
+		 <link rel="stylesheet" href="css/common.css" />
+		 <link rel="stylesheet" type="text/css" href="css/layout.css"/>
+		 <link rel="stylesheet" href="css/login.css" />
+		 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		 <script src="http://castatic.fengkongcloud.com/pr/v1/smcp.min.js" type="text/javascript" charset="utf-8"></script>
+	 </head>
+     <body>
+     	<div class="codeImg_cover codeImg" style="display: none;">
+     	</div>
+     	<div class="codeImg_container codeImg" style="display: none;">
+ 			<div id="imgCode">
+ 			</div>
+ 		</div>
+ 		<input type="text" value="" id="test" hidden="hidden" placeholder="test"/>
+	    <div class="login_container">
+	    	<div class="phoneInput">
+	    		<img src="images/phone.png"/>
+		 		<input type="tel"  maxlength='11' name="tel" placeholder="请输入手机号" value="" />
+		 	</div>
+			 <div class="codeInput">	
+			 	<img src="images/code.png"/>
+			 	<input type="number" maxlength='8' name="code"  placeholder="请输入短信验证码" />
+			 	<button class="getCode" disabled="disabled">获取验证码</button>
+			 </div>
+			 <div class="register_tips">
+			 	<span class="register_code_tips" ></span>
+			 	<span class="register_phone_tips" ></span>
+			 	<span class="register_imgCode_tips" ></span>
+			 </div>
+			<button class="toLogin" disabled="disabled">登录</button>
+	    </div> 
+	    <div class="login_back">
+	    	<a href='/sharing/#/register?shareOwner=24'><img src="images/login_back.jpg"/></a>
+	    </div>
+		 <script type="text/javascript">
+		 	var oHeight = $(document).height(); //浏览器当前的高度
+		 	var imgHeight = $(".login_back").height();
+		 	$(window).resize(function(){
+		        if(Number($(document).height()) < oHeight-150){
+			        $(".login_back").css("bottom","-" + imgHeight + "px")
+			    }else{
+			        $(".login_back").css("bottom","0");
+			    }
+		   });
+		 	var param = "";
+		 	window.onload = function() {
+		 		param = "${param}"
+		 		$("#test").val(param);
+		 	}
+		 	 //截取url字符串
+             var codeFlag = false,
+             	 phoneFlag = false,
+             	 imgCodeFlag = false,
+             	 ifSendCode = false,
+                 ifshowCode = true,
+                 rid = "",
+				 spreadId = "24";
+			var getCodeImg = function(){	 
+		 		initSMCaptcha({
+					organization:"UPLdPizkPMmRZklBqqit",
+					appId:"tyhd",
+					appendTo:"imgCode",
+					onError:function(errType, errMsg) {
+					 	console.log(errType,errMsg);
+					}
+				},function(SMCaptcha){
+					
+					SMCaptcha.onSuccess(function(data){
+						if(data.pass){
+							$(".SMCaptcha-img-wrapper").hide();
+							rid = data.rid;
+							$(".register_imgCode_tips").hide();
+							$(".codeImg").hide()
+							getSysCode()	
+						}else if(!data.pass){
+							$(".register_imgCode_tips").text("图形验证码验证错误").show().siblings().hide();
+						}
+					}); 
+					SMCaptcha.onError(function (errType,errMsg) {
+						console.log('onError , errType, errMsg');
+					 });
+				})
+			}
+			
+		     function getQueryString(name) {
+                 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+                 var r = window.location.search.substr(1).match(reg);
+                 if (r != null) {
+                     return unescape(r[2]);
+                 }
+                 return null;
+             };
+             
+             $('body').on('click',function (e){
+				var $e = window.event || e; // 兼容IE7
+				var $obj = $($e.srcElement || $e.target);
+				if(e.target.className.indexOf("codeImg_container") < 0 && e.target.className.indexOf("getCode") < 0){
+					$('.codeImg').hide();
+				}
+			});
+            
+		     $(".phoneInput > input").bind("input propertychange", function(){
+				$(".register_phone_tips").hide()
+				$(".register_code_tips").hide()
+				if($(this).val().length == '11'){
+					if($(".getCode").text() == '获取验证码')
+						$(".getCode").removeAttr("disabled").addClass("btn_allow")
+					ifToRegister()
+				}else{
+					$(".getCode").attr("disabled","disabled").removeClass("btn_allow");
+					$(".toLogin").attr("disabled","disabled").removeClass("btn_allow");
+				}
+			})
+			$(".codeInput > input").bind("input propertychange", function(){
+				$(".register_phone_tips").hide()
+				$(".register_code_tips").hide()
+				if($(this).val().length >= '4' && $(this).val().length <= '8'){
+					ifToRegister()
+				}else{
+					$(".toLogin").attr("disabled","disabled").removeClass("btn_allow");
+				}
+			})
+			 //手机号及验证码格式校验
+			 function phoneCheck(type){
+			     var regExp = /^1(3|4|5|7|8|6|9)\d{9}$/;
+			     if(!$(".phoneInput>input").val()){
+				    $(".register_phone_tips").text("请输入手机号！").show().siblings().hide();
+					return false;
+				 }else{
+				    if(!regExp.test($(".phoneInput>input").val())){
+				        $(".register_phone_tips").text("请输入正确的手机号！").show().siblings().hide();
+					    return false;
+				    }
+					return true;
+				 }   
+			 };
+			 var confirmPhone = ""
+			 //是否可以达到注册要求
+			 function ifToRegister(){
+			 	if(rid && $(".phoneInput > input").val() == confirmPhone && $(".codeInput > input").val().length >= 4 && $(".codeInput > input").val().length < 8){
+			 		$(".toLogin").addClass("btn_allow").removeAttr("disabled");
+			 	} else{
+			 		$(".toLogin").removeClass("btn_allow").attr("disabled","true");
+			 	}
+			 }
+			 //获取验证码
+			 $(".getCode").click(function(){
+			 	$(".codeImg").show()
+                getCodeImg()	                   				 
+			 });
+			 var getSysCode = function(){
+			 	 $.ajax({
+				    dataType:"json",
+					type:"get",
+					url:"/tyuehd/user/phonecode.do",
+					data:{phoenNum:$(".phoneInput>input").val()},
+					success:function(data){
+					 	//验证码正确
+						if(data.message == "成功"){
+							confirmPhone = $(".phoneInput>input").val();
+						 	minTime();
+						 	$(".getCode").attr("disabled","disabled").removeClass("btn_allow");
+						 	ifToRegister()
+						}else if(data.message){
+						 	$(".register_code_tips").text(data.message).show().siblings().hide();
+						}else{
+							//此手机号已经被注册
+						 	$(".register_code_tips").text("本活动仅限新用户领取！").show().siblings().hide();
+						}
+					}
+				});	
+			 }
+			//验证码按钮切换
+			function indexNum(){			         
+			     $(".getCode").text(t+"S");
+				 t--;		
+                 if(t<0){					    					
+				     index = window.clearInterval(index);	
+                     $(".getCode").removeAttr("disabled").addClass("btn_allow").text("获取验证码");   
+				 }					 
+			 };
+			 //1分钟计时器
+			 var t,index;
+			 function minTime(){	
+                 t = 59;		     
+				 index = setInterval("indexNum()",1000)				 			    
+			 }
+			 
+			 //注册
+			 $(".toLogin").click(function(){
+			     toLogin(); 
+			 });
+			 function toLogin(){
+			 	var data = {
+			 		spreadId:spreadId,
+                	telNum:$(".phoneInput>input").val(),
+                	vildCode:$(".codeInput>input").val(),
+					rid:rid
+			 	}
+			    //校验验证码;
+			    $.ajax({
+				    dataType:"json",
+		            type:"post",
+		            url:"/share/tyhd/jd/sw/gant/user/login.do",
+	                data:data,
+	                success:function(json){	
+	                	console.log(json)
+				     	if(json.message == "成功"){
+				     		//验证码通过
+						 	//页面跳转
+							window.location.href = json.data.redirectUrl;
+							 					 
+						}else{
+							if(json.message) $(".register_phone_tips").text(json.message).show().siblings().hide(); 
+							else $(".register_phone_tips").text("登录失败！").show().siblings().hide(); 
+						}
+					}
+				});
+			 };
+			
+		 </script>
+	 </body>
+</html>

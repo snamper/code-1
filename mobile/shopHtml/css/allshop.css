@@ -1,0 +1,38 @@
+body{background: #FFFFFF; font-family: "微软雅黑";}
+.header{width: 100%;height: 0.55rem; background: #FFFFFF; position: relative;border-bottom: 1px solid #EFEFEF;}
+.header h3{width: 100%;font-size: 0.15rem;line-height: 0.55rem; text-align: center;color: #5C5C5C;}
+.header .return {width: 0.16rem;height: 0.16rem;position: absolute; left:0.15rem;top:0.2rem;  background: url(../img/back.png) 50% no-repeat;}
+.header .return a{display: inline-block; width: 100%; height: 100%;line-height: 0.55rem;vertical-align: top;}
+/*商城-全部*/
+#full_feature .sw-bullet{left:43%;bottom:0.05rem;}
+#full_feature .sw-bullet li{width: 0.1rem;height: 0.1rem;}
+.all_shop_main{width:100%;height: auto;}
+.left_nav {width:24%; height: auto; float: left;background: #EFEFEF;}
+.left_nav li{width: 100%;height: 0.5rem;line-height: 0.5rem;text-align: center;font-size: 0.12rem;color: #5C5C5C;}
+.left_nav li span{display: inline-block;width: 100%; height: 0.20rem; vertical-align: middle; line-height: 0.20rem;}
+.right_main {width: 76%;float: left; height: auto; font-size: 0;background: #FFFFFF;}
+.right_main .image{width: 95.6%; height: 1.0rem; font-size: 0;margin: 0.05rem auto;}
+.right_main .image img{width: 100%; height: 100%;}
+.second_nav_main{width: 100%;height: 0.5rem;overflow: hidden;border-bottom: 1px solid #EFEFEF;border-top: 1px solid #EFEFEF;}
+.second_nav_main .swiper-slide {width:auto;font-size: 0.12rem; padding: 0 0.1rem; color: #5C5C5C;}
+.li_first{margin-left: 0.1rem;}
+.right_main .second_nav {background: #F7F7F7;height: 100%;}
+.right_main .second_nav li{cursor:pointer;float:left;height:0.4rem;font-size: 0.14rem; padding: 0 0.1rem;line-height: 0.4rem;text-align: center;}
+.right_main .img_main{width: 2.65rem; height:2.06rem;}
+.right_main .shop_scroll {margin-bottom: 0.1rem;}
+.right_main .shop_scroll .img_spec{height: 1.03rem;}
+.shop_show {width: 100%;}
+.left_nav .active{background: #FFFFFF;color:#292929;font-size: 0.15rem;}
+.left_nav .active span{border-left: 2px solid #F66E6E;}
+.clear{clear: both;}
+.right_main  .second_nav_main .second_active{border-bottom: 2px solid #F66E6E; color:#F66E6E;}
+.right_main .shop_scroll img:last-child{margin-bottom: 0.2rem;}
+
+/*活动*/
+/*.active_main {background: #EFEFEF;}*/
+.active_main_banner{width: 100%; height: 1.35rem; font-size: 0;}
+.active_main_start {width: 100%;height: 0.505rem; margin-top: 0.15rem; font-size: 0;}
+.active_main_shop {width: 100%;height: 1.34rem; margin-bottom: 0.15rem; font-size: 0;}
+.active_main_bottom{width: 100%;height: 1.125rem; font-size: 0;}
+.active_main img{width: 100%;height: 100%;}
+/*商品组合*/

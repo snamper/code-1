@@ -1,0 +1,429 @@
+<!DOCtype html>
+<html>
+     <head>
+	     <meta charset="utf-8"/>
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		 <title>注册</title>
+		 <link rel="stylesheet" href="css/layout.css" />
+		 <link rel="stylesheet" href="css/main.css" />
+		 <link rel="stylesheet" href="css/register.css" />
+		 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	 </head>
+     <body>
+	     <div class="register">
+	     	<div class="register_top"></div>
+	     	<div class="register_center">
+	     		<div class="center_top">
+	     			<ul>
+	     				<li>注册即得100积分(1元)</li>
+	     				<li>邀请好友注册悦多多<p>共享400积分(4元)</p></li>
+	     			</ul>
+	     			<div class="center_top_message">
+	     				<img src="images/register1/message.png" alt="" />
+	     			</div>
+	     		</div>
+	     		<div class="register_title">
+		     		<img src="images/register1/title.png" alt="" />
+		     	</div>
+		     	<div class="center_bottom">
+		     		<ul>
+		     			<li><img src="images/register1/goods1.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods2.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods3.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods4.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods5.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods6.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods7.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods8.png"" alt="" /></li>
+		     			<li><img src="images/register1/goods9.png"" alt="" /></li>
+		     		</ul>
+		     	</div>
+	     	</div>
+	     	<div class="register_area">
+	     		<div class="phoneInput">
+			 		<input type="tel"  maxlength='11' name="tel" placeholder="请输入手机号" value="" />
+			 	</div>
+			 	<div class="ImgInput">
+			 		<input type="test" maxlength='4' class="imgCode" placeholder="请输入图形验证码" value="" />
+			 		<span>
+			 			<!--<img onclick="this.src='/share/app/login/ValidateCodeServlet.do'+Date.parse(new Date());" src="/share/app/login/ValidateCodeServlet.do"/>-->
+			 			<img style="display: none;" onclick="changeImgCode()" src="" alt="" />
+			 		</span>
+			 		
+			 	</div>
+				 <div class="codeInput">	
+				 	<input type="number" maxlength='6' name="code"  placeholder="请输入短信验证码" />
+				 	<button class="getCode" disabled="disabled">获取验证码</button>
+				 </div>
+				 <div class="register_tips">
+				 	<span class="register_code_tips" ></span>
+				 	<span class="register_phone_tips" ></span>
+				 	<span class="register_imgCode_tips" ></span>
+				 </div>
+				 <button class="toRegister" disabled="disabled">验证下载马上领取</button>
+				 <div class="register_message">
+				 	积分好礼多多，立注册邀请好友领取奖励
+				 </div>
+	     	</div>
+	     	
+	     </div>
+	     
+		 <script type="text/javascript">
+		     function getQueryString(name) {
+                 var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+                 var r = window.location.search.substr(1).match(reg);
+                 if (r != null) {
+                     return unescape(r[2]);
+                 }
+                 return null;
+             };
+             
+             //截取url字符串
+             var shareOwner = getQueryString("shareOwner"),
+             	sessionId = "",
+             	 codeFlag = false,
+             	 phoneFlag = false,
+             	 imgCodeFlag = false,
+             	 ifSendCode = false,
+                 spreadType = "",	
+                 spreadChannel = getQueryString("spreadChannel"),
+				 spreadId = getQueryString("spreadId"),
+				 productId = getQueryString("productId"), //增加商品Id
+				 spreadType = getQueryString("spreadType"),
+				 shareSign = getQueryString("shareSign");
+				//  console.log(getQueryString("productId"))
+		     //手机号及验证码格式校验
+			 function phoneCheck(type){
+			     var regExp = /^1(3|4|5|7|8)\d{9}$/;
+				 if(type=="code"){  //验证码
+				     if(!$(".codeInput>input").val()){
+				     	$(".register_code_tips").text(" 请输入短信验证码！").show().siblings().hide();
+					     codeFlag = false;
+					     ifToRegister()
+						 return false;
+					 }else{
+					     if(!(/^\d{6}$/).test($(".codeInput>input").val())){
+						     if(phoneFlag) $(".register_code_tips").text("请输入正确的短信验证码!").show().siblings().hide();
+						     codeFlag = false;
+						     ifToRegister()
+						     return false;
+						 }else{				
+						 	codeFlag = true;
+					 		$(".register_code_tips").hide();
+					     	ifToRegister()
+                             return true;							 							 
+						 }					     					     
+					 }
+				 }else{//手机号
+				     if(!$(".phoneInput>input").val()){
+					     $(".register_phone_tips").text("请输入手机号！").show().siblings().hide();
+					     phoneFlag = false;
+					     ifToRegister()
+						 return false;
+					 }else{
+					     if(!regExp.test($(".phoneInput>input").val())){
+					         $(".register_phone_tips").text("请输入正确的手机号！").show().siblings().hide();
+					         phoneFlag = false;
+					         ifToRegister()
+						     return false;
+					     }else{
+					     	phoneFlag = true;
+					     	if(codeFlag){
+					     		$(".register_phone_tips").hide();
+						     	ifToRegister()
+					     	}
+							 return true;
+						 }
+					 }
+				     
+				 }
+			 };
+			 $(".imgCode").keyup(function(){	//当输入了11位数字时自动校验
+		     	if($(".imgCode").val().length >= 4) 	
+		     		checkImgCode()
+			 	else{
+			 		$(".register_phone_tips").hide()
+			 		$(".toRegister").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			 		$(".getCode").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			 	}
+			});
+			 //校验图形验证码
+			 function checkImgCode(){
+			 	$.ajax({
+				    dataType:"json",
+					type:"post",
+					url:"/share/app/code/confirm.do",
+					data:{
+						code:$(".imgCode").val(),
+						id:sessionId
+					},
+					success:function(data){
+					 	//验证码正确
+						if(data.message == "成功"){
+						 	imgCodeFlag = true;
+						 	$(".register_imgCode_tips").hide();
+						 	ifToRegister()
+						 	if(ifSendCode) codeBtnStateOn()
+						 	else codeBtnStateOff()
+						}else{
+							imgCodeFlag = false;
+							$(".register_imgCode_tips").text("图形验证码输入错误").show().siblings().hide();
+							codeBtnStateOff()
+						}
+					}
+				});		      
+			 }
+			 function dataURLtoBlob(dataurl) {
+				var arr = dataurl.split(','),
+					mime = arr[0].match(/:(.*?);/)[1],
+					bstr = atob(arr[1]),
+					n = bstr.length,
+					u8arr = new Uint8Array(n);
+				while(n--) {
+					u8arr[n] = bstr.charCodeAt(n);
+				}
+				return new Blob([u8arr], {
+				type: mime
+				});
+			}
+			 function changeImgCode(){
+			 	$.ajax({
+					type:"get",
+					url:"/share/app/login/ValidateCodeServlet.do",
+					async: false,
+					success:function(data){
+						var realData = "data:image/jpeg;base64,"+data.data.image;
+						var url = URL.createObjectURL(dataURLtoBlob(realData));
+						$(".ImgInput img").show().attr('src',url)
+						sessionId = data.data.id;
+					}
+				});	
+			 }
+			 changeImgCode();   
+			 //是否可以达到注册要求
+			 function ifToRegister(){
+			 	if(codeFlag && phoneFlag && imgCodeFlag){
+			 		$(".toRegister").css({"backgroundColor":"#ffd83b","color":"#b32524"}).removeAttr("disabled");
+			 	} else{
+			 		$(".toRegister").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			 	}
+			 }
+			 $(".phoneInput>input").keyup(function(){	//当输入了11位数字时自动校验
+		     	if($(".phoneInput>input").val().length >= 11) 
+			 		verifyPhone();
+			 	else{
+			 		$(".register_phone_tips").hide()
+			 		$(".toRegister").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			 		$(".getCode").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			 	}
+			 		
+			});
+			 //获取验证码
+			 $(".getCode").click(function(){
+			 	codeBtnStateOff();//按钮禁用
+                $.ajax({
+				    dataType:"json",
+					type:"get",
+					url:"/tyuehd/user/phonecode.do",
+					data:{phoenNum:$(".phoneInput>input").val()},
+					success:function(data){
+					 	//验证码正确
+						if(data.message == "成功"){
+						 	minTime();
+						}else if(data.message){
+							ifToRegister()
+						 	$(".register_code_tips").text(data.message).show().siblings().hide();
+						}else{
+							//此手机号已经被注册
+							ifToRegister()
+						 	$(".register_code_tips").text("本活动仅限新用户领取！").show().siblings().hide();
+						}
+					}
+				});		                   				 
+			 });
+			//验证码输入框change
+			$(".codeInput>input").keyup(function(){
+				var iVal = $(".codeInput>input").val();
+			    if(iVal.length == 6){
+			     	if(phoneCheck("code")){
+			     		codeFlag = true;
+			     		$(".register_code_tips").hide();
+					    ifToRegister();
+					}else{
+						if(phoneFlag) $(".register_code_tips").text(" 请输入短信验证码！").show().siblings().hide();
+					     codeFlag = false;
+					};
+			    }
+			    else{
+			    	$(".toRegister").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"}).attr("disabled","true");
+			     	return false;
+			    }
+			});
+			 
+			//验证码按钮切换
+			function indexNum(){			         
+			     $(".getCode").text(t+"S");
+				 t--;		
+                 if(t<0){					    					
+				     index = window.clearInterval(index);	
+                     $(".getCode").css({"backgroundColor":"#ffd83b","color":"#b32524"}).removeAttr("disabled").text("发送验证码");   					                            						 
+				 }					 
+			 };
+			 //1分钟计时器
+			 var t,index;
+			 function minTime(){	
+                 t = 60;		     
+				 index = setInterval("indexNum()",1000)				 			    
+			 }
+			 
+			 //注册
+			 $(".toRegister").click(function(){
+			     toRegister(); 
+			 });
+			 function toRegister(){
+			 	var data = {
+			 		spreadId:spreadId,
+                	spreadChannel:spreadChannel,
+                	spreadType:spreadType,
+                	shareOwner:shareOwner,
+                	telNum:$(".phoneInput>input").val(),
+                	vildCode:$(".codeInput>input").val(),
+					type:"2",
+					productId: productId,
+					shareSign: shareSign
+			 	}
+			 	console.log(data);
+			    //校验验证码;
+			    $.ajax({
+				    dataType:"json",
+		            type:"get",
+		            url:"/share/user/h5/register.do",
+	                data:data,
+	                success:function(json){	
+	                	console.log(json)
+				     	if(json.message == "成功"){
+				     		//验证码通过
+						 	//页面跳转
+						 	var point = ""
+							 if(json.data && json.data.point) point = json.data.point;
+							 if( productId ) {
+								window.location.href = 'shareRegisterSucc.html?&type=2&shareOwner='+shareOwner+"&point="+point+"&productId="+productId+"&shareSign="+shareSign; //修改
+							 } else{
+								window.location.href = 'shareRegisterSucc.html?&type=2&shareOwner='+shareOwner+"&point="+point; 
+							 }
+						 	$(".register_phone_tips").hide();							 
+						}else{
+							if(json.message) $(".register_phone_tips").text(json.message).show().siblings().hide(); 
+							else $(".register_phone_tips").text("注册失败！").show().siblings().hide(); 
+						    
+						}
+					}
+				});
+			 };
+			 
+			 //按钮状态集合
+			 function codeBtnStateOn() {//发送验证码按钮显示
+			 	$(".getCode").css({"backgroundColor":"#ffd83b","color":"#b32524"});
+				$(".getCode").removeAttr("disabled");
+			 };
+			 function codeBtnStateOff() {//发送验证码按钮禁用
+			 	$(".getCode").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"});   
+	 			$(".getCode").attr("disabled","true");
+			 };
+			 function registerBtnStateOn() {//注册按钮显示
+			 	$(".toRegister").css({"backgroundColor":"#ffd83b","color":"#b32524"});   
+				$(".toRegister").removeAttr("disabled");
+			 };
+			 function registerBtnStateOff() {//注册按钮禁用
+			 	$(".toRegister").css({"backgroundColor":"rgb(231,231,231)","color":"rgb(180,180,180)"});   
+				$(".toRegister").attr("disabled","true");
+			 };
+			 
+			 //验证手机并发送验证码
+			 function verifyPhone(){
+			 	if(phoneCheck("phone")){
+					//验证手机号是否存在
+					$.ajax({
+					    dataType:"json",
+						type:"get",
+						url:"/share/user/h5/register.do",
+						data:{telNum:$(".phoneInput>input").val(),type:"1"},
+						success:function(data){
+							//console.log(data)
+						 	//此手机号可以注册
+						 	$(".register_phone_tips").text(data.message).hide();
+						 	if($(".getCode").text() == '获取验证码' && imgCodeFlag){
+						 		codeBtnStateOn();//按钮可用
+						 	}else{
+						 		codeBtnStateOff();//按钮禁用
+						 	}
+						 	if(data.message == "成功"){
+						 		ifSendCode = true;
+						 	}else{
+								phoneFlag = false;
+								ifSendCode = false;
+					     		ifToRegister()
+							 	//此手机号已经被注册
+								codeBtnStateOff();//按钮禁用
+								
+							 	$(".register_phone_tips").text(data.message).show().siblings().hide();
+							}
+						}
+					});
+				 }else{
+				    codeBtnStateOff();//按钮禁用
+				 };
+			 };
+			 
+			 var u = navigator.userAgent;
+             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+             
+             var is_weixin = (function() {
+			    var ua = navigator.userAgent.toLowerCase();
+			    if (ua.match(/MicroMessenger/i) == "micromessenger") {
+			        return true;
+			    } else {
+			        return false;
+			    }
+			})();
+             
+		     //根据终端下载不同文件
+			 function downloadApp(){
+			 	if(is_weixin){
+			 		$(".share_tips").show()
+			 	}else{
+			 		if(isAndroid){
+						window.location.href = "http://mobile.eratpay.com/share/downloads/yddRelease.apk";
+				     }else{
+						 if(isiOS){
+							$.blockUI({ 
+								message: '苹果应用开发中，即将上线!', 
+								css:{
+								width:"5rem",
+								height:"1.2rem",
+								fontSize:"0.36rem",
+								//    backgroundColor:"rgb(0,0,0,0)",
+								left:"50%",
+								marginLeft:"-2.5rem",
+								lineHeight:"1.2rem",
+								border:"none",
+								borderRadius:"4px"
+								},
+								timeout: 1500 
+							});
+	//							 window.location.href = "http://192.168.0.8/share/downloads/yddRelease.apk";
+					     }else{
+							 alert("unknown error!");
+					     }
+				     }
+			 	}
+				 
+			 }
+			//关闭遮罩
+			function closeTips() {
+				$(".share_tips").hide()
+			}
+		 </script>
+	 </body>
+</html>

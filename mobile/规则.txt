@@ -1,0 +1,13 @@
+接口转发规则：所有接口都包含  /share 字段
+一、appMsg文件夹 （嵌套在wenbView中）
+	1、关于我们	aboutus.html
+	2、客服中心	serviceCenter.html
+二、share文件夹（分享出去的页面）
+	1、分享注册	shareRegister.html
+	2、注册成功	shareRegisterSucc.html
+	3、分享视频	shareVideo.html
+	4、分享第三方视频	shareThirdVideo.html
+三、wzry文件（王者荣耀活动）
+	mobile文件夹（分享出去的王者荣耀活动）	active.html
+	webview文件 （webview中的活动页面）	active.htm
+

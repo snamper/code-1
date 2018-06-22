@@ -1,0 +1,56 @@
+/* 活动规则 */
+header {width: 100%; height: 0.5rem; font-size: 0.18rem; color: #515151; text-align: center; line-height: 0.5rem; font-weight: bold; background: #f1f1f1; position: relative;}
+header a { display: inline-block; width: 0.15rem; height: 0.24rem; background: #fff; position: absolute; top: 0.13rem; left: 0.15rem; background: url("./../../images/return.png"); background-size: 100% 100%; }
+.rule {width: 100%; height: 100%;  background: url("./../../images/rulebg.png"); background-size: 100% 100%; }
+.content {width: 90%; height: auto; font-size: 0.15rem; margin: 0 auto; line-height: 0.2rem; padding-top: 0.15rem;}
+.content .activeRule { width: 100%; height: 0.23rem; background: url("./../../images/activeRulebg.png"); background-size: 100% 100%; }
+.content p {font-size: 0.14rem; width: 100%; line-height: 0.24rem;}
+.content .praise {width: 100%; height: auto; font-size: 0.13rem;}
+.content .praise {width: 100%; height: auto; line-height: 0.25rem; text-indent: 0.22rem;}
+/* 新手课堂 */
+.newContent .bottom {width:100%; height:0.5rem; position: absolute; bottom: 0.2rem; }
+.goQuestions { display: block; width: 50%; height: 100%; margin: 0 auto; background: url("./../../images/goClass.png"); background-size: 100% 100%; border-radius: 0.05rem }
+.newContent {width: 100%; height: 10.165rem; background: url("./../../images/newClass.png"); background-size: 100% 100%; position: relative;}
+/* .classContent {width: 100%; height: auto;}
+.classContent h3 {width: 100%; font-size: 0.15rem; line-height: 0.25rem;}
+.classContent p {width: 100%; font-size: 0.13rem; text-indent: 0.26rem; line-height: 0.2rem; margin: 0.1rem 0;} */
+
+/* 新手考试 */
+.hide {display: none}
+.exam {width: 100%; height: 9.42rem; font-size: 0.13rem; margin: 0 auto; background: url("./../../images/quest.png"); background-size: 100% 100%;}
+.examContent {width: 90%; height: 100%; font-size: 0.13rem; margin: 0 auto; position: relative; overflow: hidden;}
+
+
+.examContent .first { width: 94.2666%; height: 1.1rem; background: url("./../../images/threebg.png"); background-size: 100% 100%; position: absolute; left:2.68%; top: 0.4rem;  }
+.examContent .second  { width: 94.2666%; height: 1.1rem; background: url("./../../images/threebg.png"); background-size: 100% 100%; position: absolute; left:2.68%; top: 2rem;  }
+.examContent .third { width: 94.2666%; height: 1.4rem; background: url("./../../images/fourbg.png"); background-size: 100% 100%; position: absolute; left:2.68%; top: 3.55rem;  }
+.examContent .fourth { width: 94.2666%; height: 1.4rem; background: url("./../../images/fourbg.png"); background-size: 100% 100%; position: absolute; left:2.68%; top: 5.35rem;  }
+.examContent .fifth { width: 94.2666%; height: 1.1rem; background: url("./../../images/fourbg.png"); background-size: 100% 100%; position: absolute; left:2.68%; top: 7.2rem;  }
+.examContent .common div {height: 0.28rem; width: 100%; line-height: 0.28rem; margin-left: 5%; position: relative; font-size: 0; overflow: hidden;}
+.examContent .common div span {font-size: 0.13rem; float: left; height: 100%;}
+.examContent .common div p { font-size: 0; width: 0.13rem; height: 0.13rem; z-index: 1; background: url("./../../images/noselected.png"); background-size: 100% 100%;  position: absolute; left: 0.035rem; top: 0.08rem;}
+.examContent .common div p i {display: block;width: 0.07rem; height: 0.07rem;background: url("./../../images/select.png"); background-size: 100% 100%; margin-top: 0.03rem;margin-left: 0.03rem; }
+.examContent .common div p .hide {display: none;}
+.examContent .common .firstBox {margin-top: 0.1rem}
+.examContent .common input { float: left; opacity: 0;filter: alpha(opacity=0); z-index: 10; position: relative; width: 0.3rem; height: 0.3rem;}
+.exam .bottom {width:100%; height:0.5rem; position: absolute; left: 0; bottom: 0.4rem;}
+.assignment { display: block; width: 50%; height: 100%; margin: 0 auto; color: #fff !important;background: url("./../../images/button.png"); background-size: 100% 100%; font-size: 0.18rem; text-align: center; line-height: 0.5rem; border-radius: 0.05rem }
+.popupSuc {width: 100%;height: 100%; position: fixed; left: 0; top:0; background: rgba(0,0,0,0.6); z-index: 100;}
+.popupSucbg { width: 88.13%;height: 3.14rem; font-size: 0.2rem; margin-top: 1rem; margin-left: 5.55%;  background: url("./../../images/success.png"); background-size: 100% 100%; position: relative;  }
+.popupSucbg p {width: 100%; height: 0.3rem; line-height: 0.3rem; position: absolute; left: 0; bottom: 0.2rem; text-align: center}
+.popupSucbg div {width: 100%; height: 0.3rem; line-height: 0.3rem; position: absolute; left: 0; bottom: 0.5rem; text-align: center}
+.popupErr .popupSucMain {width: 2rem; height:2.2rem; background: #fff; margin: 2rem auto; border-radius: 0.2rem;}
+.popupErr {width: 100%;height: 100%; position: fixed; left: 0; top:0; background: rgba(0,0,0,0.6); z-index: 100;}
+
+
+.popupErrbg { width: 88.13%;height: 3.14rem; font-size: 0.2rem; margin-top: 1rem; margin-left: 5.55%;  background: url("./../../images/fail.png"); background-size: 100% 100%; position: relative;  }
+.popupErrbg p {width: 100%; height: 0.3rem; line-height: 0.3rem; position: absolute; left: 0; bottom: 0.4rem; text-align: center;}
+.popupErr {font-size: 0.15rem;}
+.popupErr p {width: 100%; height: 0.3rem; line-height: 0.3rem; text-align: center; margin-top: 0.2rem;}
+.goStudy { display: inline-block; width: 1.8rem; height: 0.4rem; line-height: 0.4rem; background: url("./../../images/goStudy.png"); background-size: 100% 100%; }
+.rest { display: inline-block; width: 1.8rem; height: 0.4rem; line-height: 0.4rem; background: url("./../../images/rest.png"); background-size: 100% 100%; }
+.lilq {width: 100%; height: 0.4rem; line-height: 0.4rem; text-align: center}
+.lilq a { display: inline-block; width: 1.8rem; height: 0.4rem; line-height: 0.4rem; background: url("./../../images/ljlq.png"); background-size: 100% 100%; }
+.popupErr .popupSucMain a {margin-top: 0.1rem;}
+/* 抽奖 */
+.drawContent { width: 100%; height:100%;}

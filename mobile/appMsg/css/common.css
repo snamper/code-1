@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+
+*{
+	box-sizing:border-box;
+	margin:0rem;
+	padding:0rem;
+	/*-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;*/
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent; /* For some Androids */
+}
+html,body {width: 100%;}
+body,h1,h2,h3,h4,h5,h6,p,ol,ul,dl,dt,dd,li,cite,fieldset { margin:0px; padding:0px; list-style:none;font-family:"Microsoft Yahei","SimHei","SimSun";}
+sup,sub { vertical-align:baseline; }
+a{text-decoration:none;outline:none;outline:0;-webkit-touch-callout:none;border: none;}
+a:link{color:inherit;outline:none;outline:0;}
+a:visited{color:inherit;outline:none;outline:0;}
+a:hover{color:inherit;outline:none;outline:0;}
+img{border:none;}
+.inline-block{display:inline-block}
+.left{float:left}
+.right{float:right}
+.clear:after {
+	content: '';
+	display: block;
+	height: 0;
+	line-height: 0;
+	visibility:hidden;
+	clear: both;
+}
+.clear {
+	*zoom: 1;
+}
+
+

@@ -1,0 +1,272 @@
+.card_content{	
+  width: 100%;
+  overflow: hidden;
+  background: #f0f0f0;
+  position: relative;
+  min-height: 11.36rem;
+.header{
+  height: .748rem;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #fff;
+  z-index: 100;
+  .van-nav-bar{
+    height: .748rem;
+    line-height: 0.748rem;
+  }
+  .van-nav-bar__title {
+    color: #282828;
+    font-size: .278rem;
+  }
+  .van-nav-bar .van-icon{
+    color: #282828;
+  }
+  .van-nav-bar__right{
+    right: 0.4rem;
+    span{
+    	color: #282828;
+    }
+  }
+  .header_navinoc {
+    position: absolute;
+    left: .1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: .34rem;
+    height: .34rem;
+  }
+}
+.hart_list{
+  width: 93.75%;
+  margin: 0 auto;
+  margin-top: 0.908rem;
+  margin-bottom: 1.071rem;
+  .no_data_info{
+      width: 6.2rem;
+      height: 0.4rem;
+      font-size: 0.2rem;
+      line-height: 0.4rem;
+      margin: 0.2rem 0;
+      color: #ccc;
+      // text-align: center;
+    }
+  .hart_detail{
+    height: 1.76rem;
+    margin-top: 0.16rem;
+    .hart_left{
+    	float: left;
+    	width: 0.425rem;
+    	height: 100%;
+    	text-align: left;
+      .van-checkbox{
+      height: 100%;
+      line-height: 1.6rem;
+      .van-checkbox__icon{
+          height: 0.32rem;
+          width: 0.32rem;
+          line-height: 0.32rem;
+        }
+      }
+    }
+    .card{
+      width: 6rem;
+      height: 1.76rem;
+      float: left;
+      background: #fff;
+      border-radius: 4px;
+      position: relative;
+      .card_top{
+        width: 93.66%;
+        height: 1.29rem;
+        margin: 0 auto;
+        border-bottom: 1px dashed #f0f0f0;
+        position: relative;
+        .card_info{
+          width: 100%;
+          height: 0.44rem;
+          color: #f77777;
+          padding-right: 0.1rem;
+          font-size: 0.18rem;
+          line-height: 0.44rem;
+          text-align: right;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+        .card_name{
+          width: 75%;
+          height: 100%;
+          float: left;
+          p{
+            height: 30%;
+            width: 100%;
+            font-size: 0.16rem;
+            text-align: left;
+          }
+          .title{
+             height: 0.35rem;
+             font-size: 0.26rem;
+             line-height: 0.35rem;
+             margin-top: 0.3rem;
+            //  font-weight: 600;
+          }
+          .title1{
+             height: 0.2rem;
+             font-size: 0.2rem;
+             line-height: 0.2rem;
+             color: #f67474;
+          }
+          .title2{
+             height: 0.16rem;
+             font-size: 0.2rem;
+             line-height: 0.16rem;
+             color: #b0b0b0;
+             margin-top: 0.08rem;
+          }
+        }
+        .card_img{
+          float: right;
+          width: 0.82rem;
+          height: 0.82rem;
+          font-size: 0;
+          position: absolute;
+          right: 0.05rem;
+          top: 0.4rem;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .card_img_active{
+          top: 0.1rem;
+        }
+        .card_main{
+          width: 100%;
+          height: 100%;
+          .card_price{
+            font-size: 0.25rem;
+            width: 1.2rem;
+            height: 100%;
+            line-height: 1.29rem;
+            float: left;
+            color: #f7716d;
+            span{
+              font-size: 0.4rem;
+            }
+          }
+          .card_price_active{
+            color: #7b7b7b;
+          }
+        }
+      }
+      .circle{
+        width: 0.14rem;
+        height: 0.14rem;
+        background: #f0f0f0;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 0.42rem;
+      }
+      .circleLeft{
+         left: -0.07rem;
+      }
+      .circleRight{
+         right: -0.07rem;
+      }
+      .card_button{
+        width: 100%;
+        height: 0.4rem;
+        font-size: 0.24rem;
+        line-height: 0.5rem;
+        color: #f7716d;
+      }
+      .card_button_no{
+        color: #cecece;
+      }
+    }
+    .cardActive{
+      width: 5.5rem;
+    }
+  }
+}
+.hart_list_bottom{
+  margin-bottom: 0;
+}
+.hart_bottom{
+  width: 100%;
+  height: 1.088rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  border-top: 0.017rem solid #efefef;
+  background: #ffffff;
+  .allSelect{
+    float: left;
+    width: 58%;
+    height: 100%;
+    font-size: 0.238rem;
+    .aaa{
+    	float: left;
+    	width: 1.7rem;
+    	margin-top: 0.34rem;
+    	text-align: left;
+    	.van-icon{
+    	  width: 0.34rem;
+    	  height: 0.34rem;
+    	  margin-left: 0.255rem;
+    	}
+    	.allChecked{
+    	  color: #fff;
+       border-color: #06bf04;
+       background-color: #06bf04;
+    	}
+    }
+  }
+  .cancel{
+    float: left;
+    width: 42%;
+    height: 100%;
+    font-size: 0.238rem;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.088rem;
+    background: #f66f6f;
+  }
+  
+}
+.order_empty{
+    width: 100%;
+    .empty_img{
+      width: 2.11rem;
+      height: 4.06rem;
+      font-size: 0;
+      padding-top: 1.46rem;
+      margin: 0 auto;
+      img{
+        width: 100%;
+      }
+    }
+    p{
+      font-size: 0.22rem;
+      color: #9fa2a7;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .go_index{
+      display: block;
+      width: 1.9rem;
+      height: 0.56rem;
+      margin: 0 auto;
+      background: #f66e6e;
+      color: #fff;
+      border-radius: 0.08rem;
+      font-size: 0.24rem;
+      line-height: 0.56rem;
+      letter-spacing: 0.05rem;
+    }
+  }
+}
+

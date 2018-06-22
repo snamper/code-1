@@ -1,0 +1,238 @@
+.hart_content{	
+  width: 100%;
+  overflow: hidden;
+.header{
+  height: .748rem;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #fff;
+  z-index: 100;
+  .van-nav-bar{
+    height: .748rem;
+    line-height: 0.748rem;
+  }
+  .van-nav-bar__title {
+    color: #282828;
+    font-size: .278rem;
+  }
+  .van-nav-bar .van-icon{
+    color: #282828;
+  }
+  .van-nav-bar__right{
+    right: 0.4rem;
+    span{
+    	color: #282828;
+    }
+  }
+  .header_navinoc {
+    position: absolute;
+    left: .1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: .34rem;
+    height: .34rem;
+  }
+}
+.hart_list{
+  width: 96.66%;
+  margin: 0.765rem 0 1.071rem;
+  margin-left: 3.33%;
+  .van-list{
+    .no_data_info{
+      width: 6.2rem;
+      height: 0.4rem;
+      font-size: 0.2rem;
+      line-height: 0.4rem;
+      margin: 0.2rem 0;
+      color: #ccc;
+      // text-align: center;
+    }
+    .van-list__loading{
+      height: 1rem;
+      margin-top: 0.5rem;
+      .van-list__loading-text{
+        line-height: 20px;
+        float: left;
+      }
+      .van-loading{
+        float: left;
+        margin-left: 2.5rem;
+      }
+    }
+  }
+  .hart_detail{
+    height: 2.26rem;
+    .hart_left{
+    	float: left;
+    	width: 0.425rem;
+    	height: 100%;
+    	text-align: left;
+      .van-checkbox{
+        height: 100%;
+        line-height: 2rem;
+        .van-checkbox__icon{
+          height: 0.32rem;
+          width: 0.32rem;
+          line-height: 0.32rem;
+        }
+      }
+    }
+    .hart_right_margin{
+      margin-left: 0.15rem;
+    }
+    .hart_right{
+    	float: left;
+    	width: 5.7rem;
+    	height: 2.006rem;
+    	margin-top: 0.255rem;
+    	border-bottom: 0.017rem solid #efefef;
+    	.hart_image{
+    	  float: left;
+    	  width: 2.465rem;
+    	  height: 1.785rem;
+    	  background: #f1f1f1;
+    	  border-radius: 0.068rem;
+    	  overflow: hidden;
+        position: relative;
+        .icon_info{
+          position: absolute;
+          top: 0.2rem;
+          padding: 0.05rem 0.1rem;
+          width: auto;
+          height: auto;
+          color:#fff;
+          font-size: 0.17rem;
+          background: #ff6767;
+        }
+        .icon_info_left{
+          left: 0;
+          border-bottom-right-radius: 0.05rem;
+          border-top-right-radius: 0.05rem;
+        }
+        .icon_info_right{
+          right: 0rem;
+          border-bottom-left-radius: 0.05rem;
+          border-top-left-radius: 0.05rem;
+        }
+        img{
+          width: 100%;
+          height: 100%;
+        }
+    	}
+    	.hart_main{
+    	  float: left;
+    	  width: 3.01rem;
+    	  height: 1.785rem;
+    	  margin-left: 0.221rem;
+    	  font-size: 0.204rem;
+    	  .h3_name{
+    	    font-size: 0.25rem;
+    	    height: 0.646rem;
+          // font-weight: 900;
+    	    line-height: 0.3rem;
+          color: #000;
+          margin-top: 0.1rem;
+    	    text-align: left;
+          overflow:hidden;
+          font-weight: normal;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+    	  }
+    	  .shop_price{
+    	  	height: 0.5rem;
+    	  	font-size: 0.204rem;
+    	  	line-height: 0.5rem;
+    	  	color: #808080;
+    	  	.point{
+    	  	  float: left;
+    	  	  width: auto;
+    	  	  i{
+    	  	    font-size: 0.24rem;
+    	  	    color: #f66e6e;
+    	  	    font-style: normal;
+    	  	  }
+    	  	}
+    	  	.money{
+    	  	  float: right;
+    	  	  width: auto;
+    	  	}
+    	  }
+    	  .shop_sale_detail{
+    	    height: 0.578rem;
+    	    line-height: 0.578rem;
+    	    .sale{
+    	    	float: left;
+    	    	width: 1.7rem;
+            color: #808080;
+    	    	text-align: left;
+    	    	i{
+    	    	  color: #f66e6e;
+    	    	  font-style: normal;
+    	    	}
+    	    }
+    	    .exchange{
+    	    	float: right;
+    	    	width: 1.19rem;
+    	    	height: 0.306rem;
+    	    	background: #ff6767;
+    	    	color: #fff;
+    	    	text-align: center;
+    	    	line-height: 0.326rem;
+            font-size: 0.2rem;
+    	    	border-radius: 0.034rem;
+    	    	margin-top: 0.119rem;
+    	    }
+    	  }
+    	}
+    }
+  }
+}
+.hart_list_margin{
+  margin-bottom: 0;
+}
+.hart_bottom{
+  width: 100%;
+  height: 1.088rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  border-top: 0.017rem solid #efefef;
+  background: #ffffff;
+  .allSelect{
+    float: left;
+    width: 58%;
+    height: 100%;
+    font-size: 0.238rem;
+    .aaa{
+    	float: left;
+    	width: 1.7rem;
+    	margin-top: 0.34rem;
+    	text-align: left;
+    	.van-icon{
+    	  width: 0.34rem;
+    	  height: 0.34rem;
+    	  margin-left: 0.255rem;
+    	}
+    	.allChecked{
+    	  color: #fff;
+       border-color: #06bf04;
+       background-color: #06bf04;
+    	}
+    }
+  }
+  .cancel{
+    float: left;
+    width: 42%;
+    height: 100%;
+    font-size: 0.238rem;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.088rem;
+    background: #f66f6f;
+  }
+}
+}
+
