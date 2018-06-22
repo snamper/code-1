@@ -1,0 +1,92 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--商品查看{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/commodityManagement/goodsView.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>内容管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>百度</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">视频内容查看</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<div class="legend">
+			视频基本信息
+		</div>
+		<hr>
+		
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" style="width:700px">
+					<label class="layui-form-label">内容名称:</label>
+		           <span>
+					      {{data.data.title}}
+					</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">视频id:</label>
+				    <span>
+					      {{data.data.videoId}}
+					</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline"  style="width:700px">
+					 <label class="layui-form-label">内容类目:</label>
+						<span>{{data.data.contentCategoryName}}</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">内容类型:</label>
+				    {% if data.data.contentType ==1 %}
+					    <span>资讯</span>
+					{% else %}
+						<span>广告</span>
+					{% endif %}
+				</div>
+			</div>
+			
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >更新时间:</label>
+					<span>
+				        {{data.data.updateTime|conTeeime}}
+				    </span>
+				</div>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">商品列表图:</label>
+			    <div class="layui-input-inline">
+			       <img style="width: 200px;height: 112px;" src='{{data.data.thumbUrl}}' alt="" />
+			    </div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >视频详情页:</label>
+					<span>
+				    	{{data.data.detailUrl}} 
+				    </span>
+				</div>
+			</div>
+			
+		</form>
+		<div class="legend">
+			平台统计信息
+		</div>
+		<hr>
+			<div class="layui-form-item layui-input-inline" style="margin-left: 170px;">
+					<label class="layui-form-label">平台点击量:</label>
+		           <span>
+					     {{data.data.clicks}}  
+					</span>
+				</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a href="/operation/contentManagement/canalList" class="layui-btn closeCurPage" >关闭</a>
+			</div>
+	</section>
+{% endblock %}

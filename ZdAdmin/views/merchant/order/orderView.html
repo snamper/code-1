@@ -1,0 +1,201 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-订单管理-订单详情{% endblock %}
+{% block head%}
+	<link rel="stylesheet" type="text/css" href="/css/commodityManagement/goodsView.css"/>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>订单管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">订单详情</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label" >支付状态:</label>
+					 <span>
+					 	{% if data.data.payment_status == 1 %}
+					 		未支付
+					 	{% elseif data.data.payment_status == 2 %}
+					 		已支付
+					 	{% elseif data.data.payment_status == 3 %}
+					 		已退款
+					 	{% endif %}
+					 </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label" >兑换/充值状态:</label>
+					 <span>
+					 	{% if product_ad_attr != 3 %}
+						 	{% if data.data.status && data.data.status == 0 %}
+						 		兑换成功
+						 	{% elseif data.data.status == 1 %}
+						 		库存不足，无法兑换
+						 	{% elseif data.data.status == 2 %}
+						 		兑换失败，商品不存在
+						 	{% elseif data.data.status == 3 %}
+						 		兑换失败，商品已下架
+						 	{% elseif data.data.status == 4 %}
+						 		兑换失败，帐号状态异常
+						 	{% elseif data.data.status == 5 %}
+						 		兑换失败，指定帐号不存在
+						 	{% elseif data.data.status == "-1"%}
+						 		兑换失败，兑换码过期(已使用)
+						 	{% elseif data.data.status == "-2" %}
+						 		兑换异常
+						 	{% elseif !data.data.status || data.data.status == "-3"%}
+						 		未兑换
+						 	{% elseif data.data.status == "-4"%}
+						 		兑换异常 运营已退积分
+						 	{% endif %}
+						{% else %}
+							{% if !data.data.status %}
+								未充值
+							{% elseif data.data.status && data.data.status == 0 %}
+								充值成功
+							{% else %}
+								充值失败
+							{% endif %}
+						{% endif %}
+					 </span>	
+				</div>
+				
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品名称:</label>
+				    <div class="layui-input-inline">
+				        {{data.data.full_name}}
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商户名称:</label>
+				    <span>{{data.data.short_name}}</span>
+				</div>
+			</div>
+			
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">用户手机号:</label>
+				    <span>
+				       	{{data.data.payment_phone}}
+				    </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">充值手机号:</label>
+				    <span>
+				        {{data.data.charge_phone}}
+				    </span>
+				</div>
+			</div>
+			
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">支付方式:</label>
+				    <span>
+				    	{% if data.data.payment_type == 1 %}
+				       		积分支付
+				       	{% elseif data.data.payment_type == 2 %}
+				       		积分+微信支付
+				       	{% elseif data.data.payment_type == 3 %}
+				       		微信支付
+				       	{% elseif data.data.payment_type == 4 %}
+				       		积分+支付宝支付
+				       	{% elseif data.data.payment_type == 5 %}
+				       		支付宝支付
+				       	{% endif %}
+				    </span>
+				</div>
+				{% if data.data.product_ad_attr == 3 %}
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">充值金额/流量:</label>
+				    <span>
+				        {% if data.data.recharge_type == 1 %}
+				       		{{data.data.amount}} 元
+				       	{% elseif data.data.recharge_type == 2 %}
+				       		{{data.data.flow}} M
+				       	{% endif %}
+				    </span>
+				</div>
+				{% endif %}
+			</div>
+			
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">支付金额:</label>
+				    <span>
+				    	{% if data.data.payment_amount %}
+				       		{{data.data.payment_amount/100}} 元
+				       	{% endif %}
+				    </span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">消耗积分:</label>
+				    <span>
+				        {{data.data.point}}
+				    </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">兑换方式:</label>
+				    <span>
+				    	{% if data.data.exchange_methods == 1 %}
+				    		手动
+				    	{% elseif data.data.exchange_methods == 2 %}
+				    		H5链接
+				    	{% elseif data.data.exchange_methods == 3 %}
+				    		API接口
+				    	{% else %}
+				    		--
+				    	{% endif %}
+				    </span>
+				</div>
+				
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">买家留言:</label>
+				    <span>
+				        {{data.data.buy_message}}
+				    </span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">下单时间:</label>
+				    <span>
+				       	{{data.data.create_time}}
+				    </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">兑换/充值时间:</label>
+				    <span>
+				    	{% if data.data.product_ad_attr != 3 %}
+				        	{{data.data.exchange_time}}
+				        {% else  %}
+				        	{{data.data.exchange_time}}
+				        {% endif %}
+				    </span>
+				</div>
+			</div>
+			
+			
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a class="layui-btn " href="/merchant/order">关闭</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	
+{% endblock %}
+
+
+

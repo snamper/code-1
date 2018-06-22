@@ -1,0 +1,153 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--活动管理--推广渠道佣金{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/operation/actManagement.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>活动管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>推广渠道佣金</li>
+	     <li class="arrow-icon">>></li>
+	     {% if page.name %}
+	     	<li class="onIndexOf">修改模板</li>
+	     {% else %}
+	     	<li class="onIndexOf">新增模板</li>
+	     {% endif %}
+	 </ul>
+{%endblock%}
+{% block content%}
+	<section id="newCannel">
+		<form class="layui-form" action="" style="width: 700px; margin: 0 auto;">
+			<div class="layui-form-item layui-input-inline">
+				<label class="layui-form-label">* 模板名称:</label>
+				<div class="layui-input-inline" style="width: 265px;">
+					{% if page.name %}
+						<input class="layui-input" placeholder="请输入模板名称" id="moudle-name" value="{{page.name}}"> 
+					{% else %}
+						<input class="layui-input" placeholder="请输入模板名称" id="moudle-name" >   
+					{% endif %}
+				</div>
+				<div class="layui-input-inline info  moudle-info"></div>
+			</div>
+			
+			{% if page.register && page.register > 0  %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+							<input type="checkbox" data-id="registerFund" checked="checked" name="" title="注册" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value registerFund" placeholder="" value="{{page.register}}">                         
+					</div>
+					<div class="layui-input-inline info  registerFund-info"></div>
+				</div>
+			{% else %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+							<input type="checkbox" data-id="registerFund" name="" title="注册" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value registerFund" placeholder="" disabled>                         
+					</div>
+					<div class="layui-input-inline info  registerFund-info"></div>
+				</div>
+			{% endif %}
+	
+			{% if page.day && page.day > 0  %}
+			<div class="layui-form-item layui-input-inline">
+				<label class="layui-form-label">满足条件:</label>
+				<div class="layui-input-inline layui-inline-ipt">
+					<input type="checkbox" data-id="nextdayFund" name="" checked title="次日留存" lay-skin="primary" >
+				</div>
+				<label class="layui-form-label label">佣金/元:</label>
+				<div class="layui-input-inline" style="width: 60px">
+					<input class="layui-input input-value  nextdayFund" placeholder="" value="{{page.day}}"/>                         
+				</div>
+				<div class="layui-input-inline info  nextdayFund-info"></div>
+			</div>
+			{% else %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+						<input type="checkbox" data-id="nextdayFund" name="" title="次日留存" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value  nextdayFund" placeholder="" disabled/>                         
+					</div>
+					<div class="layui-input-inline info  nextdayFund-info"></div>
+				</div>
+			{% endif %}
+			
+			{% if page.week && page.week > 0  %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+						<input type="checkbox" data-id="nextweekFund" name="" checked title="周留存" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value  nextweekFund"  placeholder="" value="{{page.week}}" />                         
+					</div>
+					<div class="layui-input-inline info  nextweekFund-info"></div>
+				</div>
+			{% else %}
+				<div class="layui-form-item layui-input-inline">
+				<label class="layui-form-label">满足条件:</label>
+				<div class="layui-input-inline layui-inline-ipt">
+					<input type="checkbox" data-id="nextweekFund" name="" title="周留存" lay-skin="primary" >
+				</div>
+				<label class="layui-form-label label">佣金/元:</label>
+				<div class="layui-input-inline" style="width: 60px">
+					<input class="layui-input input-value  nextweekFund"  placeholder="" disabled />                         
+				</div>
+				<div class="layui-input-inline info  nextweekFund-info"></div>
+			</div>
+			{% endif %}
+			
+			{% if page.down && page.down > 0  %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+						<input type="checkbox" data-id="downloadFund" name="" checked title="下载" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value  downloadFund" placeholder="" value="{{page.down}}" />                         
+					</div>
+					<div class="layui-input-inline info  downloadFund-info"></div>
+				</div>
+			{% else %}
+				<div class="layui-form-item layui-input-inline">
+					<label class="layui-form-label">满足条件:</label>
+					<div class="layui-input-inline layui-inline-ipt">
+						<input type="checkbox" data-id="downloadFund" name="" title="下载" lay-skin="primary" >
+					</div>
+					<label class="layui-form-label label">佣金/元:</label>
+					<div class="layui-input-inline" style="width: 60px">
+						<input class="layui-input input-value  downloadFund" placeholder="" disabled />                         
+					</div>
+					<div class="layui-input-inline info  downloadFund-info"></div>
+				</div>
+			{% endif %}
+				<div class="layui-form-item layui-input-inline" style="margin-top: 30px;">
+					{% if page.id %}
+						<a href="javascript:;" class="layui-btn changeSure" data-id="{{page.id}}" style="margin-left: 110px;">保存设置</a>
+					{% else %}
+						<a href="javascript:;" class="layui-btn changeSure" style="margin-left: 110px;">保存设置</a>
+					{% endif %}
+					<a href="/operation/actManagement/spreadChannel" class="layui-btn">返回</a>
+				</div>
+     	</form>
+	</section>
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/actManagement/spreadChannel.js"></script>
+{% endblock%}

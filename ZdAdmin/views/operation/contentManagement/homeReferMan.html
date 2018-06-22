@@ -1,0 +1,196 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--内容管理--首页推荐位管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/contentManagement/index.css" />
+	<style type="text/css">
+		.homeReferLayer .homeReferList{height: auto;}
+		.homeReferLayer{height: 300px;}
+		.homeSubmit{position: absolute;bottom: 20px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>内容管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">首页推荐位管理</li>
+		
+		{% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "应用设置" %}
+	    			<a href="javascript:;" class="layui-btn apply" style="float:right;margin-right:20px;">应用设置</a>	
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    <a href="javascript:;" class="layui-btn homeEdit homeNewEdit" data-source="add" style="float:right;margin-right:10px;">新增推荐位</a>	
+	 </ul>
+	 <input type="hidden" value="{{page | json_encode}}" name="" id="" value="" />
+{%endblock%}
+{% block content%}
+     <table class="layui-table table-width sortInputSize">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>推荐位排序</th>
+	     	<th>内容类型</th>
+	     	<th>来源渠道</th>
+	     	<th>来源类目</th>
+	     	<th>内容选择</th>
+	     	<th>操作</th> 
+	     </tr>
+         <tbody>
+         	{% for item in data.data.datas %}
+	         	<tr>
+	         		<td>{{page.pageNo|sortNum(loop.index)}}</td>
+	         		<td>{{item.bit}}</td>
+	         		<td>
+	         			{% if item.content_type %}
+	         				{{item.content_type}}
+	         			{% else %}
+	         				--
+	         			{% endif %}
+	         		</td>
+	         		<td>
+	         			{% if item.content_source %}
+	         				{{item.content_source}}
+	         			{% else %}
+	         				--
+	         			{% endif %}
+	         		</td>
+	         		<td>
+	         			{% if item.content_cat %}
+	         				{{item.content_cat}}
+	         			{% else %}
+	         				--
+	         			{% endif %}
+	         		</td>
+	         		<td>
+	         			{% if item.content %}
+	         				{{item.content}}
+	         			{% else %}
+	         				--
+	         			{% endif %}
+	         		</td>
+	         		<td>
+	         			{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "编辑" %}
+					    			<a href="javascript:;" data-id="{{item.id}}" data-bit="{{item.bit}}" data-source="edit" data-system= "{{item.system_type}}"  data-sour="{{item.content_source_code}}" data-type="{{item.content_type_code}}" data-cat="{{item.content_cat_code}}" data-choose="{{item.content_id}}" class="layui-btn homeEdit" >编辑</a> 	
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}     
+					    <a href="javascript:;" data-bit="{{item.bit}}" data-id="{{item.id}}" data-source="add" class="layui-btn delete" >删除</a> 
+	         		</td>
+	         	</tr>
+         	{% endfor %}
+         	
+		 </tbody>	
+	 </table>
+	 <div class="coverScreen hide"></div>
+	 <div class="homeReferLayer hide">
+	 		<div class="content_type_show " style="margin: 0 30px;">
+				<form action="" class="layui-form" >
+					<div class="homeList">
+			 			<div class="homeLable">
+							推荐位:				
+						</div>
+						<div class="homeInfo">
+							<div class="layui-input-inline">
+								<input type="text" name="title" class="layui-input content_bit">
+							</div>
+						</div>
+						
+			 		</div>
+			 		<div class="homeList">
+			 			<div class="homeLable">
+							内容类型:				
+						</div>
+						<div class="homeInfo">
+							<select name="goodsStatus2" class="contentType" lay-filter="contentType" lay-verify="required">
+								<option value="">内容类型</option>
+							</select>
+						</div>
+			 		</div>
+			 	</form>
+			</div>
+			<div class="content_canal_show homeOwn " style="margin: 0 30px;">
+				<form action="" class="layui-form">
+			 		<div class="homeList">
+			 			<div class="homeLable">
+							来源渠道:				
+						</div>
+						<div class="homeInfo">
+							<select name="goodsStatus4" class="contentChooseCanal" lay-filter="contentSource" lay-verify="required">
+								<option value="">渠道选择</option>
+							</select>
+						</div>
+			 		</div>
+			 	</form>
+			</div>
+			
+			<div class="content_cat_show homeOwn hide" style="margin: 0 30px;">
+				<form action="" class="layui-form">
+			 		<div class="homeList">
+			 			<div class="homeLable">
+							来源类目:				
+						</div>
+						<div class="homeInfo">
+							<select name="goodsStatus1" class="contentCat" lay-filter="contentCat" lay-verify="required">
+								<option value="">类目选择</option>
+							</select>
+						</div>
+			 		</div>
+			 	</form>
+			</div>
+			
+			
+			
+			
+			<div class="content_choose_show homeOwn" style="margin: 0 30px;">
+				<form action="" class="layui-form">
+			 		<div class="homeList">
+			 			<div class="homeLable">
+							内容选择:				
+						</div>
+						<div class="homeInfo">
+							<select name="goodsStatus3" class="contentChoose" lay-filter="contentChoose" lay-verify="required">
+								<option value="">内容选择</option>
+							</select>
+						</div>
+			 		</div>
+			 	</form>
+			</div>
+			
+			
+			
+			<div class="homeRefer homeReferList homeOwn" style="margin-top: 0;">
+		 		<form action="" class="layui-form">
+			 		<div class="homeList">
+			 			<div class="homeLable" style="margin-left: 30px;"> 
+							显示平台:				
+						</div>
+						<div class="homeInfo"">
+						    <div class="layui-input-block systemTypeBoxNew" style="line-height: 50px; margin-left: 0;" > 
+						      <input type="checkbox" name="systemType[ios]" lay-skin="primary" lay-filter="systemType" title="ios">
+						      <input type="checkbox" name="systemType[android]"lay-skin="primary" lay-filter="systemType" title="android">
+						    </div> 
+						</div>
+			 		</div>
+			 	</form>
+			</div>
+			<div style="padding-left: 30px;margin-top: -10px;">
+				<span class="layui-tooltip tooltip-tips hide"></span>
+			</div>	
+			<div class="homeSubmit">
+				<a href="javascript:;" class="layui-btn saveContent" style="margin-left: 90px;">保存</a>
+				<a href="javascript:;" class="layui-btn homeReferClose" style="margin-left: 40px;">关闭</a>
+			</div>
+		
+	</div>	
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/contentManagement/homeReferMan.js"></script>
+{% endblock%}

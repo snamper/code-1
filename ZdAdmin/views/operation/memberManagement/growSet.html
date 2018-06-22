@@ -1,0 +1,79 @@
+{% extends "./../../layout.html"%}
+{% block title%}会员管理-会员管理-成长值设置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-form-label{min-width: 140px;}
+		/*.addUserSection{margin-left: 10%;}*/
+		.addUserSection form{margin-left: 0;position: absolute;left: 50%;margin-left: -340px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>会员管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>会员管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">成长值设置</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addUserSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*登录获得:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入登录获得成长值" value="{{data.data.loginAcquire}}"  class="layui-input loginAcquire">
+			    </div>
+			    <span class="layui-tooltip tooltip-loginAcquire hide">请输入登录获得成长值</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*购买获得:</label>
+			    <div class="layui-input-inline" style="width: 270px;">
+			        <input type="text"  name=""   placeholder="请输入购买获得成长值" value="{{data.data.buyAcquire}}" class="layui-input buyAcquire" style="width: 240px;float: left;">
+			        <span style="line-height: 38px;margin-left: 10px;">%</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-buyAcquire hide">请输入购买获得成长值</span>
+			</div>
+			<!--<div class="layui-form-item userFlagChoose" >
+			    <label class="layui-form-label"></label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="flag" style="min-width: 300px;color: #ccc;">
+			       购买转化比例，例如:设置为15,那么每次消费的15%这算成长值(不足整数的四舍五入)
+			   </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*浏览广告奖励:</label>
+			    <div class="layui-input-inline layui-input-width">
+			        <input type="text" name="watchAdAcquire"  placeholder="请输入浏览广告获得成长值" value="{{data.data.watchAdAcquire}}" class="layui-input watchAdAcquire">
+			    </div>
+			    <span class="layui-tooltip tooltip-watchAdAcquire hide">请输入浏览广告获得成长值</span>
+			</div>
+			
+			<div class="layui-form-item" >
+			    <label class="layui-form-label"> 每日获得上限</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="flag" style="width: 500px;color: #ccc;line-height: 38px;">
+			       每日获得上限为通过浏览广告获得的成长值，不包含登录、消费转化的成长值
+			   </div>
+			</div>
+			{% for item in data.data.vipRankInfoViewList %}
+				<div class="layui-form-item vipRankInfoViewList">
+				    <label class="layui-form-label">*{{item.name}}:</label>
+				    <div class="layui-input-inline layui-input-width">
+				        <input data-id="{{item.id}}" type="text" value="{{item.cpmGrowthValueCeil}}" placeholder="请输入当前等级可获得成长值"  autocomplete="off" class="layui-input vipRankInfo">
+				    </div>
+				    <span class="layui-tooltip tooltip-vipRankInfo hide">请输入当前等级可获得成长值</span>
+				</div>
+			{% endfor %}-->
+			
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn saveGrowSet">保存</a>
+			    <a  class="layui-btn" href="/operation/memberManagement">返回</a>
+			</div>
+			<div style="min-height: 600px;max-height: 1200px;"></div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/memberManagement/growSet.js"></script>
+{% endblock %}
+

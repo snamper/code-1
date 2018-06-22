@@ -1,0 +1,223 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-商品审核{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">商品审核</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="layui-tab">
+		  <ul class="layui-tab-title chooseType" data-productState="{{page.productState}}" style="width: 90%;margin-left: 30px;">
+		  	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "待审核" %}
+		    			{% if page.productState && page.productState == 5 %}
+							<li data-productState="5" class="layui-this">待审核</li>
+						{% else %}
+							<li data-productState="5" >待审核</li>
+						{% endif %}
+		    		{% elseif unescape(code.name) == "已审核" %}
+		    			{% if page.productState == '-5' %}
+					    	<li data-productState='-5' class="layui-this">已审核</li>
+					    {% else %}
+					    	<li data-productState='-5'>已审核</li>
+					    {% endif %}
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}
+		  </ul>
+		</div>
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline" style="margin-left: 15px;">
+					{% if page.productAdAttr %}
+					<select name="type" data-type="{{page.productAdAttr}}" class="productAdAttr" lay-search lay-filter="type">
+						<option value="">商品广告属性</option>
+						{% if page.productAdAttr == 1 %}
+							<option value="1" selected="selected">购买商品</option>
+							<option value="2">广告商品</option>
+							<option value="3">充值商品</option>
+						{% elseif page.productAdAttr == 2 %}
+							<option value="1">购买商品</option>
+							<option value="2" selected="selected">广告商品</option>
+							<option value="3">充值商品</option>
+						{% elseif page.productAdAttr == 3 %}
+							<option value="1">购买商品</option>
+							<option value="2" >广告商品</option>
+							<option value="3" selected="selected">充值商品</option>
+						{% endif %}
+					</select>
+					{% else %}
+					<select name="type" class="productAdAttr" lay-search lay-filter="type">
+						<option value="">商品广告属性</option>
+						<option value="1" >购买商品</option>
+						<option value="2">广告商品</option>
+						<option value="3">充值商品</option>
+					</select> 
+					{% endif %}
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商品名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.fullName %}
+					 		<input type="text"  name="username" value={{page.fullName}} lay-verify="required" placeholder="" autocomplete="off" class="layui-input fullName">
+					 	{% else %}
+					 		<input type="text"  name="username" lay-verify="required" placeholder="" autocomplete="off" class="layui-input fullName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商户名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.merchantFullName %}
+					 		<input type="text"  name="username" value={{page.merchantFullName}}  autocomplete="off" class="layui-input merchantFullName">
+					 	{% else %}
+					 		<input type="text"  name="username"  autocomplete="off" class="layui-input  merchantFullName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 searchData" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>商品名称</th>
+		            <th>商户名称</th>
+		            <th>成本价（元）</th>
+		            <th>零售价（元）</th>
+		            <th>商品广告属性</th>
+		            {% if page.productState == "5" %}
+		            	<th>提交时间</th>
+		           		<th>操作</th>
+		           	{% endif %}
+		           	{% if page.productState == "-5" %}
+		            	<th>状态</th>
+		           		<th>审核时间</th>
+		           	{% endif %}
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td><a href="/merchant/audit/goodsView?productId={{item.id}}&source=/merchant/audit">{{item.fullName}}</a></td>
+					 	<td>{{item.merchantFullName}}</td>
+					 	<td>
+					 		{% if item.productAdAttr == 1 %}
+					 			{{item.costPrice}}
+					 		{% else %}
+					 			--
+					 		{% endif %}
+					 		
+					 	</td>
+					 	<td>
+					 		{% if item.productAdAttr == 1 %}
+					 			{{item.retailPrice}}
+					 		{% else %}
+					 			--
+					 		{% endif %}
+					 		
+					 	</td>
+					 	<td>
+					 		{% if item.productAdAttr == 1 %}
+					 			购买商品
+					 		{% elseif item.productAdAttr == 2 %}
+					 			广告商品
+					 		{% elseif item.productAdAttr == 3 %}
+					 			充值商品
+					 		{% endif %}
+					 	</td>
+					 	{% if page.productState == "5" %}
+					 		<td>{{item.updateTime}}</td>
+					 		<td>
+					 			{% if menuCodeList %}
+							    	{% for code in menuCodeList %}
+							    		{% if unescape(code.name) == "审核" %}
+							    			<a href="/merchant/audit/goodsAudit?productId={{item.id}}" class="layui-btn layui-btn">审核</a>
+							    		{% endif %}
+							    	{% endfor %}
+							    {% endif %}
+					 			
+						 	</td>
+					 	{% endif %}
+					 	{% if page.productState == "-5" %}
+					 		<td>
+					 			{% if item.productState == 0 %}
+					 				草稿 
+					 			{% endif %}
+					 			{% if item.productState == 1 %}
+					 				待设置 
+					 			{% endif %}
+					 			{% if item.productState == 2 %}
+					 				待上架
+					 			{% endif %}
+					 			{% if item.productState == 3 %}
+					 				已下架 
+					 			{% endif %}
+					 			{% if item.productState == 4 %}
+					 				已上架
+					 			{% endif %}
+					 			{% if item.productState == 5 %}
+					 				待审核
+					 			{% endif %}
+					 			{% if item.productState == 6 %}
+					 				待修改
+					 			{% endif %}
+					 		</td>
+					 		<td>
+					 			{{item.updateTime}}
+					 		</td>
+					 	{% endif %}
+					 </tr>
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/auditManagement/index.js"></script>
+{% endblock %}
+

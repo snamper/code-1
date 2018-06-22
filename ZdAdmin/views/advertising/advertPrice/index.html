@@ -1,0 +1,134 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告价格管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/advPreviewH5.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告价格管理</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "广告价值录入" %}
+	    			<a href="/advertising/advertPrice/advertPriceAdd" class="layui-btn" style="float:right;margin-right:60px;">广告价值录入</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.inputStartTime %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.inputStartTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.inputEndTime %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.inputEndTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>广告价值</th>
+		            <th>录入时间</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas %}
+		    	<tr>
+		    		<td>{{item.total_amount}}</td>
+		    		<td>
+		    			{% if item.input_time %}
+		    				{{item.input_time}}
+		    			{% else %}
+		    				未录入
+		    			{% endif %}
+		    		</td>
+				 	<td>
+				 		{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "补录" && item.status == 0 %}
+							 		<a href="/advertising/advertPrice/advertPriceAdd?id={{item.id}}" class="layui-btn">补录</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					    {% if item.status == 1 %}
+				 		<a href="/advertising/advertPrice/advertPriceView?id={{item.id}}" class="layui-btn ">查看</a>
+				 		{% endif %}
+				 	</td>
+				</tr>
+				{% endfor %}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	<!-- 广告预览 -->
+	<section class="H5PreviewBox hide">
+	 	<div class="coverScreen"></div>
+	    <div class="adverAppView">
+	    	<div class="videoBox"></div>
+			<div class="view_content">
+				<div class="view_title">
+					<h1 class="view_title_text"></h1>
+					<div>
+						<span class="view_time"></span>
+						<span><img src="/images/view/view6.png"/><span class="playNum"></span></span>
+					</div>
+				</div>
+				<div class="view_list">
+					<div class="view_list_name">相关视频推荐</div>
+					<ul class="view_item_box">
+					</ul>
+				</div>
+			</div>
+			<ul class="view_bottom">
+				<li><img src="/images/view/view1.png"/></li>
+				<li><img src="/images/view/view2.png"/></li>
+				<li><img src="/images/view/view3.png"/></li>
+				<li><img src="/images/view/view4.png"/></li>
+				<li><img src="/images/view/view5.png"/></li>
+			</ul>
+		</div>
+		<span class="closePreview">X</span>
+	 </section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/advertPrice/index.js"></script>
+{% endblock %}
+

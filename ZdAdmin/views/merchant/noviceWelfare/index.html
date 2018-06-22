@@ -1,0 +1,104 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理--新手福利设置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/merchant/noviceWelfare.css" />
+{% endblock %}
+{%block indexTitle%}
+	 <ul class="index_of_title">
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">新手福利设置</li>
+	     <li class="lisFlBtn moreFlBtn fr"><a href="javascript:;" class="layui-btn useConfigBtns">应用配置</a></li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<form class="layui-form site-demo-top40 noviceWelfare" id="noviceWelfare" action="">
+		<div class="layui-form-item">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>领取不同商品数量限制:</label>
+		    <div class="layui-input-inline">
+		    	{% if data.data.noobRule.productCountLimit %}
+		        <input type="text" value="{{data.data.noobRule.productCountLimit}}" class="layui-input getLimitVal" placeholder="大于0的整数">
+		        {% else %}
+		        <input type="text" value="" class="layui-input getLimitVal" placeholder="大于0的整数">
+		        {% endif %}
+		    </div>
+		     <span class="layui-tooltip tooltip-getLimitVal hide">大于0的整数</span>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="txt-impt">*</span>领取时间间隔(小时):</label>
+			<div class="layui-input-inline">
+		    	{% if data.data.noobRule.hourInterval %}
+		        <input type="text" value="{{data.data.noobRule.hourInterval}}" class="layui-input hourInterval" placeholder="大于0的整数">
+		        {% else %}
+		        <input type="text" value="" class="layui-input hourInterval" placeholder="大于0的整数">
+		        {% endif %}
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-hourInterval hide">大于0的整数</span>
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>选择新手福利商品：</label>
+			    <div class="layui-input-inline selCoupsItem" data-val="">
+			    	<input type="text" name="selCoupsInp" class="layui-input selCoupsInp" lay-verify="required" placeholder="选择新手福利商品" autocomplete="off">
+				    <i class="layui-select-icon layui-icon">&#xe61a;</i>
+				    <div class="selCoupsContItem hide">
+				    	<div class="searchBox">
+				    		<input type="text" name="searchGood" class="layui-input searchGood" lay-skin="primary" placeholder="请输入您要找的内容">
+				    		<i class="layui-icon layuiIcon">&#xe615;</i>
+				    	</div>
+				    	<ul class="selCoupsBox clearfix"></ul>
+				    	<div class="handleBtnBox">
+				    		<span class="handleBtns sureCoups">确定</span>
+				    		<span class="handleBtns resetBtn">取消</span>
+				    	</div>
+				    </div>
+			    </div>
+			    <span class="layui-tooltip tooltip-selCoups hide">请选择新手福利商品</span>
+		    </div>
+	    </div>
+    </form> 
+    <div class="goodsLisLine paddingLR40">设置新手福利商品</div>
+    <div class="goodsLisBox">
+    	<ul class="selectGoodsItem">
+    		{% if data.data.noobList.length %}
+    		{% for lis in data.data.noobList %}
+    		<li class="selItemLis" data-id="{{lis.productId}}">
+	    		<span class="selGoodsName fl marginRight20">{{lis.productName}}</span>
+	    		
+	    		<span class="oldCoast fl marginRight20" data-oldPoint="{{lis.exchangePoints}}">原价：{{lis.exchangePoints}}积分</span>
+	    		<span class="txt-impt fl">*</span><span class="fl">新手价：</span>
+	    		<input type="text" class="layui-input-inline newCoastInp marginRight20" value="{{lis.noobExchangePoints}}" placeholder="小于售价(≥0的整数)" autocomplete="off">
+	    		<div class="recHomeBox marginRight20" data-radio="{{lis.noobHomePage}}"><span class="txt-impt fl">*</span><span class="fl">推荐到首页：</span>
+		    		{% if lis.noobHomePage == 1 %}
+		    		<input name="recHomes{{loop.index}}" value="1" type="radio" lay-filter="recHome" checked="checked"><span>是</span><input class="margin_left" name="recHomes{{loop.index}}" value="0" type="radio" lay-filter="recHome"><span>否</span>
+					{% else %}
+					<input name="recHomes{{loop.index}}" value="1" type="radio" lay-filter="recHome"><span>是</span><input class="margin_left" name="recHomes{{loop.index}}" value="0" type="radio" lay-filter="recHome" checked="checked"><span>否</span>
+					{% endif %}
+				</div>
+				<div class="fl">
+					<span class="fl">排序：</span>
+					{% if lis.noobHomePage == 1 %}
+					<input type="text" class="layui-input-inline newGoodSort marginRight20 fl" value="{{lis.noobGoodSort}}" placeholder="大于0的整数" autocomplete="off">
+		    		{% else %}
+		    		<input type="text" class="layui-input-inline newGoodSort marginRight20 fl" value="{{lis.noobGoodSort}}" disabled="disabled" placeholder="大于0的整数" autocomplete="off">
+			    	{% endif %}
+			    	<div class="layui-btn-group fl">
+			    		<a class="layui-icon layui-btn layui-btn-primary layui-btn-small delCofigBtn" title="删除">&#xe640;</a>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</li>
+			{% endfor %}
+			{% endif %}
+    	</ul>
+    </div>
+	<div class="layui-form-item nextBackBtn paddingLR40">
+	 	<div class="layui-inline">
+        	<a data-ruleId="{{data.data.productRule.id}}" class="layui-btn setMessage">保存</a>
+    	</div>
+    </div>
+{% endblock %}
+{% block layui%}   
+<script src="/controllers/merchant/noviceWelfare/index.js" type="text/javascript" charset="utf-8"></script>
+{% endblock%}

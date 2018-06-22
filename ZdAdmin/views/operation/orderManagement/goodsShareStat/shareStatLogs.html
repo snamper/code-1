@@ -1,0 +1,97 @@
+{% extends "./../../../layout.html"%}
+{% block title%}运营管理--商品管理--商品分享统计日志{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		.topCont{
+		    line-height: 45px;
+		    font-size: 16px;
+		    font-weight: bold;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">商品分享统计日志</li>
+	     <li class="lisFlBtn"><a href="/operation/opMerMan/goodsShareDetail?productId={{page.productId}}&name={{escape(page.name)}}" class="layui-btn detailBackBtn">返回</a></li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+     <div class="topCont" style="padding: 0 20px;">
+     	<span class="goodsNames">商品名称：{{page.name}}</span>
+     </div>
+	 <form class="layui-form dataPlug" action="">
+	 	<div class="layui-form-item padding15" >
+		    <div class="layui-inline">
+		        <label class="layui-form-label">日期范围</label>
+		        <div class="layui-input-inline">
+		        	{% if page && page.startTime %}
+					<input class="layui-input" placeholder="开始日" id="LAY_demorange_s" value="{{page.startTime}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+			    	{% endif %}
+			    </div>
+			    <div class="layui-input-inline">
+			    	{% if page && page.endTime %}
+					<input class="layui-input" placeholder="截止日" id="LAY_demorange_e" value="{{page.endTime}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+			    	{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 90px;">用户手机号：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.phoneNum %}
+					<input type="text" name="title" id="userPhone" lay-verify="text" autocomplete="off" placeholder="请输入用户手机号" class="layui-input" value="{{page.phoneNum}}">
+					{% else %}
+					<input type="text" name="title" id="userPhone" lay-verify="text" autocomplete="off" placeholder="请输入用户手机号" class="layui-input">
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>用户手机号</th>
+	     	<th>分享时间</th>
+	     	<th>PV</th>
+	     	<th>UV</th>
+	     	<th>下载</th>
+	     	<th>注册</th>
+	     	<th>次日留存</th>
+	     	<th>七日留存</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% if data.data.datas %}
+         	{% for item in data.data.datas %}
+         	<tr>
+			 	<td>{{item.phoneNum}}</td>
+			 	<td>{{item.createTime}}</td>
+			 	<td>{{item.pv}}</td>
+			 	<td>{{item.uv}}</td>
+			 	<td>{{item.downloadCount}}</td>
+			 	<td>{{item.registerCount}}</td>
+			 	<td>{{item.nextDayLeft}}</td>
+			 	<td>{{item.sevenDayLeft}}</td>
+			</tr>
+			{% endfor %}
+			{% endif %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/orderManagement/goodsShareStat.js"></script>
+{% endblock%}

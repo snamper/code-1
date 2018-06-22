@@ -1,0 +1,44 @@
+.addResourceSection .layui-form-label{width: 130px;}
+.addResourceSection .layui-form{margin-left:15%}
+.addResourceSection .layui-input-inline{min-width:240px}
+.layui-form-saveCloseBtn{margin-left:160px;margin-top:40px}
+
+/*任务管理*/
+.logBtns{float: right;margin-right: 20px;}
+.novicesLogsBtn{display: block;}
+#taskTable th,#taskTable tr,#taskTable td{border: 0;}
+#taskTable .tasksNumInpt,#taskTable .pointsNumInpt,#taskTable .lottosNumInpt{width: 50px;line-height: 26px;}
+#taskTable .taskContBorder,#taskTable .taskPointBorder{border: 1px solid #fb2a09;box-shadow: #fb2a09 0px 0px 20px -5px;}
+.moreFlBtn{width: 220px;}
+.moreFlBtn a{width: 95px; display: inline-block;float: left;}
+/*奖品位置示例弹窗*/
+#loteryBox{padding: 25px 45px;}
+#loteryBox .awardPos{width: 100%;clear: both;}
+#loteryBox .awardPos li{width: 80px; height: 80px;border-radius: 8px;border: 1px solid #ccc;margin-bottom: 5px;text-align: center;line-height: 80px;font-size: 16px;float: left;background-color: #fbe5e5;}
+#loteryBox .awardPos li:nth-child(5){border:1px solid #fff;background-color: #fff;}
+#loteryBox .awardPos .awardShowPosCenter{border: none;}
+.awardShowPosMarngin{margin-left: 5px ;margin-right: 5px;}
+#taskTbody .selGoodsBox,#taskTbody .setPointsBox{position: relative;}
+.selGoodsBox input{width: 230px;}
+.selGoodsBox input,.selGoodsBox a{float: left;}
+.setPageBtnCenter{margin-top: 45px;}
+/*奖品图标上传*/
+.getImgBox .copyUploadBtn{opacity: 0.3;border: 0;position: absolute;right: 0;top: 0;width: 70px;line-height: 70px;font-size: 20px;color: #b5b3b3;text-align: center;cursor: pointer;transition: 0.3s;cursor:pointer;}
+#taskTable .getImgBox{width: 72px;height: 72px;}
+.getImgBox .layui-input-pos{position: relative;}
+.getImgBox .layui-upload-file{width: 70px;height: 70px;position: absolute;right: 0;top: 0;z-index: 99;opacity: 0;}
+.getImgBox .fileBtnBox{width: 70px;height: 70px;position: absolute;left: 0;top: 0;}
+.getImgBox .selectBtnF{position: absolute;right: -95px;top: 0;}
+.lottoryIconBox .imgSize{width: 100%;height: 100%;}
+.selGoodsBox .disUseBox,.setPointsBox .disUseBox{position: absolute;width: 100%;height: 100%;z-index: 33;background: rgba(234, 234, 234, 0.5);left: 0;top:0;}
+.getImgBox .lottoryIconBox{width: 70px;height: 70px;position: relative;border: 1px solid #b5b3b3;}
+.getImgBox div{display: inline-block;}
+/*选择商品弹窗*/
+.secleUrl .secleUrlTop{width: 90%;margin: 0 auto;position: relative;margin-top: 15px;}
+.secleUrlTop .urlSearch{display: block;width: 100%;padding-left: 10px;}
+.secleUrlTop .urlSearchBtn{position: absolute;right: 0;top: 0;z-index: 22;}
+.secleUrl .secleUrlCont{padding:10px 0 0 30px;}
+.secleUrl .secleUrlCont .urlContLisHover{background-color:rgba(0, 150, 136 ,0.7);}
+    
+    
+    

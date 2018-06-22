@@ -1,0 +1,137 @@
+{% extends "./../layout.html"%}
+{% block title%}数据统计--广告数据统计{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+		 <li>数据统计</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">广告数据统计</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form dataPlug" action="">
+		    <div class="layui-inline">
+		        <label class="layui-form-label">日期范围</label>
+		        <div class="layui-input-inline">
+		        	{% if page && page.startTime %}
+					<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s" value="{{page.startTime}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+			    	{% endif %}
+			    </div>
+			    <div class="layui-input-inline">
+			    	{% if page && page.endTime %}
+					<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+			    	{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline layui-canal">
+			 	<label class="layui-form-label" style="width: 84px;">广告名称：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.name %}
+					<input type="text" name="title" id="advName" lay-verify="text" autocomplete="off" placeholder="" class="layui-input" value="{{page.name}}" />
+					{% else %}
+					<input type="text" name="title" id="advName" lay-verify="text" autocomplete="off" placeholder="" class="layui-input" />
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-input-inline canalList selectStatus">
+	    		<select name="canalList" lay-filter="canalList" id="canalList">
+	    			<option value=" ">选择广告主渠道</option>
+	    		</select>
+	    	</div>
+		    <div class="layui-inline padding15" >
+	 		{% if page && page.systemType && page.systemType == 0 %}
+	    	<div class="layui-input-inline systemType" data-systemType="0">
+	        {% elseif page && page.systemType && page.systemType == 1 %}
+	    	<div class="layui-input-inline systemType" data-systemType="1">
+	    	{% elseif page && page.systemType && page.systemType == 2 %}
+	    	<div class="layui-input-inline systemType" data-systemType="2">
+			{% else %}
+			<div class="layui-input-inline systemType" data-systemType="0">
+			{% endif %}
+		        <select name="systemType" lay-filter="systemType" lay-verify="required" lay-search="">
+		        	{% if page && page.systemType &&  page.systemType == 0 %}
+		        	<option value="0" selected="selected">操作平台</option>
+		            <option value="2">android</option>
+		            <option value="1">ios</option>
+		            {% elseif page && page.systemType && page.systemType == 1 %}
+		        	<option value="0">操作平台</option>
+		            <option value="2">android</option>
+		            <option value="1" selected="selected">ios</option>
+		            {% elseif page && page.systemType && page.systemType == 2 %}
+		        	<option value="0">操作平台</option>
+		            <option value="2" selected="selected">android</option>
+		            <option value="1">ios</option>
+		            {% else %}
+		            <option value="0" selected="selected">操作平台</option>
+		            <option value="2">android</option>
+		            <option value="1">ios</option>
+					{% endif %}
+		        </select>
+	        </div> 	
+	    </div>
+	    <div class="layui-inline" style="margin-left: 10px;">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+	    <div class="layui-inline" style="float: right; margin-right: 20px;">
+	    	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "下载" %}
+		    			<a href="javascript:;" id="downLoadBtn" class="layui-btn">下载</a>
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}
+		   
+	    </div>
+	    <a	id="downloadFiles" href="" download=""></a>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>时间</th>
+	     	<th>广告名称</th>
+	     	<th>广告主渠道</th>
+	     	<th>显示平台</th>
+	     	<th>曝光量</th>
+	     	<th>曝光人数</th>
+	     	<th>点击量</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for item in data.data.datas%}
+         	<tr>
+			 	<td>{{loop.index}}</td>
+			 	<td>{{item.createTimeString}}</td>
+			 	<td>{{item.name}}</td>
+				<td>{{item.channel}}</td>
+			 	<td>
+			 		{% if item.systemType == 0 %}
+			 		全部
+			 		{% elseif item.systemType == 1 %}
+			 		IOS
+			 		{% elseif item.systemType == 2 %}
+			 		Android
+			 		{% else %}
+			 		--
+			 		{% endif %}
+			 	</td>
+			 	<td>{{item.showVolume}}</td>
+				<td>{{item.userVolume}}</td>
+				<td>{{item.clickVolume}}</td>
+			</tr>
+			{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/dataManage/advManage.js"></script>
+{% endblock%}

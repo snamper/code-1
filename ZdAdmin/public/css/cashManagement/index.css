@@ -1,0 +1,32 @@
+/*
+ *商品管理-商品兑换管理
+*/
+.setMarCenter{
+    width: 890px;
+    margin: 50px auto;
+}
+.setMarCenter .nextBackBtn{
+	width: 350px;
+	margin: 50px auto;
+}
+.setMarCenter .sortSide{
+	width: 90px;
+}
+.setMarCenter .sortSide, .setManSort .layui-form-checkbox, .layui-form-item .layui-form-checkbox[lay-skin=primary]{
+	margin: 0;
+}
+.tabChange{
+	margin: 0 25px 25px;
+	position: relative;
+}
+.tabChange .layui-tab-title .layui-this {
+    background-color: #ccc;
+    font-weight: bold;
+}
+.setMarCenter .table-center{
+	width: 85px;
+	margin: 0 auto;
+}
+.goodsViews .layui-input-inline span{
+	line-height: 38px;
+}

@@ -1,0 +1,187 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告审核{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告审核</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="layui-tab">
+			<ul class="layui-tab-title chooseType " data-status="{{page.status}}">
+				{% if menuCodeList %}
+			    	{% for code in menuCodeList %}
+			    		{% if unescape(code.name) == "待审核" %}
+			    			{% if page.status && page.status == 4 %}
+								<li data-status="4" class="layui-this">待审核</li>
+							{% else %}
+								<li data-status="4" >待审核</li>
+							{% endif %}
+			    			
+			    		{% elseif unescape(code.name) == "已审核" %}
+			    			{% if page.status ==0 %}
+						    	<li data-status='0' class="layui-this">已审核</li>
+						    {% else %}
+						    	<li data-status='0'>已审核</li>
+						    {% endif %}
+			    		{% endif %}
+			    	{% endfor %}
+			    {% endif %}
+				
+				
+			  </ul>
+		</div>
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">广告文案:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.name %}
+					 		<input type="text" name="username" value={{unescape(page.name)}}  autocomplete="off" class="layui-input adverName">
+					 	{% else %}
+					 		<input type="text"  name="username"   autocomplete="off" class="layui-input adverName">
+					 	{% endif %}	
+				    </div>
+				    
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">广告主名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.tAdvertiserName %}
+					 		<input type="text" name="username" value={{unescape(page.tAdvertiserName)}}   autocomplete="off" class="layui-input tAdvertiserName">
+					 	{% else %}
+					 		<input type="text" name="username"   autocomplete="off" class="layui-input tAdvertiserName">
+					 	{% endif %}	
+				        
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startDate %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.startDate}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endDate %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endDate}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 queryAdver" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>广告文案</th>
+		            <th>广告主</th>
+		            <th>投放类型</th>
+		            <th>目标量（次）</th>
+		            <th>投放金额（元）</th>
+		            <th>广告主单价</th>
+		            <th>提交时间</th>
+		            {% if page.status == 4 %}
+		            	<th>操作</th>
+		            {% endif %}
+		            {% if page.status == 0 %}
+		            	<th>状态</th>
+		            	<th>审核时间</th>
+		            {% endif %}
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+		    		{% if data.data.datas.length > 0 %}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td><a href="/advertising/audit/advertView?id={{item.id}}&source=/advertising/audit">{{item.name}}</a></td>
+					 	<td>{{item.t_advertiser_name}}</td>
+					 	{% if item.delivery_type == "1" %}
+					 		<td>CPM视频</td>
+					 	{% elseif item.delivery_type == "2" %}
+					 		<td>CPC</td>
+					 	{% elseif item.delivery_type == "3" %}
+					 		<td>CPM</td>
+					 	{% else %}
+					 		<td></td>
+					 	{% endif %}	
+					 	<td>{{item.target_number}}</td>
+					 	<td>{{item.amount}}</td>
+					 	<td>{{item.advertiser_unit_price}}</td>
+					 	<td>{{item.submit_time}}</td>
+					 	{% if page.status == "4"%}
+					 	<td>
+					 		{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "审核" %}
+						    			<a href="audit/auditView?id={{item.id}}" class="layui-btn layui-btn">审核</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+					 	</td>
+					 	{% endif %}
+					 	
+					 	 {% if page.status == '0' %}
+						 	
+						 	{% if item.status == "1" %}
+						 		<td>草稿</td>
+						 	{% endif %}
+						 	{% if item.status == "2" %}
+						 		<td>待修改 </td>
+						 	{% endif %}
+						 	{% if item.status == "3" %}
+						 		<td>待设置 </td>
+						 	{% endif %}	
+						 	{% if item.status == "4" %}
+						 		<td>待审核 </td>
+						 	{% endif %}
+						 	{% if item.status == "5" %}
+						 		<td>待上架 </td>
+						 	{% endif %}
+						 	{% if item.status == "7" %}
+						 		<td>已上架 </td>
+						 	{% endif %}
+						 	{% if item.status == "9" %}
+						 		<td>已下架 </td>
+						 	{% endif %}
+						 	<td>{{item.handle_time}}</td>
+						 {% endif %}
+					 </tr>
+					 {% endif %}	
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/auditManagement/index.js"></script>
+{% endblock %}
+

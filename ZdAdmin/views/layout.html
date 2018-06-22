@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title%}{% endblock %}</title>
+		<meta name="renderer" content="webkit"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="/vendor/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/css/layout.css" media="all" />
+		<link rel="stylesheet" href="/css/global.css" media="all" />
+		{% block head%}{% endblock%}
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin beg-layout-container">
+		    <!-- head begin -->
+			<div class="layui-header beg-layout-header">
+				<!--<div class="beg-layout-main beg-layout-logo">
+					 悦多多积分广告平台-运营中心
+				</div>-->
+				<div class="beg-layout-main beg-layout-side-toggle">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</div>
+				<!--一级菜单-->
+				<div class="beg-layout-main beg-layout-menu" id="menu">
+					<input type="hidden"  name="" id="menuListHide" value="" />
+					<ul class="layui-nav beg-layout-nav navContent" >
+						{% for item in menuList%}
+						     {% if item.manu_url.indexOf(navConf.nav.split("/")[1])>0%}
+					              <li class="layui-nav-item layui-this" >
+								     <a href="{{item.manu_url}}" >
+									     <cite>{{unescape(item.name)}}</cite>
+								     </a>
+					              </li>
+						     {% else %}
+						     <li class="layui-nav-item" >
+							     <a href="{{item.manu_url}}"  data-module-id="1"> 
+								     <cite>{{unescape(item.name)}}</cite>
+							     </a>
+						     </li>
+						     {% endif %}
+						{% endfor%}
+						
+					</ul>
+				</div>
+				<!-- personal info -->
+				<div class="beg-layout-main beg-layout-panel">
+					<ul class="layui-nav beg-layout-nav" lay-filter="user">
+						<li class="layui-nav-item">
+							<a href="javascript:;" class="beg-layou-head">
+								<img src="/images/0.jpg" />
+								<span>{{unescape(userMessage.name)}}</span>
+							</a>
+							<dl class="layui-nav-child">
+								 <dd>
+									<a class="editPassword" href="javascript:;" data-tab="true" data-url='user.html'>
+										<i class="fa fa-user-circle" aria-hidden="true"></i>
+										<cite>修改密码</cite>
+									</a>
+								</dd> 								
+								<dd>
+									<a class="goToLogin" style="cursor: pointer;">
+										<i class="fa fa-sign-out" aria-hidden="true"></i>
+										<cite>注销</cite>
+									</a>
+									
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- head end -->
+			<!--侧边导航栏-->
+			<div class="layui-side beg-layout-side" id="side" lay-filter="side">
+				<ul class="layui-nav layui-nav-tree beg-navbar">
+					{% for item in  navList.data%}
+						{% if item.manu_url == navConf.nav %}
+							{% if item.children && item.children.length > 0 %}
+								{% for item1 in item.children %}
+									{% if item1.children && item1.children.length > 0 %}
+										{% if navConf.navThird &&  navConf.navSec == item1.manu_url %}
+											<li class="layui-nav-item layui-nav-itemed">
+												{% else %}
+											<li class="layui-nav-item">
+										{% endif %}
+											<a href="javascript:;">
+												{{item1.name}}
+												<span class="layui-nav-more"></span>
+											</a>
+											<dl class="layui-nav-child">
+												{% for item2 in item1.children %}
+													{% if item2.manu_url == navConf.navThird %}
+													<dd class="layui-this" style="padding-left:15px;height: 45px" title="{{item2.name}}">
+														<a href="{{item2.manu_url}}">{{item2.name}}</a>
+													</dd>
+													{% else %}
+													<dd style="padding-left:15px;height: 45px" title="{{item2.name}}">
+														<a href="{{item2.manu_url}}">{{item2.name}}</a>
+													</dd>
+													{% endif %}
+												{% endfor %}
+											</dl>
+										</li>
+									{% else %}
+										{% if navConf.navSec == item1.manu_url %}
+											<li class="layui-nav-item layui-this">
+												<a  href="{{item1.manu_url}}">{{item1.name}}</a>
+											</li>
+										{% else %}
+											<li class="layui-nav-item">
+												<a href="{{item1.manu_url}}">{{item1.name}}</a>
+											</li>
+										{% endif %}
+									{% endif %}
+
+								{% endfor %}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			<!--内容区域-->
+			<div class="layui-body beg-layout-body">
+				<div class="layui-tab">
+				     {% block indexTitle%}{% endblock%}
+				</div>				
+				{% block content%}{% endblock%}
+			</div>
+			<!--
+	        	描述：密码弹窗
+	        -->
+			<div id="editPasswordBox" class="editPasswordBox hide">
+				<div class="uploadBox clearfix">
+					<div class="modal-body">
+						<form class="layui-form layui-form-position layui-form-padding" action="">
+							
+							<!--<div class="layui-form-item">
+							    <label class="layui-form-label">用户名:</label>
+							    <div class="layui-input-inline">
+							        <input type="text" name="username" lay-verify="required" placeholder="请输入手机号"  autocomplete="off" class="layui-input phone">
+							    </div>
+							    <span class="layui-tooltip tooltip-merchantShortN hide">请输入手机号</span>
+							</div>-->
+							<div class="layui-form-item">
+							    <label class="layui-form-label">新密码:</label>
+							    <div class="layui-input-inline">
+							        <input type="password" name="username" lay-verify="required" placeholder="请输入新密码"  autocomplete="off" class="layui-input newPassword">
+							    </div>
+							    <span class="layui-tooltip tooltip-merchantShortN hide">请输入新密码</span>
+							</div>
+							<div class="layui-form-item">
+							    <label class="layui-form-label">再次输入新密码:</label>
+							    <div class="layui-input-inline">
+							        <input type="password" name="username" lay-verify="required" placeholder="请输入新密码"  autocomplete="off" class="layui-input againPassword">
+							    </div>
+							    <span class="layui-tooltip tooltip-merchantShortN hide">请输入新密码</span>
+							</div>
+							
+						</form>
+					</div>
+				</div>
+				<div class="layui-form-saveCloseBtn" pane="">
+				    <a  class="layui-btn layui-save-btn " lay-submit lay-filter="submitEdit">保存</a>
+				    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+				</div>
+			</div>
+			<!--页脚-->
+			<div class="layui-footer beg-layout-footer">
+				<p>2017 &copy;
+					<a href="http://eratpay.com/">eratpay.com</a> LGPL license
+				</p>
+			</div>
+		</div>		
+		<script src="/vendor/layui/layui.js "></script>
+        <script src="/js/layout.js "></script>
+        <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/vendor/jquery/cookie.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="/vendor/jquery/clipboard.min.js"></script>
+		<script type="text/javascript" src="/js/main.js"></script>
+		{% block layui%}{% endblock%}
+	</body>
+</html>

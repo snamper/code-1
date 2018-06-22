@@ -1,0 +1,128 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-消息中心-站内信{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" href="/css/operation/index.css" />-->
+	<style type="text/css">
+		.tips{width: 800px;line-height: 24px;font-size: 14px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li>消息中心</li>
+	    <li class="arrow-icon">>></li>
+	    <li>站内信</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">配置系统站内信</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>发送场景</th>
+		            <th>标题</th>
+		            <th>内容</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm" class="layui-form">
+		    	<tr class="message_line" data-id="{{data.data.notpay.id}}" data-disabled="{{data.data.disabled}}">
+		    		<td style="width: 180px;" >
+		    			超过 <input type="text" value="{{data.data.notpay.invalid_minute}}" data-id="{{data.data.notpay.id}}" class="time" style="width: 50px;height:30px;display: inline-block;"> 分钟 未支付
+		    			<span class="layui-tooltip tooltip-time hide" style="width: 100%;line-height: 16px;margin-left: -38px;">只能是正整数</span>
+		    		</td>
+		    		<td style="width: 250px;">
+		    			<input type="text" value="{{data.data.notpay.name}}"  class="layui-input title">
+		    			<span class="layui-tooltip tooltip-title hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限20字</span>
+		    		</td>
+		    		<td style="width:50%;">
+		    			<input type="text" value="{{data.data.notpay.content}}" class="layui-input content">
+		    			<span class="layui-tooltip tooltip-content hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限50字</span>
+		    		</td>
+		    		<td style="width: 164px;">
+		    			<div class="layui-input-inline layui-input-checked" lay-filter="opt1" >
+		    				{% if !data.data.notpay.disabled || data.data.notpay.disabled == 0 %}
+						        <input type="radio" name="opt1" value="0" checked="checked" title="启用" lay-filter="opt1">
+								<input type="radio" name="opt1" value="1" title="禁用" lay-filter="opt1">
+							{% else %}
+								<input type="radio" name="opt1" value="0"  title="启用" lay-filter="opt1">
+								<input type="radio" name="opt1" value="1" checked="checked" title="禁用" lay-filter="opt1">
+							{% endif %}
+					   </div>
+		    		</td>
+		    	</tr>
+		    	<tr  class="message_line" data-id="{{data.data.invalidOrder.id}}" data-disabled="{{data.data.disabled}}">
+		    		<td style="width: 160px;">无效订单</td>
+		    		<td style="width: 160px;">
+		    			<input type="text" value="{{data.data.invalidOrder.name}}" data-id="{{data.data.invalidOrder.id}}" class="layui-input title">
+		    			<span class="layui-tooltip tooltip-title hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限20字</span>
+		    		</td>
+		    		<td style="width: 60%;">
+		    			<input type="text" value="{{data.data.invalidOrder.content}}" class="layui-input content">
+		    			<span class="layui-tooltip tooltip-content hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限50字</span>
+		    		</td>
+		    		<td style="width: 164px;">
+		    			<div class="layui-input-inline layui-input-checked" lay-filter="opt2" >
+							{% if !data.data.invalidOrder.disabled || data.data.invalidOrder.disabled == 0 %}
+						        <input type="radio" name="opt2" value="0" checked="checked" title="启用" lay-filter="opt2"> 
+								<input type="radio" name="opt2" value="1" title="禁用" lay-filter="opt2">
+							{% else %}
+								<input type="radio" name="opt2" value="0"  title="启用" lay-filter="opt2">
+								<input type="radio" name="opt2" value="1" checked="checked" title="禁用" lay-filter="opt2">
+							{% endif %}
+					   </div>
+		    		</td>
+		    	</tr>
+		    	<tr  class="message_line" data-id="{{data.data.finishOrder.id}}" data-disabled="{{data.data.disabled}}">
+		    		<td style="width: 160px;">支付成功</td>
+		    		<td style="width: 160px;">
+		    			<input type="text" value="{{data.data.finishOrder.name}}" data-id="{{data.data.finishOrder.id}}" class="layui-input title">
+		    			<span class="layui-tooltip tooltip-title hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限20字</span>
+		    		</td>
+		    		<td style="width: 60%;">
+		    			<input type="text" value="{{data.data.finishOrder.content}}" class="layui-input content">
+		    			<span class="layui-tooltip tooltip-content hide" style="width: 100%;line-height: 16px;">可输入汉字、字母、数字，限50字</span>
+		    		</td>
+		    		<td style="width: 164px;">
+		    			<div class="layui-input-inline layui-input-checked" lay-filter="opt3" >
+							{% if !data.data.finishOrder.disabled || data.data.finishOrder.disabled == 0 %}
+						        <input type="radio" name="opt3" value="0" checked="checked" title="启用" lay-filter="opt3">
+								<input type="radio" name="opt3" value="1" title="禁用" lay-filter="opt3">
+							{% else %}
+								<input type="radio" name="opt3" value="0"  title="启用" lay-filter="opt3">
+								<input type="radio" name="opt3" value="1" checked="checked" title="禁用" lay-filter="opt3">
+							{% endif %}
+					   </div>
+		    		</td>
+		    	</tr>
+		    </tbody>
+		</table>
+		<div class="marginAuto" style="margin-left:50%;margin-top: 20px; ">
+			<a href="javascript:;" class="layui-btn saveAdd" >确定</a>
+			<a href="/operation/pushMessage/message" class="layui-btn layui-btn-danger" >返回</a>
+			<!--<span class="layui-tooltip tooltip-tips hide" style="margin-left: 10px;">标题不得超过20字</span>-->
+		</div>
+		<ul class="tips" style="margin-left: 30px;">
+			<p>可用变量</p>
+			<li>$u_Name=用户名</li>
+			<li>$o_Number=订单号</li>
+			<li>$c_Name=商品名称</li>
+			<li>$b_Time=购买时间</li>
+			<li>$b_Name=商家名称</li>
+			<li>$i_Price=消耗积分数量</li>
+			<li>例：内容中输入“Hi，$u_Name！你订单号为$o_Number的订单号已经支付成功了。”</li>
+			<li>此用户名为：John  订单号为：123456789</li>
+			<li>客户端输出：</li>
+			<li>Hi，John  ！你订单号为123456789的订单号已经支付成功了。</li>
+		</ul>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/pushMessage/messageApply.js"></script>
+{% endblock %}
+
+
+

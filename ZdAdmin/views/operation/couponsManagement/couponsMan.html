@@ -1,0 +1,110 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-优惠券管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %} 
+{% block indexTitle %}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">优惠券管理</li>
+	<li class="fr"><a href="/operation/couponsManagement/addCoupons?useWay=1" class="layui-btn creatCouponBtn">创建优惠券</a></li>
+</ul>
+{% endblock %}
+{% block content %} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li><a href="/operation/couponsManagement">额度管理</a></li>
+		<li class="layui-this"><a href="/operation/couponsManagement/couponsMan">优惠券管理</a></li>
+		<li><a href="/operation/couponsManagement/channelCoupon">渠道配置优惠券</a></li>
+	</ul>
+</div>
+<form class="layui-form" action="">
+ 	<div class="layui-input-inline padding15 selCoupons" data-selIfy="">
+	    <select name="couponsIfy" lay-filter="couponsIfy" lay-verify="required" lay-search="">
+	    	<option value=" ">优惠券类型</option>
+	    	{% if page && page.couponType == '1' %}
+	    	<option value="1" selected="selected">指定商品券</option>
+	    	{% else %}
+	        <option value="1">指定商品券</option>
+	        {% endif %}
+	        {% if page && page.couponType == '2' %}
+	    	<option value="2" selected="selected">通用券</option>
+	    	{% else %}
+	        <option value="2">通用券</option>
+	        {% endif %}
+	    </select>
+    </div>
+    <div class="layui-inline">
+	 	<label class="layui-form-label labelWidth2">批次：</label>
+	    <div class="layui-input-inline">
+		    {% if page && page.batchNum %}
+			<input type="text" name="batchNum" class="layui-input batchNum" value="{{page.batchNum}}" lay-verify="text" autocomplete="off" placeholder="请输入批次">
+			{% else %}
+			<input type="text" name="batchNum" class="layui-input batchNum" lay-verify="text" autocomplete="off" placeholder="请输入批次">
+			{% endif %}			     
+	    </div>
+    </div>
+    <div class="layui-inline">
+    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+    </div>
+</form>
+{% if data.data.datas.length %}
+<table class="layui-table table-width">
+	<tr>
+     	<th>序号</th>
+     	<th>优惠券类型</th>
+     	<th>批次</th>
+     	<th>优惠券名称</th>
+     	<th>额度(元)</th>
+     	<th>使用期限</th>
+     	<th>生成数量(份)</th>
+     	<th>库存</th>
+     	<th>操作</th>
+    </tr>
+    <tbody id="htmlWrap">
+     	{% for item in data.data.datas %}
+     	<tr>
+		 	<td>{{page.pNo|sortNum(loop.index)}}</td>
+		 	{% if item.couponType == '1' %}
+		 	<td>指定商品券</td>
+		 	{% elseif item.couponType == '2' %}
+		 	<td>通用券</td>
+		 	{% endif %}
+		 	<td>{{item.batchNum}}</td>
+		 	<td>{{item.name}}</td>
+		 	<td>{{item.rmbValue}}</td>
+		 	<td>{{item.eventDateStart}} ~ {{item.useDateEnd}}</td>
+		 	<td>{{item.allCount}}</td>
+		 	<td>{{item.stockNum}}</td>
+			<td>
+				{% if item.couponType == '1' %}
+			 	{% if item.state == '1' %}
+			 	<a href="/operation/couponsManagement/fillWareHose?couponType=1&couponBaseId={{item.id}}" data-batch="{{item.batchNum}}" data-id="{{item.id}}" class="layui-btn layui-btn-normal">补货</a>
+			 	{% else %}
+			 	<a href="/operation/couponsManagement/editorCoupons?couponType=1&couponBaseId={{item.id}}" data-batch="{{item.batchNum}}" data-id="{{item.id}}" class="layui-btn">编辑</a>
+			 	{% endif %}
+			 	{% elseif item.couponType == '2' %}
+			 	{% if item.state == '1' %}
+			 	<a href="/operation/couponsManagement/fillWareHose?couponType=2&couponBaseId={{item.id}}" data-batch="{{item.batchNum}}" data-id="{{item.id}}" class="layui-btn layui-btn-normal">补货</a>
+			 	{% else %}
+			 	<a href="/operation/couponsManagement/editorCoupons?couponType=2&couponBaseId={{item.id}}" data-batch="{{item.batchNum}}" data-id="{{item.id}}" class="layui-btn">编辑</a>
+			 	{% endif %}
+			 	{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+ 	</tbody>
+</table>
+{% else %}
+<div style="text-align:center">暂无数据</div>
+{% endif %}
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+{% else %}
+    <div style="text-align:center">{{data.message}}</div>
+{% endif %}
+{% endblock %} 
+{% block layui %}
+<script type="text/javascript" src="/controllers/operation/couponsManagement/couponsMan.js"></script>
+{% endblock %}

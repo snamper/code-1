@@ -1,0 +1,89 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-第三方广告列表{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li >第三方广告</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">三方广告dsp渠道</li>
+	    <a class="layui-btn openBox" style="float:right;margin-right:60px;">新建</a>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">	
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>渠道编号</th>
+		            <th>渠道名称</th>
+		            <th>创建时间</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+		    		{% if data.data.datas.length > 0 %}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td>{{item.name}}</td>
+					 	<td>{{item.createTime}}</td>
+					 	<td>
+						    <a data-id="{{item.id}}" data-type="{{item.type}}" data-name="{{item.name}}" data-code="{{item.code}}" class="layui-btn layui-btn openBox">编辑</a>
+					 	</td>
+					 </tr>
+					 {% endif %}	
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	
+	<div class="coverScreen hide"></div>
+	<div id="setBox" class="setBox hide layui-form" style="padding-top: 30px;">
+		<div class="layui-form-item channelId">
+		    <label class="layui-form-label">*  渠道编码:</label>
+		    <div class="layui-input-inline">
+		        <input type="text" name="username" value="{{data.data.code}}" class="layui-input code">
+		    </div>
+		</div>
+		<div class="layui-form-item channelName">
+		    <label class="layui-form-label">*  渠道名称:</label>
+		    <div class="layui-input-inline">
+		        <input type="text" name="username" value="" placeholder="请输入渠道名称" autocomplete="off" class="layui-input name">
+		    </div>
+		    <span class="layui-tooltip tooltip-name hide">请输入渠道名称</span>
+		</div>
+		<div class="layui-form-item" >
+		    <label class="layui-form-label">*渠道类型:</label>
+		    <div class="layui-input-inline layui-input-checked channelType" lay-filter="type" style="width: 30%;" >
+		        <!--<input type="radio" name="type" value="1" title="后端" lay-filter="type" checked="checked"/>			
+				<input type="radio" name="type" value="2" title="前端" lay-filter="type"/>	-->
+		   </div>
+		</div>
+		<div class="layui-form-saveCloseBtn" pane="" style="margin: 40px 0 0 220px;">
+		    <a  class="layui-btn layui-save-btn saveChannel">确定</a>
+		    <a class="layui-btn layui-btn-danger layui-layer-close">取消</a>
+		</div>
+	</div>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/advertManagement/dspAdverList.js"></script>
+{% endblock %}
+

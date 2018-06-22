@@ -1,0 +1,279 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--推荐管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">推荐管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form dataPlug" action="">
+	 	<div class="tabChange">
+	 	{% if page.location %}
+	 		<ul class="layui-tab-title chooseType" data-location="{{page.location}}" style="margin-bottom:15px">
+	 	{% else %}
+	 		<ul class="layui-tab-title chooseType" data-location="1" style="margin-bottom:15px">
+	 	{% endif %}
+	 		{% if page.location == "1" %}
+	 			<li data-location="1" class="layui-this">在售商品</li>
+		 	{% else %}
+		 		<li data-location="1">在售商品</li>
+		 	{% endif %}
+		 	{% if page.location == "2" %}
+	 			<li data-location="2" class="layui-this">首页</li>
+		 	{% else %}
+		 		<li data-location="2">首页</li>
+		 	{% endif %}
+		    {% if page.location == "3" %}
+	 			<li data-location="3" class="layui-this">新手推荐</li>
+		 	{% else %}
+		 		<li data-location="3">新手推荐</li>
+		 	{% endif %}
+		    {% if page.location == "4" %}
+	 			<li data-location="4" class="layui-this">商城全部</li>
+		 	{% else %}
+		 		<li data-location="4">商城全部</li>
+		 	{% endif %}
+		 	{% if page.location == "5" %}
+	 			<li data-location="5" class="layui-this">一级分类</li>
+		 	{% else %}
+		 		<li data-location="5">一级分类</li>
+		 	{% endif %}
+		 	{% if page.location == "6" %}
+	 			<li data-location="6" class="layui-this">二级分类</li>
+		 	{% else %}
+		 		<li data-location="6">二级分类</li>
+		 	{% endif %}
+	 		</ul>
+	 	</div>
+	 	{% if page.location == "2" || page.location == "3" %}
+	 	<div class="layui-form-item hide" style="padding-left: 20px;">
+	 	{% else %}
+	 	<div class="layui-form-item" style="padding-left: 20px;">
+	 	{% endif %}
+	 		{% if page && page.productAdAttr && page.productAdAttr == 1 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="1">
+	        {% elseif page && page.productAdAttr && page.productAdAttr == 2 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="2">
+			{% elseif page && page.productAdAttr && page.productAdAttr == 3 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="3">
+			{% else %}
+			<div class="layui-input-inline productAdAttr" data-productAdAttr="0">
+			{% endif %}
+		        <select name="productAdAttr" lay-filter="productAdAttr" lay-verify="required" lay-search="">
+		        	{% if page && page.productAdAttr &&  page.productAdAttr == 1 %}
+		        	<option value="0">商品广告属性</option>
+		            <option value="1" selected="selected">购买商品</option>
+		            <option value="2">广告商品</option>
+		            <option value="3">充值商品</option>
+		            {% elseif page && page.productAdAttr && page.productAdAttr == 2 %}
+		        	<option value="0">商品广告属性</option>
+		            <option value="1">购买商品</option>
+		            <option value="2" selected="selected">广告商品</option>
+		            <option value="3">充值商品</option>
+		            {% elseif page && page.productAdAttr && page.productAdAttr == 3 %}
+		        	<option value="0">商品广告属性</option>
+		            <option value="1">购买商品</option>
+		            <option value="2">广告商品</option>
+		            <option value="3" selected="selected">充值商品</option>
+		            {% else %}
+		            <option value="0" selected="selected">商品广告属性</option>
+		            <option value="1">购买商品</option>
+		            <option value="2">广告商品</option>
+		            <option value="3">充值商品</option>
+					{% endif %}
+		        </select>
+	        </div>
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">商品名称：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.shortName %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商品名称" class="layui-input" value="{{page.shortName}}">
+					{% else %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商品名称" class="layui-input">
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">日期</label>
+		        <div class="layui-input-inline">
+		        	{% if page && page.stDate %}
+					<input class="layui-input" placeholder="" id="LAY_demorange_s" value="{{page.stDate}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="" id="LAY_demorange_s">
+			    	{% endif %}
+			    </div>
+			    <div class="layui-input-inline">
+			    	{% if page && page.enDate %}
+					<input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.enDate}}">
+					{% else %}
+			    	<input class="layui-input" placeholder="" id="LAY_demorange_e">
+			    	{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	{% if page && (page.location == 2 || page.location == "3") %}
+	     	<th>排序位置</th>
+	     	{% endif %}
+	     	<th>商品简称</th>
+	     	<th>商品图</th>
+	     	<th>原价(元)</th>
+	     	<th>兑换积分</th>
+	     	<th>已售基数</th>
+	     	<th>实售数量</th>
+	     	<th>提交时间</th>
+	     	<th>商品广告属性</th>
+	     	{% if page && (page.location == 2 || page.location == "3") %}
+	     	<th>设置商品</th>
+	     	{% else %}
+	     	<th>排序号</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% if !page.location || page.location == "1" %}
+	         	{% for lis in data.data.datas.list %}
+	         	    <tr>
+				 	    <td><a class="textLinks" href="/operation/opMerMan/showTrades2?productId={{lis.id}}" style="color: #009688;">{{lis.full_name}}</a></td>
+					 	<td><img src="{{lis.image_url}}" style="width: 110px;height: 80px;" alt="" /></td>
+					 	<td>{{lis.retail_price}}</td>
+					 	<td>{{lis.exchange_points}}</td>
+					 	<td>{{lis.base}}</td>
+					 	<td>
+					 		{% if lis.sale_count %}
+					 			{{lis.sale_count}}
+					 		{% else %}
+					 			0
+					 		{% endif %}
+					 	</td>
+						<td>{{lis.update_time}}</td>
+						<td>
+							{% if lis.product_ad_attr == 1 %}
+					 		购买商品
+					 		{% elseif lis.product_ad_attr == 2 %}
+					 		广告商品
+					 		{% elseif lis.product_ad_attr == 3 %}
+					 		充值商品
+					 		{% else %}
+					 		--
+					 		{% endif %}
+						</td>
+						<td class="setSort" >
+							{% if lis.channel_page_sort != '0' %}
+							<input class="setSorts" data-recmId="{{lis.id}}" data-value="{{lis.channel_page_sort}}" type="text" value="{{lis.channel_page_sort}}" name="" />
+							{% else %}
+							<input class="setSorts" data-recmId="{{lis.id}}" data-value="" type="text" value="" name="" />
+							{% endif %}
+						</td>
+					 	<td>
+				 			{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "编辑" %}
+						    			{% if lis.product_ad_attr == 1 %}
+						    			<a class="layui-btn" href="/operation/opMerMan/setBuyGoods?online=true&oSave=true&productId={{lis.id}}">编辑</a>
+						    			{% elseif lis.product_ad_attr == 3 %}
+						    			<a class="layui-btn" href="/operation/opMerMan/setOnlineRechargeGoods?online=true&oSave=true&productId={{lis.id}}">编辑</a>
+						    			{% endif %}
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+					 		{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "编辑CPS" %}
+						    			{% if lis.product_ad_attr == 2 %}
+						    			<a class="layui-btn" href="/operation/opMerMan/setAdvGoods?online=true&oSave=true&productId={{lis.id}}">编辑CPS</a>
+						    			{% else %}
+						    			<a class="layui-btn" href="/operation/opMerMan/setAdvGoods?oSave=true&productId={{lis.id}}">编辑CPS</a>
+						    			{% endif %}
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+					 	</td>
+				    </tr>
+	         	{% endfor %}
+         	{% elseif page.location == "2"  %}
+ 				{% for item in [1,2,3,4] %}
+	         	    <tr class="rowTr hide row{{item}}">
+	         	    	<td class="posSord">{{item}}</td>
+	         	    	<td class="posShortName">--</td>
+					 	<td class="posLogoImg">--</td>
+					 	<td class="posPrice">--</td>
+					 	<td class="posTatol">--</td>
+					 	<td class="posBase">--</td>
+					 	<td class="posReal">--</td>
+						<td class="posCreatTime">--</td>
+						<td class="posNature">--</td>
+						<td class="recMan_selHomeGoods selContBox clearfix">
+							<div class="inputIconBox">
+								<input class="layui-input getGoodsName" data-value="" value="" placeholder="请选择商品(支持搜索)" type="text" name="" />
+								<i class="layui-select-icon"></i>
+							</div>
+							<div class="goodsItems hide">
+								<ul class="selGoodsBox selHomeGoodsBox">
+									<li value="0" data-id="--" data-name="" data-img="--" data-price="--" data-tatol="--" data-base="--" 
+		         	     					data-real="--" data-time="--" data-nature="--">请选择商品</li>
+								</ul>
+	         	     		</div>
+						</td>
+				    </tr>
+			    {% endfor %}
+		    {% else %}
+		    	{% for item in [1,2] %}
+	         	    <tr class="rowTr hide rows{{item}}">
+	         	    	<td class="posSord">{{item}}</td>
+	         	    	<td class="posShortName">--</td>
+					 	<td class="posLogoImg">--</td>
+					 	<td class="posPrice">--</td>
+					 	<td class="posTatol">--</td>
+					 	<td class="posBase">--</td>
+					 	<td class="posReal">--</td>
+						<td class="posCreatTime">--</td>
+						<td class="posNature">--</td>
+						<td class="recMan_selHomeGoods selContBox clearfix">
+							<div class="inputIconBox inputIconBox">
+								<input class="layui-input getGoodsName" data-value="" value="" placeholder="请选择商品(支持搜索)" type="text" name="" />
+								<i class="layui-select-icon"></i>
+							</div>
+							<div class="goodsItems hide">
+								<ul class="selGoodsBox selRecGoodsBox">
+									<li value="0" data-id="--" data-name="" data-img="--" data-price="--" data-tatol="--" data-base="--" 
+		         	     					data-real="--" data-time="--" data-nature="--">请选择商品</li>
+								</ul>
+	         	     		</div>
+						</td>
+				    </tr>
+			    {% endfor %}
+         	{% endif %}
+		 </tbody>	
+	 </table>
+	 {% if page && page.location == '3' %}
+	 <div id="paging" data-page-no=0 data-page=0 data-page-size=0></div>	
+	 {% else %}
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% endif %}
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/orderManagement/recommendMan.js"></script>
+{% endblock%}

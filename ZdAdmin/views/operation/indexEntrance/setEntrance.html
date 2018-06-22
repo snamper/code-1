@@ -1,0 +1,87 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-首页资源入口{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {font-weight: 800;background-color: #ccc;}
+	.uploadImg{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}	
+	.uploadImgBtn{position:absolute;top:0;left:0;z-index:100;border: 1px solid #ccc;width: 38px;height: 38px;cursor: pointer;} 
+	.imgShow{width: 60px;height: 60px;position:absolute;top:-10px;left:0;z-index:100;cursor: pointer;}
+	.imgShow > img{max-width: 60px;}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li >首页资源入口</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">资源入口设置</li>
+</ul>
+{%endblock%}
+{% block content%} 
+
+<table class="layui-table table-width layui-form" data-list="{{data.data | json_encode}}">
+	<thead>
+		<tr>
+			<th>资源入口系统名称</th>
+			<th>资源入口自定义名称(限不大于4个汉字)</th>
+			<th>入口图标*(建议105*105)</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in data.data %}
+		<tr>
+			<td>{{item.resourceName}}</td>
+			<td>
+				<input type="text" attr-id="{{item.id}}" value="{{item.customName}}" class="layui-input name" />
+			</td>
+			{% if !item.iconUrl %}
+			<td style="height: 80px;">
+				<div class="layui-input-inline" style="position: relative;width: 50px;">
+			    	<input type="file" name="file{{loop.index0}}" attr-id="{{item.id}}" style="width: 30px;height: 30px;"  class="layui-upload-images uploadImg"/>
+					<span attr-id="{{item.id}}" class="uploadImgBtn" >+</span>
+					<div class="imgShow" style="display: none;">
+						<img  attr-id="{{item.id}}" src="" alt="" />
+					</div>
+			    </div>
+			</td>
+			{% else %}
+			<td style="height: 80px;">
+				<div class="layui-input-inline" style="position: relative;width: 50px;">
+			    	<input type="file" name="file{{loop.index0}}" attr-id="{{item.id}}" style="width: 30px;height: 30px;"  class="layui-upload-images uploadImg"/>
+					<span attr-id="{{item.id}}" class="uploadImgBtn" style="display: none;">+</span>
+					<div class="imgShow" >
+						<img attr-url="{{item.iconUrl}}" attr-id="{{item.id}}" src="{{item.iconUrl}}" alt="" />
+					</div>
+			    </div>
+			</td>
+			{% endif %}
+			<td>
+				<div class="layui-input-inline layui-input-checked">
+					{% if item.status == 1 %}
+			        <input type="radio" name="status{{loop.index0}}" lay-filter="status{{loop.index0}}" value="1/{{item.id}}/{{item.position}}" checked="checked" title="启用">
+					<input type="radio" name="status{{loop.index0}}" lay-filter="status{{loop.index0}}" value="2/{{item.id}}/{{item.position}}"  title="禁用">
+					{% else %}
+					<input type="radio" name="status{{loop.index0}}" lay-filter="status{{loop.index0}}" value="1/{{item.id}}/{{item.position}}"  title="启用">
+					<input type="radio" name="status{{loop.index0}}" lay-filter="status{{loop.index0}}" value="2/{{item.id}}/{{item.position}}" checked="checked" title="禁用">
+					{% endif %}
+			   </div>
+			</td>
+			<td style="border: 0;width: 100px;padding: 0;">
+				<span class="layui-tooltip tooltip-tips hide" >请上传图片</span>
+			</td>
+		</tr>
+		{% endfor %}
+	
+	</tbody>
+</table>
+<div class="layui-form-saveCloseBtn"  style="padding-left: 50%;margin-left: -100px;">
+	<a class="layui-btn layui-save-btn save" >保存</a>
+    <a href="/operation/indexEntrance" class="layui-btn layui-btn-danger ">返回</a>
+</div>
+<!--<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>-->
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/indexEntrance/setEntrance.js"></script>
+{% endblock%}

@@ -1,0 +1,111 @@
+/*APP用户管理*/
+.layui-input-inline{line-height:38px;}
+.txt-impt{
+	display: inline-block;
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 3px;
+}
+.hide{display: none;}
+.partLine{
+	width: 90%;
+	margin: 0 auto;
+	padding-bottom: 15px;
+	margin-bottom: 1px;
+}
+.partLine i{
+	display: inline-block;
+	width: 100%;
+	height: 1px;
+	background: #e2e2e2;
+}
+#userDetails .item-adMes{
+	width: 80%;
+	min-width: 920px;
+	margin: 0 auto;
+}
+.appUserManagement .firstLeft{
+	margin-left: 20px;
+}
+#userDetails .item-pos-rela{
+	position: relative;
+    padding-bottom: 50px;
+}
+.appUserManagement .forbidden{
+	background-color: #ccc;
+	cursor: default;
+}
+.appUserManagement .layui-btn-relieve{
+	background-color: #85af03;
+}
+.appUserManagement .layui-btn-rouse{
+	background-color: #e5609b;
+}
+.remarkBox textarea{
+    min-width: 95%;
+    max-width: 95%;
+    min-height: 220px;
+    max-height: 220px;
+    margin: 10px auto 0;
+    display: block;
+}
+.remarkBox #remarkSaveBtn{
+	margin: 0 auto;
+    display: block;
+    width: 65px;
+    margin-top: 10px;
+}
+/*用户详情页面*/
+.layui-item-position-right .userBox{
+	width: 110px;
+	height: 110px;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+}
+.layui-item-position-right .userBox img{
+	width: 111px;
+	height: 111px;
+}
+.item-pos-rela .layui-item-position-right{
+	position: absolute;
+	right: 30px;
+	top: 30px;
+}
+.layui-item-position-right .userIdText,.oneThird .mesTexts{
+	display: block;
+	text-align: center;
+	line-height: 36px;
+}
+.layui-form-item .oneThird{
+	width: 30%;
+	min-width: 80px;
+}
+/*针对第二列的4个入口布局用oneFour覆盖oneThird*/
+.layui-form-item .oneFour{
+	width: 22%;
+	min-width: 80px;
+}
+.layui-form-item .oneThird .mesTorus{
+	width: 90px;
+	height: 90px;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 90px;
+	margin: 0 auto;
+}
+.layui-form-item .oneThird .mesTorus a{
+	display: block;
+}
+.appuserDetail .layui-form-saveCloseBtn{
+	width: 100%;
+	padding-top: 45px;
+}
+.appuserDetail .layui-form-saveCloseBtn a{
+	display: block;
+	width: 65px;
+	margin: 30px auto;
+}
+.appUserManagement .bigLayIpt{width: 240px;}
+.appUserManagement .bigInptInline{width: 110px;display: inline-block;}

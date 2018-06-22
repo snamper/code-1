@@ -1,0 +1,123 @@
+.act-chart {
+	width: 150px;
+	height: 160px; 
+	float: left; 
+	margin-right: 2%;
+}
+.act-chart-main {
+	width: 100%; 
+	height: 150px; 
+	margin-left: 20px; 
+	min-width: 1050px;
+}
+
+.circular {
+	width: 100px;
+	height: 100px; 
+	text-align: center;
+	background: #f1f1f1; 
+	font-size: 16px;
+	line-height: 100px;
+	border-radius: 50%;
+	margin: 0 auto;
+}
+.act-chart p {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	font-size: 16px;
+	margin-top: 5px;
+	text-align: center;
+}
+
+
+/*创建活动/渠道*/
+
+.actManEdit .act-edit-change {
+	margin-left: 33%;
+}
+.actManEdit .layui-form-label {
+	width: 30%;
+}
+.act-channel-main {
+	width: 100%;
+	min-width: 1160px;
+	height: auto;
+}
+.layui-form-saveCloseBtn{
+	margin-left: 33%;
+}
+
+.act-channel-main .act-edit-channel:nth-child(1) {
+	margin-left: 89px;
+	margin-right: 20px;
+	border-right: 1px solid black;
+}
+.actManEdit .layui-form-item .layui-input-inline {
+	width: 250px;
+}
+.actManEdit .layui-form-item .adress-select {
+	width: 100px;
+}
+.act-edit-channel .layui-form-label {
+	width: 100px;
+}
+.act-edit-channel {
+	float: left;
+}
+
+/*活动详情*/
+
+#activeDetail .channel-detail-main .layui-form-label {
+	width: 150px;
+}
+#activeDetail .channel-detail-main span.layui-form-label {
+	width: auto;
+	text-align: center;
+	padding-left: 0;
+}
+/*推广渠道佣金*/
+
+#newCannel .layui-inline-ipt {
+	width: 120px;
+}
+#newCannel  .layui-input,#newCannel  .layui-textarea {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+}
+
+.layui-textarea {
+	padding-left: 0;
+}
+#newCannel .label {
+	width: 60px; 
+	padding-left: 0;
+}
+#newCannel .info {
+	color: red;
+	width: 300px;
+}
+
+
+/*渠道详情*/
+.act-channel-detail .layui-form-item {
+	margin-bottom: 0;
+}
+
+.act-channel-detail .channel-detail-main {
+	width: auto;
+	height: 100%;
+	float: left;
+	margin-right: 20px;
+}
+
+
+.act-channel-detail .layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 5px;
+    width: auto;
+    font-weight: 400;
+    text-align: right;
+}

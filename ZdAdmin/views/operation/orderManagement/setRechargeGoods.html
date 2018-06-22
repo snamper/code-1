@@ -1,0 +1,406 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--商品设置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/operation/setRechargeGoods.css" />
+	<style type="text/css">
+		.layui-form-item .notClickBtn{width: 100%;height: 100%;position: absolute;z-index: 22;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	 <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">商品设置</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<form class="layui-form formPage site-demo-top40 setSaleMes setMarCenter" id="setRechargeGoods" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商品状态：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.productState == 0 %}
+				    <span>草稿</span>
+				    {% elseif data.data.productState == 1 || data.data.productState == 2 %}
+				    <span>待上架</span>
+				    {% elseif data.data.productState == 3 %}
+				    <span>已下架</span>
+				    {% elseif data.data.productState == 4 %}
+				    <span>已上架</span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">创建时间：</label>
+				<div class="layui-input-inline">
+	                <span>{{data.data.createTime}}</span>				 					 			 
+				</div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商品名称：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.fullName}}</span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">商品详情链接：</label>
+				<div class="layui-input-inline">
+					<a href="/operation/opMerMan/showTrades1?productId={{data.data.id}}" target="_blank">查看详情</a>
+			    </div>
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品列表图：</label>
+			<div class="layui-input-inline">
+				<img src="{{data.data.listImage}}" alt="" style="width: 220px;height: 160px;"/>
+		    </div>			 
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">已售数量：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.soldNumber %}
+			    		<span>{{data.data.soldNumber}}</span>
+			    	{% else %}
+			    		<span>0</span>
+			    	{% endif %}
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>已售基数:</label>
+		    <div class="layui-input-inline" style="width: 280px;">
+		    	{% if data.data.productRule.base %}
+		        <input type="text" value="{{data.data.productRule.base}}" class="layui-input saleBase" style="width: 200px;float: left;">
+		        {% else %}
+		        <input type="text" value="0" class="layui-input saleBase" style="width: 200px;float: left;">
+		        {% endif %}
+		        <span style="float: left;">（件）</span>
+		    </div>
+		     <span class="layui-tooltip tooltip-saleBase hide">必须为大于等于0的数字</span>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品标签:</label>
+			<div class="layui-input-inline">
+		    	{% if data.data.tag %}
+		        <input type="text" value="{{data.data.tag}}" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% else %}
+		        <input type="text" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% endif %}
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-btnsLabel hide">请输入1-4个字</span>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="txt-impt">*</span>充值商家请求比例(%):</label>
+			<div class="layui-input-inline askScale">
+				<input name="scaleFilter" value="1" title="话费" type="radio" lay-filter="scaleFilter" checked="checked">
+				<input name="scaleFilter" value="2" title="流量" type="radio" lay-filter="scaleFilter">
+		    	<div class="layui-input-inline scalesBox hfScale">
+			    	{% if data.data.billSendRatioList.length %}
+			    	{% for bills in data.data.billSendRatioList %}
+			    	{% if bills.merchanEname == '19e' %}
+			    	{% if bills.ratio || bills.ratio == '0' %}
+			        <span>19e：</span><input type="text" data-name="19e" data-id="{{bills.id}}" value="{{bills.ratio}}" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			        {% else %}
+			        <span>19e：</span><input type="text" data-name="19e" data-id="{{bills.id}}" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			        {% endif %}
+			    	{% elseif bills.merchanEname == 'ofpay' %}
+			    	{% if bills.ratio || bills.ratio == '0' %}
+			        <span>欧飞：</span><input type="text" data-name="ofpay" data-id="{{bills.id}}" value="{{bills.ratio}}" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			        {% else %}
+			        <span>欧飞：</span><input type="text" data-name="ofpay" data-id="{{bills.id}}" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			        {% endif %}
+			    	{% endif %}
+			    	{% endfor %}
+			    	{% else %}
+			    	<span>19e：</span><input type="text" data-name="19e" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			    	<span>欧飞：</span><input type="text" data-name="ofpay" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			    	{% endif %}
+			    </div>
+			    <div class="layui-input-inline scalesBox llScale hide">
+			    	{% if data.data.flowSendRatioList.length %}
+			    	{% for flows in data.data.flowSendRatioList %}
+			    	{% if flows.merchanEname == '19e' %}
+			    	{% if flows.ratio || flows.ratio == '0' %}
+			        <span>19e：</span><input type="text" data-name="19e" data-id="{{flows.id}}" value="{{flows.ratio}}" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			        {% else %}
+			        <span>19e：</span><input type="text" data-name="19e" data-id="{{flows.id}}" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			        {% endif %}
+			    	{% elseif flows.merchanEname == 'ofpay' %}
+			    	{% if flows.ratio || flows.ratio == '0' %}
+			        <span>欧飞：</span><input type="text" data-name="ofpay" data-id="{{flows.id}}" value="{{flows.ratio}}" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			        {% else %}
+			        <span>欧飞：</span><input type="text" data-name="ofpay" data-id="{{flows.id}}" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			        {% endif %}
+			    	{% endif %}
+			    	{% endfor %}
+			    	{% else %}
+			    	<span>19e：</span><input type="text" data-name="19e" name="eFlow" lay-skin="primary" class="layui-input askVerify eFlow" placeholder="支持2位小数">
+			    	<span>欧飞：</span><input type="text" data-name="ofpay" name="ofFlow" lay-skin="primary" class="layui-input askVerify ofFlow" placeholder="支持2位小数">
+			    	{% endif %}
+			    </div>
+			</div>
+		    <span class="layui-tooltip tooltip-hints tooltip-btnsAsk hide">请规范输入0-100,支持2位小数（两者之和为100）</span>
+		</div>
+		<div class="layui-form-item laysItem">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>充值类型:</label>
+		    <div class="layui-input-block">
+		    	<ul class="layui-tab-title chooseLays" data-pay="1" style="width: 170px;">
+		    		<li data-pay="1" class="layui-this">充话费</li>
+			 		<li data-pay="2">充流量</li>
+		 		</ul>
+		 		<span class="explainTip">提示：话费和流量都需要进行配置</span>
+		    </div>
+		    <div class="payTypesBtn selTariffe layui-input-block">
+		    	<div class="tariffeContents">
+		    		{% if data.data.billList.length %}
+			    		{% for tariffe in data.data.billList %}
+			    		{% if loop.first %}
+			    		<div class="tariffeContentLis">
+				    		<input type="text" data-id="{{tariffe.id}}" data-disable="{{tariffe.disable_type}}" class="layui-input-inline tariffeNum" value="{{tariffe.amount}}" placeholder="请输入1-500" style="width: 100px;">
+				    		<span class="fl">(元)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+				    		<input type="text" class="layui-input-inline tariffePoint" value="{{tariffe.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+					    	<div class="layui-btn-group">
+							    <a class="layui-btn layui-btn-primary layui-btn-small addFariffeBtn" title="添加配置项"><i class="layui-icon"></i></a>
+							</div>
+							<span class="layui-tooltip tooltip-hints tooltip-tariffe hide">请输入1-500以内的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-tariffeIntal hide">　请输≥0的整数</span>
+				    	</div>
+			    		{% else %}
+			    		<div class="tariffeContentLis">
+				    		<input type="text" data-id="{{tariffe.id}}" data-disable="{{tariffe.disable_type}}" class="layui-input-inline tariffeNum" value="{{tariffe.amount}}" placeholder="请输入1-500" style="width: 100px;">
+				    		<span class="fl">(元)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+				    		<input type="text" class="layui-input-inline tariffePoint" value="{{tariffe.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+					    	<div class="layui-btn-group">
+							    <a class="layui-btn layui-btn-primary layui-btn-small addFariffeBtn" title="添加配置项"><i class="layui-icon"></i></a>
+								<a class="layui-btn layui-btn-primary layui-btn-small delFariffeBtn" title="删除配置项"><i class="layui-icon"></i></a>
+					    	</div>
+							<span class="layui-tooltip tooltip-hints tooltip-tariffe hide">请输入1-500以内的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-tariffeIntal hide">　请输≥0的整数</span>
+				    	</div>
+			    		{% endif %}
+			    		{% endfor %}
+		    		{% else %}
+		    		<div class="tariffeContentLis">
+			    		<input type="text" class="layui-input-inline tariffeNum" placeholder="请输入1-500" style="width: 100px;">
+			    		<span class="fl">(元)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+			    		<input type="text" class="layui-input-inline tariffePoint" placeholder="请输入消耗积分" style="width: 100px;">
+				    	<div class="layui-btn-group">
+						    <a class="layui-btn layui-btn-primary layui-btn-small addFariffeBtn" title="添加配置项"><i class="layui-icon"></i></a>
+						</div>
+						<span class="layui-tooltip tooltip-hints tooltip-tariffe hide">请输入1-500以内的整数</span>
+						<span class="layui-tooltip tooltip-hints tooltip-tariffeIntal hide">　请输≥0的整数</span>
+			    	</div>
+		    		{% endif %}
+			    </div>
+		    </div>
+		    <div class="payTypesBtn selFlow layui-input-block hide">
+		    	<div class="operators" data-flowFilter="1">
+					<input name="selectStatus" value="1" title="移动" type="radio" lay-filter="flowFilter" checked="checked">
+					<input name="selectStatus" value="0" title="联通" type="radio" lay-filter="flowFilter">
+					<input name="selectStatus" value="2" title="电信" type="radio" lay-filter="flowFilter">
+			    </div>
+			    <div class="flowContents">
+			    	<div class="flowCofBox flowCM">
+			    		{% if data.data.mobileList.length %}
+				    		{% for flow in data.data.mobileList %}
+				    		{% if loop.first %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCM" title="添加配置项"><i class="layui-icon"></i></a>
+								</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+				    		{% else %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCM" title="添加配置项"><i class="layui-icon"></i></a>
+									<a class="layui-btn layui-btn-primary layui-btn-small delFlowBtnCM" title="删除配置项"><i class="layui-icon"></i></a>
+						    	</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+					    	{% endif %}
+					    	{% endfor %}
+				    	{% else %}
+				    	<div class="flowContentLis">
+				    		<input type="text" class="layui-input-inline flowNum" placeholder="请输入1-11264" style="width: 100px;">
+				    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+				    		<input type="text" class="layui-input-inline flowPoint" placeholder="请输入消耗积分" style="width: 100px;">
+				    		<span class="txt-impt fl"> *</span><span class="fl">19e产品ID：</span>
+				    		<input type="text" class="layui-input-inline flowPId" value="" placeholder="请输入产品ID" style="width: 100px;">
+				    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+				    		<input type="text" class="layui-input-inline flowPlimit" value="" placeholder="请输入面额" style="width: 100px;">
+					    	<div class="layui-btn-group">
+							    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCM" title="添加配置项"><i class="layui-icon"></i></a>
+							</div>
+							<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+				    	</div>
+				    	{% endif %}
+			    	</div>
+			    	<div class="flowCofBox flowUN hide">
+			    		{% if data.data.unicomList.length %}
+				    		{% for flow in data.data.unicomList %}
+				    		{% if loop.first %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+						    	<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnUN" title="添加配置项"><i class="layui-icon"></i></a>
+								</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+				    		{% else %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+						    	<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnUN" title="添加配置项"><i class="layui-icon"></i></a>
+									<a class="layui-btn layui-btn-primary layui-btn-small delFlowBtnCM" title="删除配置项"><i class="layui-icon"></i></a>
+								</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+					    	{% endif %}
+					    	{% endfor %}
+				    	{% else %}
+				    	<div class="flowContentLis">
+				    		<input type="text" class="layui-input-inline flowNum" placeholder="请输入1-11264" style="width: 100px;">
+				    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+				    		<input type="text" class="layui-input-inline flowPoint" placeholder="请输入消耗积分" style="width: 100px;">
+					    	<span class="txt-impt fl"> *</span><span class="fl">19e产品ID：</span>
+				    		<input type="text" class="layui-input-inline flowPId" value="" placeholder="请输入产品ID" style="width: 100px;">
+				    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+				    		<input type="text" class="layui-input-inline flowPlimit" value="" placeholder="请输入面额" style="width: 100px;">
+					    	<div class="layui-btn-group">
+							    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnUN" title="添加配置项"><i class="layui-icon"></i></a>
+							</div>
+							<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+				    	</div>
+				    	{% endif %}
+			    	</div>
+			    	<div class="flowCofBox flowCT hide">
+			    		{% if data.data.telecomList.length %}
+				    		{% for flow in data.data.telecomList %}
+				    		{% if loop.index == 1 %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+						    	<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCT" title="添加配置项"><i class="layui-icon"></i></a>
+								</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+				    		{% else %}
+				    		<div class="flowContentLis">
+					    		<input type="text" data-id="{{flow.id}}" data-disable="{{flow.disable_type}}" class="layui-input-inline flowNum" value="{{flow.flow}}" placeholder="请输入1-11264" style="width: 100px;">
+					    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+					    		<input type="text" class="layui-input-inline flowPoint" value="{{flow.point}}" placeholder="请输入消耗积分" style="width: 100px;">
+						    	<span class="txt-impt fl">*</span><span class="fl">19e产品ID：</span>
+					    		<input type="text" class="layui-input-inline flowPId" value="{{flow.ehfProductId}}" placeholder="请输入产品ID" style="width: 100px;">
+					    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+					    		<input type="text" class="layui-input-inline flowPlimit" value="{{flow.amount}}" placeholder="请输入面额" style="width: 100px;">
+						    	<div class="layui-btn-group">
+								    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCT" title="添加配置项"><i class="layui-icon"></i></a>
+									<a class="layui-btn layui-btn-primary layui-btn-small delFlowBtnCM" title="删除配置项"><i class="layui-icon"></i></a>
+								</div>
+								<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+								<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+					    	</div>
+					    	{% endif %}
+					    	{% endfor %}
+				    	{% else %}
+				    	<div class="flowContentLis">
+				    		<input type="text" class="layui-input-inline flowNum" placeholder="请输入1-11264" style="width: 100px;">
+				    		<span class="fl">(M)　</span><span class="txt-impt fl">*</span><span class="fl">消耗积分：</span>
+				    		<input type="text" class="layui-input-inline flowPoint" placeholder="请输入消耗积分" style="width: 100px;">
+					    	<span class="txt-impt fl"> *</span><span class="fl">19e产品ID：</span>
+				    		<input type="text" class="layui-input-inline flowPId" value="" placeholder="请输入产品ID" style="width: 100px;">
+				    		<span class="txt-impt fl">*</span><span class="fl">欧飞面额：</span>
+				    		<input type="text" class="layui-input-inline flowPlimit" value="" placeholder="请输入面额" style="width: 100px;">
+					    	<div class="layui-btn-group">
+							    <a class="layui-btn layui-btn-primary layui-btn-small addFlowBtnCT" title="添加配置项"><i class="layui-icon"></i></a>
+							</div>
+							<span class="layui-tooltip tooltip-hints tooltip-flow hide">请输入1-11264以内的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowIntal hide">　请输≥0的整数</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPId hide">　请输如产品ID</span>
+							<span class="layui-tooltip tooltip-hints tooltip-flowPlimit hide">　请输入1-500以内的整数</span>
+				    	</div>
+				    	{% endif %}
+			    	</div>
+			    </div>
+		    </div>
+		</div>
+		<div class="rechargeBox"></div>
+		<div class="layui-form-item nextBackBtn">
+		 	<div class="layui-inline">
+		 		<i class="notClickBtn hide"></i>
+            	<a data-ruleId="{{data.data.productRule.id}}" class="layui-btn setMessage">保存</a>
+        	</div>
+        	<!--{% if page && !page.online %}
+		 	<div class="layui-inline">
+		 		<i class="notClickBtn hide"></i>
+            	<a class="layui-btn slaves">上架</a>
+        	</div>
+        	{% endif %}-->
+        </div>
+	 </form>        
+{% endblock %}
+{% block layui%}   
+<script src="/controllers/operation/orderManagement/setRechargeGoods.js" type="text/javascript" charset="utf-8"></script>
+{% endblock%}

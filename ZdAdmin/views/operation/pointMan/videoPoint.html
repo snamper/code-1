@@ -1,0 +1,105 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {
+	    font-weight: 800;
+	    background-color: #ccc;
+	}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">积分管理</li>
+</ul>
+{%endblock%}
+{% block content%} 
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li><a href="/operation/pointMan">CPM积分模型</a></li>
+		<li><a href="/operation/pointMan/integralSet">内容发放积分模型</a></li>
+		<li><a href="/operation/pointMan/registerIntegral">注册积分模型</a></li>
+		<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+		<li><a href="/operation/pointMan/dayStayTotalMan">每日停留积分管理</a></li>
+		<li><a href="/operation/pointMan/changeRecordCPM">积分模型变更记录</a></li>
+		<li class="layui-this"><a href="/operation/pointMan/videoPoint">实时视频积分</a></li>
+	</ul>
+</div>
+{% if data.message =="成功"%}
+ <form class="layui-form dataPlug" action="">
+ 	<div class="layui-form-item padding15" >
+ 		<a href="/operation/pointMan/videoPointSet" class="layui-btn" style="float:right;margin-right:60px;">配置积分</a>
+    </div>
+ </form>
+ <table class="layui-table table-width">
+	<tr>
+     	<th>录入时间</th>
+     	<th>当日发放总积分</th>
+     	<th>单次发放积分范围</th>
+     	<th>操作</th>
+    </tr>
+    <tbody id="htmlWrap">
+     	{% for item in data.data.datas %}
+     	<tr>
+		 	<td>{{item.input_date}}</td>
+		 	<td>
+		 		{% if item.total_points || item.total_points === 0 %}
+		 			{{item.total_points}}
+		 		{% else %}
+		 			———
+		 		{% endif %}
+		 	</td>
+		 	<td>
+		 		{% if item.one_release_min || item.one_release_min === 0 %}
+		 			{{item.one_release_min}} ~ {{item.one_release_max}}
+		 		{% else %}
+		 			———
+		 		{% endif %}
+		 		
+		 	</td>
+			<td>
+				<!-- 当前年份大于录入年份 -->
+				{% if item.curr_date.split("-")[0] > item.input_date.split("-")[0] %}
+					<a href="/operation/pointMan/videoPointDetail?id={{item.id}}&pageNo=1&pageSize=10" class="layui-btn">查看积分明细</a>
+				<!-- 当前年份小于录入年份 -->	
+				{% elseif item.curr_date.split("-")[0] < item.input_date.split("-")[0] %}
+					<a href="/operation/pointMan/videoPointSet?id={{item.id}}" class="layui-btn">编辑</a>
+				<!-- 当前年份等于录入年份 -->
+				{% elseif item.curr_date.split("-")[0] == item.input_date.split("-")[0] %}
+					<!-- 当前月份大于录入月份 -->
+					{% if item.curr_date.split("-")[1] > item.input_date.split("-")[1] %}
+						<a href="/operation/pointMan/videoPointDetail?id={{item.id}}&pageNo=1&pageSize=10" class="layui-btn">查看积分明细</a>
+					<!-- 当前月份小于录入月份 -->
+					{% elseif item.curr_date.split("-")[1] < item.input_date.split("-")[1] %}
+						<a href="/operation/pointMan/videoPointSet?id={{item.id}}" class="layui-btn">编辑</a>
+					<!-- 当前月份等于录入月份 -->
+					{% elseif item.curr_date.split("-")[1] == item.input_date.split("-")[1] %}
+						<!-- 当前日期大于录入日期 -->
+						{% if item.curr_date.split("-")[2] > item.input_date.split("-")[2] %}
+							<a href="/operation/pointMan/videoPointDetail?id={{item.id}}&pageNo=1&pageSize=10" class="layui-btn">查看积分明细</a>
+						<!-- 当前日期小于录入日期 -->
+						{% elseif item.curr_date.split("-")[2] < item.input_date.split("-")[2] %}
+							<a href="/operation/pointMan/videoPointSet?id={{item.id}}" class="layui-btn">编辑</a>
+						<!-- 当前日期等于录入日期 -->
+						{% elseif item.curr_date.split("-")[2] == item.input_date.split("-")[2] && item.type == 0 %}
+							<a href="/operation/pointMan/videoPointSet?id={{item.id}}" class="layui-btn">补录</a>
+						{% elseif item.curr_date.split("-")[2] == item.input_date.split("-")[2] && item.type == 1 %}
+							<a href="/operation/pointMan/videoPointDetail?id={{item.id}}&pageNo=1&pageSize=10" class="layui-btn">查看积分明细</a>
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+ 	</tbody>
+ </table>
+ <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+ {% else %}
+     <div style="text-align:center">{{data.message}}</div>
+ {% endif%}
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/pointManagement/videoPoint.js"></script>
+{% endblock%}

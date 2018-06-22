@@ -1,0 +1,137 @@
+.layui-form-label{ width: 30%; }
+/* 时间轴样式 */
+.course_nr{height:162px; background:url(../../images/ico9.gif) repeat-x center;width: 500px;margin-left:25%;}
+.course_nr li{ float:left; background:url(../../images/ico10.gif) no-repeat center top; padding-top:30px; width:140px; text-align:center; position:relative; margin-top:65px;}
+.shiji{ position:absolute; width:100%; left:0; top:-20px; display:none;}
+.shiji h1{ height:67px; line-height:67px; color:#518dbb; font-weight:bold; background:url(../../images/ico11.gif) no-repeat center top; margin-bottom:8px;}
+.shiji p{ line-height:14px; color:#999;}
+.coverScreen{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top:0;
+	left:0;
+	z-index:10;
+	background-color:#333;
+	opacity:0.5
+}
+.appView{
+	position: absolute;
+	top:30px;
+	left:50%;
+	width:750px;
+	height:1477px;
+	margin-left:-375px;
+	background-color: #fff;
+	z-index:12
+}
+.copyUploadBtn{
+	position: absolute;
+	right: 20px;
+	top: 0;
+	width: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	border: 1px solid #b5b3b3;
+	color: #b5b3b3;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+	cursor:pointer;
+}
+#uploadVedio{
+	width: 375px;
+	/*height: 118px !important;*/
+}
+.layui-form-saveCloseBtn{
+	margin-left: 32%;
+}
+.uploadLogo{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+#asImportCode{position:absolute;top:0;right:0;z-index:100}	
+.uploadVedio{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}	
+#asImportVedio{position:absolute;top:0;right:0;z-index:100} 
+vedio{border:1px solid #ccc;}
+.vedio_box{width: 288px !important;}
+#uploadVedioFile{width: 227px;height: auto;}
+.layui-form-item .layui-input-inline{width: 250px;}
+.choosePosition{
+	height: 38px;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+.adverPosition{position: relative;}
+.adverPosition_area{
+	width: 250px;
+	height: auto;
+	position: absolute;
+	left: 30%;
+	top: 38px;
+	z-index: 101;
+	background-color: #fff;
+	margin-left: 30px;
+	border: 1px solid #ccc;
+}
+.configCategory{
+	height: auto;
+    padding-bottom: 20px;
+    max-height: 230px;
+	overflow-y: auto;
+	padding-left: 20px;
+	border-bottom: 1px solid #ccc;
+}
+.adverPosition_area > a{
+	margin-top: -5px;
+}
+.adverPosition_area > a.layui-save-btn{
+	margin-left: 88px;
+}
+.setBox_header{
+	width: 100%;
+	height: 38px;
+	border-bottom: 1px solid #ccc;
+}
+.setBox_header > li{
+	height: 100%;
+	float: left;
+	text-align: left;
+	line-height: 38px;
+	padding-left: 20px;
+}
+.setBox_header > li:nth-child(1){
+	width: 300px;
+}
+.setBox_header > li:nth-child(2){
+	width: 260px;
+}
+.adverBox{
+	width: 100%;
+	height: 300px;
+}
+.adverBox  li{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+}
+.adver_left,.adverBox   li > p{
+	height: 100%;
+	text-align: left;
+	padding-left: 20px;
+}
+.adver_left{width: 400px;}
+.adverBox   li > p{width: 260px;}
+.adverBox  li > i,.adverBox  li > span,.adverBox   li > p,.adver_left{
+	display: block;
+	float: left;
+}
+#paging1{float: right;margin-right: 10px;}
+.layui-form-saveCloseBtn{margin-top: 60px;}
+.coverScreen{
+	width: 100%;
+	height: 100%;
+	background: #333;
+	opacity: .5;
+	z-index: 1;
+	position: fixed;
+	left: 0;
+	top: 0;
+}

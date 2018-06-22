@@ -1,0 +1,77 @@
+{% extends "./../../../layout.html"%} 
+{% block title%}运营管理-任务管理-签到任务设置{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" /> 
+<link rel="stylesheet" href="/css/operation/task.css" /> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">任务管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">签到任务设置</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<table class="layui-table table-width" id="taskTable">
+	<tr>
+		<th>连续签到时间</th>
+		<th>奖励积分</th>
+		<th>抽奖次数限制</th>
+	</tr>
+	<tbody id="taskTbody">
+		{% if data.data.length %} 
+		{% for item in data.data %}
+		<tr>
+			<td class="editorId" data-id="{{item.id}}">{{loop.index}}</td>
+			<td class="adPoints">
+			    <a class="layui-btn layui-btn-primary layui-btn-small cutPointsBtn"><i class="layui-icon">-</i></a>
+			    {% if item.signScore %}
+			    <input class="pointsNumInpt" data-val="{{item.signScore}}" value="{{item.signScore}}" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+			    {% else %}
+			    <input class="pointsNumInpt" data-val="1" value="1" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+			    {% endif %}
+			    <a class="layui-btn layui-btn-primary layui-btn-small addPointsBtn"><i class="layui-icon">+</i></a>
+			</td>
+			<td class="adLottos">
+			    <a class="layui-btn layui-btn-primary layui-btn-small cutLottosBtn"><i class="layui-icon">-</i></a>
+			    {% if item.drawLimit %}
+			    <input class="lottosNumInpt" data-val="{{item.drawLimit}}" value="{{item.drawLimit}}" placeholder="0-6" type="text" name="lottosNum" autocomplete="off"/>
+			    {% else %}
+			    <input class="lottosNumInpt" data-val="0" value="0" placeholder="0-6" type="text" name="lottosNum" autocomplete="off"/>
+			    {% endif %}
+			    <a class="layui-btn layui-btn-primary layui-btn-small addLottosBtn"><i class="layui-icon">+</i></a>
+			</td>
+		</tr>
+		{% endfor %} 
+		{% else %}
+		{% for item in [1,2,3,4,5,6,7] %}
+		<tr>
+			<td class="editorId" data-id="">{{loop.index}}</td>
+			<td class="adPoints">
+			    <a class="layui-btn layui-btn-primary layui-btn-small cutPointsBtn"><i class="layui-icon">-</i></a>
+			    <input class="pointsNumInpt" data-val="1" value="1" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+			    <a class="layui-btn layui-btn-primary layui-btn-small addPointsBtn"><i class="layui-icon">+</i></a>
+			</td>
+			<td class="adLottos">
+			    <a class="layui-btn layui-btn-primary layui-btn-small cutLottosBtn"><i class="layui-icon">-</i></a>
+			    <input class="lottosNumInpt" data-val="0" value="0" placeholder="0-6" type="text" name="lottosNum" autocomplete="off"/>
+			    <a class="layui-btn layui-btn-primary layui-btn-small addLottosBtn"><i class="layui-icon">+</i></a>
+			</td>
+		</tr>
+		{% endfor %} 
+		{% endif %}
+	</tbody>
+</table>
+<div class="setPageBtnCenter">
+    <a href="javascript:;" class="layui-btn saveTaskSetBtn">保存设置</a>
+    <a href="/operation/taskManagement/checkTaskList" class="layui-btn taskBackBtn">返回</a>
+</div>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/taskManagement/checksTaskSet.js"></script>
+{% endblock%}

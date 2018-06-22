@@ -1,0 +1,352 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-商品管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/commodityManagement/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+		.uploadFile{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}	
+	    .importCode{position:absolute;top:0;left:0;z-index:100}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">商品管理</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建" %}
+	    			<a href="/merchant/cmdMan/newGoods" class="layui-btn" style="float:right;margin-right:60px;">新建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		
+		<div class="layui-tab">
+		    {% if page.productState  || page.productState == ""%}
+		    <ul class="layui-tab-title chooseType" data-status="{{page.productState}}">
+		    {% else %}
+		    <ul class="layui-tab-title chooseType" data-status="0">
+		    {% endif %}
+		  	{% if page.productState || page.productState == ""  %}
+		  		{% if menuCodeList %}
+			    	{% for code in menuCodeList %}
+			    		{% if unescape(code.name) == "草稿箱" %}
+			    			{% if page.productState == "0"  %}
+						    	<li data-status="0" class="layui-this">草稿箱</li>
+						    {% else %}
+						    	<li data-status="0">草稿箱</li>
+						    {% endif %}
+			    		{% endif %}
+			    		{% if unescape(code.name) == "待上架" %}
+			    			 {% if page.productState == 2  %}
+						    	<li data-status="2" class="layui-this">待上架</li>
+						    {% else %}
+						    	<li data-status="2">待上架</li>
+						    {% endif %}
+			    		{% endif %}
+			    		{% if unescape(code.name) == "已上架" %}
+			    			 {% if page.productState == 4 %}
+						    	<li data-status="4" class="layui-this">已上架</li>
+						    {% else %}
+						    	<li data-status="4">已上架</li>
+						    {% endif %}
+			    		{% endif %}
+			    		{% if unescape(code.name) == "已下架" %}
+			    			{% if page.productState == 3 %}
+						    	<li data-status="3" class="layui-this">已下架</li>
+						    {% else %}
+						    	<li data-status="3">已下架</li>
+						    {% endif %}
+			    		{% endif %}
+			    		{% if unescape(code.name) == "全部" %}
+			    			 {% if page.productState != "0" &&  page.productState != "2" && page.productState != "3" && page.productState != "4"%}
+						    	<li data-status="5" class="layui-this">全部</li>
+						    {% else %}
+						    	<li data-status="5">全部</li>
+						    {% endif %} 
+			    		{% endif %}
+			    	{% endfor %}
+			    {% endif %}
+			{% endif %}
+		  </ul>
+		</div>
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+					<select lay-filter="productAdAttr" class="productAdAttr" data-productAdAttr="{{page.productAdAttr}}">
+			    		<option value="">商品广告属性</option>
+			    		{% if page.productAdAttr == "1" %}
+			    			<option value="1" selected="selected">购买商品</option>
+			    		{% else %}
+			    			<option value="1">购买商品</option>
+			    		{% endif %}
+			    		{% if page.productAdAttr == "2" %}
+			    			<option value="2" selected="selected">广告商品</option>
+			    		{% else %}
+			    			<option value="2">广告商品</option>
+			    		{% endif %}
+			    		{% if page.productAdAttr == "3" %}
+			    			<option value="3" selected="selected">充值商品</option>
+			    		{% else %}
+			    			<option value="3">充值商品</option>
+			    		{% endif %}
+					</select> 
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商品名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.fullName %}
+					 		<input type="text"  name="username" value={{page.fullName}} lay-verify="required" placeholder="" autocomplete="off" class="layui-input fullName">
+					 	{% else %}
+					 		<input type="text"  name="username" lay-verify="required" placeholder="" autocomplete="off" class="layui-input fullName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商户名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.merchantFullName %}
+					 		<input type="text"  name="username" value={{page.merchantFullName}}  autocomplete="off" class="layui-input merchantFullName">
+					 	{% else %}
+					 		<input type="text"  name="username"  autocomplete="off" class="layui-input  merchantFullName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 queryGoods" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>商品名称</th>
+		            <th>商户名称</th>
+		            <th>成本价（元）</th>
+		            <th>零售价（元）</th>
+		            {% if page.productState == "4"%}
+			            <th>兑换积分</th>
+		            {% endif %}
+			        <th>库存数量</th>
+		            {% if page.productState == "4" %}
+			            <th>上架时间</th>
+		            {% endif %}
+		            {% if page.productState == "3" %}
+			            <th>下架时间</th>
+		            {% endif %}
+		            <th>商品广告属性</th>
+		            {% if page.productState == "" || page.productState == 0 %}
+			            <th>状态</th>
+		            {% endif %}
+		            
+		            {% if page.productState == "0" || page.productState == "2" || page.productState == "" %}
+			            <th>进货时间</th>
+		            {% endif %}
+		            {% if page.productState == "0" || page.productState == "3" || page.productState == "" || page.productState == "4" %}
+		           		<th>操作</th>
+		            {% endif %}
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td><a href="/merchant/cmdMan/goodsView?productId={{item.id}}">{{item.fullName}}</a></td>
+					 	
+					 	<td>{{item.merchantShortName}}</td>
+					 	<td>
+					 		{% if item.productAdAttr == 1 %}
+					 			{{item.costPrice}}
+					 		{% else %}
+					 			--
+					 		{% endif %}
+					 		
+					 	</td>
+					 	<td>
+					 		{% if item.productAdAttr == 1 %}
+					 			{{item.retailPrice}}
+					 		{% else %}
+					 			--
+					 		{% endif %}
+					 		
+					 	</td>
+					 	
+					 	{% if page.productState == "4"%}
+			            	<td>{{item.exchangeIntegral}}</td>
+		            	{% endif %}
+				        <td>{{item.stockNum}}</td>
+					 	{% if page.productState == "4" %}
+				            <td>{{item.updateTime}}</td>
+			            {% endif %}
+			            {% if page.productState == "3" %}
+				            <td>{{item.soldOutTime}}</td>
+			            {% endif %}
+			            <td>
+			            	{% if item.productAdAttr == 1 %}
+					 			购买商品
+					 		{% elseif item.productAdAttr == 2 %}
+					 			广告商品
+					 		{% elseif item.productAdAttr == 3 %}
+					 			充值商品
+					 		{% endif %}
+			            </td>
+			            {% if page.productState == "" ||  page.productState == 0 %}
+				            {% if item.productState == "3" %}
+						 		<td>已下架</td>
+						 	{% elseif item.productState == "1" %}
+						 		<td>未设置 </td>
+						 	{% elseif item.productState == "2" %}
+						 		<td>已设置 (待上架)  </td>
+						 	{% elseif item.productState == "0" || item.productState == "-1" || item.productState == "-2" %}
+						 		<td>草稿  </td>
+						 	{% elseif item.productState == "4" %}
+						 		<td>已上架</td>
+						 	{% elseif item.productState == "5" %}
+						 		<td>待审核</td>
+						 	{% elseif item.productState == "6" %}
+						 		<td>待修改（审核失败）</td>
+						 	{% endif %}	
+			            {% endif %}
+					 	{% if page.productState == "" || page.productState == "0" || page.productState == "2"%}
+				            <td>{{item.stockTime}}</td>
+			            {% endif %}
+					 	{% if page.productState == "" || page.productState == "3" || page.productState == "0" || item.productState == "4"%}
+			            	<td>
+			            		{% if item.productState == "3" || item.productState == "0" || item.productState == "-1" || item.productState == "-2" || item.productState == "6" %}
+					 				{% if menuCodeList %}
+								    	{% for code in menuCodeList %}
+								    		{% if unescape(code.name) == "查看兑换码" %}
+								    			{% if item.stockNum > 0 && item.productAdAttr == 1 %}
+								    				<a href="/merchant/cmdMan/codeView?productId={{item.id}}&pageSize=10&pageNo=1" class="layui-btn layui-btn">查看兑换码</a>
+								    			{% endif %}
+							    			{% elseif unescape(code.name) == "删除兑换码" %}
+							    				{% if item.stockNum > 0 && item.productAdAttr == 1 && item.productState == "0" || item.productState == "-1" || item.productState == "-2" %}
+								    				<a href="javascript:;" data-id="{{item.id}}" class="layui-btn delCodeBtns">删除兑换码</a>
+								    			{% endif %}
+								    		{% elseif unescape(code.name) == "导入兑换码" && item.productAdAttr == 1 && item.productState != "3" %}
+								    			<a  class="layui-btn layui-btn" style="position: relative;">
+								    				<input type="file" name="excelfile" class="uploadFile" style="width: 70px;"/>
+								    				<span data-id="{{item.id}}" class="layui-btn coverInputBtn importCode">导入兑换码</span>
+								    			</a>
+								    		{% elseif unescape(code.name) == "编辑" %}
+								    			<a href="/merchant/cmdMan/editorGoods?productId={{item.id}}" class="layui-btn layui-btn">编辑</a>
+								    		{% elseif unescape(code.name) == "提交" %}
+								    			{% if item.productState != "6" && item.productState != "3"  %}
+								    				{% if item.stockNum > 0 && item.productAdAttr == 1 ||  item.productAdAttr == 2 ||  item.productAdAttr == 3%}
+								    				<a data-id="{{item.id}}"  class="layui-btn submitGoods">提交</a>
+								    				{% endif %}
+								    			{% endif %}
+								    		{% elseif unescape(code.name) == "删除" %}
+								    			<a data-id="{{item.id}}"  class="layui-btn layui-btn-danger deleteGoods">删除</a>
+								    		{% endif %}
+								    	{% endfor %}
+								    {% endif %}
+					 			{%endif%}
+					 			{% if item.productState == "4" %}
+					 				<a data-id="{{item.id}}"  class="layui-btn openGoodsView">预览</a>
+					 			{% endif %}
+						 	</td>
+		            	{% endif %}
+					 </tr>
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	
+	<div class="coverScreen hide"></div>
+	<div class="adverAppView hide">
+		<div class="goods_view_overControll">
+			<div class="goods_view_title">商品详情</div>
+			<a class="layui-btn layui-btn-primary  closeAppView">关闭</a>
+			<div class="goods_view_content">
+				<div class="goode_view_img"><img src="https://oss.eratpay.com/46dcecdfa73e444f9681a1a0fd3b7d49.jpg"/></div>
+				<div class="view_content">
+					<div class="view_title">
+						<h1>爱奇艺黄金会员卡</h1>
+						<p>
+							<span class="view_code"><i>1500</i>积分</span>
+							<span class="view_times">已售：<i>550</i>件</span>
+						</p>
+						<p>
+							<span class="view_money">市场价参考：<i>20</i>元</span>
+							<sapn class="view_changeCode">1元=<i>200</i>积分</sapn>
+						</p>
+						<p>
+							(限一个IP地址、一个手机号、一个手机IMEI设备号,每月兑换1份)
+						</p>
+					</div>
+					<div class="view_message">
+						<p>购买须知：</p>
+						<h3>有效期：</h3>
+						<p class="useFulTime">2017年3月10日——2017年3月30日</p>
+						<h3>注意事项</h3>
+						<ul class="note_message">
+							<li>1、可在PC端、Pad端、手机端享受会员服务,TV端不可用;</li>
+							<li>2、没人限兑10份，兑换后请在2018年05月30日之前使用，会员有效期会叠加;</li>
+						</ul>
+						<h3>使用流程：</h3>
+						<ul class="goode_flow">
+							<li>1、可在PC端、Pad端、手机端享受会员服务,TV端不可用;</li>
+							<li>2、没人限兑10份，兑换后请在2018年05月30日之前使用，会员有效期会叠加;</li>
+							<li>3、没人限兑10份，兑换后请在2018年05月30日之前使用，会员有效期会叠加;</li>
+							<li>4、可在PC端、Pad端、手机端享受会员服务,TV端不可用;</li>
+							<li>5、没人限兑10份，兑换后请在2018年05月30日之前使用，会员有效期会叠加;</li>
+						</ul>
+						<h3>法律声明：</h3>
+						<ul class="goods_law">
+							<li>1、可在PC端、Pad端、手机端享受会员服务,TV端不可用;</li>
+							<li>2、没人限兑10份，兑换后请在2018年05月30日之前使用，会员有效期会叠加;</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="goods_view_bottom">
+				<p>积分余额：<i>45000</i></p>
+				<p>立即购买</p>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/commodityManagement/index.js"></script>
+
+{% endblock %}
+

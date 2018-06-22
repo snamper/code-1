@@ -1,0 +1,82 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-用户管理-编辑用户{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>用户管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">编辑用户</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addUserSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">用户名称:</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.ename %}
+			        	<input type="text" name="username" value="{{data.data.ename}}"  placeholder="请输入用户名称" autocomplete="off" class="layui-input addUserName">
+			    	{% else %}
+			    		<input type="text" name="username"  placeholder="请输入用户名称" autocomplete="off" class="layui-input addUserName">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-username hide">请输入用户名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">用户密码:</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.user_pwd %}
+			        	<input type="password" value="{{data.data.user_pwd}}"  name="userPassword"   placeholder="请输入用户密码" autocomplete="off" class="layui-input password">
+			    	{% else %}
+			    		<input type="password"  name="userPassword" placeholder="请输入用户密码" autocomplete="off" class="layui-input password">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-password hide">请输入用户密码</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">用户姓名:</label>
+			    <div class="layui-input-inline layui-input-width">
+			    	{% if data.data.name %}
+			        	<input type="text" value="{{data.data.name}}" name="realName"  placeholder="请输入用户姓名" autocomplete="off" class="layui-input realName">
+			        {% else %}
+			        	<input type="text" name="realName"  placeholder="请输入用户姓名" autocomplete="off" class="layui-input realName">
+			        {% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-realName hide">请输入用户姓名</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*手机号:</label>
+			    <div class="layui-input-inline layui-input-width">
+			    	{% if data.data.phone %}
+			        	<input type="text" value="{{data.data.phone}}" placeholder="请输入手机号" autocomplete="off" class="layui-input phone">
+			        {% else %}
+			        	<input type="text"  placeholder="请输入手机号" autocomplete="off" class="layui-input phone">
+			        {% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-phone hide">请输入正确的手机号</span>
+			</div>
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label">选择角色:</label>
+			    <div class="layui-input-inline layui-input-checked">
+			       <select name="" class="userSearch" lay-verify="require"  data-roleName="{{data.data.role_name}}"  lay-search lay-filter="userSearch">
+			    		<option value="">选择角色</option>
+					</select>   
+			   </div>
+			   <span class="layui-tooltip tooltip-userSearch hide">请选择角色</span>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn" lay-submit lay-filter="saveUserAdd">保存</a>
+			     <a  class="layui-btn" href="/system/userManage">返回</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/system/userManagement/editUser.js"></script>
+{% endblock %}
+

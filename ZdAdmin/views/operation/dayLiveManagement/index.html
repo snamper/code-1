@@ -1,0 +1,252 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-日活量统计{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/dayLiveManagement.css"/>
+	<script type="text/javascript" src="/vendor/echarts/echarts.common.min.js"></script>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">日活量统计</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="dayLiveMan">
+		<form class="layui-form dayLiveManForm" action="">
+			<div class="layui-inline">年月查询：</div>
+			<div class="layui-inline inputWidthMin">
+	            <select name="years" class="getYears" data-years="0" lay-filter="years" lay-verify="required" lay-search="">
+		        	<option value="0" selected="selected">请选择年</option>
+		        </select>
+		    </div>
+		    <div class="layui-inline inputWidthMin">
+		        <select name="mouths" class="getMouths" data-mouths="0" lay-filter="mouths" lay-verify="required" lay-search="">
+		        	<option value="0" selected="selected">请选择月</option>
+		        </select>
+		    </div>
+		    <div class="layui-inline searchBtnMargin">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </form>
+		<div id="main"></div>
+	</section>
+{% endblock %}
+{% block layui %}
+<script type="text/javascript">
+	var dayLivesData = [];//日活数量数据表
+    var dayRegistersData = [];//日注册数量数据表
+	var dayLoginsData = [];//日登录数量数据表
+	var data1=[
+	        {
+	            name:'日活数量',
+	            type:'line',
+	            data:[]
+	        },
+	        {
+	            name:'注册数量',
+	            type:'line',
+	            data:[]
+	        },
+	        {
+	            name:'登录数量',
+	            type:'line',
+	            data:[]
+	        }
+	    ];
+	layui.use(['element','laydate','form'], function(){
+		var $ = layui.jquery;
+		var form = layui.form();
+		
+		//选择年月
+		form.on('select(years)',function (data){
+			$('.getYears').attr('data-years', data.value);
+		});
+		form.on('select(mouths)',function (data){
+			$('.getMouths').attr('data-mouths', data.value);
+		});
+		
+		//渲染时间年月
+		var myDate = new Date();
+		var year=myDate.getFullYear()+1;//获取当前年
+		var month=myDate.getMonth()+2;//获取当前月
+		var strYear = '<option value="0" selected="selected">请选择年</option>';
+		var strMouth = '<option value="0" selected="selected">请选择月</option>';
+		for(var i=2017;i<Number(year);i++){
+			if(i == year-1){
+				strYear += '<option selected="selected" value="'+i+'">'+i+'年</option>';
+			}else{
+				strYear += '<option value="'+i+'">'+i+'年</option>';
+			}
+		}
+		for(var i=1;i<13;i++){
+			if(i == month-1){
+				strMouth += '<option selected="selected" value="'+i+'">'+i+'月</option>';
+			}else{
+				strMouth += '<option value="'+i+'">'+i+'月</option>';
+			}
+		}
+		$('.getYears').html(strYear);
+		$('.getMouths').html(strMouth);
+		//初始化输入框里面的值
+		$('.getYears').attr('data-years', year-1);
+		$('.getMouths').attr('data-mouths', month-1);
+		form.render();
+		function p(s) {
+		    return s < 10 ? '0' + s: s;
+		}
+		
+		//获取图表需要的数据
+		function dataInits($year,$month){
+			//图表默认横轴显示当前月的天数
+			var dateArr = [];//横轴月份日期
+			var dateArrInitLen = Number(mGetDate($year,$month)) + 1;//拿到选中的年月对应的天数
+//			$('.getYears').attr('data-years', $year);
+//			$('.getMouths').attr('data-mouths', $month);
+			if(Number(year-1) == Number($year) && Number(month-1) == Number($month)){//如果是当前年当前月的话，横轴显示日期截止当前日
+				dateArrInitLen = myDate.getDate()+1;//当前日
+			}
+			for(var i=1;i<dateArrInitLen;i++){
+				dateArr.push(i);
+			}
+			var dataTime = {
+				startTime: $year + '-' + p($month) + '-01', 
+				endTime: $year + '-' + p($month) + '-' + p(Number(mGetDate($year,$month))),
+				pageNo: 1,
+				pageSize: 31
+			};
+			getChartsDatas('/operation/dayLiveMan/dayLives',dataTime,'1');//日活量统计
+			getChartsDatas('/operation/dayLiveMan/dayRegisters',dataTime,'2');//日注册量统计
+			getChartsDatas('/operation/dayLiveMan/dayLogins',dataTime,'3');//日登录量统计
+			getEcharts (dateArr,data1);//初始化图表
+		}
+		dataInits(year-1,month-1);
+		
+		//搜索按钮事件
+		$('#searchBtn').on('click',function (){
+			//clear array
+			dayLivesData = [];
+			dayRegistersData = [];
+			dayLoginsData = [];		
+			if(getUserInput(layer)){
+			  var getY = $('.getYears').attr('data-years');//搜索时获取选中的年
+			  var getM = $('.getMouths').attr('data-mouths');//搜索时获取选中的月
+			  dataInits(getY,getM);
+//			  getEcharts(dateArr,data1);//更新图表
+			};
+		});
+		
+		//渲染数据方法
+		function getChartsDatas ($url,$data,type){//$url不同的数据接口,$data传入的时间区间，type哪一类的数据
+			dayLivesData = [];
+			dayRegistersData = [];
+			dayLoginsData = [];
+			getUserInput(layer);
+			$.ajax({//日活量数据
+				type: "post",
+				dataType: "json",
+				url: $url,
+				data: $data,
+				async:false,
+				beforeSend:beforeSend(),
+				success: function(json) {
+					if(json.message == "成功") {	
+						if(type == '1'){
+							for(var i=0;i<json.data.length;i++){
+								var arrIndex = Number(json.data[i].time.split("-")[2]-1);
+								dayLivesData[arrIndex] = json.data[i].app_live_count;							  							
+							}
+							data1[0].data = dayLivesData;
+						}else if(type == '2'){
+							for(var i=0;i<json.data.length;i++){
+								var arrIndex = Number(json.data[i].time.split("-")[2]-1);
+								dayRegistersData[arrIndex] = json.data[i].app_regist_count;
+							}
+							data1[1].data = dayRegistersData;
+						}else{
+							for(var i=0;i<json.data.length;i++){
+								var arrIndex = Number(json.data[i].time.split("-")[2]-1);
+								dayLoginsData[arrIndex] = json.data[i].app_login_count;
+							}
+							data1[2].data = dayLoginsData;
+						}
+					}
+				},
+				error: function() {
+					layer.msg('数据加载失败！', {
+						time: 1000, //1s后自动关闭
+						icon: 2
+					});
+				}
+			});//ajax
+		};
+			
+	}); 
+	
+	
+	
+	//图表渲染
+	function getEcharts (xAxisData,seriesData){//xAxisData-横轴数据   seriesData-纵轴数量
+		var myChart = echarts.init(document.getElementById('main'));
+		var option = {
+            title: {
+		        text: '日活量统计'
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['日活数量','注册数量','登录数量']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: xAxisData
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: seriesData
+        };
+		myChart.setOption(option);
+	};
+	
+	//获取传入的某年某月的天数
+	function mGetDate(year, month){
+		 var days = new Date(year, month, 0);
+		 return days.getDate();
+	};
+	function getUserInput(layer){
+		var getY = $('.getYears').attr('data-years');//搜索时获取选中的年
+		var getM = $('.getMouths').attr('data-mouths');//搜索时获取选中的月
+		if(getY == '0' || getM == '0'){//年月未填写完整
+			layer.msg('请选择完整日期！');
+			return false;
+		}else{
+			var dateArrLen = mGetDate(getY,getM) + 1;//拿到选中的年月对应的天数
+			dateArr = [];
+			for(var i=1;i<dateArrLen;i++){
+				dateArr.push(i);
+				dayLivesData.push(0);//日活数量数据表
+                dayRegistersData.push(0);//日注册数量数据表
+                dayLoginsData.push(0);//日登录数量数据表                
+			}
+			//getEcharts (dateArr,data2);
+			return true;
+		}
+	}
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,69 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理--广告管理{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/advertising/index.css" /> {% endblock %} {%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li>广告管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">广告位配置</li>
+	<a class="layui-btn apply" style="float:right;margin-right:60px;">配置生效</a>
+</ul>
+{%endblock%} {% block content%} {% if data.message =="成功"%}
+
+<table class="layui-table table-width">
+	<tr>
+		<th>列表位置</th>
+		<th>可展示广告</th>
+		<th>已配置广告数</th>
+		<th>操作</th>
+	</tr>
+	<tbody id="htmlWrap" attr-data="{{data.data.datas | json_encode}}">
+		{% for lis in data.data.datas %}
+		<tr>
+			<td>{{lis.position}}</td>
+			<td>
+				{% if lis.adList && lis.adList.length > 0 %}
+					{% for item in lis.adList %}
+					<p>{{item.ad_name}}</p>
+					{% endfor %}
+				{% else %}
+					--
+				{% endif %}
+			</td>
+			<td>
+				{% if lis.ad_num %}
+					{{lis.ad_num}}
+				{% else %}
+					0
+				{% endif %}
+			</td>
+			<td>
+				<a data-position="{{lis.position}}" data-adverList="{{lis.adList | json_encode}}" class="layui-btn setPosition">设置</a>
+			</td>
+		</tr>
+		{% endfor%}
+	</tbody>
+</table>
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%}
+<div class="coverScreen hide"></div>
+<div id="setBox" class="setBox hide">
+	<ul class="setBox_header">
+		<li>广告名称</li>
+		<li>投放类型</li>
+	</ul>
+	
+	<ul class="adverBox layui-form">
+		
+	</ul>
+	<div id="paging1" data-page-no="1" data-page="10" data-page-size={{data.data.pageSize}} style="margin-top: 10px;"></div>
+	<div class="layui-form-saveCloseBtn" pane="">
+	    <a  class="layui-btn layui-save-btn savePositionList">确定</a>
+	    <a class="layui-btn layui-btn-danger layui-layer-close">取消</a>
+	</div>
+</div>
+{% endblock %} {% block layui%}
+<script type="text/javascript" src="/controllers/advertising/advertManagement/adverSpace.js"></script>
+{% endblock%}

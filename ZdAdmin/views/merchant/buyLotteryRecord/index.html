@@ -1,0 +1,113 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-购彩记录{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style>
+		#sec1 .layui-form-label{width: 60px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">购彩记录</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1" class="padding15">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position buyLotteryRecord" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">手机号:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.phoneNum %}
+					 		<input type="text" name="phoneNum" value={{page.phoneNum}} class="layui-input phoneNum">
+					 	{% else %}
+					 		<input type="text" name="phoneNum" class="layui-input phoneNum">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">订单号:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.orderNum %}
+					 		<input type="text" name="orderNum" value={{page.orderNum}} class="layui-input orderNum">
+					 	{% else %}
+					 		<input type="text" name="orderNum" class="layui-input orderNum">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">购买时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                   </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+                </div>
+				<div class="layui-form-item layui-input-inline">
+					{% if page && page.orderNo %}
+					<select lay-filter="lotteryType" class="lotteryType" data-lotteryType="{{page.orderNo}}">
+					{% else %}
+					<select lay-filter="lotteryType" class="lotteryType" data-lotteryType="0">
+					{% endif %}
+			    		<option value=" ">请选择彩种</option>
+					</select> 
+				</div>
+				<div class="layui-input-inline">
+		    		<a href="javascript:;" id="search"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    	</div>	
+		    	<a class="layui-btn derivaBtn" style="float:right;margin-right:40px;">导出</a>
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>支付方式</th>
+		            <th>支付单号</th>
+		            <th>订单号</th>
+		            <th>商家</th>
+		            <th>彩种</th>
+		            <th>手机号</th>
+		            <th>消耗积分</th>
+		            <th>消耗金额</br>(元)</th>
+		            <th>购买时间</th>
+		        </tr>
+		    </thead>
+		    {% if data.data.datas.length > 0 %}
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas %}
+			    	<tr>
+					 	<td>{{page.pageNo|sortNum(loop.index)}}</td>
+					 	<td data-order="{{item.payMode}}">{{item.payMode}}</td>
+					 	<td class="copy" data-order="{{item.payOrder}}" title="{{item.payOrder}}">{{item.payOrder}}</td>
+					 	<td class="copy" data-order="{{item.thirdOrder}}" title="{{item.thirdOrder}}">{{item.thirdOrder}}</td>
+					 	<td>{{item.business}}</td>
+					 	<td>{{item.orderName}}</td>
+					 	<td>{{item.phoneNum}}</td>
+					 	<td>{{item.point}}</td>
+					 	<td>{{item.money}}</td>
+					 	<td>{{item.buyTime}}</td>	  
+					 </tr>
+				 {% endfor%}
+		    </tbody>
+		    {% endif %}
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+		<a id="downloadFiles" href="" download=""></a>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/buyLotteryRecord/index.js"></script>
+{% endblock %}
+

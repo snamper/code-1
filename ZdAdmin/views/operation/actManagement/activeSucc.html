@@ -1,0 +1,66 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-活动管理-活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>活动管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建活动</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<!--
+        	描述：填写基本信息
+        -->
+		<form class="layui-form layui-form-position layui-form-padding firstPage" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						选择活动类型
+						<div class="shiji">
+							<h1>1</h1>
+							<p>选择活动类型</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						活动设置
+						<div class="shiji">
+							<h1>2</h1>
+							<p>活动设置</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						<div class="shiji">
+							<h1>3</h1>
+							<p>保存完成</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div style="margin-left: 25%;width: 500px;">
+				<img src="/images/u432.png" alt="" />
+				<span>活动创建成功，可在活动列表查看活动详情</span>
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a class="layui-btn layui-save-btn" href="/operation/actManagement/chooseActive">继续创建</a>
+			</div>
+		</form>
+	
+		
+	</section>
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		$($('.course_nr2 li')[2]).find('.shiji').slideDown();
+	</script>
+{% endblock %}
+
+
+

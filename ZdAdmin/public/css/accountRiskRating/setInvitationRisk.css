@@ -1,0 +1,15 @@
+/*设置邀请风险*/
+.fl{float: left;}
+.fr{float: right;}
+.clearfix{display: block;content: '';clear: both;}
+.handleBox{padding-right: 20px; margin-bottom:0;}
+.layui-form-saveCloseBtn{text-align: center;}
+.setInvitationRisk{padding: 20px 0 0 30px;}
+.setInvitationRisk .risksNumInpt{width: 100px;vertical-align: middle;height: 26px;}
+.setInvitationRisk .layui-icon{font-weight: bold;}
+.setInvitationRisk .risksLisItems{margin-right: 50px;margin-bottom: 25px;}
+.setInvitationRisk .layui-form-checkbox span{width: 115px;}
+.setInvitationRisk .layui-btn-group{font-size: 14px;}
+.setInvitationRisk .layui-btn-primary{border-left: 1px solid #C9C9C9;}
+.setInvitationRisk .layui-input-inline{width: 320px;}
+.setInvitationRisk .invitationRiskBox{padding-left: 20px;}

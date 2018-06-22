@@ -1,0 +1,123 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-优惠券管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %} 
+{% block indexTitle %}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">优惠券管理</li>
+	<li class="fr"><a href="/operation/couponsManagement/configChannelsCoup" class="layui-btn channelCouponBtn">配置渠道优惠券</a></li>
+</ul>
+{% endblock %}
+{% block content %} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li><a href="/operation/couponsManagement">额度管理</a></li>
+		<li><a href="/operation/couponsManagement/couponsMan">优惠券管理</a></li>
+		<li class="layui-this"><a href="/operation/couponsManagement/channelCoupon">渠道配置优惠券</a></li>
+	</ul>
+</div>
+<div class="layui-form-item padding15">
+	<div class="layui-inline">
+	 	<label class="layui-form-label">渠道名称：</label>
+	    <div class="layui-input-inline">
+		    {% if page && page.channelName %}
+			<input type="text" name="channelName" class="layui-input channelName" value="{{page.channelName}}" lay-verify="text" autocomplete="off" placeholder="请输入渠道名称">
+			{% else %}
+			<input type="text" name="channelName" class="layui-input channelName" lay-verify="text" autocomplete="off" placeholder="请输入渠道名称">
+			{% endif %}			     
+	    </div>
+    </div>
+    <div class="layui-inline">
+    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+    </div>
+</div>
+<table class="layui-table table-width channelCoupTab">
+	<thead>
+		<tr>
+	     	<th>序号</th>
+	     	<th>渠道</th>
+	     	<th>渠道id</th>
+	     	<th>总计额度(元)</th>
+	     	<th>优惠券名称</th>
+	     	<th>额度(元)</th>
+	     	<th>使用期限</th>
+	     	<th>配置数量</th>
+	     	<th>渠道库存数量</th>
+	     	<th>操作</th>
+	    </tr>
+	</thead>
+    <tbody id="htmlWrap">
+     	{% for item in data.data.datas %}
+     	<tr>
+     		<td>{{page.pNo|sortNum(loop.index)}}</td>
+     		<td style="height: {{item.totalHeight}};">{{item.channelName}}</td>
+     		<td style="height: {{item.totalHeight}};">{{item.channelId}}</td>
+     		<td style="height: {{item.totalHeight}};">{{item.sumAll}}</td>
+     		<td class="rankTd" style="max-width: 420px;height: {{item.oneHeight}};">
+     		{% if item.couponBaseList.length > 1 %}
+     			{% for lis in item.couponBaseList %}
+     			<span class="lisRank">{{lis.name||'--'}}</span>
+     			{% endfor %}
+ 			{% elseif item.couponBaseList[0] %}
+ 				{{item.couponBaseList[0].name}}
+ 			{% else %}--{% endif %}
+     		</td>
+     		<td class="rankTd" style="height: {{item.oneHeight}};">
+     		{% if item.couponBaseList.length > 1 %}
+     			{% for lis in item.couponBaseList %}
+     			<span class="lisRank">{{lis.rmbValue||'--'}}</span>
+     			{% endfor %}
+ 			{% elseif item.couponBaseList[0] %}
+ 				{{item.couponBaseList[0].rmbValue}}
+ 			{% else %}--{% endif %}
+     		</td>
+		 	<td class="rankTd" style="height: {{item.oneHeight}};width: 300px;">
+     		{% if item.couponBaseList.length > 1 %}
+     			{% for lis in item.couponBaseList %}
+     			<span class="lisRank">{{lis.eventDateStart}}---{{lis.useDateEnd}}</span>
+     			{% endfor %}
+ 			{% elseif item.couponBaseList[0] %}
+ 				{{item.couponBaseList[0].eventDateStart}}---{{item.couponBaseList[0].useDateEnd}}
+ 			{% else %}--{% endif %}
+     		</td>
+		 	<td class="rankTd" style="height: {{item.oneHeight}};">
+     		{% if item.allCount %}
+     			{{item.allCount}}
+ 			{% else %}--{% endif %}
+     		</td>
+		 	<td class="rankTd" style="height: {{item.oneHeight}};">
+     		{% if item.couponBaseList.length > 1 %}
+     			{% for lis in item.couponBaseList %}
+     			<span class="lisRank">{{lis.hasCount}}</span>
+     			{% endfor %}
+ 			{% elseif item.couponBaseList[0] %}
+ 				{{item.couponBaseList[0].hasCount}}
+ 			{% else %}--{% endif %}
+     		</td>
+			<td style="height: {{item.totalHeight}};">
+				{% if item.status == '1' %}
+				<a href="/operation/couponsManagement/configChannelsCoup?couponChannelId={{item.id}}" class="layui-btn">编辑</a>
+				<a href="javascript:;" class="layui-btn useTakeBtn" data-ChannelId="{{item.id}}">应用生效</a>
+				{% elseif item.status == '2' %}
+				<a href="javascript:;" class="layui-btn layui-btn-danger drawOffBtn" data-ChannelId="{{item.id}}">暂停领取</a>
+				<a href="/operation/couponsManagement/channelsCoupReplen?couponChannelId={{item.id}}" class="layui-btn layui-btn-normal">补货</a>
+				{% elseif item.status == '3' %}
+				<a href="javascript:;" class="layui-btn layui-btn-warm drawOnBtn" data-ChannelId="{{item.id}}">启动领取</a>
+				{% else %}--{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+ 	</tbody>
+</table>
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+{% else %}
+    <div style="text-align:center">{{data.message}}</div>
+{% endif %}
+{% endblock %} 
+{% block layui %}
+<script type="text/javascript" src="/controllers/operation/couponsManagement/channelCoupon.js"></script>
+{% endblock %}

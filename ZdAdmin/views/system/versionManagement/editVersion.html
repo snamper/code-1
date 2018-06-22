@@ -1,0 +1,106 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-版本管理-创建版本{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>版本管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">创建版本</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addUserSection">
+		<div class="legend">
+			新建版本信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">更新方式:</label>
+			    <div class="layui-input-inline layui-input-checked updatetype" data-type="{{data.data.type}}">
+			    	{% if !data.data.type || data.data.type == 1  %}
+			        	<input type="radio" name="status" value="1" checked="checked" title="强制更新">
+			        	<input type="radio" name="status" value="0" title="普通更新">
+			        {% else %}
+						<input type="radio" name="status" value="1"  title="强制更新">
+			        	<input type="radio" name="status" checked="checked" value="0" title="普通更新">
+			        {% endif %}
+			   </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">* 版本号:</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.versionCode %}
+			       		<input type="text"  name="versionCode" value="{{data.data.versionCode}}"  placeholder="请输入版本号" autocomplete="off" class="layui-input versionCode">
+			    	{% else %}
+			    		<input type="text"  name="versionCode"   placeholder="请输入版本号" autocomplete="off" class="layui-input versionCode">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-versionCode hide">请输入版本号</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label" style="width: 90px;">* 应用LOGO:</label>
+			    <div class="site-demo-upload">
+			    	{% if data.data.logo %}
+				    	<img data-url="{{data.data.logo}}" id="uploadLogoShow" style="width: 150px;height: 150px; float: left; margin-right: 20px;"  src="{{data.data.logo}}"/>
+				    {% else %}
+				    	<img  data-url="{{data.data.logo}}" id="uploadLogoShow" style="width: 150px;height: 150px;float: left; margin-right: 20px;"  src="/images/showUpLogoImg.png"/>
+				    {% endif %}
+				    <div class="layui-input-inline" style="position: relative;">
+				    	<input type="file" name="file" data-url="{{data.data.logo}}"  class="layui-upload-images uploadLogo"/>
+						<!--<span class="layui-btn coverInputBtn coverInputBtnLeft" id="asImportCode">上传应用LOGO</span>-->	
+						<span class="copyUploadBtn" id="asImportCode">+</span>
+				    </div>
+				</div>
+				 <span class="layui-tooltip tooltip-versionCode hide">请上传应用LOGO</span>
+			</div>
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline" style="color: #ccc;font-size: 12px;min-width: 300px;">
+			        	图片格式为JPG,JPEG，PNG ，大小10M，比例1:1
+			   </div>
+			</div>
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label">更新描述:</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.content %}
+			        	<textarea class="layui-textarea-goods content" style="width: 100%;height: 100px;resize:none;">{{data.data.content}}</textarea>
+			   		{% else %}
+			   			<textarea class="layui-textarea-goods content" style="width: 100%;height: 100px;resize:none;"></textarea>
+			   		{% endif %}
+			    </div>
+			   <span class="layui-tooltip tooltip-userSearch hide">200字限制</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">* 应用包:</label>
+			    <div class="layui-form-label" style="width: 50px;">
+			    	{{data.data.size}}
+			    </div>
+			    <div class="layui-input-inline layui-input-width" style="position: relative;">
+			        <input type="file" name="file" data-url="{{data.data.downloadUrl}}" style="cursor: pointer;" class="layui-upload-images uploadBag"/>
+			        
+			        <span class="layui-btn coverInputBtn coverInputBtnLeft" id="ImportupBag">替换应用包</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-realName hide">请上传应用包</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">* 应用地址:</label>
+			    <div class="layui-input-inline layui-input-width" style="line-height: 38px;">
+			        {{data.data.downloadUrl}}
+			    </div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn saveVersion" >保存</a>
+			    <a href="/system/versionManage" class="layui-btn ">返回</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/system/versionManagement/editVersion.js"></script>
+{% endblock %}
+

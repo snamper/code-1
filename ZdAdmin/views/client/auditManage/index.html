@@ -1,0 +1,186 @@
+{% extends "./../../layout.html"%}
+{% block title%}客户管理-广告主管理{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" href="/css/system/index.css" />-->
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>客户管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告主列表</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-tab">
+				  <ul class="layui-tab-title chooseType" data-status="{{page.status}}" style="width: 90%;margin-left: 30px;">
+				  	{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "待审核" %}
+				    			{% if page.status == 1 %}
+							    	<li data-status="1" class="layui-this">待审核</li>
+							    {% else %}
+							    	<li data-status="1">待审核</li>
+							    {% endif %}
+				    		{% endif %}
+				    		{% if unescape(code.name) == "已审核" %}
+				    			{% if page.status == 5 %}
+							    	<li data-status="5" class="layui-this">已审核</li>
+							    {% else %}
+							    	<li data-status="5">已审核</li>
+							    {% endif %}
+							    
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				  </ul>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+					<div class="layui-input-inline" style="margin-left: 20px;">
+						{% if page.advType %}
+							<select name="" lay-verify="require" class="selectType" data-advType="{{page.advType}}" lay-search lay-filter="userSearch">
+								<option value="">广告主类型</option>
+								{% if page.advType == 1 %}
+									<option value="1" selected="selected">直客</option>
+									<option value="2">代理</option>
+								{% else %}
+									<option value="1">直客</option>
+									<option value="2" selected="selected">代理</option>
+								{% endif %}
+							</select> 
+								
+						{% else %}
+					 		<select name="" lay-verify="require"  class="selectType" data-advType="" lay-search lay-filter="userSearch">
+								<option value="">广告主类型</option>
+								<option value="1">直客</option>
+								<option value="2">代理</option>
+						</select> 
+					 	{% endif %}
+					</div>
+				    <label class="layui-form-label">广告主名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.shortName %}
+					 		<input type="text" id="merchantId" name="username" value={{page.shortName}} lay-verify="required" placeholder="广告主名称" autocomplete="off" class="layui-input queryByResourceName">
+					 	{% else %}
+					 		<input type="text" id="merchantId" name="username" lay-verify="required" placeholder="广告主名称" autocomplete="off" class="layui-input queryByResourceName">
+					 	{% endif %}	
+				    </div>
+				    
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.stDate %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.stDate}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.enDate %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.enDate}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 queryAdver" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		 
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>广告主名称</th>
+		            <th>广告主类型</th>
+		            <th>创建人</th>
+		            <th>广告数量</th>
+		            {% if page.status == 1 %}
+		            	<th>提交时间</th>
+		            	<th>操作</th>
+		            {% endif %}
+		            {% if page.status == 5 %}
+		            	<th>状态</th>
+		            	<th>审核时间</th>
+		            {% endif %}
+		        </tr>
+		    </thead>
+		   
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas.list%}
+			    	<tr>
+			    		<td>{{item.id}}</td>
+			    		<td><a href="/client/audit/advertiserView?advId={{item.id}}&source=/client/audit">{{item.full_name}}</a></td>
+			    		{% if item.type == "1" %}
+					 		<td>直客</td>
+					 	{% endif %}	
+					 	{% if item.type == "2" %}
+					 		<td>代理</td>
+					 	{% endif %}	
+			    		<td>{{item.name}}</td>
+			    		<td>{{item.adcounts}}</td>
+			    		{% if page.status == 1 %}
+				    		<td>{{item.submit_time}}</td>
+				    		<td>
+				    			{% if menuCodeList %}
+							    	{% for code in menuCodeList %}
+							    		{% if unescape(code.name) == "审核" %}
+							    			<a data-id="{{item.id}}" href="/client/audit/advAudit?advId={{item.id}}"  class="layui-btn">审核</a>
+							    		{% endif %}
+							    	{% endfor %}
+							    {% endif %}
+				    			
+				    		</td>
+				    	{% endif %}
+				    	{% if page.status == 5 %}
+				    		<td>
+				    			{% if item.status == 0 %}
+				    				草稿箱 
+				    			{% elseif item.status == 1 %}
+				    				待审核 
+				    			{% elseif item.status == 2 %}
+				    				审核通过 
+				    			{% elseif item.status == 3 %}
+				    				待修改（未通过）
+				    			{% elseif item.status == 4 %}
+				    				已删除 
+				    			{% elseif item.status == 5 %}
+				    				已审核
+				    			
+				    			{% endif %}
+				    		</td>
+				    		<td>{{item.handle_time}}</td>
+				    	{% endif %}
+			    	</tr>
+		    	{% endfor%}
+		    	
+		    </tbody>
+		    
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/client/auditManagement/index.js"></script>
+{% endblock %}
+

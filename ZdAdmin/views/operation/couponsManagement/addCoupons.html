@@ -1,0 +1,124 @@
+{% extends "./../../layout.html"%}
+{% block title %}运营管理--优惠券管理--优惠券创建{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %}
+{% block indexTitle %}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>优惠券管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">优惠券创建</li>
+	 </ul>
+{% endblock %}
+{% block content %}
+	<form class="layui-form formPage site-demo-top40 editorCoupons couponsCenter" action="">
+		<div class="layui-form-item" pane="">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>优惠券类型:</label>
+		    {% if !page || page.useWay == 1 %}
+		    <div class="layui-input-inline layui-input-checked getCoupIfy" data-useWay='1' style="width: 220px;">
+			    <input type="radio" name="useWay" value="1" title="指定商品券" checked="checked"/>
+			    <input type="radio" name="useWay" value="2" title="通用券"/>
+		    </div>
+		    {% else %}
+		    <div class="layui-input-inline layui-input-checked getCoupIfy" data-useWay='2' style="width: 220px;">
+			    <input type="radio" name="useWay" value="1" title="指定商品券"/>
+			    <input type="radio" name="useWay" value="2" title="通用券" checked="checked"/>
+		    </div>
+		    {% endif %}
+		</div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>优惠券名称：</label>
+			    <div class="layui-input-inline fillCouponsNames">
+				    <input type="text" name="couponsName" class="layui-input couponsName" lay-verify="required" placeholder="请输入30字以内的名称" autocomplete="off">
+			    </div>	
+			    <span class="layui-tooltip tooltip-couponsName hide">请规范输入30字以内的名称</span>
+		    </div>
+	    </div>
+	    {% if !page || page.useWay == 1 %}
+	    <div class="layui-form-item useWayDiffCont">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>选择商品：</label>
+			    <div class="layui-input-inline selCouponsGoods" data-id="">
+				    <select name="coupGoods" class="couponsGoodsBox" lay-filter="coupGoods" lay-verify="required" lay-search="">
+				    	<option value=" ">请选择商品</option>
+				    </select>
+			    </div>	
+			    <span class="layui-tooltip tooltip-coupGoods hide">请选择商品</span>
+		    </div>
+	    </div>
+	    {% endif %}
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>额度(元)：</label>
+			    <div class="layui-input-inline selCouponsLimit" data-val="">
+				    <select name="coupLimit" class="couponsLimitBox" lay-filter="coupLimit" lay-verify="required" lay-search="">
+				    	<option value=" ">请选择额度</option>
+				    </select>
+			    </div>	
+			    <span class="layui-tooltip tooltip-coupLimit hide">请选择优惠券额度</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>数量(份)：</label>
+			    <div class="layui-input-inline fillCouponsNumber">
+				    <input type="text" name="fillCoupNum" class="layui-input fillCoupNum" lay-verify="required" placeholder="请输入优惠券数量" autocomplete="off">
+			    </div>	
+			    <span class="layui-tooltip tooltip-fillCoupNum hide">请输入1~100000的整数</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>有效期(天)：</label>
+			    <div class="layui-input-inline couponsPeriod">
+				    <input type="text" name="coupPeriod" class="layui-input coupPeriod" lay-verify="required" placeholder="请输入有效期" autocomplete="off">
+			    </div>	
+			    <span class="layui-tooltip tooltip-coupPeriod hide">请输入大于0的整数</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>活动时间：</label>
+                <div class="layui-input-inline">
+				    {% if page && page.startTime%}
+					<input type="text" value="{{page.startTime}}" class="layui-input" placeholder="开始时间" id="LAY_demorange_s" autocomplete="off">    
+                    {% else %}
+					<input type="text" class="layui-input" placeholder="开始时间" id="LAY_demorange_s" autocomplete="off">    
+                    {% endif %}					
+               </div>                  
+                <div class="layui-input-inline">
+				    {% if page && page.endTime%}
+					<input type="text" class="layui-input" value="{{page.endTime}}" placeholder="截止时间" id="LAY_demorange_e" autocomplete="off">  
+            		{% else %}
+					<input type="text" class="layui-input" placeholder="截止时间" id="LAY_demorange_e" autocomplete="off">  
+                    {% endif %}								
+                </div>
+			    <span class="layui-tooltip tooltip-activetyTime hide">请选择活动时间</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">优惠券使用时间：</label>
+			    <div class="layui-input-inline getAutoUseTime">
+			    	<span class="coupUseTime_s"></span> ~ 
+			    	<span class="coupUseTime_e"></span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item addBtnBox">
+			<div class="layui-inline">		
+            	<a class="layui-btn addCouponsSaveBtns" href="javascript:;">生成</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="/operation/couponsManagement/couponsMan" class="layui-btn">返回</a>
+        	</div>
+        </div>
+	 </form>
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/operation/couponsManagement/addCoupons.js"></script>
+{% endblock%}

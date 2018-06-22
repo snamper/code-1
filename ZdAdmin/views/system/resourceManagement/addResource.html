@@ -1,0 +1,99 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-资源管理-新建资源{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>资源管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建资源</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">资源类型:</label>
+			    <div class="layui-input-inline " >
+			        <select name="" lay-verify="require"  lay-search lay-filter="resourceType">
+					  <!--<option value="">请选择资源类型</option>-->
+					  <option value="1">一级菜单</option>
+					  <option value="2">二级菜单</option>
+					  <option value="3">三级菜单</option>
+					  <option value="6">按钮菜单</option>
+					</select>
+					
+			    </div>
+			    <span class="layui-tooltip tooltip-resourceType hide">请选择菜单类型</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">资源名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" lay-verify="required" placeholder="请输入资源名称" autocomplete="off" class="layui-input resourceName">
+			    </div>
+			    <span class="layui-tooltip tooltip-resourceName hide">请输入资源名称</span>
+			</div>
+			<div class="layui-form-item resourceCode" style="display: none;">
+			    <label class="layui-form-label">资源编码:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username"  placeholder="请输入资源编码" autocomplete="off" class="layui-input code">
+			    </div>
+			    <span class="layui-tooltip tooltip-code hide">请输入资源编码</span>
+			</div>
+			<div class="layui-form-item ifShowPar" style="display: none;">
+			    <label class="layui-form-label">父资源名:</label>
+			    <div class="layui-input-inline resourceParent">
+			        <select name="parentResource" lay-verify="require" data-list="{{data.data.datas}}" lay-filter="parentResource">
+			        	<option value="">请选择一级父资源</option>
+				          {% for item in data.data%}
+				          	{% if item.type == 1 %}
+							  <option data-parentId="{{item.parent_id}}"  value="{{item.menu_id}}/{{item.parent_id}}">{{item.name}}</option>
+							{% endif %}	
+						{% endfor%}
+					</select>
+					
+			    </div>
+			    <div class="layui-input-inline secondResource" >
+			        <select name="resourceType" lay-verify="" class="secResource" lay-filter="secondResourceContainer" >
+			        	<option value="">请选择二级父资源</option>
+			        </select>
+			    </div>
+			    <div class="layui-input-inline thirdResource" >
+			        <select name="resourceType" lay-verify="" class="thirdResourceSelect" lay-filter="thirdResource" >
+			        	<option value="">请选择三级父资源</option>
+			        </select>
+			        <span class="layui-tooltip tooltip-parentResource hide">请选择一级父资源</span>
+			        <span class="layui-tooltip tooltip-secondResource hide">请选择一级父资源</span>
+			        <span class="layui-tooltip tooltip-thirdResource hide">请选择三级父资源</span>
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">URL:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" lay-verify="required" placeholder="请输入URL" autocomplete="off" class="layui-input resourceUrl">
+			    </div>
+			    <span class="layui-tooltip tooltip-resourceUrl hide" style="margin-left: 195px;">请输入URL</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">排序:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" lay-verify="required|number" placeholder="数字越小越靠前" autocomplete="off" class="layui-input resourceSort">
+			    </div>
+			    <span class="layui-tooltip tooltip-resourceSort hide">请输入排序号</span>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn" lay-submit lay-filter="saveUserAdd">保存</a>
+			    <a class="layui-btn layui-btn-danger clearMessage">重置</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/system/resourceManagement/addResource.js"></script>
+{% endblock %}
+
+

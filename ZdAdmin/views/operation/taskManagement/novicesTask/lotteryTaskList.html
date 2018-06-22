@@ -1,0 +1,76 @@
+{% extends "./../../../layout.html"%} 
+{% block title%}运营管理-任务管理-抽奖任务{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" /> 
+<link rel="stylesheet" href="/css/operation/task.css" /> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">任务管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">抽奖任务</li>
+	<li class="lisFlBtn moreFlBtn">
+		{% if menuCodeList %} 
+			{% for code in menuCodeList %}
+				{% if unescape(code.name) == "奖品设置" %}
+					<a href="/operation/taskManagement/setLotteryTask" class="layui-btn setLotteryBtn">奖品设置</a>
+				{% elseif unescape(code.name) == "查看详情" %}
+					<a href="/operation/taskManagement/showLotteryLogList" class="layui-btn showLotteryBtn">查看详情</a>
+				{% endif %} 
+			{% endfor %} 
+		{% endif %}
+	</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<table class="layui-table table-width">
+	<thead>
+		<tr>
+			<th>抽奖位置</th>
+			<th>奖品</th>
+			<th>中奖概率(%)</th>
+			<th>库存状态</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if data.data.length %}
+		{% for lis in data.data %}
+		<tr>
+			<td>{{loop.index}}</td>
+			{% if lis.type == '1' %}
+			<td>{{lis.lacky_draw}}积分</td>
+			{% elseif lis.type == '2' %}
+			<td>{{lis.lacky_draw}}</td>
+			{% elseif lis.type == '3' %}
+			<td>谢谢参与!</td>
+			{% else %}
+			<td>--</td>
+			{% endif %}
+			<td>{{lis.probability|floatMul(100)}}</td>
+			{% if lis.type == '2' %}
+			<td>{{lis.product_num}}</td>
+			{% else %}
+			<td>--</td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+		{% else %}
+		{% for item in [1,2,3,4,5,6,7,8] %}
+		<tr class="initData">
+			<td>{{loop.index}}</td>
+			<td>--</td>
+			<td>--</td>
+			<td>--</td>
+		</tr>
+		{% endfor %} 
+		{% endif %}
+	</tbody>
+</table>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+{% endblock%}

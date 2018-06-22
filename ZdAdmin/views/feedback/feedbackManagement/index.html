@@ -1,0 +1,90 @@
+{% extends "./../../layout.html"%}
+{% block title%}意见反馈-反馈列表{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>意见反馈</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">反馈列表</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				
+				<div class="layui-form-item layui-input-inline">
+					
+				    <label class="layui-form-label">用户昵称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.name %}
+					 		<input type="text" value={{page.name}} lay-verify="required" placeholder="用户昵称" autocomplete="off" class="layui-input name">
+					 	{% else %}
+					 		<input type="text" lay-verify="required" placeholder="用户昵称" autocomplete="off" class="layui-input name">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                   </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 searchData" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>用户昵称</th>
+		            <th>反馈内容</th>
+		            <th>反馈时间</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+			    		<td>{{item.name}}</td>
+			    		<td>{{item.submit_content}}</td>
+			    		<td>{{item.submit_time}}</td>
+			    	</tr>
+		    	{% endfor%}
+		    	
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/feedback/feedbackManage/index.js"></script>
+{% endblock %}
+

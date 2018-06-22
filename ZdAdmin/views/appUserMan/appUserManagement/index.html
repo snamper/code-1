@@ -1,0 +1,383 @@
+{% extends "./../../layout.html"%}
+{% block title%}APP用户管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/appUserControl/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>APP用户管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">用户列表</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <form class="layui-form appUserManagement" action="" style="padding-top: 15px;">
+	 	<div class="layui-form-item">
+		    <div class="layui-inline firstLeft">
+		        <div class="layui-input-inline loginStatus" style="width: 120px;">
+		        	{% if page && page.userType == '1' %}
+		        	<select name="logins" class="loginStas" data-stats="1" lay-filter="logins" lay-verify="required" lay-search="">
+			        	<option value="-6">登录状态</option>
+			            <option value="0">登录</option>
+			            <option value="1" selected="selected">游客</option>
+			        </select>
+		        	{% elseif page && page.userType == '0' %}
+		        	<select name="logins" class="loginStas" data-stats="0" lay-filter="logins" lay-verify="required" lay-search="">
+			        	<option value="-6">登录状态</option>
+			            <option value="0" selected="selected">登录</option>
+			            <option value="1">游客</option>
+			        </select>
+		        	{% else %}
+		        	<select name="logins" class="loginStas" data-stats="-6" lay-filter="logins" lay-verify="required" lay-search="">
+			        	<option value="-6" selected="selected">登录状态</option>
+			            <option value="0">登录</option>
+			            <option value="1">游客</option>
+			        </select>
+		        	{% endif %}
+		        </div>
+		    </div>
+	 		<div class="layui-inline">
+		        <div class="layui-input-inline selectStatus" style="width: 120px;">
+		        	{% if page && page.loginStatus == '-1' %}
+		        	<select name="stats" class="selStas" data-stats="-1" lay-filter="stats" lay-verify="required" lay-search="">
+			        	<option value="-6">用户状态</option>
+			            <option value="0">启用</option>
+			            <option value="-1" selected="selected">停用</option>
+			        </select>
+		        	{% elseif page && page.loginStatus == '0' %}
+		        	<select name="stats" class="selStas" data-stats="0" lay-filter="stats" lay-verify="required" lay-search="">
+			        	<option value="-6">用户状态</option>
+			            <option value="0" selected="selected">启用</option>
+			            <option value="-1">停用</option>
+			        </select>
+		        	{% else %}
+		        	<select name="stats" class="selStas" data-stats="-6" lay-filter="stats" lay-verify="required" lay-search="">
+			        	<option value="-6" selected="selected">用户状态</option>
+			            <option value="0">启用</option>
+			            <option value="-1">停用</option>
+			        </select>
+		        	{% endif %}
+		        </div>
+		    </div>
+		    <div class="layui-inline">
+		        <div class="layui-input-inline selectIntegral" style="width: 120px;">
+		        	{% if page && page.scoreStatus == '0' %}
+			        <select name="integral" class="selIntegral" data-integral="0" lay-filter="integral" lay-verify="required" lay-search="">
+			        	<option value="-6">积分状态</option>
+			            <option value="1">积分正常</option>
+			            <option value="0" selected="selected">积分冻结</option>
+			        </select>
+		        	{% elseif page && page.scoreStatus == '1' %}
+			        <select name="integral" class="selIntegral" data-integral="1" lay-filter="integral" lay-verify="required" lay-search="">
+			        	<option value="-6">积分状态</option>
+			            <option value="1" selected="selected">积分正常</option>
+			            <option value="0">积分冻结</option>
+			        </select>
+		        	{% else %}
+			        <select name="integral" class="selIntegral" data-integral="-6" lay-filter="integral" lay-verify="required" lay-search="">
+			        	<option value="-6" selected="selected">积分状态</option>
+			            <option value="1">积分正常</option>
+			            <option value="0">积分冻结</option>
+			        </select>
+		        	{% endif %}
+		        </div>
+		    </div>
+		    <div class="layui-inline">
+		        <div class="layui-input-inline selectRiskStatus" style="width: 120px;">
+		        	{% if page && page.riskStatus == '0' %}
+			        <select name="riskStatus" class="selRiskStatus" data-risk="0" lay-filter="riskStatus" lay-verify="required" lay-search="">
+			        	<option value="-6">账号风险</option>
+			            <option value="0" selected="selected">无风险</option>
+			            <option value="1">低风险</option>
+			            <option value="2">高风险</option>
+			        </select>
+		        	{% elseif page && page.riskStatus == '1' %}
+			        <select name="riskStatus" class="selRiskStatus" data-risk="1" lay-filter="riskStatus" lay-verify="required" lay-search="">
+			        	<option value="-6">账号风险</option>
+			            <option value="0">无风险</option>
+			            <option value="1" selected="selected">低风险</option>
+			            <option value="2">高风险</option>
+			        </select>
+			        {% elseif page && page.riskStatus == '2' %}
+			        <select name="riskStatus" class="selRiskStatus" data-risk="2" lay-filter="riskStatus" lay-verify="required" lay-search="">
+			        	<option value="-6">账号风险</option>
+			            <option value="0">无风险</option>
+			            <option value="1">低风险</option>
+			            <option value="2" selected="selected">高风险</option>
+			        </select>
+		        	{% else %}
+			        <select name="riskStatus" class="selRiskStatus" data-risk="-6" lay-filter="riskStatus" lay-verify="required" lay-search="">
+			        	<option value="-6" selected="selected">账号风险</option>
+			            <option value="0">无风险</option>
+			            <option value="1">低风险</option>
+			            <option value="2">高风险</option>
+			        </select>
+		        	{% endif %}
+		        </div>
+		    </div>
+		    <div class="layui-inline">
+		        <div class="layui-input-inline selectSex" style="width: 80px;">
+		        	{% if page && page.sex == '1' %}
+			        <select name="sexs" class="selSexs" data-sexs="1" lay-filter="sexs" lay-verify="required" lay-search="">
+			        	<option value="-6">性别</option>
+			            <option value="1" selected="selected">男</option>
+			            <option value="2">女</option>
+			        </select>
+		        	{% elseif page && page.sex == '2' %}
+			        <select name="sexs" class="selSexs" data-sexs="2" lay-filter="sexs" lay-verify="required" lay-search="">
+			        	<option value="-6">性别</option>
+			            <option value="1">男</option>
+			            <option value="2" selected="selected">女</option>
+			        </select>
+		        	{% else %}
+			        <select name="sexs" class="selSexs" data-sexs="-6" lay-filter="sexs" lay-verify="required" lay-search="">
+			        	<option value="-6" selected="selected">性别</option>
+			            <option value="1">男</option>
+			            <option value="2">女</option>
+			        </select>
+		        	{% endif %}
+		        </div>
+		    </div>
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">手机号：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.name %}
+			    	<input type="text" name="userPetName" id="userPetName" value="{{page.name}}" lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="userPetName" id="userPetName" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label">注册时间：</label>
+			    <div class="layui-input-inline bigInptInline">
+				     {% if page && page.registTimeStart %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.registTimeStart}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline bigInptInline">
+				     {% if page && page.registTimeEnd %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.registTimeEnd}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 90px;">备注关键词：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.remark %}
+			    	<input type="text" name="userPetIp" id="userPetRemark" value="{{page.remark}}" lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="userPetIp" id="userPetRemark" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">出生年月:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.birthStart %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.birthStart}}" id="LAY_demorange_s_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.birthEnd %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e_e" value="{{page.birthEnd}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 90px;">积分余额：</label>
+			    <div class="layui-input-inline bigLayIpt">
+			    	{% if page.scoreFloor %}
+			    	<input type="text" name="balanceAreaEnd" id="balanceAreaEnd" value="{{page.scoreFloor}}" lay-verify="text" autocomplete="off" class="layui-input bigInptInline">
+					{% else %}
+					<input type="text" name="balanceAreaEnd" id="balanceAreaEnd" lay-verify="text" autocomplete="off" class="layui-input bigInptInline">
+					{% endif %}
+					-
+					{% if page.scorePlatfond %}
+			    	<input type="text" name="balanceAreaStar" id="balanceAreaStar" value="{{page.scorePlatfond}}" lay-verify="text" autocomplete="off" class="layui-input bigInptInline">
+					{% else %}
+					<input type="text" name="balanceAreaStar" id="balanceAreaStar" lay-verify="text" autocomplete="off" class="layui-input bigInptInline">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+			    <div class="layui-input-inline selRemarkStatus" style="width: 130px;">
+			    	{% if page.remarkStatus == '1' %}
+			    	<input type="checkbox" name="userPetRemarkStatus" title="所有备注用户" id="userPetRemarkStatus" lay-skin="primary" checked>
+					{% else %}
+					<input type="checkbox" name="userPetRemarkStatus" title="所有备注用户" id="userPetRemarkStatus" lay-skin="primary">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	     <table class="layui-table table-width">
+		     <tr>
+		     	<th></th>
+		     	<th>序号</th>
+		     	<th>手机号</th>
+		     	<th>性别</th>
+		     	<th>出生年月</th>
+		     	<th>积分余额</th>
+		     	<th>积分状态</th>
+		     	<th>注册时间</th>
+		     	<th>最近登录时间</th>
+		     	<th>登录状态</th>
+		     	<th>账号风险</th>
+		     	<th>备注<br/>(单击查看/双击编辑)</th>
+		     	<th>操作</th>
+		     </tr>
+	         <tbody id="htmlWrap">
+	         	{% for lis in data.data.datas.list %}
+	         	<tr class="checkedBoxTr">
+	         		{% if lis.user_type == 0 %}
+	         		<td><input name="" lay-filter="ones" lay-skin="primary" type="checkbox" style="width: 16px;height: 16px;"></td>
+	         		{% else %}
+	         		<td></td>
+	         		{% endif %}
+	         		<td class="orderN">{{loop.index}}</td>
+	         		<td><a class="userLinks" id="userNameLink" href="/appUserControl/appUserMan/userdetail?userId={{lis.id}}" data-id="{{lis.id}}" style="color: #009688;">{{lis.tel_num}}</a></td>
+				 	<td>
+				 		{% if lis.sex == '1' %}
+				 		男
+				 		{% elseif lis.sex == '2' %}
+				 		女
+				 		{% else %}
+				 		--
+				 		{% endif %}
+				 	</td>
+				 	<td>{{lis.birth|birthStr}}</td>
+					<td>{{lis.u_score_balance}}</td>
+					<td>
+						{% if lis.score_status == '0' %}
+						积分冻结
+						{% elseif lis.score_status == '1' %}
+						积分正常
+						{% else %}
+						--
+						{% endif %}
+					</td>
+					<td>{{lis.create_time.split(' ')[0]}}</td>
+					<td>{{lis.last_login_time.split(' ')[0]}}</td>
+					{% if lis.user_type == 0 %}
+					<td>登录</td>
+					{% else %}
+					<td>游客</td>
+					{% endif %}
+					{% if lis.risk_status == '0' %}
+					<td>无风险</td>
+					{% elseif lis.risk_status == '1' %}
+					<td>低风险</td>
+					{% elseif lis.risk_status == '2' %}
+					<td>高风险</td>
+					{% else %}
+					<td></td>
+					{% endif %}
+					{% if lis.user_type == 1 %}
+						<td></td>
+					{% else %}
+						{% if lis.remark %}
+						<td class="remarkInpt" data-remarkTime="{{lis.remark_time}}" data-val="{{lis.remark}}" data-id="{{lis.id}}" data-name="{{lis.name}}" data-point="{{lis.u_score_balance}}">{{lis.remark|hideFlow(8)}}</td>
+						{% else %}
+						<td class="remarkInpt" data-id="{{lis.id}}" data-name="{{lis.name}}" data-point="{{lis.u_score_balance}}"></td>
+						{% endif %}
+					{% endif %}
+					<td class="statusMes">
+					{% if lis.user_type == 0 %}
+						{% if lis.login_status == '-1' %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "启用" %}
+						    			<a class="layui-btn enableBtn starQuitBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="on">启用</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% else %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "停用" %}
+						    			<a class="layui-btn layui-btn-danger disableBtn starQuitBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="off">停用</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% endif %}
+						{% if lis.score_status == '0' %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "解除冻结" %}
+						    			<a class="layui-btn layui-btn-normal relieveIntegralBtn frostRelieveBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="offs">解除冻结</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% else %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "冻结积分" %}
+						    			<a class="layui-btn layui-btn-warm frostIntegralBtn frostRelieveBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="ons">冻结积分</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% endif %}
+						{% if lis.risk_status == '2' %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "解除风险" %}
+						    			<a class="layui-btn layui-btn-relieve relieveRisksBtn risksStatusBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="turnOff">解除风险</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% else %}
+							{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "唤醒风险" %}
+						    			<a class="layui-btn layui-btn-rouse rouseRisksBtn risksStatusBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="turnOn">唤醒风险</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+						{% endif %}
+					{% endif %}
+					</td>
+				</tr>
+	         	{% endfor %}
+			 </tbody>	
+		 </table>
+		 <div class="layui-inline fnBtns" style="padding: 0 0 30px 55px;">
+		 	<input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox" style="width: 18px;height: 18px;vertical-align: middle;"> 全选　
+		 	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "启用" %}
+		    			<a class="layui-btn" id="enableBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="-1" data-btnStatus="on">启用</a>
+					{% elseif unescape(code.name) == "停用" %}
+						<a class="layui-btn layui-btn-danger" id="disableBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="0" data-btnStatus="off">停用</a>
+					{% elseif unescape(code.name) == "冻结积分" %}
+						<a class="layui-btn layui-btn-warm" id="frostIntegralBtn" href="javascript:;" data-id="{{lis.id}}"  data-loginStas="-1" data-btnStatus="ons">冻结积分</a>
+					{% elseif unescape(code.name) == "解除冻结" %}
+						<a class="layui-btn layui-btn-normal" id="relieveIntegralBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="0" data-btnStatus="offs">解除冻结</a>
+					{% elseif unescape(code.name) == "解除风险" %}
+		    			<a class="layui-btn layui-btn-relieve" id="relieveRisksBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="turnOff">解除风险</a>
+	    			{% elseif unescape(code.name) == "唤醒风险" %}
+		    			<a class="layui-btn layui-btn-rouse" id="rouseRisksBtn" href="javascript:;" data-id="{{lis.id}}" data-loginStas="{{lis.login_status}}" data-btnStatus="turnOn">唤醒风险</a>
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}
+		 </div>
+	 </form>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+     {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/appUserControl/appUserManagement/index.js"></script>
+{% endblock%}

@@ -1,0 +1,484 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告管理-广告编辑{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	<link rel="stylesheet" href="/css/advPreviewH5.css" />
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>广告管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告编辑</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<!--
+        	描述：填写基本信息
+        -->
+		<form class="layui-form layui-form-position layui-form-padding firstPage" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						
+						<div class="shiji">
+							<h1>1</h1>
+							<p>填写基本信息</p>
+						</div>
+					</li>
+					
+					<li>
+						设置投放信息
+						<div class="shiji">
+							<h1>2</h1>
+							<p>设置投放信息</p>
+						</div>
+					</li>
+					<li>
+						设置KPI
+						<div class="shiji">
+							<h1>3</h1>
+							<p>设置KPI</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="layui-form-item resourceCode">
+			    <label class="layui-form-label">*  广告（应用）名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" value="{{data.data.adName}}" placeholder="请输入30字内的广告名称"  class="layui-input name">
+			    </div>
+			    <span class="layui-tooltip tooltip-name hide">请输入30字内的广告名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*选择广告主:</label>
+			    <div class="layui-input-inline">
+			    	<select name="" lay-verify="require" class="adverList" data-id="{{data.data.t_advertiser_id}}" data-name="{{data.data.t_advertiser_name}}"  lay-search lay-filter="short_name">
+			    		<option value="">选择广告主</option>
+					</select>     
+			    </div>
+			    <div class="layui-input-inline" style="width:120px">
+			    	<a class="layui-btn layui-save-btn" href="/client/advertiserManage/addAdvertiser?source=/advertising/advertManage/addAdvert">创建广告主</a>
+			    </div>
+			    <span class="layui-tooltip tooltip-short_name hide">请选择广告主</span>
+			</div>
+			<div class="layui-form-item ifShowPar">
+			    <label class="layui-form-label"> *  投放周期:</label>
+			   	<div class="layui-input-inline" style="width: 360px;">
+			       <input class="layui-input layui-input-inline" style="width: 150px;" value='{{data.data.startTime}}'  placeholder="开始时间" id="LAY_demorange_s"> 
+			       <div class="layui-input-inline" style="width: 20px;height: 38px;line-height: 38px;">&nbsp;&nbsp;至&nbsp;&nbsp;</div>
+			       <input class="layui-input layui-input-inline" style="width: 150px;" value='{{data.data.endTime}}' placeholder="截止时间" id="LAY_demorange_e">
+			    </div>
+			    <span class="layui-tooltip tooltip-time hide">请设置投放周期</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label contentType" data-contentType="{{data.data.content_type}}"> *选择类型:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="contentType" style="width: 30%;">
+			   		{% if data.data.content_type == 2 %}
+			        <input type="radio" name="contentType" value="2" checked="checked" lay-filter="contentType" title="广告" >
+					 <input type="radio" name="contentType" value="1" lay-filter="contentType" title="内容">
+					{% else %}
+					<input type="radio" name="contentType" value="2"  lay-filter="contentType" title="广告" >
+					 <input type="radio" name="contentType" value="1" lay-filter="contentType" checked="checked" title="内容">
+					{% endif %}
+			   </div>
+			</div>
+			<div class="layui-form-item deliveryType" data-deliveryType="{{data.data.delivery_type}}">
+			    <label class="layui-form-label">*投放类型:</label>
+			    <div class="layui-input-inline layui-input-checked" lay-filter="deliveryType" style="width: 30%;" >
+			    	{% if data.data.delivery_type == 1 %}
+				        <input type="radio" name="deliveryType" disabled="disabled" value="1" title="CPM视频" lay-filter="deliveryType" checked="checked"/>			
+						<input type="radio" name="deliveryType" disabled="disabled" value="2" title="CPC" lay-filter="deliveryType"/>	
+						<input type="radio" name="deliveryType" disabled="disabled" value="3" title="CPM" lay-filter="deliveryType" />	
+					{% elseif data.data.delivery_type == 2 %}
+						<input type="radio" name="deliveryType" disabled="disabled" value="1" title="CPM视频" lay-filter="deliveryType" />			
+						<input type="radio" name="deliveryType" disabled="disabled" value="2" title="CPC" checked="checked" lay-filter="deliveryType"/>	
+						<input type="radio" name="deliveryType" disabled="disabled" value="3" title="CPM" lay-filter="deliveryType" />	
+					{% else %}
+						<input type="radio" name="deliveryType" disabled="disabled" value="1" title="CPM视频" lay-filter="deliveryType" />			
+						<input type="radio" name="deliveryType" disabled="disabled" value="2" title="CPC" lay-filter="deliveryType"/>	
+						<input type="radio" name="deliveryType" disabled="disabled" value="3" title="CPM" checked="checked" lay-filter="deliveryType" />	
+					{% endif %}
+			   </div>
+			</div>
+			<div class="layui-form-item adverPosition" >
+			    <label class="layui-form-label">*列表页位置:</label>
+			    <div class="" >
+			    	<input class="layui-input-inline choosePosition" data-positionList="{{data.data.positionList | json_encode}}" attr-expand="1" type="text" name="" readonly="readonly" placeholder="选择列表页位置" >
+				    <div class="adverPosition_area" style="display: none;">
+				    	<ul class="layui-tab configCategory">
+					    	
+					    </ul>
+					    <a class="layui-btn layui-save-btn confirmPosition" >确定</a>
+					    <a class="layui-btn layui-btn-danger cancelPosition"  id="cancelPosition">取消</a>
+				    </div>
+			    </div>
+			    <span class="layui-tooltip tooltip-position hide">请选择列表页位置</span>
+			</div>
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label">* 视频封面图:</label>
+			    <div class="site-demo-upload">
+			    	{% if data.data.ad_homepage %}
+				    <img class="layui-input-inline" id="uploadLogoShow" style="width: 227px;height: 128px;" data-url="{{data.data.ad_homepage}}" src="{{data.data.ad_homepage}}"/>
+				    {% else %}
+				    <img class="layui-input-inline" id="uploadLogoShow" style="width: 227px;height: 128px;" data-url="" src="/images/showUpLogoImg.png"/>
+				    {% endif %}
+				    <div class="layui-input-inline" style="position: relative;width:50px">
+				    	<input type="file" name="file"  class="layui-upload-images uploadLogo"/>
+						<!--<span class="layui-btn coverInputBtn coverInputBtnLeft" id="asImportCode">上传视频封面图</span>-->	
+						<span class="copyUploadBtn" id="asImportCode">+</span>
+				    </div>
+				</div>
+				 <span class="layui-tooltip tooltip-image hide">请上传视频封面图</span>
+				
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline" style="width: 300px;">
+			    	<div style="color: #ccc;font-size: 12px;">图片格式为JPG,JPEG,PNG,大小10M,尺寸比例为16:9</div>
+			    </div>
+			    <span class="layui-tooltip tooltip-merchantShortN hide">200字限制</span>
+			</div>
+			{% if data.data.delivery_type == 1 %}
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label"> * 视频上传:</label>
+			    <div class="site-demo-upload " >
+			    	<div class="layui-input-inline vedio_box" style="position: relative;">
+			    		<div class="layui-input-inline vedioContainer" style="width: 300px;">
+					    	{% if data.data.mobile_version_url %}
+				    			<video id="uploadVedioFile"  controls>
+				    				<source id="uploadVedioShow" data-url='{{data.data.mobile_version_url}}' src='{{data.data.mobile_version_url}}' type="video/mp4"></source>
+				 				</video>
+				    		{% endif %}
+					    </div>
+			    		<input type="file" name="file" lay-type="video" data-adLength="{{data.data.ad_length}}" class="layui-upload-video hide uploadVedio"/>
+				    	<!--<span class="layui-btn coverInputBtn coverInputBtnLeft" id="asImportVedio">请上传视频(必传)</span>-->
+				    	<span class="copyUploadBtn" id="asImportVedio">+</span>
+			    	</div>
+				</div>
+				<span class="layui-tooltip tooltip-vedio hide">请上传视频</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline" style="width: 300px;">
+			    	<div style="color: #ccc;font-size: 12px;">视频格式为MP4,AVI,RMVB,大小500M,尺寸比例:16:9</div>
+			    </div>
+			</div>
+			{% else %}
+				<div class="layui-form-item ">
+				    <label class="layui-form-label">*  广告主单价:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="advertiserUnitPrice" value="{{data.data.advertiser_unit_price}}" class="layui-input advertiserUnitPrice">
+				    </div>
+				    <span class="layui-tooltip tooltip-advertiserUnitPrice hide"></span>
+				</div>
+				<div class="layui-form-item ">
+				    <label class="layui-form-label">*  投放金额:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="amount" placeholder="请输入投放金额" value="{{data.data.amount}}" class="layui-input amount">
+				    </div>
+				    <span class="layui-tooltip tooltip-amount hide"></span>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">*  单日预算上限:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="dayBudgetCeiling" placeholder="请输入单日预算上限" value="{{data.data.day_budget_ceiling}}" class="layui-input dayBudgetCeiling">
+				    </div>
+				    <span class="layui-tooltip tooltip-dayBudgetCeiling hide">请输入单日预算上限</span>
+				</div>
+				<div class="layui-form-item cpmonehide">
+				    <label class="layui-form-label">*  落地页链接:</label>
+				    <div class="layui-input-inline" style="width: 350px;">
+				        <input style="width: 250px;display: inline-block;" value="{{data.data.mobile_version_url}}" type="text" name="mobileVersionUrl" placeholder="请输入落地页链接" autocomplete="off" class="layui-input mobileVersionUrl">
+				    	<a  class="layui-btn layui-save-btn adverPreview" target="view_window" style="display: inline-block;">预览</a>
+				    </div>
+				    <span class="layui-tooltip tooltip-mobileVersionUrl hide">请输入http://或者https://开头落地页链接</span>
+				</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">  *投放平台:</label>
+				    <div class="layui-input-inline layui-input-checked">
+				        <input type="radio" name="platem" value="1" checked="checked" title="手机" >
+				   </div>
+				</div>
+				<div class=" layui-input-checked platemCpm" data-check="{{data.data.device_type}}" style="margin-bottom: 20px;">
+					<label class="layui-form-label"></label>
+			    	{% if data.data.device_type == 0 %}
+			    		<input type="checkbox" value="1" name="platemCpm" lay-filter="platemCpm" checked="checked" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="platemCpm" lay-filter="platemCpm" checked="checked"  title="安卓系统" />
+				    {% elseif data.data.device_type == 1 %}
+				    	<input type="checkbox" value="1" name="platemCpm" lay-filter="platemCpm" checked="checked" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="platemCpm" lay-filter="platemCpm"  title="安卓系统" />
+				    {% elseif data.data.device_type == 2 %}
+				    	<input type="checkbox" value="1" name="platemCpm" lay-filter="platemCpm" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="platemCpm" lay-filter="platemCpm" checked="checked"  title="安卓系统" />
+				    {% endif %} 
+			        			
+			   </div>
+			{% endif %}
+			<div class="layui-form-item">
+			    <label class="layui-form-label">广告描述:</label>
+			    <div class="layui-input-inline">
+			    	<textarea name="" class="description" value="{{data.data.description}}" rows="" cols="" style="width: 100%;height: 100px;resize:none;">{{data.data.description}}</textarea>
+			    </div>
+			    <span class="layui-tooltip tooltip-description hide">200字限制</span>
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+				{% if data.data.delivery_type == 1 %}
+					<a class="layui-btn layui-save-btn nextPage "  data-nextPage="2" >下一步</a>
+					<a class="layui-btn layui-save-btn saveAdver" >保存</a>
+				{% else %}
+					<a class="layui-btn layui-save-btn commitAdver" >保存</a>
+				{% endif %}
+			    
+			    <a class="layui-btn layui-btn-danger back" href="/advertising/advertManage/advertManageSelf">返回</a>
+			</div>
+		</form>
+		<!--
+        	描述：设置投放信息
+        -->
+		<form class="layui-form layui-form-position layui-form-padding hide secondPage" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						填写基本信息
+						<div class="shiji">
+							<h1>1</h1>
+							<p>填写基本信息</p>
+						</div>
+					</li>
+					
+					<li>
+						
+						<div class="shiji">
+							<h1>2</h1>
+							<p>设置投放信息</p>
+						</div>
+					</li>
+					<li>
+						设置KPI
+						<div class="shiji">
+							<h1>3</h1>
+							<p>设置KPI</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">  *投放平台:</label>
+			    <div class="layui-input-inline layui-input-checked">
+			        <input type="radio" name="platem" value="1" checked="checked" title="手机" >
+			   </div>
+			</div>
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*投放设备:</label>
+			    <div class="layui-input-inline layui-input-checked platemCheck" data-check="0" >
+			    	{% if data.data.device_type == 0 %}
+			    		<input type="checkbox" value="1" name="goodsType[entity]" lay-filter="platem" checked="checked" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="goodsType[entity]" lay-filter="platem" checked="checked"  title="安卓系统" />
+				    {% elseif data.data.device_type == 1 %}
+				    	<input type="checkbox" value="1" name="goodsType[entity]" lay-filter="platem" checked="checked" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="goodsType[entity]" lay-filter="platem"  title="安卓系统" />
+				    {% elseif data.data.device_type == 2 %}
+				    	<input type="checkbox" value="1" name="goodsType[entity]" lay-filter="platem" title="IOS系统" />			
+					 	<input type="checkbox" value="2" name="goodsType[entity]" lay-filter="platem" checked="checked"  title="安卓系统" />
+				    {% endif %} 
+			        			
+			   </div>
+			    <span class="layui-tooltip tooltip-platemCheck hide">请选择投放设备</span>
+			</div>
+			<div class="layui-form-item userFlagChoose" >
+			    <label class="layui-form-label"> *用户标签:</label>
+			   	<div class="layui-input-inline layui-input-checked" style="width: 30%;">
+			   		{% if data.data.scope_type == 1 %}
+			    		<input type="radio" name="flag" value="1" checked="checked" lay-filter="flag" title="全部用户" >
+						<input type="radio" name="flag" value="2" lay-filter="flag" title="指定用户">
+				    {% else%}
+				    	<input type="radio" name="flag" value="1"  lay-filter="flag" title="全部用户" >
+						<input type="radio" name="flag" value="2" checked="checked" lay-filter="flag" title="指定用户">
+				    {% endif %} 
+			   </div>
+			</div>
+			
+			<div class="layui-form-item  chooseFlag">
+				<label class="layui-form-label"></label>
+			   	<div class="layui-input-inline layui-input-checked" >
+			        {% if data.data.scope_type == 2 %}
+			        	<div class="layui-form-item" >
+							<label class="layui-input-inline" style="width: 70px;"> 用户性别:</label>
+							{% if data.data.person_sex == 0 %}
+				    			<div class="layui-input-inline userSex" data-sex='{{data.data.person_sex}}' style="width: 30px;"> 全部</div>
+						    {% elseif data.data.person_sex == 1 %}
+						    	<div class="layui-input-inline userSex" data-sex='{{data.data.person_sex}}' style="width: 30px;"> 男</div>
+						    {% elseif data.data.person_sex == 2 %}
+						    	<div class="layui-input-inline userSex" data-sex='{{data.data.person_sex}}' style="width: 30px;"> 女</div>
+						    {% endif %} 
+							<div class="layui-form-item" >
+								<label class="layui-input-inline" style="width: 70px;"> 用户年龄:</label>
+								{% if data.data.person_max_age && data.data.person_min_age %}
+					    			<div class="layui-input-inline ageContent" data-minAge='{{data.data.person_min_age}}' data-maxAge='{{data.data.person_max_age}}' style="width: 80px;">{{data.data.person_min_age}} ~ {{data.data.person_max_age}}岁</div>
+							    {% elseif data.data.person_max_age && !data.data.person_min_age %}
+							    	<div class="layui-input-inline ageContent" data-maxAge='{{data.data.person_max_age}}' style="width: 80px;">最大{{data.data.person_max_age}}岁</div>
+							    {% elseif !data.data.person_max_age && data.data.person_min_age %}
+							    	<div class="layui-input-inline ageContent" data-minAge='{{data.data.person_min_age}}' style="width: 80px;">最小{{data.data.person_min_age}}岁</div>
+							    {% else %}	
+							    	<div class="layui-input-inline ageContent"  style="width: 80px;">不限</div>
+							    {% endif %} 
+							</div>
+						</div>
+					{% endif %} 
+				</div>
+			</div>
+
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a class="layui-btn layui-save-btn nextPage" data-nextPage="3"   >下一步</a>
+				<a class="layui-btn layui-save-btn saveAdver" >保存</a>
+			    <a class="layui-btn layui-btn-danger prePage"  data-prePage="1" >上一步</a>
+			</div>
+			<!--
+            	描述：指定用户弹框
+            -->
+			<div id="userFlagBox" class="userFlag hide">
+				<form class="layui-form layui-form-position layui-form-padding" action="" style="margin-top:20px">
+					<div class="layui-form-item">
+					    <label class="layui-form-label">用户性别:</label>
+					    <div class="layui-input-inline " style="width: 60%;">
+					        <div class="layui-input-inline layui-input-checked" style="width: 100%;">
+					        	{% if data.data.person_sex == 0 %}
+					    			<input type="radio" name="sex" value="0" checked="checked" lay-filter="sex" title="全部" >
+									 <input type="radio" name="sex" value="1" lay-filter="sex" lay-filter="sex" title="男">
+									 <input type="radio" name="sex" value="2" lay-filter="sex" lay-filter="sex" title="女">
+							    {% elseif data.data.person_sex == 1 %}
+							    	<input type="radio" name="sex" value="0"  lay-filter="sex" title="全部" >
+									 <input type="radio" name="sex" value="1" checked="checked" lay-filter="sex" lay-filter="sex" title="男">
+									 <input type="radio" name="sex" value="2" lay-filter="sex" lay-filter="sex" title="女">
+							    {% elseif data.data.person_sex == 2 %}
+							    	<input type="radio" name="sex" value="0"  lay-filter="sex" title="全部" >
+								 	<input type="radio" name="sex" value="1" lay-filter="sex" lay-filter="sex" title="男">
+								 	<input type="radio" name="sex" value="2" checked="checked" lay-filter="sex" lay-filter="sex" title="女">
+								{% else %}
+									<input type="radio" name="sex" value="0" checked="checked" lay-filter="sex" title="全部" >
+									 <input type="radio" name="sex" value="1" lay-filter="sex" lay-filter="sex" title="男">
+									 <input type="radio" name="sex" value="2" lay-filter="sex" lay-filter="sex" title="女">
+							    {% endif %} 
+						   </div>
+					    </div>
+					</div>
+					<div class="layui-form-item">
+					    <label class="layui-form-label">用户年龄:</label>
+					    <div class="layui-input-inline" style="width: 360px;">
+					    	
+					       <input class="layui-input layui-input-inline minAge" value="{{data.data.person_min_age}}" style="width: 150px;"  placeholder=""> 
+					       <div class="layui-input-inline" style="width: 20px;height: 38px;line-height: 38px;">&nbsp;&nbsp;至&nbsp;&nbsp;</div>
+					       <input class="layui-input layui-input-inline maxAge" value="{{data.data.person_max_age}}" style="width: 150px;" placeholder="">
+					    </div>
+					</div>
+					<div class="layui-form-saveCloseBtn"  pane="" style="margin-top:140px;margin-left:300px">
+						<a class="layui-btn layui-save-btn makeUser" >确定</a>
+					    <a class="layui-btn layui-btn-danger cancelSet" >取消</a>
+					</div>
+				</form>
+			</div>
+		</form>
+		
+		<!--
+        	描述：设置KPI
+        -->
+		<form class="layui-form layui-form-position layui-form-padding hide thirdPage" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						填写基本信息
+						<div class="shiji">
+							<h1>1</h1>
+							<p>填写基本信息</p>
+						</div>
+					</li>
+					
+					<li>
+						设置投放信息
+						<div class="shiji">
+							<h1>2</h1>
+							<p>设置投放信息</p>
+						</div>
+					</li>
+					<li>
+						
+						<div class="shiji">
+							<h1>3</h1>
+							<p>设置KPI</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">*投放类型:</label>
+			    <div class="layui-input-inline layui-input-checked" style="width: 30%;" >
+			        <input type="radio" name="CPM" value="CPM" title="CPM" checked="checked"/>			
+					<input type="radio" name="CPA" value="CPA" title="CPA" disabled="disabled"/>	
+					<input type="radio" name="CPS" value="CPS" title="CPS" disabled="disabled" />	
+			   </div>
+			</div>
+			<div class="layui-form-item  chooseFlag">
+				<label class="layui-form-label">*目标量:</label>
+			   	<div class="layui-input-inline">
+			        <input type="text" name="" value="{{data.data.target_number}}"  placeholder="请输入KPI" autocomplete="off" class="layui-input kpi">
+			    </div>
+			    <span class="layui-tooltip hide tooltip-kpi">请输入KPI</span>
+			</div>
+			<div class="layui-form-item  chooseFlag">
+				<label class="layui-form-label">*投放金额:</label>
+			   	<div class="layui-input-inline">
+			        <input type="text" name="" value="{{data.data.amount}}"  placeholder="请输入投放金额" autocomplete="off" class="layui-input setMoney">
+			    </div>
+			    <span class="layui-tooltip hide tooltip-money">请输入投放金额,最大9位数</span>
+			    <div class="layui-input-inline" style="line-height:38px;width:45px;">&nbsp;&nbsp;（元）</div>
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a class="layui-btn layui-save-btn saveAdver " >保存</a>
+				<a class="layui-btn layui-save-btn submitAdvert">提交</a>
+				<a class="layui-btn layui-save-btn previewH5Btn">预览</a>
+			    <a class="layui-btn layui-save-btn prePage"  data-prePage="2" >上一步</a>
+			</div>
+		</form>
+	</section>
+	<!-- 广告预览 -->
+	<section class="H5PreviewBox hide">
+	 	<div class="coverScreen"></div>
+	    <div class="adverAppView">
+	    	<div class="videoBox"></div>
+			<div class="view_content">
+				<div class="view_title">
+					<h1 class="view_title_text"></h1>
+					<div>
+						<span class="view_time"></span>
+						<span><img src="/images/view/view6.png"/><span class="playNum"></span></span>
+					</div>
+				</div>
+				<div class="view_list">
+					<div class="view_list_name">相关视频推荐</div>
+					<ul class="view_item_box">
+					</ul>
+				</div>
+			</div>
+			<ul class="view_bottom">
+				<li><img src="/images/view/view1.png"/></li>
+				<li><img src="/images/view/view2.png"/></li>
+				<li><img src="/images/view/view3.png"/></li>
+				<li><img src="/images/view/view4.png"/></li>
+				<li><img src="/images/view/view5.png"/></li>
+			</ul>
+		</div>
+		<span class="closePreview">X</span>
+	 </section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/advertManagement/editAdvert.js"></script>
+{% endblock %}
+
+
+

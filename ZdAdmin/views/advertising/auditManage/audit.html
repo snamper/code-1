@@ -1,0 +1,228 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告查看{% endblock %}
+{% block head%}
+	<link rel="stylesheet" type="text/css" href="/css/commodityManagement/goodsView.css"/>
+	<style type="text/css">
+		.failCause{
+			width: 80%;
+			height: 90px;
+			margin:20px 10% 20px 10%;
+			
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告审核</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<div class="legend">
+			广告基本信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >广告状态:</label>
+					{% if data.data.status == "1" %}
+				 		<span>草稿</span>
+				 	{% endif %}	
+				 	{% if data.data.status == "2" %}
+				 		<span>审核不通过</span>
+				 	{% endif %}
+				 	{% if data.data.status == "3" %}
+				 		<span>待设置</span>
+				 	{% endif %}
+				 	{% if data.data.status == "4" %}
+				 		<span>待审核 </span>
+				 	{% endif %}
+				 	{% if data.data.status == "5" %}
+				 		<span>待上架</span>
+				 	{% endif %}	
+				 	{% if data.data.status == "7" %}
+				 		<span>已上架</span>
+				 	{% endif %}
+				 	{% if data.data.status == "9" %}
+				 		<span>已下架</span>
+				 	{% endif %}
+				 	{% if data.data.status == "0" %}
+				 		<span>删除</span>
+				 	{% endif %}
+				</div>
+				
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label" >广告类型:</label>
+					 <!--<span>CPM</span>-->
+					 {% if data.data.delivery_type == "1" %}
+					 		<span>CPM视频</span>
+				 	{% endif %}	
+				 	{% if data.data.delivery_type == "2" %}
+				 		<span>CPC</span>
+				 	{% endif %}
+				 	{% if data.data.delivery_type == "3" %}
+				 		<span>CPM</span>
+				 	{% endif %}
+					
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告主:</label>
+				    <span>
+					      {{data.data.t_advertiser_name}}
+					</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">投放周期:</label>
+				    <span>
+				       	{{data.data.startTime}} ~ {{data.data.endTime}}
+				    </span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">创建人:</label>
+				    <span>
+				       	{{data.data.name}}
+				    </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">创建时间:</label>
+				    <span>
+				        {{data.data.create_time}}
+				    </span>
+				</div>
+			</div>
+			
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">视频封面图:</label>
+			    <div class="layui-input-inline">
+			       <img style="width: 200px;height: 112px;" src='{{data.data.ad_homepage}}' alt="" />
+			    </div>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">视频链接:</label>
+			    <div class="layui-input-inline">
+			    	<a >{{data.data.mobile_version_url}}</a>
+			    </div>
+			</div>
+			
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">广告描述	:</label>
+			    <div class="layui-input-inline">
+			        {{data.data.description}}
+			    </div>
+			</div>
+			
+			
+		</form>
+		
+		<div class="legend">
+			投放信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >投放平台:</label>
+					<span>手机</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">投放设备:</label>
+				    {% if data.data.device_type == 0 %}
+			    		<span>全部</span>
+				    {% elseif data.data.device_type == 1 %}
+				    	<span>IOS</span>
+				    {% elseif data.data.device_type == 2 %}
+				    	<span>安卓</span>
+				    {% endif %} 
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label" >用户标签:</label>
+					 {% if data.data.scope_type == 1 %}
+			    		<span>全部</span>
+				    {% else %}
+				    	<span>指定用户</span>
+				    	{% if data.data.person_sex == 0 %}
+			    		<span>全部</span>
+					    {% elseif data.data.person_sex == 1 %}
+					    	<span>男</span>
+					    {% elseif data.data.person_sex == 2 %}
+					    	<span>女</span>
+					    {% endif %} 
+				    	{% if data.data.person_max_age && data.data.person_min_age %}
+			    			<span>{{data.data.person_min_age}} ~ {{data.data.person_max_age}}</span>
+					    {% elseif data.data.person_max_age && !data.data.person_min_age %}
+					    	<span>最大{{data.data.person_max_age}}岁</span>
+					    {% elseif !data.data.person_max_age && data.data.person_min_age %}
+					    	<span>最小{{data.data.person_min_age}}岁</span>
+					    {% endif %} 
+				    {% endif %} 
+				</div>
+			</div>
+		</form>	
+		<div class="legend">
+			KPI信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >投放目标量:</label>
+					<span>{{data.data.target_number}}</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告主投放金额:</label>
+				    <span>
+					     {{data.data.amount}}
+					</span>
+				</div>
+			</div>
+			
+			
+		</form>
+		<div class="legend">
+			
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告主单价:</label>
+				    <span>
+					     {{data.data.advertiser_unit_price}}元
+					</span>
+				</div>
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="" style="margin-top:30px;margin-bottom:30px">
+			    <a data-id="{{data.data.id}}" data-type="审核通过" class="layui-btn audit">审核通过</a>
+			    <a data-id="{{data.data.id}}" data-type="审核失败" class="layui-btn layui-btn-danger audit" >审核失败</a>
+			</div>
+		</form>
+		<div id="failCause" class=" hide">
+			<div class="uploadBox clearfix">
+				<div class="modal-body">
+					<textarea class="failCause" ></textarea>
+				</div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn failSubmit">提交</a>
+			    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/auditManagement/audit.js"></script>
+{% endblock %}
+
+

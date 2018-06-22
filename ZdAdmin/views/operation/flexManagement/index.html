@@ -1,0 +1,371 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--轮播图管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		.lisFlBtn .addFlexBtn{display: inline-block;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+    <ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">轮播图管理</li>
+	    <li class="lisFlBtn moreFlBtn">
+		{% if menuCodeList %} 
+			{% for code in menuCodeList %}
+				{% if unescape(code.name) == "新建首页轮播" %}
+					<a class="layui-btn addFlexBtn" href="/operation/flexManagement/addFlexImgBtn?current=homePage">新建首页轮播</a>
+				{% elseif unescape(code.name) == "新建商城轮播" %}
+					<a class="layui-btn addFlexBtn" href="/operation/flexManagement/addFlexImgBtn?current=mall">新建商城轮播</a>
+				{% endif %} 
+			{% endfor %} 
+		{% endif %}
+		</li>
+	</ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form flexImgMan" action="">
+	 	<div class="tabChange">
+		 	<div class="layui-tab">
+				<ul data-status="1" class="layui-tab-title dataActiveUl">
+					{% if page.status %}
+						{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "待上架" %}
+					    			{% if page.status == '1' %}
+									<li data-status="1" class="layui-this">待上架</li>
+									{% else %}
+									<li data-status="1">待上架</li>
+									{% endif %}
+				    			{% elseif unescape(code.name) == "已上架" %}
+					    			{% if page.status == '2' %}
+									<li data-status="2" class="layui-this">已上架</li>
+									{% else %}
+									<li data-status="2">已上架</li>
+									{% endif %}
+				    			{% elseif unescape(code.name) == "已下架" %}
+					    			{% if page.status == '3' %}
+									<li data-status="3" class="layui-this">已下架</li>
+									{% else %}
+									<li data-status="3">已下架</li>
+									{% endif %}
+				    			{% elseif unescape(code.name) == "全部" %}
+					    			{% if page.status == '0' || !page.status || page.status == '' %}
+									<li data-status="0" class="layui-this">全部</li>
+									{% else %}
+									<li data-status="0">全部</li>
+									{% endif %}
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					{% else %}
+					<li data-status="1" class="layui-this">待上架</li>
+					<li data-status="2">已上架</li>
+					<li data-status="3">已下架</li>
+					<li data-status="0">全部</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+		        <label class="layui-form-label layui-status">轮播图位置:</label>
+		        {% if page && page.locationType %}
+		        <div class="layui-input-inline selLocationType" data-locationType="{{page.locationType}}">
+	        	{% else %}
+	        	<div class="layui-input-inline selLocationType" data-locationType="0">
+	        	{% endif %}
+			        <select name="modules" lay-filter="locationType" lay-verify="required" lay-search="">
+			        	{% if page && page.locationType == '1' %}
+			        	<option value="0">全部</option>
+			            <option value="1" selected="selected">首页</option>
+			            <option value="2">商城页</option>
+						{% elseif page && page.locationType == '2' %}
+			        	<option value="0">全部</option>
+			            <option value="1">首页</option>
+			            <option value="2" selected="selected">商城页</option>
+						{% else %}
+			        	<option value="0" selected="selected">全部</option>
+			            <option value="1">首页</option>
+			            <option value="2">商城页</option>
+						{% endif %}
+			        </select>
+		        </div>
+		    </div>
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">轮播图名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.name %}
+					<input type="text" name="shortName" id="shortName" value={{unescape(page.name)}} lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="shortName" id="shortName" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchFlexBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>轮播图名称</th>
+	     	<th>显示平台</th>
+	     	<th>URL</th>
+	     	{% if page.status == '1' %}
+	     	<th>创建时间</th>
+	     	<th>排序号</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if page.status == '2' %}
+	     	<th>创建时间</th>
+	     	<th>上架时间</th>
+	     	<th>排序号</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if page.status == '3' %}
+	     	<th>创建时间</th>
+	     	<th>下架时间</th>
+	     	<th>排序号</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if page.status == '0' || !page.status || page.status == '' %}
+	     	<th>创建时间</th>
+	     	<th>上架时间</th>
+	     	<th>状态</th>
+	     	<th>排序号</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.datas %}
+         	<tr>
+				{% if page.status == "1" && lis.status == "1" %}
+			 	<td><a class="textLinks" data-id="{{lis.id}}" href="/operation/flexManagement/flexImgDetail?id={{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	<td>
+			 	{% if lis.platform == '0' %}
+			 	全部
+			 	{% elseif lis.platform == '1' %}
+			 	IOS
+			 	{% elseif lis.platform == '2' %}
+			 	安卓
+			 	{% else %}
+			 	--
+			 	{% endif %}
+			 	</td>
+			 	{% if lis.link_type == '1' %}
+			 	<td class="contTitle" title="{{lis.link_url}}"><a target="_blank" class="limitText" href="{{lis.link_url}}">{{lis.link_url}}</a></td>
+			 	{% elseif lis.link_type == '2' %}
+			 	<td class="contTitle" title="{{lis.mobile_version_url}}"><a target="_blank" class="limitText" href="{{lis.mobile_version_url}}">{{lis.adName}}</a></td>
+			 	{% else %}
+			 	<td class="contTitle" title="{{lis.full_name}}">{{lis.full_name}}</td>
+			 	{% endif %}
+				<td>{{lis.create_time}}</td>
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+			    				{% if lis.location_type == '1' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=homePage">编辑</a>
+				    			{% elseif lis.location_type == '2' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=mall">编辑</a>
+				    			{% endif %}
+			    			{% elseif unescape(code.name) == "删除" %}
+				    			<a class="layui-btn layui-btn-danger delFlexPic" data-id="{{lis.id}}">删除</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if page.status == "2" && lis.status == "2" %}
+			 	<td><a class="textLinks" data-id="{{lis.id}}" href="/operation/flexManagement/flexImgDetail?id={{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	<td>
+			 	{% if lis.platform == '0' %}
+			 	全部
+			 	{% elseif lis.platform == '1' %}
+			 	IOS
+			 	{% elseif lis.platform == '2' %}
+			 	安卓
+			 	{% else %}
+			 	--
+			 	{% endif %}
+			 	</td>
+			 	{% if lis.link_type == '1' %}
+			 	<td class="contTitle" title="{{lis.link_url}}"><a target="_blank" class="limitText" href="{{lis.link_url}}">{{lis.link_url}}</a></td>
+			 	{% elseif lis.link_type == '2' %}
+			 	<td class="contTitle" title="{{lis.mobile_version_url}}"><a target="_blank" class="limitText" href="{{lis.mobile_version_url}}">{{lis.adName}}</a></td>
+			 	{% else %}
+			 	<td class="contTitle" title="{{lis.full_name}}">{{lis.full_name}}</td>
+			 	{% endif %}
+			 	<td>{{lis.create_time}}</td>
+				<td>{{lis.online_time}}</td>
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "下架" %}
+				    			<a class="layui-btn layui-btn-normal toOffFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">下架</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if page.status == "3" && lis.status == "3" %}
+			 	<td><a class="textLinks" data-id="{{lis.id}}" href="/operation/flexManagement/flexImgDetail?id={{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	<td>
+			 	{% if lis.platform == '0' %}
+			 	全部
+			 	{% elseif lis.platform == '1' %}
+			 	IOS
+			 	{% elseif lis.platform == '2' %}
+			 	安卓
+			 	{% else %}
+			 	--
+			 	{% endif %}
+			 	</td>
+			 	{% if lis.link_type == '1' %}
+			 	<td class="contTitle" title="{{lis.link_url}}"><a target="_blank" class="limitText" href="{{lis.link_url}}">{{lis.link_url}}</a></td>
+			 	{% elseif lis.link_type == '2' %}
+			 	<td class="contTitle" title="{{lis.mobile_version_url}}"><a target="_blank" class="limitText" href="{{lis.mobile_version_url}}">{{lis.adName}}</a></td>
+			 	{% else %}
+			 	<td class="contTitle" title="{{lis.full_name}}">{{lis.full_name}}</td>
+			 	{% endif %}
+			 	<td>{{lis.create_time}}</td>
+				<td>{{lis.offline_time}}</td>
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+				    			{% if lis.location_type == '1' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=homePage">编辑</a>
+				    			{% elseif lis.location_type == '2' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=mall">编辑</a>
+				    			{% endif %}
+			    			{% elseif unescape(code.name) == "删除" %}
+				    			<a class="layui-btn layui-btn-danger delFlexPic" data-id="{{lis.id}}">删除</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if page.status == '0' || !page.status || page.status == '' %}
+			 	<td><a class="textLinks" data-id="{{lis.id}}" href="/operation/flexManagement/flexImgDetail?id={{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	<td>
+			 	{% if lis.platform == '0' %}
+			 	全部
+			 	{% elseif lis.platform == '1' %}
+			 	IOS
+			 	{% elseif lis.platform == '2' %}
+			 	安卓
+			 	{% else %}
+			 	--
+			 	{% endif %}
+			 	</td>
+			 	{% if lis.link_type == '1' %}
+			 	<td class="contTitle" title="{{lis.link_url}}"><a target="_blank" class="limitText" href="{{lis.link_url}}">{{lis.link_url}}</a></td>
+			 	{% elseif lis.link_type == '2' %}
+			 	<td class="contTitle" title="{{lis.mobile_version_url}}"><a target="_blank" class="limitText" href="{{lis.mobile_version_url}}">{{lis.adName}}</a></td>
+			 	{% else %}
+			 	<td class="contTitle" title="{{lis.full_name}}">{{lis.full_name}}</td>
+			 	{% endif %}
+			 	<td>{{lis.create_time}}</td>
+				<td>{{lis.offline_time}}</td>
+				{% if lis.status == "1" %}
+				<td>待上架</td>
+				{% endif %}
+				{% if lis.status == "2" %}
+				<td>已上架</td>
+				{% endif %}
+				{% if lis.status == "3" %}
+				<td>已下架</td>
+				{% endif %}
+				{% if lis.status == "1" %}
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+				    			{% if lis.location_type == '1' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=homePage">编辑</a>
+				    			{% elseif lis.location_type == '2' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=mall">编辑</a>
+				    			{% endif %}
+			    			{% elseif unescape(code.name) == "删除" %}
+				    			<a class="layui-btn layui-btn-danger delFlexPic" data-id="{{lis.id}}">删除</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if lis.status == "2" %}
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "下架" %}
+				    			<a class="layui-btn layui-btn-normal toOffFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">下架</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if lis.status == "3" %}
+				<td><input type="text" class="layui-input getFlexSorts" data-status="{{lis.status}}" data-old-sort="{{lis.sort}}" value="{{lis.sort}}" placeholder="轮播图位置(1-5)"></td>
+				<td>
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+				    			{% if lis.location_type == '1' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=homePage">编辑</a>
+				    			{% elseif lis.location_type == '2' %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/flexManagement/editorFlexImgBtn?id={{lis.id}}&current=mall">编辑</a>
+				    			{% endif %}
+			    			{% elseif unescape(code.name) == "删除" %}
+				    			<a class="layui-btn layui-btn-danger delFlexPic" data-id="{{lis.id}}">删除</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% endif %}
+			</tr>
+         	{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/flexManagement/index.js"></script>
+{% endblock%}

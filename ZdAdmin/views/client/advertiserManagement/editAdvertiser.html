@@ -1,0 +1,93 @@
+<!--{% extends "./../../layout.html"%}-->
+{% block title%}客户管理-广告主管理-广告主编辑{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	<style type="text/css">
+		.layui-form-saveCloseBtn{
+			margin-left: 32%;
+		}
+		.uploadAdverLogo{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+	    #importAdverLogo{position:absolute;top:0;left:0;z-index:100;width:115px}	
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>客户管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>广告主管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告主编辑</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<blockquote class="layui-elem-quote ">广告主编辑</blockquote>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">* 广告主类型:</label>
+			     <div class="layui-input-inline layui-input-checked">
+			     	{% if data.data.type == 1 %}
+						<input type="radio" name="1" value="1" checked="checked" title="直客" >
+					 <input type="radio" name="1" value="2" title="代理">
+					{% else %}
+						<input type="radio" name="1" value="1"  title="直客" >
+					 <input type="radio" name="1" checked="checked" value="2" title="代理">
+					{% endif %}
+			        
+			   </div>
+			</div>
+			<div class="layui-form-item resourceCode" >
+			    <label class="layui-form-label">* 广告主简称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" value="{{data.data.short_name}}"  autocomplete="off" class="layui-input shortName">
+			    </div>
+			    <span class="layui-tooltip tooltip-shortName hide">请输入8字内的广告主名称</span>
+			</div>
+			<div class="layui-form-item resourceCode" >
+			    <label class="layui-form-label">* 广告主全称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="username" value="{{data.data.full_name}}"   autocomplete="off" class="layui-input fullName">
+			    </div>
+			    <span class="layui-tooltip tooltip-fullName hide">请输入15字内的广告主名称</span>
+			</div>
+			<div class="layui-form-item" pane="">
+			    <label class="layui-form-label">广告主LOGO:</label>
+			    <div class="site-demo-upload" >
+				    <img class="layui-input-inline" id="uploadLogoShow" style="width: 227px;height: 128px;" data-url="{{data.data.logo}}" src="{{data.data.logo}}"/>
+				    <div class="layui-input-inline " style="position: relative;">
+				    	<input type="file" name="file"  class="layui-upload-images uploadAdverLogo"/>
+						<span class="layui-btn coverInputBtn coverInputBtnLeft" id="importAdverLogo">上传LOGO</span>	
+				    </div>
+				</div>
+				
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline" style="color:#ccc;font-size:12px;width: 300px;">
+			    	图片格式为JPG,JPEG,PNG,大小10M,尺寸比例为16:9
+			    </div>
+			    
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">广告主描述:</label>
+			    <div class="layui-input-inline">
+			    	<textarea name="" rows="" class="introduce" cols="" value="{{data.data.introduce}}" style="width: 120%;height: 100px;resize:none;">{{data.data.introduce}}</textarea>
+			    	<div class="layui-tooltip tooltip-merchantShortN right" style="line-height:20px !important">最多200字</div>
+			    </div>
+			    
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a class="layui-btn layui-save-btn saveEdit" lay-submit lay-filter="saveEdit">保存</a>
+			    <a class="layui-btn layui-btn-danger clearMessage backPre" >返回</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/client/advertiserManage/eidtAdvertiser.js"></script>
+{% endblock %}
+
+
+

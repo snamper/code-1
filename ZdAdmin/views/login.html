@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <title>Zhuandong Admin</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+	     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap-responsive.min.css">
+         <link rel="stylesheet" href="/css/login.css">
+         <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+         <link rel="stylesheet" type="text/css" href="/vendor/layui/css/layui.css"/>
+	     <link href="/css/css" rel="stylesheet" type="text/css">
+         <style type="text/css">
+             input{
+                 font-family: "Microsoft Yahei";
+             }
+             .control-label{
+                 color: #B2DFEE;
+                 padding-left: 4px;
+             }
+         </style>
+    </head>
+	<body>
+		
+	     <div id="loginbox">  
+             <div class="control-group normal_text"> 
+                 <h2 style="color:#B2DFEE;font-size:28px;">悦多多积分广告平台-运营中心</h2>
+                 <span style="font-size:14px;color:gray;">版权所有 © 北京天悦互动科技有限公司 20XX-20XX</span>
+             </div>          
+             <form id="loginform" class="form-vertical" action="">
+                 <div class="control-group">
+                     <label class="control-label">登录账号</label>
+                     <div class="controls">
+                         <div class="main_input_box">
+                             <span class="add-on bg_lg"><i class="fa fa-users" style="font-size:16px"></i></span><input lay-verify="required|phone" class="phone" type="text" value="">
+                         </div>
+                     </div>
+                 </div>
+                 <div class="control-group2">
+                     <label class="control-label">登录密码</label>
+                     <div class="controls">
+                         <div class="main_input_box">
+                             <span class="add-on bg_ly"><i class="fa fa-lock" style="font-size:16px"></i></span><input lay-verify="required" class="userPwd" type="password">
+                         </div>
+                     </div>
+                 </div>
+                
+                 <!---->
+                 <div class="form-actions" >    
+                     <span class="pull-right" ><input type="button" lay-submit lay-filter="saveUserAdd" id="checkBtn"  class="btn btn-success" style="width:335px;" value=" 登    录"></span>          
+				</div>
+                 <div class="control-group normal_text">
+                     <div style="font-size:14px;color:gray;">推荐使用webkit内核浏览器，如chrome等</div>
+                 </div>
+             </form>             
+         </div>
+         <div id="codeBox" class=" hide">
+			<div class="uploadBox clearfix">
+				<div class="modal-body">
+					<div class="codeBox">
+	                     <label class="">您的密码输入错误超过3次，请录入验证码！</label>
+	                     <div class="controls">
+	                         <div class="main_input_box">
+	                         		<img src="/admin/login/ValidateCodeServlet" alt="" />
+	                             <input lay-verify="code" class="code" type="text" value="">
+	                         </div>
+	                     </div>
+	                 </div>
+				</div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn savePermissionMessage">确定</a>
+			</div>
+		</div>
+	</body>
+	<script src="/vendor/layui/layui.js "></script>
+    <script src="/js/layout.js "></script>
+    <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
+     <script src="/vendor/jquery/cookie.js" type="text/javascript" charset="utf-8"></script>
+    
+	<script src="/controllers/login/login.js" type="text/javascript" charset="utf-8"></script>
+</html>

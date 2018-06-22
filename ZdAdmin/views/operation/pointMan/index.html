@@ -1,0 +1,91 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {font-weight: 800;background-color: #ccc;}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">积分管理</li>
+</ul>
+{%endblock%}
+{% block content%} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li class="layui-this"><a href="/operation/pointMan">CPM积分模型</a></li>
+		<li><a href="/operation/pointMan/integralSet">内容发放积分模型</a></li>
+		<li><a href="/operation/pointMan/registerIntegral">注册积分模型</a></li>
+		<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+		<li><a href="/operation/pointMan/dayStayTotalMan">每日停留积分管理</a></li>
+		<li><a href="/operation/pointMan/changeRecordCPM">积分模型变更记录</a></li>
+		<li><a href="/operation/pointMan/videoPoint">实时视频积分</a></li>
+	</ul>
+</div>
+<div id="changeModelBtnBox">
+	{% if menuCodeList %}
+    	{% for code in menuCodeList %}
+    		{% if unescape(code.name) == "更改发放模型" %}
+    			<a class="layui-btn changeModelBtn" href="/operation/pointMan/changeModelLink">更改发放模型</a>
+    		{% endif %}
+    	{% endfor %}
+    {% endif %}
+</div>
+<form class="layui-form integralModelMan" action="">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">当前模型：</label>
+			<div class="layui-input-inline modelName" style="width: 300px;">
+				{% if data.data.model_type == 1 %}
+				模型一
+				{% elseif data.data.model_type == 2 %}
+				自定义模型
+				{% else %}
+				当前未选择发放模型，请选择更改操作！
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</form>
+<table class="layui-table table-width">
+	<thead>
+		<tr>
+			<th>分段数</th>
+			<th>A积分比例(%)</th>
+			<th>获取间隔</th>
+		</tr>
+	</thead>
+	{% if !data.data %}
+	<tbody></tbody>
+	{% else %}
+	<tbody>
+		<tr>
+			{% if !data.data %}
+			<td>1</td>
+			<td>100</td>
+			<td>--</td>
+			{% else %}
+			<td>{{data.data.segment_number}}</td>
+			<td>{{data.data.point_proportion}}</td>
+			<td>
+				{% if data.data.time_interval %}
+				{{data.data.time_interval}}
+				{% else %}
+				--
+				{% endif %}
+			</td>
+			{% endif %}
+		</tr>
+	</tbody>
+	{% endif %}
+</table>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/pointManagement/index.js"></script>
+{% endblock%}

@@ -1,0 +1,28 @@
+@charset "utf-8";
+.left{float:left}
+.right{float:right}
+.clear{clear:both}
+.inline_display{display:inline}
+.block_display{display:block}
+.index_of_title{border-bottom:1px solid #1AA094;height:40px;}
+.index_of_title li{display: inline-block; vertical-align: middle;font-size: 14px;transition: all .2s;-webkit-transition: all .2s;line-height: 40px;padding: 0 10px;}
+.index_of_title .onIndexOf{color: white; background-color: #1AA094;}
+.index_of_title .arrow-icon{padding: 0 4px;}
+.site-demo-button{margin-bottom:40px;}
+.site-demo-button div{margin: 20px 30px 30px;}
+.site-demo-right40{margin-right:40px;}
+.site-demo-top40{margin-top:40px;}
+.site-demo-bottom40{margin-bottom:40px;}
+.table-width{width:98%;margin:15px auto}
+.editor_width{width:50%}
+.formPage .layui-form-item label{width:200px;}
+.formPage .layui-form-item .layui-input-block{margin-left:230px}
+.tableGoBack{margin-left:1%;margin-bottom:40px}
+#paging{position:absolute;right: 40px;margin-bottom:40px;}
+.layui-form-item .hide{display: none;}
+.layui-form-item .show{display: inline-block;}
+.layui-tooltip{display: inline-block;color: red;font-size: 12px;line-height: 38px;}
+.layui-table th{text-align: center !important;}
+.layui-table td{text-align: center !important;}
+.hide {display: none;}
+.padding15{padding-left: 15px;}

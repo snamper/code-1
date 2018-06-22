@@ -1,0 +1,209 @@
+{% extends "./../../layout.html"%}
+{% block title%}APP用户管理--退款记录--退款详情{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/refund/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>APP用户管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li>退款记录</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">退款详情</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	<form class="layui-form formPage site-demo-top40 goodsViews setMarCenter" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">兑换状态：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.status == 0 %}
+				 	<span>兑换成功</span>
+				 	{% elseif data.data.status == -2 %}
+				 	<span>兑换异常</span>
+				 	{% elseif data.data.status == -3 %}
+				 	<span>未兑换</span>
+				 	{% elseif data.data.status == -4 %}
+				 	<span>兑换异常,运营已退积分</span>
+				 	{% elseif data.data.status == 1 %}
+				 	<span>库存不足,无法兑换</span>
+				 	{% elseif data.data.status == 2 %}
+				 	<span>兑换失败,商品不存在</span>
+				 	{% elseif data.data.status == 3 %}
+				 	<span>兑换失败,商品已下架</span>
+				 	{% elseif data.data.status == 4 %}
+				 	<span>兑换失败,帐号状态异常</span>
+				 	{% elseif data.data.status == 5 %}
+				 	<span>兑换失败,指定帐号不存在</span>
+				 	{% else %}
+				 	<span>兑换失败</span>
+				 	{% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商品名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.full_name %}
+				    <span>{{data.data.full_name}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">商户名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.short_name %}
+				    <span>{{data.data.short_name}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">用户手机号：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.payment_phone %}
+				    <span>{{data.data.payment_phone}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">充值手机号：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.charge_phone %}
+				    <span>{{data.data.charge_phone}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">支付方式：</label>
+			    <div class="layui-input-inline">
+			    	<span>
+				    	{% if data.data.payment_type == 1 %}
+				       		积分支付
+				       	{% elseif data.data.payment_type == 2 %}
+				       		积分+微信支付
+				       	{% elseif data.data.payment_type == 3 %}
+				       		微信支付
+				       	{% elseif data.data.payment_type == 4 %}
+				       		积分+支付宝支付
+				       	{% elseif data.data.payment_type == 5 %}
+				       		支付宝支付
+				       	{% endif %}
+				    </span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">充值金额：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.charge_money %}
+				    <span>{{data.data.charge_money}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">消耗积分：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.point %}
+				    <span>{{data.data.point}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">支付金额：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.payment_amount %}
+				    <span>{{data.data.payment_amount/100}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">购买时间：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.payment_time %}
+				    <span>{{data.data.payment_time}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">最后兑换时间：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.exchange_time %}
+				    <span>{{data.data.exchange_time}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">兑换方式：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.exchange_methods == 1 %}
+				    <span>手动</span>
+				    {% elseif data.data.exchange_methods == 2 %}
+				    <span>H5</span>
+				    {% elseif data.data.exchange_methods == 3 %}
+				    <span>API接口</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">账号类型：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.account_type == 1 %}
+			    	<span>手机号类型</span>
+				    {% elseif data.data.account_type == 2 %}
+				    <span>多账号类型</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    
+	 
+	    
+	    
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a href="/appUserControl/appUserMan/integralPartic?userId={{data.data.pay_user_id}}&status=4&pageNo=1&pageSize=10" class="layui-btn">关闭</a>
+        	</div>
+        </div>
+	 </form>
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%} 
+{% endblock%}

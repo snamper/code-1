@@ -1,0 +1,127 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-平台任务管理-新建任务{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/task.css" />
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>平台任务管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建任务</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">*任务类型:</label>
+			    <div class="layui-input-inline layui-input-checked" lay-filter="taskType" style="width:340px !important">
+			        <input type="radio" name="taskType" value="1" checked="checked" title="诱导观看">
+					<input type="radio" name="taskType" value="2" title="诱导评论">
+					<input type="radio" name="taskType" value="3" title="诱导分享">
+					<input type="radio" name="taskType" value="4" title="日常观看">
+					<input type="radio" name="taskType" value="5" title="日常评论">
+					<input type="radio" name="taskType" value="6" title="日常分享">
+					<input type="radio" name="taskType" value="7" title="完成任务">
+					<input type="radio" name="taskType" value="8" title="邀请好友">
+					<!--<input type="radio" name="taskType" value="9" title="应用分享">-->
+			   </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*任务说明:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" class="layui-input taskName">
+			    </div>
+			    <span class="layui-tooltip tooltip-taskName hide">请输入200字以内说明</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*排序权重:</label>
+			    <div class="layui-input-inline" style="min-width:80px !important">
+			        <input type="text"  class="layui-input taskOrder">
+			    </div>
+			    <span class="layui-tooltip tooltip-taskOrder hide">请输入排序</span>
+			</div>
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*奖励积分:</label>
+			    <div class="layui-input-inline" style="min-width:80px !important">
+			        <input type="text"  class="layui-input point">
+			    </div>
+			    <span class="layui-tooltip tooltip-point hide" >请输入奖励积分</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*任务开放时间:</label>
+			    <div class="layui-input-inline" style="min-width:80px !important">
+					<input  readonly="readonly"  class="layui-input"  id="LAY_demorange_s">
+				</div>
+				<div class="layui-input-inline" style="min-width:80px !important">
+					<input class="layui-input" readonly="readonly"  id="LAY_demorange_e"> 
+				</div>
+			    <span class="layui-tooltip tooltip-taskTime hide">请选择任务开放时间</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">每日完成上限:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  class="layui-input dayMaxTimes">
+			    </div>
+			    <span>（若不设置则无上限）</span>
+			    <span class="layui-tooltip tooltip-dayMaxTimes hide" >请输入每日完成上限</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">完成总上限:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  class="layui-input allMaxTimes">
+			    </div>
+			    <span>（若不设置则无上限）</span>
+			    <span class="layui-tooltip tooltip-allMaxTimes hide" >请输入完成总上限</span>
+			</div>
+			<div class="layui-form-item inducedAdver" >
+			    <label class="layui-form-label ">*选择平台广告:</label>
+			    <div class="layui-input-inline">
+				    <select name="" lay-verify="require"  lay-search>
+					    <option value="">请选择平台广告</option>
+					  	{% for item in data.data.datas %}
+						    <option value="{{item.id}}">{{item.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			    <span class="layui-tooltip tooltip-adver hide" >请选择平台广告</span>
+			</div>
+			<div class="layui-form-item everydayAdver" style="display:none">
+			    <label class="layui-form-label">*完成任务所需数量:</label>
+			    <div class="layui-input-inline" style="min-width:80px !important">
+			        <input type="text"  class="layui-input compliteTimes">
+			    </div>
+			    <span class="layui-tooltip tooltip-compliteTimes hide" >请输入完成任务所需数量</span>
+			</div>
+			<!--<div class="layui-form-item elseAdver" style="display:none">
+			    <label class="layui-form-label">*完成所需事件数量:</label>
+			    <div class="layui-input-inline" style="min-width:80px !important">
+			        <input type="text"  class="layui-input compliteTimes">
+			    </div>
+			    <span class="layui-tooltip tooltip-compliteTimes hide" >请输入完成所需事件数量</span>
+			</div>-->
+			<div class="layui-form-item">
+			    <label class="layui-form-label">备注:</label>
+			    <div class="layui-input-inline">
+			        <div class="layui-input-inline">
+			        <textarea class="layui-textarea-goods remarks"  name="remarks" style="width: 100%;height: 100px;resize:none;"></textarea>
+			   </div>
+			    </div>
+			    <span class="layui-tooltip tooltip-remarks hide" >最多输入200字</span>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn saveAdd">保存</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/taskManagement/addTask.js"></script>
+{% endblock %}
+
+

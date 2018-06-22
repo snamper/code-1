@@ -1,0 +1,184 @@
+<!--{% extends "./../../layout.html"%}-->
+{% block title%}运营管理-渠道列表-创建活动{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/actManagement.css" />
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>渠道列表</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">创建活动</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="actManEdit">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item act-edit-change">
+			     <div class="layui-input-inline layui-input-checked">
+			        <input type="radio" name="1" value="1" checked="checked" title="活动" lay-filter="type1"/>
+					<input type="radio" name="1" value="2" title="渠道" lay-filter="type1"/>
+			   </div>
+			</div>
+			<div class="act-edit-active">
+				<div class="layui-form-item selActiveType" style="margin-left: 33%;">
+				     <div class="layui-input-inline layui-input-checked" style="width: 350px;">
+				        <input type="radio" name="2" value="1" checked="checked" title="打包活动" lay-filter="type2"/>
+						<input type="radio" name="2" value="2" title="类王者荣耀活动" lay-filter="type2"/>
+				   </div>
+				</div>
+				
+				<div class="layui-form-item resourceCode" >
+				    <label class="layui-form-label">* 活动:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="adverName"  placeholder="请输入活动名称" autocomplete="off" class="layui-input active-name">
+				    </div>
+				    <span class="layui-tooltip tooltip-name hide"></span>
+				</div>
+				<div class="layui-form-item resourceCode" >
+				    <label class="layui-form-label">* 邀请用户获取积分:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="fullName"  placeholder="请输入邀请用户获取积分" autocomplete="off" class="layui-input get-integral">
+				    </div>
+				    <span class="layui-tooltip tooltip-integral hide"></span>
+				</div>
+				<div class="layui-form-item resourceCode" >
+				    <label class="layui-form-label">邀请用户数量限制:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="fullName"  placeholder="请输入邀请用户数量限制" autocomplete="off" class="layui-input number-limit">
+				    </div>
+				    <span class="layui-tooltip tooltip-limit hide"></span>
+				</div>	
+				<div class="layui-form-saveCloseBtn">
+				    <a href="javascript:;" class="layui-btn saveAddActive" >保存</a>
+				    <a href="/operation/actManagement/channelList" class="layui-btn layui-btn-danger" >返回</a>
+				</div>
+			</div>
+		
+			<div class="act-channel-main hide" style="min-width: 1300px;">
+				<div class="act-edit-channel" style="width: 550px;">
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label" style="width: 30%;">推广渠道基础信息</label>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">* 渠道名称:</label>
+					    <div class="layui-input-inline">
+					        <input type="text" name="adverName"  placeholder="请输入渠道名称" autocomplete="off" class="layui-input channel-name">
+					    </div>
+					    <span class="layui-tooltip tooltip-channel hide"></span>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">* 联系人:</label>
+					    <div class="layui-input-inline">
+					        <input type="text" name="fullName"  placeholder="请输入联系人" autocomplete="off" class="layui-input contacts">
+					    </div>
+					    <span class="layui-tooltip tooltip-contacts hide"></span>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">* 联系手机:</label>
+					    <div class="layui-input-inline">
+					        <input type="text" name="fullName"  placeholder="请输入手机号" autocomplete="off" class="layui-input phone">
+					    </div>
+					    <span class="layui-tooltip tooltip-phone hide"></span>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">联系地址:</label>
+					    <div class="layui-input-inline adress-select">
+		                    <select name="provid" id="provid" lay-filter="provid">
+		                        <option value="">请选择省</option>
+		                    </select>
+		                </div>
+		                <div class="layui-input-inline adress-select">
+		                    <select name="cityid" id="cityid" lay-filter="cityid">
+		                        <option value="">请选择市</option>
+		                    </select>
+		                </div>
+		                <div class="layui-input-inline adress-select">
+		                    <select name="areaid" id="areaid" lay-filter="areaid">
+		                        <option value="">请选择县/区</option>
+		                    </select>
+		                </div>           
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <div class="layui-input-inline" style="margin-left:130px; ">
+					        <textarea name="" rows="" cols="" placeholder="请输入详细地址" style="width: 100%;height: 60px; resize: none;" class="detail-address"></textarea>
+					    </div>
+					    <span class="layui-tooltip tooltip-detail hide"></span>
+					</div>
+				</div>
+				
+				<div class="act-edit-channel " style="width: 550px;">
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label" style="width: 28%;">渠道方收款信息</label>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">佣金模板:</label>
+					    <div class="layui-input-inline">
+					        <select name="moneyMoudle" id="moneyMoudle" lay-filter="moneyMoudle">
+		                        <option value="">请选择模板</option>
+		                        <option value="1">佣金模板一</option>
+		                    </select>
+					    </div>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">银行:</label>
+					    <div class="layui-input-inline">
+					        <select name="bankSelect" id="bankSelect" lay-filter="bankSelect">
+		                        <option value="">请选择银行</option>
+		                        <option value=" ">请选择银行</option>
+		                        <option value="中国银行">中国银行</option>
+		                        <option value="北京银行">北京银行</option>
+		                        <option value="中国工商银行 ">中国工商银行 </option>
+		                        <option value="招商银行">招商银行</option>
+		                        <option value="中国农业银行">中国农业银行</option>
+		                        <option value="中国建设银行">中国建设银行</option>
+		                        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+		                        <option value="交通银行">交通银行</option>
+		                        <option value="中国民生银行">中国民生银行</option>
+		                        <option value="浦发银行" style="padding-bottom: 10px;">浦发银行</option>
+		                    </select>
+					    </div>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">支行:</label>
+					    <div class="layui-input-inline">
+					        <input type="text" name="fullName"  placeholder="请输入支行名称" autocomplete="off" class="layui-input bank">
+					    </div>
+					    <span class="layui-tooltip tooltip-bank hide"></span>
+					</div>
+					<div class="layui-form-item resourceCode" >
+					    <label class="layui-form-label">收款账号:</label>
+					    <div class="layui-input-inline">
+					        <input type="text" name="fullName"  placeholder="请输入收款账号" autocomplete="off" class="layui-input accounts">
+					    </div>
+					    <span class="layui-tooltip tooltip-accounts hide"></span>
+					</div>
+					
+					<div class="layui-form-item resourceCode" >
+						<label class="layui-form-label">备注:</label>
+					    <div class="layui-input-inline">
+					        <textarea name="" rows="" cols="" style="width: 100%; height: 60px; resize: none;" class="remarks"></textarea>
+					    </div>
+					    <span class="layui-tooltip tooltip-remarks hide"></span>
+					</div>
+				</div>
+				<div class="layui-form-saveCloseBtn"  style="width: 100%; float: left; margin-top: 40px; margin-left: 33%;">
+				    <a class="layui-btn saveAdd" lay-filter="saveAdd">保存</a>
+				    <a href="/operation/actManagement/channelList" class="layui-btn layui-btn-danger" >返回</a>
+				</div>
+			</div>
+			</div>
+			
+		</form>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/actManagement/data.js"></script>
+	<script type="text/javascript" src="/controllers/operation/actManagement/province.js"></script>
+	<script type="text/javascript" src="/controllers/operation/actManagement/channelEdit.js"></script>
+{% endblock %}
+
+
+

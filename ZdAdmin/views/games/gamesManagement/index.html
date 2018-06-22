@@ -1,0 +1,103 @@
+{% extends "./../../layout.html"%} 
+{% block title%}小游戏管理-大转盘管理{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/games/index.css"/> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>小游戏管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">大转盘管理</li>
+	<li class="lisFlBtn moreFlBtn">
+		{% if menuCodeList %} 
+			{% for code in menuCodeList %}
+				{% if unescape(code.name) == "大转盘设置" %}
+					<a style="width: 120px;" href="/games/gamesMan/bigDialSet" class="layui-btn novicesLogsBtn">大转盘设置</a>
+				{% endif %} 
+			{% endfor %} 
+		{% endif %}
+	</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form lagLibrary" action="">
+ 	<div class="layui-form-item padding15">
+	    <div class="layui-inline">
+	        <div class="layui-input-inline">
+	        	{% if page && page.stDate %}
+				<input class="layui-input" placeholder="开始日" id="LAY_demorange_s" value="{{page.stDate}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+		    	{% endif %}
+		    </div>
+		    <div class="layui-input-inline">
+		    	{% if page && page.enDate %}
+				<input class="layui-input" placeholder="截止日" id="LAY_demorange_e" value="{{page.enDate}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+		    	{% endif %}
+		    </div>
+	    </div>
+ 		<div class="layui-inline">
+		    <div class="layui-input-inline">
+			    {% if page && page.userPhone %}
+				<input type="text" name="userPhone" id="userPhone" class="layui-input" value="{{page.userPhone}}" lay-verify="text" autocomplete="off" placeholder="请输入手机号">
+				{% else %}
+				<input type="text" name="userPhone" id="userPhone" class="layui-input" lay-verify="text" autocomplete="off" placeholder="请输入手机号">
+				{% endif %}			     
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+    	{% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "导出" %}
+	    		<div class="layui-inline" style="float: right; margin-right: 20px;">
+	    			{% if data.data.retPage.datas.length %}
+	    			<a href="javascript:;" id="downLoadBtn" class="layui-btn">导出</a>
+	    			{% else %}
+	    			<a href="javascript:;" id="downLoadBtn" class="layui-btn" data-dataLis="1">导出</a>
+	    			{% endif %}
+    			</div>
+    			<a	id="downloadFiles" href="" download=""></a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+    </div>
+    <div class="layui-form-item padding15">
+    	消耗积分总计：{{data.data.sumData.useScoreSum}}积分　　　　　发放积分总计：{{data.data.sumData.winScoreSum}}积分
+    </div>
+	{% if data.data.retPage.datas.length %}
+	<table class="layui-table table-width">
+		<thead>
+			<tr>
+				<th>时间</th>
+				<th>手机号</th>
+				<th>消耗积分</th>
+				<th>发放积分</th>
+			</tr>
+		</thead>
+		<tbody id="htmlWrap"> 
+			{% for item in data.data.retPage.datas %}
+			<tr>
+				<td>{{item.createTime}}</td>
+				<td>{{item.userPhone}}</td>
+				<td>{{item.useScore}}</td>
+				<td>{{item.winScore}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<div class="noDatas">暂无数据</div>
+	{% endif %}
+ </form>
+<div id="paging" data-page-no={{data.data.retPage.pageNo}} data-page={{data.data.retPage.totalPage}} data-page-size={{data.data.retPage.pageSize}}></div>	
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/games/gamesManagement/index.js"></script>
+{% endblock%}

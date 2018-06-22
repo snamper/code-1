@@ -1,0 +1,172 @@
+/*系统管理全局样式*/
+.layui-form-position {
+    position: relative;
+}
+.layui-form-referBtn {
+    /*display: inline-block;
+    position: absolute;
+    right: 20px;
+    bottom: 0px;*/
+   margin-top:-15px
+}
+.layui-form-item{
+	/*margin-bottom: 0 !important;*/
+}
+.legend{
+	margin:15px 50px;
+}
+/*新增用户*/
+.addUserSection{
+	/*position: absolute;*/
+	min-width:400px;
+	margin-top:30px;
+	
+}
+.addUserSection hr{
+	margin: 0 50px;
+}
+.addUserSection form{
+	margin-left:25%;
+	margin-top:40px
+}
+
+.addUserSection>form .layui-input-inline{
+	min-width: 240px;
+}
+.addUserSection>form>.layui-form-saveCloseBtn{
+	margin-left:120px;
+	margin-top:50px
+}
+ .uploadLogo{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+ #asImportCode{position:absolute;top:0;left:0;z-index:100}
+  .uploadBag{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+ #ImportupBag{position:absolute;top:0;left:0;z-index:100;min-width: 114px;}
+/*权限管理*/
+#permissionTreeContent>li{
+	width: 33%;
+	float: left;
+}
+#permissionTreeContent>li>a{
+	font-weight: 800;
+}
+#permissionTreeContent>li>a>cite{
+	font-size: 18px
+}
+.permissionTreeBox .layui-form-saveCloseBtn{
+	position: static;
+	margin-left: 80%;
+}
+/*新增角色*/
+.addRoleSection{
+	position: absolute;
+	min-width:400px;
+	margin-top:30px;
+	left:25%;
+}
+.addRoleSection>form .layui-input-inline{
+	min-width: 240px;
+}
+.addRoleSection>form>.layui-form-saveCloseBtn{
+	margin-left:30%;
+}
+.addRoleSection>form .addRoleSection>form{
+	
+}
+.addRoleSection>form>.layui-form-item textarea{
+	width: 100%;
+	min-height:70px;
+}
+
+/*设置用户*/
+.setUserSection{
+	min-width:400px;
+	margin-top:30px;
+	margin-left:12%;
+}
+.setUserSection > form .layui-input-inline{
+	line-height: 38px;
+}
+.setUserSection > form .layui-form-label{
+	min-width:104px;
+}
+.setUserSection > form .layui-input-inline{
+	min-width:210px;
+}
+.setUserSection > form .layui-input-inline>input{
+	float:left
+}
+.setUserSection > form .layui-input-inline>input:nth-child(1){
+	width: 60%;
+}
+
+.setUserSection > form .layui-input-inline>input:nth-child(2){
+	margin-left:10%;
+	width: 30%;
+}
+.setUserSection > form>.layui-form-item>ul{
+	margin-left:50px;
+	width:80%;
+}
+.setUserSection > form>.layui-form-item>ul>li{
+	min-width: 160px;
+	background-color: rgba(242, 242, 242, 1);
+	margin-top:15px;
+	margin-left:1%;
+	float: left;
+	min-height:36px;
+	line-height:36px;
+}
+.setUserSection > form>.layui-form-item>ul>li>i{
+	cursor: pointer;
+	font-size: 22px;
+	margin-top:5px;
+}
+
+/*新建资源*/
+.addResourceSection{
+	min-width:30%;
+	/*max-width: 60%;*/
+	margin-left:30%;
+	margin-top:50px
+}
+.addResourceSection > form .layui-input-inline{
+	min-width:200px;
+}
+.addResourceSection > form .layui-input-checked{
+	min-width:260px !important;
+}
+.addResourceSection>form>.layui-form-saveCloseBtn{
+	margin-left:10%
+}
+.modal{
+	z-index:13000 !important;
+	top:90px !important;
+}
+.modal-backdrop{
+	display: none;
+}
+.resourceUrl{
+	min-width: 380px;
+}
+.layui-tree li ul{
+	margin-left: 40px !important;
+}
+.copyUploadBtn{
+	position: absolute;
+	right: 20px;
+	top: 0;
+	width: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	border: 1px solid #b5b3b3;
+	color: #b5b3b3;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+	cursor:pointer;
+}
+.drawNumInpt {
+	width: 60px;
+	height: 26px;
+	text-align: center;
+}

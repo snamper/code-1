@@ -1,0 +1,51 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-优惠券管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %} 
+{% block indexTitle %}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">优惠券管理</li>
+	<li class="fr"><a href="javascript:;" class="layui-btn creatLimitBtn">创建额度</a></li>
+</ul>
+{% endblock %}
+{% block content %} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li class="layui-this"><a href="/operation/couponsManagement">额度管理</a></li>
+		<li><a href="/operation/couponsManagement/couponsMan">优惠券管理</a></li>
+		<li><a href="/operation/couponsManagement/channelCoupon">渠道配置优惠券</a></li>
+	</ul>
+</div>
+{% if data.data.datas.length %}
+<table class="layui-table table-width">
+	<tr>
+     	<th>序号</th>
+     	<th>额度(元)</th>
+     	<th>创建时间</th>
+    </tr>
+    <tbody id="htmlWrap">
+     	{% for item in data.data.datas %}
+     	<tr>
+		 	<td>{{page.pNo|sortNum(loop.index)}}</td>
+		 	<td>{{item.rmbValue}}</td>
+		 	<td>{{item.createTime}}
+		 	</td>
+		</tr>
+		{% endfor %}
+ 	</tbody>
+</table>
+{% else %}
+<div style="text-align:center">暂无数据</div>
+{% endif %}
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+{% else %}
+    <div style="text-align:center">{{data.message}}</div>
+{% endif %}
+{% endblock %} 
+{% block layui %}
+<script type="text/javascript" src="/controllers/operation/couponsManagement/index.js"></script>
+{% endblock %}

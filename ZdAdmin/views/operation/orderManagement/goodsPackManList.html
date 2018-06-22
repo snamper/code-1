@@ -1,0 +1,96 @@
+{% extends "./../../layout.html"%} 
+{% block title%}运营管理-商品管理-打包商品管理{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css"/> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">商品管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">打包商品管理</li>
+	<li class="lisFlBtn moreFlBtn">
+		<a class="layui-btn addFlexBtn" href="/operation/opMerMan/addGoodsPack">创建商品包</a>
+	</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form lagLibrary" action="">
+ 	<div class="layui-form-item padding15">
+ 		<div class="layui-inline">
+		 	<label class="layui-form-label" style="width: 120px;">商品包名称：</label>
+		    <div class="layui-input-inline">
+			    {% if page && page.telNum %}
+				<input type="text" name="userId" id="userId" class="layui-input" value="{{page.telNum}}" lay-verify="text" autocomplete="off" placeholder="请输入商品包名称">
+				{% else %}
+				<input type="text" name="userId" id="userId" class="layui-input" lay-verify="text" autocomplete="off" placeholder="请输入商品包名称">
+				{% endif %}			     
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<label class="layui-form-label">创建时间：</label>
+	        <div class="layui-input-inline">
+	        	{% if page && page.startTime %}
+				<input class="layui-input" placeholder="开始" id="LAY_demorange_s" value="{{page.startTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="开始" id="LAY_demorange_s">
+		    	{% endif %}
+		    </div>
+		    <div class="layui-input-inline">
+		    	{% if page && page.endTime %}
+				<input class="layui-input" placeholder="截止" id="LAY_demorange_e" value="{{page.endTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="截止" id="LAY_demorange_e">
+		    	{% endif %}
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+    </div>
+	<table class="layui-table table-width">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>商品包编号</th>
+				<th>商品包名称</th>
+				<th>商品数量</th>
+				<th>打包总价</th>
+				<th>创建时间</th>
+				<th>创建人</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody id="htmlWrap">
+			{% if data.data.datas.length %} 
+			{% for item in data.data.datas %}
+			<tr>
+				<td>{{page.pNo|sortNum(loop.index)}}</td>
+				<td>{{item.packageId}}</td>
+				<td>{{item.packageName}}</td>
+				<td>{{item.packageStock}}</td>
+				<td>{{item.packageTotalPrice}}</td>
+				<td>{{item.createDateTime}}</td>
+				<td>{{item.createUserId}}</td>
+				<td >
+					<a class="layui-btn" href="/operation/opMerMan/editorGoodsPack?packageId={{item.packageId}}">编辑</a>
+					{% if item.allowDelete %}
+					<a class="layui-btn layui-btn-danger delGoodsPack" data-id="{{item.packageId}}" href="javascript:;">删除</a>
+					{% endif %}
+					<a class="layui-btn packUseTake" data-id="{{item.packageId}}" href="javascript:;">应用生效</a>
+				</td>
+			</tr>
+			{% endfor %} 
+			{% endif %}
+		</tbody>
+	</table>
+ </form>
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/orderManagement/goodsPackManList.js"></script>
+{% endblock%}

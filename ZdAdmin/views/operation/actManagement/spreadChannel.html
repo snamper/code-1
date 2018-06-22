@@ -1,0 +1,93 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--活动管理--推广渠道佣金{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>活动管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">推广渠道佣金</li>
+	     
+	     {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新增佣金模板" %}
+					<a href="/operation/actManagement/newMoudle" class="layui-btn" style="float:right;margin-right:40px;">新增佣金模板</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	 </ul>
+{%endblock%}
+{% block content%}
+	 <div class="layui-form-item" style="">
+	 	<p style="margin-left: 15px;">佣金模板</p>
+	 </div>
+     <table class="layui-table table-width" style="width: 100%; width: 98%; margin: 15px auto; ">
+	     <tr>
+	     	<th>模板名称</th>
+	     	<th>满足条件 &nbsp;|&nbsp; 佣金/元</th>
+	     	<th>满足条件&nbsp;|&nbsp;佣金/元</th>
+	     	<th>满足条件&nbsp;|&nbsp;佣金/元</th>
+	     	<th>满足条件&nbsp;|&nbsp;佣金/元</th>
+	     	<th>操作</th>
+	     </tr>
+	     {% if data.data.datas.list.length && data.data.datas.list.length > 0 %}
+         <tbody id="htmlWrap">
+         	{% for item in data.data.datas.list %}
+         	<tr>
+         		<td>{{item.name}}</td>
+         		{% if item.register_fund == 0 %}
+         			<td>--</td>
+         		{% else %}
+         			<td>注册  | {{item.register_fund}}</td>
+         		{% endif %}
+         		{% if item.nextday_fund == 0 %}
+         			<td>--</td>
+         		{% else %}
+         			<td>次日留存  | {{item.nextday_fund}}</td>
+         		{% endif %}
+         		{% if item.nextweek_fund == 0 %}
+         			<td>--</td>
+         		{% else %}
+         			<td>周留存   | {{item.nextweek_fund}}</td>
+         		{% endif %}
+         		{% if item.download_fund == 0 %}
+         			<td>--</td>
+         		{% else %}
+         			<td>下载   | {{item.download_fund}}</td>
+         		{% endif %}
+         		<td>
+					
+					
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "修改" %}
+								<a href="javascript:;" data-name="{{item.name}}" data-down="{{item.download_fund}}"
+						data-register="{{item.register_fund}}" data-day="{{item.nextday_fund}}" data-week={{item.nextweek_fund}} class="layui-btn editMoudle" data-name="{{item.name}}" data-id="{{item.id}}">修改</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				    
+				    
+				    {% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "删除" %}
+								<a href="javascript:;" class="layui-btn deleteMoudle" data-id="{{item.id}}">删除</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+         		</td>
+         	</tr>
+         	{% endfor %}
+		 </tbody>	
+		 {% endif %}
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	 
+	
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/actManagement/spreadChannel.js"></script>
+{% endblock%}

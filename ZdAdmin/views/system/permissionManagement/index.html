@@ -1,0 +1,53 @@
+{% extends "./../../layout.html"%} {% block title%}系统管理-权限管理{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/system/index.css" />
+ {% endblock %} {%block indexTitle%}
+<ul class="index_of_title">
+	<li>系统管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">权限管理</li>
+</ul>
+{%endblock%} {% block content%}
+<section id="permissionSection">
+	<table class="layui-table table-width">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>角色名称</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody id="htmlWrap">
+			{% for item in data.data.datas%}
+		    	<tr>
+				 	<td>{{item.role_id}}</td>
+				 	<td>{{item.name}}</td>
+				 	<td>
+				 		<a data-id="{{item.role_id}}" class="layui-btn layui-btn openModal">权限管理</a>
+				 	</td>		 	
+				 </tr>	
+			{% endfor%}
+			
+		</tbody>
+	</table>
+	<!--
+        	作者：刘熠
+        	时间：2017-07-26
+        	描述：权限管理弹窗
+        -->
+	<div id="goodsInfoBox" class="permissionTreeBox hide">
+		<div class="uploadBox clearfix">
+			<div class="modal-body">
+				<ul id="permissionTreeContent"></ul>
+			</div>
+		</div>
+		<div class="layui-form-saveCloseBtn" pane="">
+		    <a  class="layui-btn layui-save-btn savePermissionMessage">保存</a>
+		    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+		</div>
+	</div>
+	<!--<div id="paging"></div>-->
+	<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+</section>
+{% endblock %} {% block layui %}
+<script type="text/javascript" src="/controllers/system/permissionManagement/index.js"></script>
+{% endblock %}

@@ -1,0 +1,407 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-订单管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+		.order_header .layui-form-label{width: 60px;}
+		.copy{cursor: pointer;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">订单管理</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="layui-tab">
+		  <ul class="layui-tab-title chooseType" data-orderStatus="{{page.orderStatus}}" style="width: 90%;margin-left: 30px;">
+		  	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "全部" %}
+		    			{% if page.orderStatus == 0 || page.status %}
+			  				<li data-orderStatus="0" class="layui-this">全部</li>
+			  			{% else %}
+			  				<li data-orderStatus="0" >全部</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "待付款" %}
+		    			{% if page.orderStatus == 1 && !page.status %}
+			  				<li data-orderStatus="1" class="layui-this">待付款</li>
+			  			{% else%}
+			  				<li data-orderStatus="1">待付款</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "已完成" %}
+		    			{% if page.orderStatus == 2  && !page.status %}
+			  				<li data-orderStatus="2" class="layui-this">已完成</li>
+			  			{% else%}
+			  				<li data-orderStatus="2">已完成</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "已取消" %}
+		    			{% if page.orderStatus == 3  && !page.status %}
+			  				<li data-orderStatus="3" class="layui-this">已取消</li>
+			  			{% else%}
+			  				<li data-orderStatus="3">已取消</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "已关闭" %}
+		    			{% if page.orderStatus == 4  && !page.status %}
+			  				<li data-orderStatus="4" class="layui-this">已关闭</li>
+			  			{% else%}
+			  				<li data-orderStatus="4">已关闭</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "兑换状态未知" %}
+		    			{% if page.orderStatus == 5  && !page.status %}
+			  				<li data-orderStatus="5" class="layui-this">兑换状态未知</li>
+			  			{% else%}
+			  				<li data-orderStatus="5">兑换状态未知</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "积分已支付现金未支付" %}
+		    			{% if page.orderStatus == 6  && !page.status %}
+			  				<li data-orderStatus="6" class="layui-this">积分已支付现金未支付</li>
+			  			{% else%}
+			  				<li data-orderStatus="6">积分已支付现金未支付</li>
+			  			{% endif %}
+		    		{% elseif unescape(code.name) == "兑换失败" %}
+		    			{% if page.orderStatus == 7  && !page.status %}
+			  				<li data-orderStatus="7" class="layui-this">兑换失败</li>
+			  			{% else%}
+			  				<li data-orderStatus="7">兑换失败</li>
+			  			{% endif %}
+			  		{% elseif unescape(code.name) == "已支付" %}
+		    			{% if page.orderStatus == 8  && !page.status %}
+			  				<li data-orderStatus="8" class="layui-this">已支付</li>
+			  			{% else%}
+			  				<li data-orderStatus="8">已支付</li>
+			  			{% endif %}
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}	
+		  </ul>
+		</div>
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position order_header" action="">
+				
+				<div class="layui-form-item layui-input-inline">
+					{% if page.productAdAttr %}
+					<select lay-filter="productAdAttr" class="productAdAttr" data-productAdAttr="{{page.productAdAttr}}">
+					{% else %}
+					<select lay-filter="productAdAttr" class="productAdAttr" data-productAdAttr="0">
+					{% endif %}
+			    		<option value="">商品广告属性</option>
+			    		{% if page.productAdAttr == "0" %}
+			    			<option value="0" selected="selected">全部</option>
+			    		{% else %}
+			    			<option value="0">全部</option>
+			    		{% endif %}
+			    		{% if page.productAdAttr == "1" %}
+			    			<option value="1" selected="selected">购买商品</option>
+			    		{% else %}
+			    			<option value="1">购买商品</option>
+			    		{% endif %}
+			    		{% if page.productAdAttr == "2" %}
+			    			<option value="2" selected="selected">广告商品</option>
+			    		{% else %}
+			    			<option value="2">广告商品</option>
+			    		{% endif %}
+			    		{% if page.productAdAttr == "3" %}
+			    			<option value="3" selected="selected">充值商品</option>
+			    		{% else %}
+			    			<option value="3">充值商品</option>
+			    		{% endif %}
+					</select> 
+				</div>
+				{% if page.orderStatus == 0 || page.status %}
+				<div class="layui-form-item layui-input-inline">
+					<select lay-filter="status" class="status" data-status="{{page.status}}">
+			    		<option value="">订单状态</option>
+			    		{% if page.status == "0" %}
+			    			<option value="0" selected="selected">全部</option>
+			    		{% else %}
+			    			<option value="0">全部</option>
+			    		{% endif %}
+			    		{% if page.status == "1" %}
+			    			<option value="1" selected="selected">待付款</option>
+			    		{% else %}
+			    			<option value="1">待付款</option>
+			    		{% endif %}
+			    		{% if page.status == "2" %}
+			    			<option value="2" selected="selected">已完成</option>
+			    		{% else %}
+			    			<option value="2">已完成</option>
+			    		{% endif %}
+			    		{% if page.status == "3" %}
+			    			<option value="3" selected="selected">已取消</option>
+			    		{% else %}
+			    			<option value="3">已取消</option>
+			    		{% endif %}
+			    		{% if page.status == "4" %}
+			    			<option value="4" selected="selected">已关闭</option>
+			    		{% else %}
+			    			<option value="4">已关闭</option>
+			    		{% endif %}
+			    		{% if page.status == "5" %}
+			    			<option value="5" selected="selected">兑换状态未知</option>
+			    		{% else %}
+			    			<option value="5">兑换状态未知</option>
+			    		{% endif %}
+			    		{% if page.status == "6" %}
+			    			<option value="6" selected="selected">积分已支付现金未支付</option>
+			    		{% else %}
+			    			<option value="6">积分已支付现金未支付</option>
+			    		{% endif %}
+			    		{% if page.status == "7" %}
+			    			<option value="7" selected="selected">兑换失败</option>
+			    		{% else %}
+			    			<option value="7">兑换失败</option>
+			    		{% endif %}
+			    		{% if page.status == "8" %}
+			    			<option value="8" selected="selected">已支付</option>
+			    		{% else %}
+			    			<option value="8">已支付</option>
+			    		{% endif %}
+					</select> 
+				</div>
+				{% endif %}
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商品名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.productName %}
+					 		<input type="text"  name="productName" value={{page.productName}}  autocomplete="off" class="layui-input productName">
+					 	{% else %}
+					 		<input type="text"  name="productName"  autocomplete="off" class="layui-input  productName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商户名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.merchantName %}
+					 		<input type="text"  name="merchantName" value={{page.merchantName}}  autocomplete="off" class="layui-input merchantName">
+					 	{% else %}
+					 		<input type="text"  name="merchantName"  autocomplete="off" class="layui-input  merchantName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">手机号:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.userPhone %}
+					 		<input type="text" name="userId" value={{page.userPhone}} class="layui-input userId">
+					 	{% else %}
+					 		<input type="text" name="userId" class="layui-input userId">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">订单编号:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.orderno %}
+					 		<input type="text" name="orderno" value={{page.orderno}} class="layui-input orderno">
+					 	{% else %}
+					 		<input type="text" name="orderno" class="layui-input orderno">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+					{% if page && page.orderType %}
+					<select lay-filter="productAdType" class="productAdType" data-productAdType="{{page.orderType}}">
+					{% else %}
+					<select lay-filter="productAdType" class="productAdType" data-productAdType="0">
+					{% endif %}
+			    		{% if page.orderType == "1" %}
+			    			<option value="0">类型</option>
+			    			<option value="1" selected="selected">购买订单</option>
+			    			<option value="2">抽奖订单</option>
+			    		{% elseif page.orderType == "2" %}
+			    			<option value="0">类型</option>
+			    			<option value="1">购买订单</option>
+			    			<option value="2" selected="selected">抽奖订单</option>
+			    		{% else %}
+				    		<option value="0" selected="selected">类型</option>
+				    		<option value="1">购买订单</option>
+				    		<option value="2">抽奖订单</option>
+			    		{% endif %}
+					</select> 
+				</div>
+				
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">下单时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.createTimeBefore %}
+						 <input class="layui-input" placeholder="" value="{{page.createTimeBefore}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.createTimeEnd %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.createTimeEnd}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+                </div>
+				<div class="layui-input-inline">
+		    		<a href="javascript:;" id="search"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    	</div>	
+		    	<a class="layui-btn derivaBtn" style="float:right;margin-right:40px;">导出</a>
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>支付单号</th>
+		            <th>订单编号</th>
+		            <th>商品名称</th>
+		            <th>商户名称</th>
+		            <th>手机号</th>
+		            <th>消耗积分</th>
+		            <th>消耗金额（元）</th>
+		            <th>兑换/充值账号</th>
+		            <th>订单状态</th>
+		            <th>下单时间</th>
+		            <th>支付状态</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    {% if data.data.datas.length > 0 %}
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td class="copy" data-order="{{item.trade_no}}" title="{{item.trade_no}}">{{item.trade_no | hideFlow(10)}}</td>
+					 	<td class="copy" data-order="{{item.orderno}}" title="{{item.orderno}}">{{item.orderno | hideFlow(10)}}</td>
+					 	<td><a href="/merchant/order/orderView?orderId={{item.id}}">{{item.full_name}}</a></td>
+					 	<td>{{item.merchant_short_name}}</td>
+					 	{% if item.risk_status == 0 %}
+					 	{% if item.current_risk_status == 0 %}
+					 	<td>(无){{item.payment_phone}}(无)</td>
+					 	{% elseif item.current_risk_status == 1 %}
+					 	<td>(无){{item.payment_phone}}(低)</td>
+					 	{% elseif item.current_risk_status == 2 %}
+					 	<td>(无){{item.payment_phone}}(高)</td>
+					 	{% else %}
+					 	<td>(无){{item.payment_phone}}</td>
+					 	{% endif %}
+					 	{% elseif item.risk_status == 1 %}
+					 	{% if item.current_risk_status == 0 %}
+					 	<td>(低){{item.payment_phone}}(无)</td>
+					 	{% elseif item.current_risk_status == 1 %}
+					 	<td>(低){{item.payment_phone}}(低)</td>
+					 	{% elseif item.current_risk_status == 2 %}
+					 	<td>(低){{item.payment_phone}}(高)</td>
+					 	{% else %}
+					 	<td>(低){{item.payment_phone}}</td>
+					 	{% endif %}
+					 	{% elseif item.risk_status == 2 %}
+					 	{% if item.current_risk_status == 0 %}
+					 	<td>(高){{item.payment_phone}}(无)</td>
+					 	{% elseif item.current_risk_status == 1 %}
+					 	<td>(高){{item.payment_phone}}(低)</td>
+					 	{% elseif item.current_risk_status == 2 %}
+					 	<td>(高){{item.payment_phone}}(高)</td>
+					 	{% else %}
+					 	<td>(高){{item.payment_phone}}</td>
+					 	{% endif %}
+					 	{% else %}
+					 	{% if item.current_risk_status == 0 %}
+					 	<td>{{item.payment_phone}}(无)</td>
+					 	{% elseif item.current_risk_status == 1 %}
+					 	<td>{{item.payment_phone}}(低)</td>
+					 	{% elseif item.current_risk_status == 2 %}
+					 	<td>{{item.payment_phone}}(高)</td>
+					 	{% else %}
+					 	<td>{{item.payment_phone}}</td>
+					 	{% endif %}
+					 	{% endif %}
+					 	<td>{{item.point}}</td>
+					 	<td>
+					 		{% if item.payment_amount %}
+					 			{{item.payment_amount/100}}
+					 		{% else %}
+					 			0
+					 		{% endif %}
+					 	</td>
+				 		<td title="{{item.charge_phone}}">
+				 			{% if item.charge_phone %}
+				 				{{item.charge_phone | hideFlow(10)}}
+				 			{% else %}
+				 				--
+				 			{% endif %}
+				 		</td>
+					 	<td>
+							 	{% if item.status == 1 %}
+							 		未付款
+							 	{% elseif item.status == 2 %}
+							 		已完成
+							 	{% elseif item.status == 3 %}
+							 		已取消
+							 	{% elseif item.status == 4 %}
+							 		已关闭
+							 	{% elseif item.status == 5 %}
+							 		兑换状态未知
+							 	{% elseif item.status == 6 %}
+							 		积分已支付现金未支付
+							 	{% elseif item.status == 7 %}
+							 		兑换失败
+							 	{% elseif item.status == 8 %}
+							 		已支付
+							 	{% endif %}
+					 	</td>
+					 	<td>{{item.create_time}}</td>
+					 	<td>
+					 		{% if item.payment_status == 1 %}
+					 			未支付
+					 		{% elseif item.payment_status == 2 %}
+					 			{% if item.status == 7 %}
+					 				{% if item.payment_type == 2 || item.payment_type == 4%}
+					 				已支付，积分已退
+					 				{% else %}
+					 				已支付
+					 				{% endif %}
+					 			{% else %}
+					 			已支付
+					 			{% endif %}
+					 		{% elseif item.payment_status == 3 %}
+						 		已退款
+					 		{% endif %}
+					 	</td>
+					 	<td>
+					 		{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "退款" && item.need_refund_flag == 1 %}
+									 	<!--<a data-id="{{item.id}}" class="layui-btn layui-btn refund">退款</a>-->
+								 	{% endif %}
+								 	{% if unescape(code.name) == "发货" %}
+								 		{% if item.metchant_deliver_way == "2" && item.ship_status == "0" && item.status == 8%}
+								 			<!--<a data-id="{{item.id}}" class="layui-btn layui-btn shipping">发货</a>-->
+								 		{% endif %}
+								 	{% endif %}
+								{% endfor %}
+							{% endif %}
+					 	</td>	  
+					 </tr>
+				 {% endfor%}
+		    </tbody>
+		    {% endif %}
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+		<a id="downloadFiles" href="" download=""></a>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/order/index.js"></script>
+{% endblock %}
+

@@ -1,0 +1,223 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-消息中心-站内信{% endblock %}
+{% block head%}
+	<style type="text/css">
+		.addResourceSection{width: 100%;}
+		.layui-form{width: 900px;margin: 20px auto;}
+		
+		.layui-form-item  span{height: auto;line-height: 38px;width: 790px;float: left;}
+		.layui-form-saveCloseBtn{margin-left: 100px;}
+		.phone > li{width: 158px;text-align: left;float: left;line-height:38px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li>消息中心</li>
+	    <li class="arrow-icon">>></li>
+	    <li>站内信</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">详细</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" >
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" >用户范围:</label>
+				<span>
+					{% if page.scope == 1 %}
+						全部用户
+					{% elseif page.scope == 2 %}
+						指定用户
+					{% else %}
+						部分用户
+					{% endif %}
+				</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">标题:</label>
+			    <span>{{data.data.detail.name}}</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">内容:</label>
+			    <span>{{data.data.detail.content}}<span>
+			</div>
+			<div class="layui-form-item " >
+			    <label class="layui-form-label">跳转页面:</label>
+			    <span>
+			    	{% if data.data.detail.redirectType == 1 %}
+			    		广告id  {{data.data.detail.redirectDetail}}
+			    	{% elseif data.data.detail.redirectType == 2 %}
+			    		商品id  {{data.data.detail.redirectDetail}}
+			    	{% else %}
+			    		主页面 
+			    		{% if data.data.detail.redirectType == 1 %}
+			    			充值
+			    		{% elseif data.data.detail.redirectType == 2 %}
+			    			积分明细
+			    		{% elseif data.data.detail.redirectType == 3 %}
+			    			邀请好友
+			    		{% elseif data.data.detail.redirectType == 4 %}
+			    			会员服务
+			    		{% elseif data.data.detail.redirectType == 5 %}
+			    			客服中心
+			    		{% elseif data.data.detail.redirectType == 6 %}
+			    			个人资料
+			    		{% elseif data.data.detail.redirectType == 7 %}
+			    			系统设置
+			    		{% elseif data.data.detail.redirectType == 8 %}
+			    			账户管理
+			    		{% endif %}
+			    	{% endif %}
+			    </span>
+			</div>
+			{% if page.scope == 1 %}
+			<div>
+				
+			</div>
+			{% elseif page.scope == 3 %}
+			<div>
+				<div class="layui-form-item " >
+					 <label class="layui-form-label" >用户范围:</label>
+					<span>部分用户</span>
+				</div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">安卓机型:</label>
+				    <span>
+					       {% if data.data.phoneType.androidStatus == "是" %}
+					       		{% if data.data.phoneType.androidList %}
+						       		{% for item in data.data.phoneType.androidList %}
+						       			{{item}}
+						       			{% if loop.index0 < data.data.phoneType.androidList.length - 1 %}
+						       				,
+						       			{% endif %}
+						       		{% endfor %}
+						       	{% endif %}
+						    {% else %}
+						    	否
+					       {% endif %}
+					</span>
+				</div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">安卓版本:</label>
+				    <span>
+					    {% if data.data.phoneType.androidStatus == "是" %}
+					      	{% if data.data.phoneType.androidVersionStatus == 1 %}
+					       		{% if data.data.phoneType.androidVersionList %}
+						       		{% for item in data.data.phoneType.androidVersionList %}
+						       			{{item}}
+						       			{% if loop.index0 < data.data.phoneType.androidVersionList.length - 1 %}
+						       				,
+						       			{% endif %}
+						       		{% endfor %}
+						       	{% endif %}
+					     	{% elseif data.data.phoneType.androidVersionStatus == 2 %}
+					     		大于等于 {{data.data.phoneType.androidVersionList[0]}} 版本
+					     	{% elseif data.data.phoneType.androidVersionStatus == 3 %}
+					     		小于等于 {{data.data.phoneType.androidVersionList[0]}} 版本
+					     	{% endif %}
+					    {% else %}
+					    	否
+					    {% endif %}
+					</span>
+				</div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">ios机型:</label>
+				    <span>
+					       {% if data.data.phoneType.iosStatus == "是" %}
+					       		{% if data.data.phoneType.iosList %}
+						       		{% for item in data.data.phoneType.iosList %}
+						       			{{item}}
+						       			{% if loop.index0 < data.data.phoneType.iosList.length - 1 %}
+						       				,
+						       			{% endif %}
+						       		{% endfor %}
+						       	{% endif %}
+						    {% else %}
+						    	否
+					       {% endif %}
+					</span>
+				</div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">ios版本:</label>
+				    <span>
+					    {% if data.data.phoneType.iosStatus == "是" %}
+					      	{% if data.data.phoneType.iosVersionStatus == 1 %}
+					       		{% if data.data.phoneType.iosVersionList %}
+						       		{% for item in data.data.phoneType.iosVersionList %}
+						       			{{item}}
+						       			{% if loop.index0 < data.data.phoneType.iosVersionList.length - 1 %}
+						       				,
+						       			{% endif %}
+						       		{% endfor %}
+						       	{% endif %}
+					     	{% elseif data.data.phoneType.iosVersionStatus == 2 %}
+					     		大于等于 {{data.data.phoneType.iosVersionList[0]}} 版本
+					     	{% elseif data.data.phoneType.iosVersionStatus == 3 %}
+					     		小于等于 {{data.data.phoneType.iosVersionList[0]}} 版本
+					     	{% endif %}
+					    {% else %}
+					    	否
+					    {% endif %}
+					</span>
+				</div>
+				
+			{% elseif page.scope == 2 %}
+			<div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">手机号:</label>
+				    <ul class="phone" style="width: 790px;float: left;">
+				    	{% for item in data.data.phoneNum %}
+				    		<li>{{item}}</li>
+				    	{% endfor %}
+				    </ul>
+				</div>
+			</div>
+			{% endif %}
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">当前状态:</label>
+			    <span>
+			       	{% if data.data.sendinfo.status == 1 %}
+			    		已完成
+			    	{% elseif data.data.sendinfo.status == 2 %}
+			    		已撤回
+			    	{% elseif data.data.sendinfo.status == 3 %}
+			    		预约中
+			    	{% endif %}
+			    </span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">发送时间:</label>
+			    <span>
+			    	{% if data.data.detail.frequency == 1 %}
+			    		及时发送   {{data.data.sendinfo.sendTime}}
+			    	{% elseif data.data.detail.frequency == 2 %}
+			    		定时发送	 {{data.data.sendinfo.sendTime}}
+			    	{% elseif data.data.detail.frequency == 3 %}
+			    		重复发送  
+			    		{% if data.data.detail.send_week  %}
+			    			每周 
+			    		{% elseif data.data.detail.send_day %}
+			    			每月 
+			    		{% else %}
+			    			每日 
+			    		{% endif %}
+			    		
+			    		{{data.data.detail.sendTime}}
+			    	{% endif %}
+			    <span>
+			</div>
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a href="/operation/pushMessage/message" class="layui-btn layui-btn-danger audit" >返回</a>
+			</div>
+		</form>
+		
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<!--<script type="text/javascript" src="/controllers/operation/pushMessage/messageDetail.js"></script>-->
+{% endblock %}
+

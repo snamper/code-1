@@ -1,0 +1,68 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-form-label{width: 120px;text-align: right;}
+	.layui-input-inline.layui-form-item{width: 300px;}
+	.layui-form-item .layui-input-inline{text-align: left;width: 140px;}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>积分发放</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">发放明细</li>
+</ul>
+{%endblock%}
+{% block content%} 
+	<div class="layui-form-item layui-input-inline">
+        <label class="layui-form-label">查看日期:</label>
+        <div class="layui-input-inline" >
+		     {{data.data.input_date}}                
+        </div>
+  </div>
+  <div class="layui-form-item layui-input-inline">
+        <label class="layui-form-label">计划发放总积分:</label>
+        <div class="layui-input-inline">
+		   {{data.data.total_points}}                   
+        </div>
+  </div>
+  <div class="layui-form-item layui-input-inline">
+        <label class="layui-form-label">单次发放积分范围:</label>
+        <div class="layui-input-inline">
+		   {{data.data.one_release_min}} ～ {{data.data.one_release_max}}                  
+        </div>
+  </div>
+  <div class="layui-form-item " style="padding-left: 70px;">
+	  共计 {{data.data.total_record_num}} 条发放记录，累计发放 {{data.data.total_release_points}} 积分  
+  </div>
+{% if data.message =="成功"%}
+ 
+ <table class="layui-table table-width">
+	<tr>
+     	<th>序号</th>
+     	<th>获得用户</th>
+     	<th>获得积分数</th>
+     	<th>获得时间</th>
+    </tr>
+    <tbody id="htmlWrap">
+     	{% for item in data.data.release_data.datas %}
+     	<tr>
+      <td>{{data.data.release_data.pageNo | sortNum(loop.index)}}</td>
+      <td>{{item.tel_num}}</td>
+      <td>{{item.points}}</td>
+      <td>
+        {{item.create_time}}
+      </td>
+    </tr>
+		{% endfor %}
+ 	</tbody>
+ </table>
+ <div id="paging" data-page-no={{data.data.release_data.pageNo}} data-page={{data.data.release_data.totalPage}} data-page-size={{data.data.release_data.pageSize}}></div>	 
+ {% else %}
+     <div style="text-align:center">{{data.message}}</div>
+ {% endif%}
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/pointManagement/videoPoint.js"></script>
+{% endblock%}

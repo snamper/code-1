@@ -1,0 +1,180 @@
+{% extends "./../../layout.html"%}
+{% block title%}APP用户管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/appUserControl/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>APP用户管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">用户详情</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <section class="appuserDetail">
+		<form class="layui-form formPage site-demo-top40" action="" id="userDetails">
+			<div class="partLine">用户基本信息<i></i></div>
+			<div class="item-adMes item-pos-rela">
+				<div class="layui-form-item">
+			    	<div class="layui-inline">
+					    <label class="layui-form-label">用户昵称：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.name %}
+						    <span>{{data.data.name}}</span>
+						    {% else %}
+						    <span></span>
+						    {% endif %}
+					    </div>	
+				    </div>
+				    <div class="layui-inline">
+				    	<label class="layui-form-label">性别：</label>
+						<div class="layui-input-inline">
+							{% if data.data.sex == '1' %}
+				    		<span>男</span>
+					    	{% elseif data.data.sex == '2' %}
+					    	<span>女</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+						</div>
+				    </div>
+				    <div class="layui-inline">
+				    	<label class="layui-form-label">出生年月：</label>
+						<div class="layui-input-inline">
+							{% if data.data.birth %}
+				    		<span>{{data.data.birth.split(' ')[0]}}</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+						</div>
+				    </div>
+			    </div>
+			    <div class="layui-form-item">
+			    	<div class="layui-inline">
+					    <label class="layui-form-label">最近登录IP：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.last_login_ip %}
+				    		<span class="targetNum">{{data.data.last_login_ip}}</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+					    </div>	
+				    </div>
+				    <div class="layui-inline">
+					    <label class="layui-form-label">用户状态：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.login_status == '-1' %}
+				    		<span>冻结状态</span>
+					    	{% else %}
+					    	<span>启用状态</span>
+					    	{% endif %}
+					    </div>	
+				    </div>
+				    <div class="layui-inline">
+					    <label class="layui-form-label">手机号：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.tel_num %}
+				    		<span>{{data.data.tel_num}}</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+					    </div>	
+				    </div>
+			    </div>
+			    <div class="layui-form-item">
+			    	<div class="layui-inline">
+					    <label class="layui-form-label">最近登录时间：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.last_login_time %}
+				    		<span class="targetNum">{{data.data.last_login_time.split(' ')[0]}}</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+					    </div>	
+				    </div>
+				    <div class="layui-inline">
+					    <label class="layui-form-label">注册时间：</label>
+					    <div class="layui-input-inline">
+					    	{% if data.data.create_time %}
+				    		<span>{{data.data.create_time.split(' ')[0]}}</span>
+					    	{% else %}
+					    	<span></span>
+					    	{% endif %}
+					    </div>	
+				    </div>
+			    </div>
+			    <div class="layui-inline layui-item-position-right">
+				    <div class="layui-input-inline userBox" style="overflow: hidden;">
+				    	{% if data.data.image_url %}
+				    	<img src="{{data.data.image_url}}" alt="" />
+				    	{% else %}
+				    	<img src="" alt="" />
+				    	{% endif %}
+				    </div>
+				    {% if data.data.id %}
+			    	<span class="userIdText">用户ID: {{data.data.id}}</span>
+			    	{% else %}
+			    	<span class="userIdText">用户ID: </span>
+			    	{% endif %}
+			    </div>
+			</div>
+		    <div class="partLine">积分信息<i></i></div>
+		    <div class="item-adMes">
+		    	<div class="layui-form-item">
+			    	<div class="layui-inline oneThird">
+					    <div class="mesTorus">当前积分</div>
+					    {% if data.data.u_score_balance %}
+					    <span class="mesTexts">{{data.data.u_score_balance}}</span>
+					    {% else %}
+					    <span class="mesTexts"></span>
+					    {% endif %}
+				    </div>
+				    <div class="layui-inline oneThird">
+					    <div class="mesTorus">累计积分</div>
+					    {% if data.data.u_score_all %}
+					    <span class="mesTexts">{{data.data.u_score_all}}</span>
+					    {% else %}
+					    <span class="mesTexts"></span>
+					    {% endif %}
+				    </div>
+				    <div class="layui-inline oneThird">
+					    <div class="mesTorus">累计消耗积分</div>
+					    {% if data.data.u_score_expense_all || data.data.u_score_expense_all == '0' %}
+					    <span class="mesTexts">{{data.data.u_score_expense_all}}</span>
+					    {% else %}
+					    <span class="mesTexts"></span>
+					    {% endif %}
+				    </div>
+			    </div>
+		    </div>
+		    <div class="partLine">行为记录<i></i></div>
+		    <div class="item-adMes">
+				<div class="layui-form-item">
+			    	<div class="layui-inline oneThird oneFour">
+					    <div class="mesTorus"><a href="/appUserControl/appUserMan/integralPartic?userId={{data.data.id}}&status=1&pageNo=1&pageSize=10" target="_blank" style="color: #009688;">获取积分</a></div>
+				    </div>
+				    <div class="layui-inline oneThird oneFour">
+					    <div class="mesTorus"><a href="/appUserControl/appUserMan/integralPartic?userId={{data.data.id}}&status=2&pageNo=1&pageSize=10" target="_blank" style="color: #009688;">积分消耗</a></div>
+				    </div>
+				    <div class="layui-inline oneThird oneFour">
+					    <div class="mesTorus"><a href="/appUserControl/appUserMan/integralPartic?userId={{data.data.id}}&status=3&pageNo=1&pageSize=10" target="_blank" style="color: #009688;">观看记录</a></div>
+				    </div>
+				    <div class="layui-inline oneThird oneFour">
+					    <div class="mesTorus"><a href="/appUserControl/appUserMan/integralPartic?userId={{data.data.id}}&status=4&pageNo=1&pageSize=10" target="_blank" style="color: #009688;">退款记录</a></div>
+				    </div>
+			    </div>
+		   </div>
+		</form>
+		<div class="layui-form-saveCloseBtn">
+		    <a class="layui-btn closeCurPage" href="/appUserControl/appUserMan">关闭</a>
+		</div>
+	 </section>
+	 <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>
+     {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/appUserControl/appUserManagement/userDetail.js"></script>
+{% endblock%}

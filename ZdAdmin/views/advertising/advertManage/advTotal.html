@@ -1,0 +1,135 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--广告管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>广告管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">广告效果统计</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <form class="layui-form advManagement" action="" style="padding-top: 15px;">
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">广告文案：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.adName %}
+			    	<input type="text" name="advName"  value="{{page.adName}}" class="layui-input adName">
+					{% else %}
+					<input type="text" name="advName"  class="layui-input adName">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 85px;">广告主名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.advertiserName %}
+			    	<input type="text" name="advertiserName"  value="{{page.advertiserName}}"  class="layui-input advertiserName">
+					{% else %}
+					<input type="text" name="advertiserName"  class="layui-input advertiserName">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">开始时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline" style="margin-left: 30px;line-height: 38px;">总共查出 
+	    		{% if data.data.sumRows %}
+	    			{{data.data.sumRows}}
+	    		{% else %}
+	    			0
+	    		{% endif %}
+	    		条数据，共计展示 
+	    		{% if data.data.sumShowTimes %}
+	    			{{data.data.sumShowTimes}}
+	    		{% else %}
+	    			0
+	    		{% endif %}
+	    		次，产生点击 
+	    		  {% if data.data.sumClickTimes %}
+	    			{{data.data.sumClickTimes}}
+	    		{% else %}
+	    			0
+	    		{% endif %}
+	    		   次，总计产生收益
+	    		  {% if data.data.sumProfit %}
+	    		  	{{data.data.sumProfit}}
+	    		  {% else %}
+	    		  	0
+	    		  {% endif %}
+	    		元
+	    	</div>
+		    <a  class="layui-btn derivation" style="float:right;margin-right:60px;">导出报表</a>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>广告名称</th>
+	     	<th>广告主名称</th>
+	     	<th>数据日期</th>
+	     	<th>投放类型</th>
+	     	<th>展示数(次)</th>
+	     	<th>点击数(次)</th>
+	     	<th>点击率</th>
+	     	<th>收益</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.page.datas %}
+         	<tr>
+         		<td>{{lis.id}}</td>
+			 	<td>{{lis.adName}}</td>
+			 	<td>{{lis.advertiserName}}</td>
+			 	<td>{{lis.inputDateStr}}</td>
+			 	<td>
+			 		{% if lis.deliveryType == 1 %}
+			 			CPM视频
+			 		{% elseif lis.deliveryType == 2 %}
+			 			CPC
+			 		{% else %}
+			 			CPM
+			 		{% endif %}
+			 	</td>
+			 	<td>{{lis.showTimes}}</td>
+			 	<td>{{lis.clickTimes}}</td>
+			 	<td>{{lis.clickingRate}}%</td>
+			 	<td>{{lis.profit}}</td>
+				<!--<td>{{lis.createTime}}</td>-->
+			</tr>
+         	{% endfor%}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.page.pageNo}} data-page={{data.data.page.totalPage}} data-page-size={{data.data.page.pageSize}}></div>	
+     {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+	 <a	id="downloadFiles" href="" download=""></a>
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/advertising/advertManagement/advTotal.js"></script>
+{% endblock%}

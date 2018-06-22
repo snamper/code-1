@@ -1,0 +1,228 @@
+/*客户管理*/
+.layui-form-item .txt-impt{
+	display: inline-block;
+    color: red;
+    font-weight: bolder;
+}
+#addManBtnPos{
+	display: inline-block;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+}
+.setMarCenter{
+    width: 890px;
+    margin: 50px auto;
+}
+.addTenants .layui-input-CoverImg,.editorTenants .layui-input-CoverImg{
+	width:300px;
+}
+.copyUploadBtn{
+	position: absolute;
+	right: 0px;
+	top: 0;
+	width: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	border: 1px solid #b5b3b3;
+	color: #b5b3b3;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.addTenants .layui-input-pos:hover .copyUploadBtn{
+	border: 1px solid #1aa194;
+	color: #1aa194;
+}
+.addTenants #addTenants{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: 0px;
+	top: 0;
+	z-index: 99;
+}
+.nextBackBtn{
+	width: 350px;
+	margin: 50px auto;
+}
+.partLine{
+	width: 95%;
+	margin: 0 auto;
+}
+.partLine i{
+	display: inline-block;
+	width: 100%;
+	height: 1px;
+	background: #e2e2e2;
+}
+/*客户管理-商户待审核管理*/
+.tabChange {
+    margin: 0 25px 25px;
+    position: relative;
+}
+.tabChange .layui-tab-title .layui-this {
+    background-color: #ccc;
+    font-weight: bold;
+}
+.tabChange .layui-tab-title .layui-this:after{
+	border: none;
+}
+/*商户审核*/
+.merchantsAudit .layui-input-inline{
+	line-height: 38px;
+	display: inline-block;
+}
+.failBox .failText{
+	height: 250px;
+	overflow: auto;
+}
+.failBox .handelBox{
+	padding: 8px 0;
+	width: 180px;
+	margin: 0 auto;
+}
+.failBox .failTextArea{
+	width: 480px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 8px;
+	border: 1px solid #ccc;
+	min-height: 235px;
+}
+
+.coverScreen{
+	width: 100%;
+	height: 100%;
+	z-index:100;
+	position: fixed;
+	left: 0;
+	top:0;
+	background: #333;
+	opacity: 0.3;
+}
+.adverAppView{
+	width: 375px;
+	min-height:738px ;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	top:30px;
+	margin-left:-185px;
+	z-index:102;
+}
+#uploadVedio{
+	width: 100%;
+	height: 211px;
+}
+.view_bottom{
+	width: 100%;
+	height: 64px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border-top: 2px solid #ccc;
+	z-index: 103 !important;
+	background: #fff;
+}
+.view_bottom li{
+	float: left;
+	width:75px;
+	height:64px ;
+}
+.view_bottom li img{
+	line-height: 64px;
+	width: 30px;
+	height: 30px;
+	/*margin-left: 25px;
+	margin-right: 20px;*/
+	margin:17px 20px 17px 25px
+}
+.view_content{
+	padding: 0 15px;
+}
+.view_title{
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #ccc;
+}
+.view_title>h1{
+	margin-top: 17px;
+	margin-right: 5px;
+	font-size:16px;
+	color: #515151;
+	font-weight:800 ;
+	line-height: 30px;
+	margin-bottom: 8px;
+}
+.view_title>div{
+	margin-bottom: 8px;
+	color: #ccc;
+}
+.view_title>div>span:nth-child(1){
+	margin-right: 11px;
+}
+.view_title>div>span:nth-child(2)>img{
+	margin-right: 3px;
+}
+.view_message{
+	width: 100%;
+	height: 76px;
+	border-bottom: 1px solid #ccc;
+}
+.view_message_left{
+	margin: 18px 13px 18px 0;
+	float: left;
+}
+.view_message_left img{
+	width:40px;
+	height: 40px;
+}
+.view_message_middle{
+	margin-top: 16px;
+	float: left;
+	font-size: 12px;
+}
+.view_message_middle h1{
+	margin-bottom:7px;
+	font-size:16px ;
+	font-weight: 800;
+}
+.view_message_right{
+	float: right;
+	margin-top: 30px;
+}
+.view_message_right img{
+	width: 55px;
+	height: 24px;
+}
+.view_list{
+	height: 310px;
+}
+.view_list .view_list_name{
+	margin: 10px 13px 0 0;
+}
+.view_list ul{
+	height: 270px;
+	overflow-y: auto;
+}
+.view_list ul li{
+	height: 100px;
+	padding: 13px  17px 0 0 ;
+	border-bottom: 1px solid #ccc;
+}
+.view_list ul li img{
+	float: left;
+	width: 90px;
+	height: 68px;
+	margin-right: 17px;
+}
+.view_list ul li .view_list_message{
+	margin-left: 17px;
+}
+.view_list ul li .view_list_message h3{
+	font-size: 16px;
+	font-weight: 800;
+	margin-bottom: 9px;
+}
+.view_list ul::-webkit-scrollbar {display:none}

@@ -1,0 +1,103 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-活动管理-活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	<style type="text/css">
+		.activeList{width: 1000px;height: auto;margin: 20px auto;}
+		.activeList > li{
+			width: 100px;
+		    height: 50px;
+		    border: 1px solid #ccc;
+		    line-height: 50px;
+		    text-align: center;
+		    float: left;
+		    margin-right: 20px;
+		    margin-bottom: 20px;
+		    cursor: pointer;
+		}
+		.activeList > li:nth-child(8n){
+			margin-right: 0;
+		}
+		.activeChoose{
+			background-color: #007DDB;
+			color: #fff;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>活动管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建活动</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<!--
+        	描述：填写基本信息
+        -->
+		<form class="layui-form layui-form-position layui-form-padding firstPage" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						<div class="shiji">
+							<h1>1</h1>
+							<p>选择活动类型</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						活动设置
+						<div class="shiji">
+							<h1>2</h1>
+							<p>活动设置</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						保存完成
+						<div class="shiji">
+							<h1>3</h1>
+							<p>保存完成</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<ul class="activeList">
+				<li data-id="1">新用户注册</li>
+				<!--<li data-id="2">邀请有礼</li>-->
+				<div style="clear:both;height: 0;overflow:hidden"></div>
+			</ul>
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a class="layui-btn layui-save-btn next" >下一步</a>
+			</div>
+		</form>
+	
+		
+	</section>
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		$($('.course_nr2 li')[0]).find('.shiji').slideDown();
+		var activeId = "";
+		$(".activeList > li").on("click", function(){
+			$(this).addClass("activeChoose").siblings().removeClass("activeChoose")
+			activeId = $(this).attr("data-id")
+		})
+		//下一步
+		$(".next").on("click", function(){
+			if(!activeId){
+				layer.msg('请选择活动类型！', {
+					time: 1500, //1s后自动关闭
+					icon: 2
+				});
+				return;
+			}
+			window.location.href = "/operation/actManagement/registerActive?id=" + activeId;
+		})
+	</script>
+{% endblock %}
+
+
+

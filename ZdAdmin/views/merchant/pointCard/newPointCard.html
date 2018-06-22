@@ -1,0 +1,127 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理--积分卡管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		.layui-form-label {
+			width: 300px;
+		}
+		.save {
+			margin-left: 310px;
+		}
+		.layui-form-item {
+			min-width: 1100px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>积分卡管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">新建积分卡</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection" style="min-width: 1000px; margin-top: 20px;">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*积分卡名称:</label>
+			    <div class="layui-input-inline" style="width: 300px;">
+			        <input type="text" class="layui-input name" placeholder="请输入积分卡名称" style="width: 260px;display: inline-block;margin-right: 5px;">
+			    </div>
+			    <span class="layui-tooltip tooltip-name hide">请输入50字以内名称(限中英数)</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*积分卡额度:</label>
+			    <div class="layui-input-inline" style="width: 300px;">
+			        <input type="text" class="layui-input limit" placeholder="请输入积分卡额度" style="width: 260px;display: inline-block;margin-right: 5px;">
+			    </div>
+			    <span class="layui-tooltip tooltip-limit hide">请输入额度为1-100000000 之内的整数</span>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn" pane="" style="margin-top: 30px;">
+			     <a href="javascript:;" class="layui-btn save">保存</a>
+			     <a href="/merchant/pointCard/pointCardMan" class="layui-btn layui-btn-danger" style="margin-left: 80px;">取消</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript">
+     	layui.use(['element', 'form'], function(){
+     		var $ = layui.jquery;
+     		var flagName = false, flagLimit = false;
+     		//字节长度函数
+     		var reg = /^[A-Za-z0-9\u4e00-\u9fa5]{1,50}$/; // 积分卡名称验证
+     		$(".name").blur(function() {
+     			console.log($(this).val())
+     			if (reg.test($(this).val())) {
+     				$(".tooltip-name").addClass("hide");
+     				flagName = true;
+     			}else{
+     				$(".tooltip-name").removeClass("hide");
+     				flagName = false;
+     			}
+     		})
+     		
+     		var regLimit = /^[1-9][0-9]{0,8}$/; //额度验证
+     		$(".limit").blur(function() {
+     			if (regLimit.test($(this).val())) {
+     				$(".tooltip-limit").addClass("hide");
+     				flagLimit = true;
+     			}else{
+     				$(".tooltip-limit").removeClass("hide");
+     				flagLimit = false;
+     			}
+     		})
+     		
+     		$(".save").on("click",function() {
+     			if( flagName && flagLimit) {
+     				var data = {
+						name: $(".name").val(),
+						score: $(".limit").val(),
+					}
+					layer.confirm('保存后及时生效，是否保存？', {
+					btn: ['确认', '取消'] //按钮
+						}, function() {
+							console.log(data)
+							$.ajax({
+								type: "post",
+								dataType: "json",
+								url: "/admin/scorecard/base/add.do",
+								data:data,
+								beforeSend:beforeSend(),
+								success: function(json) {
+									if(json.message == "成功") {
+										layer.msg('保存成功！', {
+											time: 1000, //1s后自动关闭
+											icon: 1
+										},function(){
+											window.location.href = "/merchant/pointCard/pointCardMan"
+										});
+									}else {
+										layer.msg(json.message, {
+											time: 1500, //1s后自动关闭
+											icon: 2
+										});
+									}
+								},error: function(){
+									layer.msg('保存失败！', {
+										time: 1500, //1s后自动关闭
+										icon: 2
+									});
+								}
+							})
+						})
+     			}else{
+	 				layer.msg("必填项未填写或格式不正确!", {
+							time: 1500, //1s后自动关闭
+							icon: 2
+						});
+					}
+     		})
+     	})
+     </script>
+{% endblock%}

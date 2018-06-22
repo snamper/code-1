@@ -1,0 +1,232 @@
+{% extends "./../../layout.html"%}
+{% block title%}会员管理-会员管理-权益设置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-form-label{min-width: 110px;}
+		.addUserSection{position: relative;}
+		.addUserSection form{margin-left: 0;position: absolute;left: 50%;margin-left: -340px;}
+		.layui-form-label{min-width: 110px;}
+		.fixMember{position: absolute;left: 30px;top: 50px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>会员管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>会员管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">权益设置</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addUserSection">
+		{% if page && page.id  %}
+			<span class="fixMember">*{{data.data.name}}</span>
+		{% endif %}
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			{% if page && page.id  %}
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*等级排序:</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.sort == 0 %}
+			        	<input type="text" placeholder="请输入等级排序" readonly="readonly" disabled="disabled" value="{{data.data.sort}}"  class="layui-input rank">
+			        {% else %}
+			        	<input type="text" placeholder="请输入等级排序" value="{{data.data.sort}}"  class="layui-input rank">
+			        {% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-rank hide">请输入等级排序</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline" style="color:#ccc;min-width: 360px;line-height: 24px;">
+			       数值越高代表等级越高，例如序号为5的排在序号为3的等级之上，0为最低等级，填写整数不可以填写小数
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*等级名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入等级名称" value="{{data.data.name}}"  class="layui-input rankName">
+			    </div>
+			    <span class="layui-tooltip tooltip-rankName hide">请输入等级名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*cpm广告上限:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入cpm广告上限" value="{{data.data.cpmWatchCeil}}"  class="layui-input numLimit">			        
+			    </div>
+			    <span class="layui-tooltip tooltip-numLimit hide">请输入cpm广告上限</span>
+			</div>
+			<!--<div class="layui-form-item">
+			    <label class="layui-form-label">*三方dsp数量:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  name="dspNum"   placeholder="请输入三方dsp数量"  class="layui-input dspNum">
+			    </div>
+			    <span class="layui-tooltip tooltip-dspNum hide">请输入三方dsp数量</span>
+			</div>-->
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*购买折扣:</label>
+			    <div class="layui-input-inline layui-input-width" style="width: 270px;">
+			    	<input type="text" name="discount"  placeholder="请输入购买折扣" value="{{data.data.discount}}" style="width: 240px;float: left;" class="layui-input discount">
+			        <span style="line-height: 38px;margin-left: 10px;">%</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-discount hide">请输入购买折扣</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline layui-input-width" style="width: 310px;color: #ccc;line-height: 24px;">
+			        购买折扣比例，例如：商品价格为100积分，设置为15那么用户需要消费的15积分购买这个商品。
+			    </div>
+			</div>
+			
+			<div class="layui-form-item exchange_goods" data-type="{{data.data.specialProductAuthority}}">
+			    <label class="layui-form-label"> *特价商品兑换:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="exchange" style="width: 290px;">
+			   		
+		        	{% if data.data.specialProductAuthority == 0 %}
+				        <input type="radio" name="exchange" value="0" checked="checked" lay-filter="exchange" title="不支持兑换" >
+						<input type="radio" name="exchange" value="1" lay-filter="exchange" title="可以兑换特价商品">
+					{% else %}
+						 <input type="radio" name="exchange" value="0"  lay-filter="exchange" title="不支持兑换" >
+						<input type="radio" name="exchange" value="1" checked="checked" lay-filter="exchange" title="可以兑换特价商品">
+					{% endif %}
+			   		
+			  </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*抽奖次数:</label>
+			    <div class="layui-input-inline">
+				    <a class="layui-btn layui-btn-primary layui-btn-small cutDrawBtn"><i class="layui-icon">-</i></a>
+				   	<input type="text" class="drawNumInpt" value="{{data.data.drawCount}}">
+				    <a class="layui-btn layui-btn-primary layui-btn-small addDrawBtn"><i class="layui-icon">+</i></a>
+				</div>
+				<span class="layui-tooltip tooltip-draw"></span>
+			</div>
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*所需成长值:</label>
+			    <div class="layui-input-inline layui-input-width">
+			    	{% if data.data.sort == 0 %}
+			        	<input type="text"  placeholder="请输入所需成长值" disabled="disabled" readonly="readonly" value="{{data.data.growthValue}}" class="layui-input growCode">
+			        {% else %}
+			        	<input type="text"  placeholder="请输入所需成长值" value="{{data.data.growthValue}}" class="layui-input growCode">
+			        {% endif %}
+			        
+			    </div>
+			    <span class="layui-tooltip tooltip-growCode hide">请输入所需成长值</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*购买积分价格:</label>
+			    <div class="layui-input-inline layui-input-width">
+			    	{% if data.data.sort == 0 %}
+			        	<input type="text"  placeholder="请输入购买积分价格" readonly="readonly" disabled="disabled" value="{{data.data.integral}}" class="layui-input code">
+			        {% else %}
+			        	<input type="text"  placeholder="请输入购买积分价格" value="{{data.data.integral}}" class="layui-input code">
+			        {% endif %}
+			        
+			    </div>
+			    <span class="layui-tooltip tooltip-code hide">请输入购买积分价格</span>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a data-id="{{data.data.id}}" data-url="/admin/vip/rank/info/update.do" data-source="edit" class="layui-btn layui-save-btn saveMember" >保存</a>
+			    <a  class="layui-btn" href="/operation/memberManagement">返回</a>
+			</div>
+			<div style="min-height: 600px;max-height: 1200px;"></div>
+			
+			{% else %}
+			
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*等级排序:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入等级排序"  class="layui-input rank">
+			    </div>
+			    <span class="layui-tooltip tooltip-rank hide">请输入等级排序</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			     <div class="layui-input-inline" style="color:#ccc;min-width: 360px;line-height: 24px;">
+			       数值越高代表等级越高，例如序号为5的排在序号为3的等级之上，0为最低等级，填写整数不可以填写小数
+			    </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*等级名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入等级名称"  class="layui-input rankName">
+			    </div>
+			    <span class="layui-tooltip tooltip-rankName hide">请输入等级名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*cpm广告上限:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" placeholder="请输入cpm广告上限"  class="layui-input numLimit">
+			    </div>
+			    <span class="layui-tooltip tooltip-numLimit hide">请输入cpm广告上限</span>
+			</div>
+			<!--<div class="layui-form-item">
+			    <label class="layui-form-label">*三方dsp数量:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  name="dspNum"   placeholder="请输入三方dsp数量"  class="layui-input dspNum">
+			    </div>
+			    <span class="layui-tooltip tooltip-dspNum hide">请输入三方dsp数量</span>
+			</div>-->
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*购买折扣:</label>
+			   <div class="layui-input-inline layui-input-width" style="width: 270px;">
+			        <input type="text" name="discount"  placeholder="请输入购买折扣" style="width: 240px;float: left;" class="layui-input discount">
+			        <span style="line-height: 38px;margin-left: 10px;">%</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-discount hide">请输入购买折扣</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label"></label>
+			    <div class="layui-input-inline layui-input-width" style="width: 310px;color: #ccc;line-height: 24px;">
+			        购买折扣比例，例如：商品价格为100积分，设置为15那么用户需要消费的15积分购买这个商品。
+			    </div>
+			</div>
+			<div class="layui-form-item exchange_goods" >
+			    <label class="layui-form-label"> *特价商品兑换:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="exchange" style="width: 290px;">
+			        <input type="radio" name="exchange" value="0" checked="checked" lay-filter="exchange" title="不支持兑换" >
+					<input type="radio" name="exchange" value="1" lay-filter="exchange" title="可以兑换特价商品">
+			  </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*抽奖次数:</label>
+			    <div class="layui-input-inline">
+				    <a class="layui-btn layui-btn-primary layui-btn-small cutDrawBtn"><i class="layui-icon">-</i></a>
+				   	<input type="text" class="drawNumInpt">
+				    <a class="layui-btn layui-btn-primary layui-btn-small addDrawBtn"><i class="layui-icon">+</i></a>
+				</div>
+				<span class="layui-tooltip tooltip-draw"></span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*所需成长值:</label>
+			    <div class="layui-input-inline layui-input-width">
+			        <input type="text"  placeholder="请输入所需成长值" class="layui-input growCode">
+			    </div>
+			    <span class="layui-tooltip tooltip-growCode hide">请输入所需成长值</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*购买积分价格:</label>
+			    <div class="layui-input-inline layui-input-width">
+			        <input type="text"  placeholder="请输入购买积分价格" class="layui-input code">
+			    </div>
+			    <span class="layui-tooltip tooltip-code hide">请输入购买积分价格</span>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  data-url="/admin/vip/rank/info/save.do" data-source="edit" class="layui-btn layui-save-btn saveMember" >保存</a>
+			    <a  class="layui-btn" href="/operation/memberManagement">返回</a>
+			</div>
+			<div style="min-height: 600px;max-height: 1200px;"></div>
+			{% endif %}
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/memberManagement/equitySet.js"></script>
+{% endblock %}
+

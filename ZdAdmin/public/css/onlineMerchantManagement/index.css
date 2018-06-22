@@ -1,0 +1,49 @@
+/*
+ *商家管理-线上商户管理
+ */
+#sec1{
+	width: 100%;
+}
+#sec1 .sec1ContTop{
+	padding: 10px 0 10px 35px;
+	border-bottom: 1px solid #ccc;
+}
+.layui-form-item .layui-input-size{
+	width: 300px;
+}
+.layui-form-position{
+	position: relative;
+}
+.layui-form-referBtn{
+	display: inline-block;
+	position: absolute;
+	right: 20px;
+	top: 95px;
+}
+
+/*商家管理-线上商户管理-新建商户*/
+.site-demo-upload img{
+	display: inline-block;
+    width: 200px;
+    height: 200px;
+}
+.layui-form .layui-form-item .layui-input-width{
+	width: 500px;
+}
+.layui-form.layui-form-padding{
+	padding: 30px 0 0 30px;
+}
+.newtenantSection .layui-form-saveCloseBtn{
+    padding: 20px 0 30px 110px;
+}
+.newtenantSection .table-width-left{
+	width: 98%;
+}
+.newtenantSection .input-hint{
+	padding-left: 10px;
+	color: #b9b7b7;
+}
+/*编辑商户*/
+.newtenantSection .layui-upload-button{
+	top: -80px;
+}

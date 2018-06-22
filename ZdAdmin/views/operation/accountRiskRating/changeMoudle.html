@@ -1,0 +1,86 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--帐号风险管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>综合评分风险管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">更改模型</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+
+
+<div class="main" style="min-width: 1000px;">
+	
+
+     <table class="layui-table table-width sortInputSize" style="width:700px; float: left;" frame=void>
+	     <tr>
+	     	<th>风险等级</th>
+	     	<th>分段</th>
+	     	<th>监测周期/天</th>
+	     </tr>
+         <tbody id="htmlWrap">
+        	<tr>
+        		<td>无风险</td>
+        		<td>
+					<input type="text" name="text" class="layui-input input-inline-num noRiskLow" value="0" disabled autocomplete="off">
+					<div class="layui-input-inline input-inline-section"> <=  分段  < </div>			
+					<input type="text" name="text" class="layui-input input-inline-num noRiskHigh" value="{{data.data.riskFreeRangeEnd}}" autocomplete="off">
+        		</td>
+        		<td>
+					<a href="javascript:;" class="layui-btn layui-btn-primary reduceBtn reduce-add">－</a>
+					<input type="text" name="text" class="layui-input input-inline-date noRiskDate" value="{{data.data.riskFreeDetectCycle}}" autocomplete="off">
+					<a href="javascript:;" class="layui-btn layui-btn-primary addBtn reduce-add">＋</a><span>天</span>
+        	</td>
+        	</tr>
+        
+        	<tr>
+        		<td>低风险</td>
+        		<td>
+					<input type="text" name="text" class="layui-input input-inline-num noRiskHigh" autocomplete="off" value="{{data.data.riskFreeRangeEnd}}">
+					<div class="layui-input-inline input-inline-section"> <=  分段  < </div>			
+					<input type="text" name="text" class="layui-input input-inline-num lowRiskHigh" autocomplete="off" value="{{data.data.lowRiskRangeEnd}}">
+        		</td>
+        		<td>
+        			<a href="javascript:;" class="layui-btn layui-btn-primary reduceBtn reduce-add">－</a>
+					<input type="text" name="text" class="layui-input input-inline-date lowRiskDate" value="{{data.data.lowRiskDetectCycle}}" autocomplete="off">
+					<a href="javascript:;" class="layui-btn layui-btn-primary addBtn reduce-add">＋</a><span>天</span>
+        		</td>
+        	</tr>
+        	
+        	<tr>
+        		<td>高风险</td>
+        		<td>
+        			
+					<input type="text" name="text" class="layui-input input-inline-num lowRiskHigh" autocomplete="off"  value="{{data.data.lowRiskRangeEnd}}">
+					<div class="layui-input-inline input-inline-section"> <=  分段  <= </div>			
+					<input type="text" name="text" class="layui-input input-inline-num highRiskHigh" value="100" autocomplete="off" disabled>
+        		</td>
+        		<td>
+        			<a href="javascript:;" class="layui-btn layui-btn-primary reduceBtn reduce-add">－</a>
+					<input type="text" name="text" class="layui-input input-inline-date highRiskDate" value="{{data.data.highRiskDetectCycle}}" autocomplete="off">
+					<a href="javascript:;" class="layui-btn layui-btn-primary addBtn reduce-add">＋</a><span>天</span>
+        		</td>
+        	</tr>
+		 </tbody>	
+	 </table>	
+	 <div class="changeMoudleBox">
+	 	<div class="noRisInfo info"></div>
+	 	<div class="lowRisInfo info"></div>
+	 	<div class="highRisInfo info"></div>
+	 </div>
+	 <div class="layui-form-item riskMoudle">
+	 	<a href="javascript:;" class="layui-btn changeConfigSure">保存</a>
+	 	<a href="/operation/accountRiskRating/colligate" class="layui-btn">返回</a>
+	 </div>
+</div>
+{% endblock %}
+{% block layui%}
+	<script type="text/javascript" src="/controllers/operation/accountRisksManagement/changeMoudle.js"></script>
+{% endblock%}

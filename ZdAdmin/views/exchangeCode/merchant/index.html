@@ -1,0 +1,91 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-消息中心-站内信{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>积分互换管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">商家管理</li>
+	    <a class="layui-btn apply" style="float:right;margin-right:10px;">应用生效</a>
+		<a href="/exchangeCode/platform/merchantManager" class="layui-btn" style="float:right;margin-right:10px;">创建商家</a>
+	
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商家积分:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.name %}
+					 		<input type="text" name="name" value={{unescape(page.name)}}  autocomplete="off" class="layui-input name">
+					 	{% else %}
+					 		<input type="text"  name="name"   autocomplete="off" class="layui-input name">
+					 	{% endif %}	
+				    </div>
+				    
+				</div>
+				
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="">
+						<a href="javascript:;" class="query" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>商家积分</th>
+		            <th>logo</th>
+		            <th>兑换比例</th>
+		            <th>兑换说明</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.swap_data.datas%}
+			    	<tr>
+			    		<td>{{page.pNo|sortNum(loop.index)}}</td>
+			    		<td>{{item.pointName}}</td>
+			    		<td>
+			    			{% if item.logo %}
+			    				<img src="{{item.logo}}" alt="" style="max-width: 100px;" />
+			    			{% endif %}
+			    		</td>
+			    		<td>
+			    			{{item.selfProportion}}:{{item.platformProportion}}
+			    		</td>
+			    		<td title="{{item.instructions}}">{{item.instructions  | hideFlow(100)}}</td>
+			    		<td>
+			    			<a href="/exchangeCode/platform/editmerchant?id={{item.id}}&status={{item.status}}&type={{item.type}}" class=" layui-btn">编辑</a>
+			    		</td>
+			    	</tr>
+		    	{% endfor%}
+		    	
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.swap_data.pageNo}} data-page={{data.data.swap_data.totalPage}} data-page-size={{data.data.swap_data.pageSize}}></div>		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/exchangeCode/merchant/index.js"></script>
+{% endblock %}
+
+

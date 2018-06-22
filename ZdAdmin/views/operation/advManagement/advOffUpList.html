@@ -1,0 +1,356 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--广告管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/advPreviewH5.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li class="arrow-icon">广告管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">上下架管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <form class="layui-form" action="">
+	 	<div class="tabChange">
+		 	<div class="layui-tab">
+				<ul data-status="0" class="layui-tab-title dataActiveUl">
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "全部" %}
+				    			{% if !page.status || page.status == '' || page.status == '0' %}
+								<li data-status="0" class="layui-this">全部</li>
+								{% else %}
+								<li data-status="0">全部</li>
+								{% endif %}
+				    		{% elseif unescape(code.name) == "待上架" %}
+				    			{% if page.status == '5' %}
+								<li data-status="5" class="layui-this">待上架</li>
+								{% else %}
+								<li data-status="5">待上架</li>
+								{% endif %}
+			    			{% elseif unescape(code.name) == "已上架" %}
+				    			{% if page.status == '7' %}
+								<li data-status="7" class="layui-this">已上架</li>
+								{% else %}
+								<li data-status="7">已上架</li>
+								{% endif %}
+			    			{% elseif unescape(code.name) == "已下架" %}
+				    			{% if page.status == '9' %}
+								<li data-status="9" class="layui-this">已下架</li>
+								{% else %}
+								<li data-status="9">已下架</li>
+								{% endif %}
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</ul>
+			</div>
+		</div>
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">广告文案：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.name %}
+					<input type="text" name="title" id="advShortName" lay-verify="text" autocomplete="off" class="layui-input" value="{{page.name}}">
+					{% else %}
+					<input type="text" name="title" id="advShortName" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>广告文案</th>
+	     	<th>广告主</th>
+	     	<th>投放类型</th>
+	     	<th>目标量</th>
+	     	<th>投放金额(元)</th>
+	     	<th>广告主价格(元)</th>
+	     	<th>广告列封面图</th>
+	     	<th>时长</th>
+	     	<th>视频链接</th>
+	     	{% if page.status == '5' %}
+	     	<th>设置时间</th>
+	     	<th>排序号</th>
+	     	<th>推荐位置</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if page.status == '7' %}
+	     	<th>上架时间</th>
+	     	<th>排序号</th>
+	     	<th>推荐位置</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if page.status == '9' %}
+	     	<th>下架时间</th>
+	     	<th>排序号</th>
+	     	<th>推荐位置</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     	{% if !page.status || page.status == '' %}
+	     	<th>上架时间</th>
+	     	<th>状态</th>
+	     	<th>排序号</th>
+	     	<th>推荐位置</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.datas %}
+         	<tr>
+         		<td><a class="textLinks" href="/operation/advManagement/showAdvDetailt?id={{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	{% if lis.tAdvertiserName %}
+			 	<td>{{lis.tAdvertiserName}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.deliveryType == '1' %}
+			 	<td>CPM视频</td>
+			 	{% elseif lis.deliveryType == '2' %}
+			 	<td>CPC</td>
+			 	{% elseif lis.deliveryType == '3' %}
+			 	<td>CPM</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.targetNumber %}
+			 	<td>{{lis.targetNumber}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.amount %}
+			 	<td>{{lis.amount}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.advertiserUnitPrice %}
+			 	<td>{{lis.advertiserUnitPrice}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	<td><img src="{{lis.adHomepage}}" class="imgSize"/></td>
+			 	<td>{{lis.adLength|convertTime}}</td>
+			 	<td class="contTitle" title="{{lis.mobileVersionUrl}}"><span class="limitText">{{lis.mobileVersionUrl}}</span></td>
+				{% if page.status == "5" && lis.status == "5" %}
+			 	<td>
+		 		{% if lis.cpmSetTime %}
+			 		{{lis.cpmSetTime}}
+		 		{% else %}
+		 			--
+		 		{% endif %}
+			 	</td>
+			 	{% if lis.showInHomePage %}
+			 		<td>{{lis.homePageSort}}</td>
+			 		<td>首页</td>
+			 	{% else %}
+			 		{% if lis.showInChannel && lis.channelSort %}
+			 		<td>{{lis.channelSort}}</td>
+			 		<td>频道页</td>
+			 		{% else %}
+			 		<td>--</td>
+			 		<td>频道页</td>
+			 		{% endif %}
+			 	{% endif %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/advManagement/editorIntegralPut?id={{lis.id}}">编辑</a>
+			    			{% elseif unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" href="javascript:;" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if page.status == "7" && lis.status == "7" %}
+				<td>{{lis.putawayTime}}</td>
+				{% if lis.showInHomePage %}
+			 		<td>{{lis.homePageSort}}</td>
+			 		<td>首页</td>
+			 	{% else %}
+			 		{% if lis.showInChannel && lis.channelSort %}
+			 		<td>{{lis.channelSort}}</td>
+			 		<td>频道页</td>
+			 		{% else %}
+			 		<td>--</td>
+			 		<td>频道页</td>
+			 		{% endif %}
+			 	{% endif %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "下架" %}
+				    			<a class="layui-btn layui-btn-normal toOffFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">下架</a>
+			    			{% elseif unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" href="javascript:;" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if page.status == "9" && lis.status == "9" %}
+			 	<td>{{lis.soldOutTime}}</td>
+				{% if lis.showInHomePage %}
+			 		<td>{{lis.homePageSort}}</td>
+			 		<td>首页</td>
+			 	{% else %}
+			 		{% if lis.showInChannel && lis.channelSort %}
+			 		<td>{{lis.channelSort}}</td>
+			 		<td>频道页</td>
+			 		{% else %}
+			 		<td>--</td>
+			 		<td>频道页</td>
+			 		{% endif %}
+			 	{% endif %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" href="javascript:;" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if !page.status || page.status == '' %}
+				{% if lis.status == "5" %}
+				<td>
+		 		{% if lis.cpmSetTime %}
+			 		{{lis.cpmSetTime}}
+		 		{% else %}
+		 			--
+		 		{% endif %}
+			 	</td>
+				<td>待上架</td>
+				{% endif %}
+				{% if lis.status == "7" %}
+				<td>{{lis.putawayTime}}</td>
+				<td>已上架</td>
+				{% endif %}
+				{% if lis.status == "9" %}
+				<td>{{lis.soldOutTime}}</td>
+				<td>已下架</td>
+				{% endif %}
+				{% if lis.showInHomePage %}
+			 		<td>{{lis.homePageSort}}</td>
+			 		<td>首页</td>
+			 	{% else %}
+			 		{% if lis.showInChannel && lis.channelSort %}
+			 		<td>{{lis.channelSort}}</td>
+			 		<td>频道页</td>
+			 		{% else %}
+			 		<td>--</td>
+			 		<td>频道页</td>
+			 		{% endif %}
+			 	{% endif %}
+			 	{% if lis.status == "5" %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "上架" %}
+				    			<a class="layui-btn layui-btn-normal toUpFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">上架</a>
+			    			{% elseif unescape(code.name) == "编辑" %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/advManagement/editorIntegralPut?id={{lis.id}}">编辑</a>
+			    			{% elseif unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if lis.status == "7" %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "下架" %}
+				    			<a class="layui-btn layui-btn-normal toOffFlexPic" data-id="{{lis.id}}" data-sort="{{lis.sort}}">下架</a>
+			    			{% elseif unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" href="javascript:;" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% if lis.status == "9" %}
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+			    			{% if unescape(code.name) == "预览" %}
+				    			<a class="layui-btn layui-btn-danger previewH5Btn" href="javascript:;" data-id="{{lis.id}}">预览</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+				{% endif %}
+				{% endif %}
+			</tr>
+         	{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>
+     <section class="H5PreviewBox hide">
+	 	<div class="coverScreen"></div>
+	    <div class="adverAppView">
+	    	<div class="videoBox"></div>
+			<div class="view_content">
+				<div class="view_title">
+					<h1 class="view_title_text"></h1>
+					<div>
+						<span class="view_time"></span>
+						<span><img src="/images/view/view6.png"/><span class="playNum"></span></span>
+					</div>
+				</div>
+				<div class="view_list">
+					<div class="view_list_name">相关视频推荐</div>
+					<ul class="view_item_box">
+					</ul>
+				</div>
+			</div>
+			<ul class="view_bottom">
+				<li><img src="/images/view/view1.png"/></li>
+				<li><img src="/images/view/view2.png"/></li>
+				<li><img src="/images/view/view3.png"/></li>
+				<li><img src="/images/view/view4.png"/></li>
+				<li><img src="/images/view/view5.png"/></li>
+			</ul>
+		</div>
+		<span class="closePreview">X</span>
+	 </section>
+    {% else %}
+	    <div style="text-align:center">{{data.message}}</div>
+	{% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/advManagement/advOffUpList.js"></script>
+{% endblock%}

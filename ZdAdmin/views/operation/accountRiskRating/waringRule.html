@@ -1,0 +1,174 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-账号风险管理-注册送积分{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" href="/css/operation/task.css" />-->
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>账号风险管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">报警规则设置</li>
+	     <a class="layui-btn openBox" style="float:right;margin-right:60px;">新增联系人</a>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">1.</label>
+			    <div class="layui-input-inline" style="width: 720px;">
+			    	{% for item in data.data %}
+			    	{% if item.alertType == 1 %}
+			    	每 30分钟检测当前时间前 <input type="text" class="layui-input timeSlot" data-id="{{item.id}}" data-alertType="{{item.alertType}}" value="{{item.timeSlot}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	分钟的注册用户数，如果超过 <input type="text" class="layui-input alertLimit" value="{{item.alertLimit}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	个注册用户，则进行报警。
+			    	{% endif %}
+			    	{% endfor %}
+			    </div>
+			    <a data-index="0" class="layui-btn layui-save-btn save">保存</a>
+			    <span class="layui-tooltip tooltip-tips hide">只能输入正整数</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">2.</label>
+			    <div class="layui-input-inline" style="width: 720px;">
+			    	{% for item in data.data %}
+			    	{% if item.alertType == 2 %}
+			    	每 30分钟检测当前时间前 <input type="text" class="layui-input timeSlot" value="{{item.timeSlot}}" data-id="{{item.id}}" data-alertType="{{item.alertType}}" style="width: 50px;padding: 0;display: inline-block;">
+			    	分钟的主动登陆用户，如果超过 <input type="text" class="layui-input alertLimit" value="{{item.alertLimit}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	个主动登陆用户，则进行报警。
+			    	{% endif %}
+			    	{% endfor %}
+			    </div>
+			    <a data-index="1" class="layui-btn layui-save-btn save">保存</a>
+			    <span class="layui-tooltip tooltip-tips hide">只能输入正整数</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">3.</label>
+			    <div class="layui-input-inline" style="width: 800px;">
+			    	{% for item in data.data %}
+			    	{% if item.alertType == 3 %}
+					每 30分钟检测当前时间前 <input type="text" class="layui-input timeSlot" value="{{item.timeSlot}}" data-id="{{item.id}}" data-alertType="{{item.alertType}}" style="width: 50px;padding: 0;display: inline-block;"> 
+			    	分钟的各个商品的兑换数量，如果某一商品兑换次数超过 <input type="text" class="layui-input alertLimit" value="{{item.alertLimit}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	个，则进行报警。
+			    	{% endif %}
+			    	{% endfor %}
+			    </div>
+			    <a  data-index="2" class="layui-btn layui-save-btn save">保存</a>
+			    <span class="layui-tooltip tooltip-tips hide">只能输入正整数</span>
+			</div>
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">4.</label>
+			    <div class="layui-input-inline" style="width: 820px;">
+			    	{% for item in data.data %}
+			    	{% if item.alertType == 4 %}
+			    	每 30分钟检测当前时间前 <input type="text" class="layui-input timeSlot" value="{{item.timeSlot}}" data-id="{{item.id}}" data-alertType="{{item.alertType}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	分钟全局通过邀请好友发放的积分数，如果发放积分数超过 <input type="text" class="layui-input alertLimit" value="{{item.alertLimit}}"  style="width: 50px;padding: 0;display: inline-block;"> 
+			    	积分，则进行报警。
+			    	{% endif %}
+			    	{% endfor %}
+			    </div>
+			    <a data-index="3" class="layui-btn layui-save-btn save">保存</a>
+			    <span class="layui-tooltip tooltip-tips hide">只能输入正整数</span>
+			</div>
+			<div style="height: 360px;">
+				<table class="layui-table table-width" style="width: 400px;float: left;margin-left: 80px;">
+			    <thead>
+			        <tr>
+			            <th>邮箱号</th>
+			            <th>业务部门</th>
+			            <th>操作</th>
+			        </tr>
+			    </thead>
+			    <tbody id="resourceForm" data-list="{{tableList | json_encode}}">
+			    	{% for item in tableList.data.datas %}
+			    	{% if loop.index <= 5 %}
+			    	<tr>
+						<td>{{item.email}}</td>
+						<td>
+							{% if item.mailType == 1 %}
+								运营
+							{% elseif item.mailType == 2 %}
+								产品
+							{% elseif item.mailType == 3 %}
+								开发
+							{% endif %}
+						</td>
+						<td>
+							<a data-id="{{item.id}}" class="layui-btn layui-btn-danger delete">删除</a>
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+			    </tbody>
+			</table>
+			{% if tableList.data.datas.length > 5 %}
+			<table class="layui-table table-width" style="width: 400px;float: left;margin-left: 40px;">
+			    <thead>
+			        <tr>
+			            <th>邮箱号</th>
+			            <th>业务部门</th>
+			            <th>操作</th>
+			        </tr>
+			    </thead>
+			    <tbody id="resourceForm">
+			    	{% for item in tableList.data.datas %}
+			    	{% if loop.index > 5 %}
+			    	<tr>
+						<td>{{item.email}}</td>
+						<td>
+							{% if item.mailType == 1 %}
+								运营
+							{% elseif item.mailType == 2 %}
+								产品
+							{% elseif item.mailType == 3 %}
+								开发
+							{% endif %}
+						</td>
+						<td>
+							<a data-id="{{item.id}}" class="layui-btn layui-btn-danger delete">删除</a>
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+			    </tbody>
+			</table>
+			{% endif %}
+			</div>
+			<div  id="paging" data-page-no={{tableList.data.pageNo}} data-page={{tableList.data.totalPage}} data-page-size={{tableList.data.pageSize}}></div>	
+			
+			<div id="addRules" class="addRules hide" style="margin: 20px 0 0 20px;">
+				<div class="layui-form-item resourceCode">
+				    <label class="layui-form-label">*  邮箱:</label>
+				    <div class="layui-input-inline">
+				        <input type="text" name="email" placeholder="请输入邮箱"  class="layui-input email">
+				    </div>
+				    <span class="layui-tooltip tooltip-email hide">请输入正确的邮箱号</span>
+				</div>
+				<div class="layui-form-item" >
+				    <label class="layui-form-label">*业务部门:</label>
+				    <div class="layui-input-inline layui-input-checked" lay-filter="mailType"  style="width: 246px;">
+				        <input type="radio" name="mailType" value="1" title="运营" lay-filter="mailType" checked="checked"/>			
+						<input type="radio" name="mailType" value="2" title="产品" lay-filter="mailType"/>	
+						<input type="radio" name="mailType" value="3" title="开发" lay-filter="mailType" />	
+				   </div>
+				</div>
+				<div class="layui-form-saveCloseBtn" style="margin: 20px 0 0 100px;">
+				    <a  class="layui-btn layui-save-btn addRule">保存</a>
+				    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+				</div>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script src="/controllers/operation/accountRisksManagement/waringRule.js" type="text/javascript" charset="utf-8"></script>
+	
+{% endblock %}
+
+

@@ -1,0 +1,148 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/client/index.css" />
+	<link rel="stylesheet" href="/css/operation/actManagement.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>活动管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">活动详情</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="activeDetail">
+		<div class="sec1ContMiddle">
+			<div class="channel-detail-main">
+				<label class="layui-form-label" style="padding-left: 20px; width: 100px;">*活动名称:</label>
+				<span class="layui-form-label">{{data.data.spreadEvent.name}}</span>
+			</div>
+			<div class="channel-detail-main">
+				<label class="layui-form-label">*邀请用户获取积分:</label>
+				<span class="layui-form-label">{{data.data.spreadEvent.inviteScore}}</span>
+			</div>
+			<div class="channel-detail-main">
+				<label class="layui-form-label">邀请用户数量限制:</label>
+				{% if data.data.spreadEvent.inviteLimit %}
+					<span class="layui-form-label">{{data.data.spreadEvent.inviteLimit}}</span>
+				{% else %}
+					<span class="layui-form-label">无限制</span>
+				{% endif %}
+			</div>
+		</div>	
+		<div class="layui-input-inline act-chart-main">
+	
+				<div class="act-chart act-chart-first">
+					<div class="circular">{{data.data.allData.all_scored}}</div>
+					<p>发放积分</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.allData.activated_count}}</div>
+					<p>激活用户</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.allData.registed_count}}</div>
+					<p>注册用户</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.allData.nextday_remained_count}}</div>
+					<p>次日留存</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.allData.nextweek_remained_count}}</div>
+					<p>七日留存</p>
+				</div>
+		</div>
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>分享用户</th>
+		            <th>用户分享次数</th>
+		            <th>H5浏览次数</th>
+		            <th>邀请用户-朋友圈</th>
+		            <th>邀请用户-微信好友</th>
+		            <!--<th>邀请用户-微博好友</th>-->
+		            <th>邀请用户-复制链接</th>
+		            <th>邀请用户数</th>
+		            <th>次日留存</th>
+		            <th>七日留存</th>
+		        </tr>
+		    </thead>
+		   
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.page.datas %}
+			    	<tr>
+			    		<td>{{page.pNo|sortNum(loop.index)}}</td>	
+			    		<td>{{item.tel_num}}</td>
+			    		<td>{{item.wxZone_count+item.wx_count+item.url_count}}</td>
+			    		<td>{{item.url_click_count}}</td>
+			    		<td>{{item.wxZone_count}}</td>
+			    		<td>{{item.wx_count}}</td> 
+			    		<!--<td>{{item.wb_count}}</td>-->
+			    		<td>{{item.url_count}}</td>
+			    		<td>{{item.activated_count}}</td>
+			    		<td>{{item.nextday_remained_count}}</td>
+			    		<td>{{item.nextweek_remained_count}}</td>
+			    		
+			    	</tr>
+		    	{% endfor%}
+		    	
+		    </tbody>
+		    
+		</table>
+		<div id="paging" data-page-no={{data.data.page.pageNo}} data-page={{data.data.page.totalRows}} data-page-size={{data.data.page.pageSize}}></div>	
+	</section>
+	
+	
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		layui.use(['element', 'paging'], function(){
+			var pageNo = $("#paging").attr('data-page-no') ? $("#paging").attr('data-page-no') : "1";
+			var pageSize = $("#paging").attr('data-page-size') ? $("#paging").attr('data-page-size') : "10";
+			var pages = Math.ceil($("#paging").attr('data-page') / pageSize);
+			var search = function() {
+				var data = {
+					spreadEventId: getQueryString("spreadEventId"),
+					pageNo:$("#paging").attr("data-page-no"),
+					pageSize:$("#paging").attr("data-page-size")
+				};
+				window.location.search="?spreadEventId="+escape(data.spreadEventId)+"&pNo="+escape(data.pageNo)+"&pSize="+escape(data.pageSize);
+			}
+			var paging = layui.laypage({
+				pages: pages, //分页数   总条数%单页显示条数  向上取整
+				cont: "paging", //组件容器
+				curr: pageNo, //当前页
+				groups: pageSize, //连续分页数
+				jump: function(obj, first) {
+					//得到了当前页，用于向服务端请求对应数据
+					//var curr = obj.curr;
+					if(!first) {
+						$("#paging").attr('data-page-no',obj.curr)
+						search()
+						
+					}
+				}
+			});
+		})
+	</script>
+{% endblock %}
+

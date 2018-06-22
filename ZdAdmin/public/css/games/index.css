@@ -1,0 +1,11 @@
+/*小游戏管理*/
+/*大转盘管理*/
+.layui-input-inline{line-height:38px;}
+.layui-form-item .txt-impt{display: inline-block;color: red;font-weight: bolder;}
+.noDatas{text-align: center;font-size: 16px;color: #ccc;line-height: 60px;}
+.lisFlBtn{float: right;margin-right: 20px;}
+.lisFlBtn a{display: block;}
+.setPageBtnCenter{text-align: center;}
+#bigDialTbody .bigDialBorder{border: 1px solid #fb2a09;box-shadow: #fb2a09 0px 0px 20px -5px;}
+.ticketsBox .ticketPoint{width: 70%;display: inline-block;}
+.probValBlur{min-width: 120px;}

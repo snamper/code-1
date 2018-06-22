@@ -1,0 +1,11 @@
+.fl{float: left;}
+.fr{float: right;}
+.clearfix{display: block;content: '';clear: both;}
+.handleBox{padding-right: 20px; margin-bottom:0;}
+.layui-form-saveCloseBtn{text-align: center;}
+.layuiRisks .risksNumInpt{vertical-align: middle;width: 35px;height: 26px;}
+.layuiRisks .layui-icon{font-weight: bold;}
+.layuiRisks .risksLisItems{margin-right: 50px;margin-bottom: 25px;}
+.layuiRisks .layui-form-checkbox span{width: 110px;}
+.layuiRisks .layui-btn-group{font-size: 14px;}
+.layuiRisks .layui-btn-primary{border-left: 1px solid #C9C9C9;}

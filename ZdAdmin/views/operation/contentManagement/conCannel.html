@@ -1,0 +1,166 @@
+{% extends "./../../layout.html"%} {% block title%}运营中心--内容管理--内容频道管理{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/contentManagement/index.css" /> 
+<style type="text/css">
+	.layui-form-item .layui-input-inline{width: 250px;}
+	.uploadLogo{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+	    #asImportCode{position:absolute;top:0;left:110px;z-index:100}	
+</style>
+{% endblock %} {%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li>内容管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">内容频道管理</li>
+	{% if menuCodeList %} {% for code in menuCodeList %} {% if unescape(code.name) == "应用设置" %}
+	<a href="javascript:;" class="layui-btn apply" style="float:right;margin-right:60px;">应用设置</a>
+	{% endif %} {% endfor %} {% endif %} {% if menuCodeList %} {% for code in menuCodeList %} {% if unescape(code.name) == "新建频道" %}
+	<a href="javascript:;" data-source="parent" class="layui-btn openBox" style="float:right;margin-right: 10px;">新建频道</a>
+	{% endif %} {% endfor %} {% endif %}
+</ul>
+{%endblock%} {% block content%}
+
+<table class="layui-table table-width sortInputSize">
+	<tr>
+		<th>序号</th>
+		<th>频道名称</th>
+		<th>排序位置</th>
+		<th>内容来源</th>
+		<th>内容类目</th>
+		<th>操作</th>
+	</tr>
+	<tbody id="htmlWrap">
+		{% for item in data.data.datas %}
+		<tr class="parentChannel">
+			<td>{{page.pageNo|sortNum(loop.index)}}</td>
+			<td class="expandIcon">
+				<i class="layui-icon expand" data-menu="{{menuCodeList | json_encode}}" data-id="{{item.id}}" data-name="{{item.name}}" data-sort="{{loop.index0}}" style="font-size: 16px;cursor: pointer;">&#xe623;</i>  
+				{{item.name}}
+			</td>
+			<td>{{item.sort}}</td>
+			<td>
+				{% if item.thirdChannelList &&  item.thirdChannelList.length > 0 %}
+     				{% for item1 in item.thirdChannelList %}
+     					{{item1.name}}
+     					{% if loop.index0 < item.thirdChannelList.length - 1 %}
+     						、
+     					{% endif %}
+     				{% endfor %}
+     			{% else %}
+     				--
+     			{% endif %}
+			</td>
+			<td style="max-width: 200px;">
+				{% if item.thirdContentCategoryList &&  item.thirdContentCategoryList.length > 0 %}
+     				{% for item1 in item.thirdContentCategoryList %}
+     					{% for item2 in item.thirdChannelList %}
+     						{% if item2.code == item1.thirdChannelCode %}
+     							{% set foo = item2.name %}
+     						{% endif %}
+	     				{% endfor %}
+	     				{% if item1.id != "-1" %}
+		     				{{item1.name}}
+		     				{% if foo %}
+		     					({{foo}})
+		     				{% endif %}
+	     					{% if loop.index0 < item.thirdContentCategoryList.length - 1 %}
+	     						、
+	     					{% endif %}
+	     				{% endif %}
+     				{% endfor %}
+     			{% else %}
+     				--
+     			{% endif %}
+			</td>
+			<td>
+				{% if menuCodeList %}
+					{% for code in menuCodeList %}
+						{% if unescape(code.name) == "编辑" %}
+							<a href="javascript:;" class="layui-btn openBox" data-source="parent" data-image="{{item.image}}" data-parentId="{{item.parentId}}" data-id="{{item.id}}" data-message="{{item | json_encode}}">编辑</a>
+						{% elseif unescape(code.name) == "删除" %}
+							<a href="javascript:;" data-id="{{item.id}}" class="layui-btn layui-btn-danger deleteChannel">删除</a>
+						{% elseif unescape(code.name) == "添加新子频道" %}
+							<a  data-parentId="{{item.id}}" class="layui-btn openBox">添加新子频道</a>
+						{% endif %} 
+					{% endfor %} 
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>
+<div class="coverScreen hide"></div>
+<div id="setBox" class="hide">
+	<form action="" class="layui-form ">
+		<div class="layui-form-item canalLayer">
+			<label class="layui-form-label">频道名称</label>
+			<div class="layui-input-inline">
+				<input type="text" name="title" class="layui-input channelName">
+			</div>
+			<span class="layui-tooltip tooltip-channelName hide">请输入频道名称</span>
+		</div>
+		<div class="layui-form-item canalLayer">
+			<label class="layui-form-label">排序位置</label>
+			<div class="layui-input-inline">
+				<input type="text" name="sort" class="layui-input sort">
+			</div>
+			<span class="layui-tooltip tooltip-sort hide">请输入数字排序位置</span>
+		</div>
+		<div class="layui-form-item canalLayerErr" style="text-align: center; color:red">
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">来源渠道</label>
+			<div class="layui-input-inline">
+				<ul class="layui-tab configCategory">
+				
+				</ul>
+			</div>
+			<span class="layui-tooltip tooltip-configCategory hide">请选择来源渠道</span>
+		</div>
+		<div class="layui-form-item editCanalSortErr" style="text-align: center; color:red">
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">来源类目</label>
+			<div class="layui-input-inline">
+				<ul class="layui-tab catSource">
+				
+				</ul>
+			</div>
+			<span class="layui-tooltip tooltip-catSource hide">请选择来源类目</span>
+		</div>
+		<div class="layui-form-item">
+			<form action="" class="layui-form">
+		 		<div class="homeList">
+		 			<div class="homeLable" style="margin-left: 30px;"> 
+						显示平台:				
+					</div>
+					<div class="homeInfo"">
+					    <div class="layui-input-block systemTypeBoxNew" style="line-height: 50px; margin-left: 0;" > 
+					      <input type="checkbox" name="systemType[ios]" lay-skin="primary" lay-filter="systemType" title="ios">
+					      <input type="checkbox" name="systemType[android]"lay-skin="primary" lay-filter="systemType" title="android">
+					    </div> 
+					</div>
+		 		</div>
+		 	</form>
+		</div>
+		<div class="layui-form-item uploadFile" style="position: relative;display: none;" >
+			<label class="layui-form-label">频道图片：</label>
+			<input type="file" name="file" style="width: 30px;height: 30px;" class="layui-upload-images uploadLogo"/>
+			<span class="copyUploadBtn" id="asImportCode" style="display: none;">+</span>
+			<img id="uploadLogoShow"  style="max-width: 50px;position: absolute;left: 110px;top: 0;display: none;cursor: pointer;" src="" alt="" />
+			
+			<span class="layui-tooltip tooltip-image hide" style="margin-left: 130px;">请上传图片</span>
+		</div>
+		<div class="layui-form-item" style="margin-top: 40px;">
+			<div class="layui-input-block layui-canal">
+				<a href="javascript:;" class="layui-btn saveContentMessage">保存</a>
+				<a href="javascript:;" class="layui-btn layui-btn-primary layui-layer-close">关闭</a>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %} {% block layui%}
+<script type="text/javascript" src="/controllers/operation/contentManagement/index.js"></script>
+{% endblock%}

@@ -1,0 +1,233 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<style type="text/css">
+	.layui-form-label{width: 200px;}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>观看积分发放</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">配置积分</li>
+</ul>
+{%endblock%}
+{% block content%} 
+
+ <form class="layui-form dataPlug" action="" style="width: 650px;margin: 30px auto;">
+ 	<div class="layui-form-item" >
+ 		<label class="layui-form-label" >选择日期:</label>
+		<div class="layui-input-inline">
+			{% if page && page.id %}
+				<input value="{{data.data.inputTime.split(' ')[0]}}" class="layui-input inputTime" placeholder="选择日期" readonly="readonly" id="LAY_demorange_e" >
+				<!--<input class="layui-input inputTime" value="{{data.data.inputTime.split(' ')[0]}}" disabled="disabled" placeholder="选择日期" readonly="readonly" >-->
+			{% else %}
+				<input class="layui-input" placeholder="选择日期" readonly="readonly" id="LAY_demorange_e" >
+			{% endif %}
+	        
+	   </div>	
+	   <span class="layui-tooltip tooltip-time hide">请选择日期</span>
+ 	</div>
+ 	<div class="layui-form-item " >
+	    <label class="layui-form-label">计划发放总积分:</label>
+	    <div class="layui-input-inline">
+	    	{% if page && page.id %}
+				<input class="layui-input totalPoint" value="{{data.data.totalPoints}}" placeholder="请输入计划发放总积分">
+			{% else %}
+				<input class="layui-input totalPoint" placeholder="请输入计划发放总积分">
+			{% endif %}
+	        
+	    </div>
+	     <span class="layui-tooltip tooltip-totalPoint hide"></span>
+	</div>
+	<div class="layui-form-item " >
+	    <label class="layui-form-label">单次发放积分范围:</label>
+	    <div class="layui-input-inline" style="width: 260px;">
+	    	{% if page && page.id %}
+				<input class="layui-input bottomPoint" value="{{data.data.oneReleaseMin}}" style="width: 100px;display: inline-block;" placeholder="积分下限"> 
+	        —— <input style="width: 100px;display: inline-block;"  value="{{data.data.oneReleaseMax}}" class="layui-input topPoint" placeholder="积分上限"> 分
+			{% else %}
+				<input class="layui-input bottomPoint" style="width: 100px;display: inline-block;" placeholder="积分下限"> 
+	        —— <input style="width: 100px;display: inline-block;" class="layui-input topPoint" placeholder="积分上限"> 分
+			{% endif %}
+	        
+	    </div>
+	    <span class="layui-tooltip tooltip-pointScope hide"></span>
+	</div>
+ 	<div class="layui-form-item" style="margin-left: 230px;margin-top: 30px;">
+ 		<a class="layui-btn savePoint" data-id="{{page.id}}">保存</a>
+ 		<a class="layui-btn layui-btn-danger" href="/operation/pointMan/videoPoint">返回</a>
+    </div>
+ </form>
+
+{% endblock %}
+{% block layui%}
+	<script type="text/javascript">
+	layui.use(['element','laydate'], function(){
+		var $ = layui.jquery;
+		
+		var end = {
+			min: laydate.now(),
+			istime: true,
+			format: 'YYYY-MM-DD',
+	//		choose: function(datas) {
+	//			start.max = datas; //结束日选好后，重置开始日的最大日期
+	//		}
+		};
+	
+		document.getElementById('LAY_demorange_e').onclick = function() {
+			end.elem = this
+			laydate(end);
+			$(".tooltip-time").hide()
+		}
+	})
+	//保存
+	$(".savePoint").on("click", function(){
+		
+		if(!$("#LAY_demorange_e").val() && !$(".savePoint").attr("data-id")){
+			$(".tooltip-time").show();
+			return;
+		}
+		if(!$(".totalPoint").check().notNull() || !$(".totalPoint").check().isNum() || $(".totalPoint").val() < 0 || $(".totalPoint").val().indexOf(".") > -1){
+			$(".totalPoint").parent().parent().find('.tooltip-totalPoint').html("请输入大于等于0的整数").show();
+			return;
+		}
+		
+		if(!$(".bottomPoint").check().notNull()){
+			$(".bottomPoint").parent().parent().find('.tooltip-pointScope').html("请输入积分下限").show()
+			return;
+		}else{
+			if(!$(this).check().isNum()){
+				$(".bottomPoint").parent().parent().find('.tooltip-pointScope').html("只能输入数字").show()
+				return;
+			}else{
+				if($(".bottomPoint").val() < 0 || $(".bottomPoint").val().indexOf(".") > -1){
+					$(".bottomPoint").parent().parent().find('.tooltip-pointScope').html("只能输入大于等于0的整数").show()
+					return;
+				}else{
+					if($(".topPoint").val() && Number($(".bottomPoint").val()) > Number($(".topPoint").val())){
+						$(".bottomPoint").parent().parent().find('.tooltip-pointScope').html("积分下限不可大于积分上限").show()
+						return;
+					}
+				}
+			}
+		}
+		
+		if(!$(".topPoint").check().notNull()){
+			$(".topPoint").parent().parent().find('.tooltip-pointScope').html("请输入积分上限").show()
+			return;
+		}else{
+			if(!$(".topPoint").check().isNum()){
+				$(".topPoint").parent().parent().find('.tooltip-pointScope').html("只能输入数字").show()
+				return;
+			}else{
+				if($(".topPoint").val() < 0 || $(".topPoint").val().indexOf(".") > -1){
+					$(".topPoint").parent().parent().find('.tooltip-pointScope').html("只能输入大于等于0的整数").show()
+					return;
+				}else{
+					if($(".bottomPoint").val() && Number($(".topPoint").val()) < Number($(".bottomPoint").val())){
+						$(".topPoint").parent().parent().find('.tooltip-pointScope').html("积分上限不可小于积分下限").show()
+						return;
+					}
+				}
+			}
+		}
+		var message = {
+			inputTime:$("#LAY_demorange_e").val(),
+			totalPoints:$(".totalPoint").val(),
+			oneReleaseMin:$(".bottomPoint").val(),
+			oneReleaseMax:$(".topPoint").val()
+		}
+//		return;
+		if($(".savePoint").attr("data-id"))	{
+			var url = '/admin/forward/integral/release/update.do';
+			message.id = $(".savePoint").attr("data-id");
+		}else var url = '/admin/forward/integral/release/save.do';
+		console.log(message)
+		layer.confirm('您确定要保存吗？', {
+			btn: ['确认', '取消'] //按钮
+		}, function() {
+			$.ajax({
+				type: "post",
+				dataType: "json",
+//				contentType: "application/json",
+				url: url,
+				data: message,
+				beforeSend:beforeSend(),
+				success: function(json) {
+					if(json.message == "成功") {
+						layer.msg('保存成功！', {
+							time: 1000, //1s后自动关闭
+							icon: 1
+						},function(){
+							window.location.href = "/operation/pointMan/videoPoint"
+						});
+					}else{
+						layer.msg(json.message)
+					}
+				},
+				error: function() {
+					layer.msg('录入失败！', {
+						time: 1000, //1s后自动关闭
+						icon: 2
+					});
+				}
+			})
+		})
+	})
+	$(".totalPoint").on("blur", function() {
+		var message = ""
+		var _this = this;
+		if(!$(this).check().notNull()){
+			$(_this).parent().parent().find('.tooltip-totalPoint').html("请输入大于等于0的整数").show()
+		}else{
+			if(!$(this).check().isNum()){
+			$(_this).parent().parent().find('.tooltip-totalPoint').html("只能输入数字").show()
+			}else{
+				if($(_this).val() < 0 || $(_this).val().indexOf(".") > -1)
+					$(_this).parent().parent().find('.tooltip-totalPoint').html("只能输入大于等于0的整数").show()
+				else
+					$(_this).parent().parent().find('.tooltip-totalPoint').hide()
+			}
+		}
+	})
+	$(".bottomPoint").on("blur", function() {
+		var _this = this;
+		if(!$(this).check().notNull()){
+			$(_this).parent().parent().find('.tooltip-pointScope').html("请输入积分下限").show()
+		}else{
+			if(!$(this).check().isNum()){
+				$(_this).parent().parent().find('.tooltip-pointScope').html("只能输入数字").show()
+			}else{
+				if($(_this).val() < 0 || $(_this).val().indexOf(".") > -1)
+					$(_this).parent().parent().find('.tooltip-pointScope').html("只能输入大于等于0的整数").show()
+				else{
+					if($(".topPoint").val() && Number($(".bottomPoint").val()) > Number($(".topPoint").val()))
+						$(_this).parent().parent().find('.tooltip-pointScope').html("积分下限不可大于积分上限").show()
+					else
+						$(_this).parent().parent().find('.tooltip-pointScope').hide()
+				}
+			}
+		}
+	})
+	$(".topPoint").on("blur", function() {
+		var _this = this;
+		if(!$(this).check().notNull()){
+			$(_this).parent().parent().find('.tooltip-pointScope').html("请输入积分上限").show()
+		}else{
+			if(!$(this).check().isNum()){
+				$(_this).parent().parent().find('.tooltip-pointScope').html("只能输入数字").show()
+			}else{
+				if($(_this).val() < 0 || $(_this).val().indexOf(".") > -1)
+					$(_this).parent().parent().find('.tooltip-pointScope').html("只能输入大于等于0的整数").show()
+				else{
+					if($(".bottomPoint").val() && Number($(".topPoint").val()) < Number($(".bottomPoint").val()))
+						$(_this).parent().parent().find('.tooltip-pointScope').html("积分上限不可小于积分下限").show()
+					else
+						$(_this).parent().parent().find('.tooltip-pointScope').hide()
+				}
+			}
+		}
+	})
+	</script>
+{% endblock%}
+

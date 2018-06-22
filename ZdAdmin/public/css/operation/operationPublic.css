@@ -1,0 +1,27 @@
+/*标签库管理*/
+.fl{float: left;}
+.fr{float: right;}
+.layui-tab-title .layui-this {font-weight: 800;background-color: #ccc;}
+.labelWidth2{width: 50px;}
+.limitText{width: 300px; margin: 20px auto;}
+.handelBox{padding-left: 100px;}
+.addBtnBox{padding-left: 180px;}
+.couponsCenter .getAutoUseTime{width: 290px;}
+.layui-form .layui-select-icon{position: absolute;right: 10px;top: 0;font-size: 12px;color: #ccc;}
+.selCoupsItem .selCoupsBox .activeThis{background-color: #9e9e9e;}
+.selCoupsItem .selCoupsContItem{position: absolute;top: 40px;left: 0;width: 400px;height: 300px;background:#fff; padding-bottom: 40px;overflow: hidden;
+								box-shadow: 1px 1px 50px rgba(0,0,0,.3);z-index: 111;}
+.selCoupsItem .selCoupsBox{width:387px;height: 100%;overflow: auto;padding: 5px 0 5px 13px;}
+.selCoupsItem .selCoupsBox li{width:175px;height: 38px;border: 1px solid #f1f1f1;margin: 0 10px 10px 0;cursor: pointer;display:block;white-space:nowrap;
+								overflow:hidden;text-overflow:ellipsis;padding: 0 5px;box-sizing: border-box;}
+.selCoupsContItem .handleBtnBox{position: absolute;top: 300px;left: 0;width: 140px;height: 40px;background: #fff;padding-left: 260px;}
+.selCoupsContItem .handleBtnBox span{display: inline-block;cursor: pointer;width: 60px;height: 30px;line-height: 30px;text-align: center;
+									font-size: 14px;background: #F6F6F6;margin-top: 5px;-moz-user-select:none;-webkit-user-select: none;-ms-user-select: none; }
+.selCoupsContItem .handleBtnBox span:hover{background: #ccc;}
+.selCoupsItem .selCoupsBox .noDatasLis{width:300px;color:#ccc;border:none;float:left;text-align: center;}
+.selCoupsInp{padding-right: 24px;}
+/*配置渠道优惠券列表表格处理*/
+#htmlWrap .lisRank{display: inline-block;width: 100%;border-bottom: 1px solid #ccc;}
+#htmlWrap .rankTd{padding: 0 !important;}
+#htmlWrap .rankTd .lisRank:last-child{border-bottom: none;}
+.channelCoupTab #htmlWrap tr td{line-height: 30px;}

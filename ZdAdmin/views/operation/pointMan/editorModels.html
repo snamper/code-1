@@ -1,0 +1,150 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-积分管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		.addResourceSection .customModelBox{
+			position: relative;
+		}
+		.customModelBox .addModelBtn{
+			position: absolute;
+    		right: 20px;
+		}
+		#changeSubBtn{
+			position: absolute;
+			right: 20px;
+			top: 65px;
+		}
+		.layui-tab-title .layui-this {font-weight: 800; background-color: #ccc;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>积分管理</li>
+	</ul>
+{%endblock%}
+{% block content%}
+{% if data.message =="成功"%}
+	<section class="addResourceSection">
+		<div class="layui-tab padding15">
+			<ul class="layui-tab-title chooseType">
+				<li class="layui-this"><a href="/operation/pointMan">CPM积分模型</a></li>
+				<li><a href="/operation/pointMan/integralSet">内容发放积分模型</a></li>
+				<li><a href="/operation/pointMan/registerIntegral">注册积分模型</a></li>
+				<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+				<li><a href="/operation/pointMan/dayStayTotalMan">每日停留积分管理</a></li>
+				<li><a href="/operation/pointMan/changeRecordCPM">积分模型变更记录</a></li>
+			</ul>
+		</div>
+		<form class="layui-form" action="" style="padding-left: 20px;">
+			<div class="layui-form-item" >
+				<label class="layui-form-label" style="width: 120px;">选择发放模型：</label>
+			    <div class="layui-input-inline layui-input-checked" lay-filter="modelType" style="width:340px !important">
+			    	{% if data.data.model_type == 1 %}
+			        <input type="radio" lay-filter="modelType" name="modelType" value="1" checked="checked" title="应用模型一">
+			        {% else %}
+			        <input type="radio" lay-filter="modelType" name="modelType" value="1" title="应用模型一">
+			        {% endif %}
+			        {% if data.data.model_type == 2 %}
+			        <input type="radio" lay-filter="modelType" name="modelType" value="2" checked="checked" title="应用自定义模型">
+			        {% else %}
+			        <input type="radio" lay-filter="modelType" name="modelType" value="2" title="应用自定义模型">
+			        {% endif %}
+			   </div>
+			</div>
+		</form>
+    	<a href="javascript:;" class="layui-btn" id="changeSubBtn" data-type="{{data.data.model_type}}">变更</a>
+    	{% if data.data %}
+			{% if data.data.model_type == 1 %}
+			<div class="modelTableBox">
+			{% elseif data.data.model_type == 2 %}
+			<div class="modelTableBox hide">
+			{% endif %}
+				<table class="layui-table table-width">
+					<tr>
+						<th>分段数</th>
+						<th>A积分比例(%)</th>
+						<th>获取间隔</th>
+					</tr>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>100</td>
+							<td>--</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			{% if data.data.model_type == 1 %}
+			<div class="customModelBox hide">
+			{% elseif data.data.model_type == 2 %}
+			<div class="customModelBox">
+			{% endif %}
+				<table class="layui-table table-width">
+					<tr>
+						<th>分段数</th>
+						<th>A积分比例(%)</th>
+						<th>获取间隔</th>
+						<th>操作</th>
+					</tr>
+					{% if data.data.model_type == 1 %}
+					<tbody class="addModelItem">
+					</tbody>
+					{% elseif data.data.model_type == 2 %}
+					<tbody class="addModelItem">
+						{% for model2Lis in data.data.datas %}
+						<tr>
+							<td>{{loop.index}}</td>
+							<td><input type="text" class="editorText pointText" value="{{model2Lis.point_proportion}}" disabled="disabled"/></td>
+							<td><input type="text" class="editorText timeText" value="{{model2Lis.time_interval}}" disabled="disabled"/></td>
+							<td><a class="layui-btn delModelBtn" href="javascript:;">删除</a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+					{% endif %}
+				</table>
+				<a class="layui-btn addModelBtn" href="javascript:;">新建分段</a>
+			</div>
+		{% else %}
+			<div class="modelTableBox hide">
+				<table class="layui-table table-width">
+					<tr>
+						<th>分段数</th>
+						<th>A积分比例(%)</th>
+						<th>获取间隔</th>
+					</tr>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>100</td>
+							<td>--</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="customModelBox hide">
+				<table class="layui-table table-width">
+					<tr>
+						<th>分段数</th>
+						<th>A积分比例(%)</th>
+						<th>获取间隔</th>
+						<th>操作</th>
+					</tr>
+					<tbody class="addModelItem">
+					</tbody>
+				</table>
+				<a class="layui-btn addModelBtn" href="javascript:;">新建分段</a>
+			</div>
+		{% endif %}
+	</section>
+{% else %}
+	<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/pointManagement/index.js"></script>
+{% endblock %}
+
+

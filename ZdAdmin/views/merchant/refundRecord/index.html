@@ -1,0 +1,148 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-退款记录{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/refund/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">退款记录</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商品名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.productName %}
+					 		<input type="text" name="goodsName" value={{page.productName}} autocomplete="off" class="layui-input goodsName">
+					 	{% else %}
+					 		<input type="text" name="goodsName" autocomplete="off" class="layui-input goodsName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">商户名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.merchantFullName %}
+					 		<input type="text" name="username" value={{page.merchantFullName}} autocomplete="off" class="layui-input merchantName">
+					 	{% else %}
+					 		<input type="text" name="username" autocomplete="off" class="layui-input merchantName">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">手机号:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.userPhone%}
+					 		<input type="text"  name="userid" value={{page.userPhone}}  autocomplete="off" class="layui-input userIdInt">
+					 	{% else %}
+					 		<input type="text"  name="userid"  autocomplete="off" class="layui-input userIdInt">
+					 	{% endif %}	
+				    </div>
+				</div>
+			</form>
+		</div>
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" style="margin-top: 0;" action="">
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">退款时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.refundTimeStart %}
+						 <input class="layui-input" placeholder="" value="{{page.refundTimeStart}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+						 {% endif %}                      
+                   </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.refundTimeEnd %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.refundTimeEnd}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+              </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block" style="margin-left:0;">
+						<a  class="layui-btn right site-demo-right40 queryGoods" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>商品名称</th>
+		            <th>商户名称</th>
+		            <th>手机号</th>
+		            <th>退回积分</th>
+		            <th>退积分时间</th>
+		            <th>退回金额(元)</th>
+		            <th>退款时间</th>
+		            <th>订单状态</th>
+		            <th>退款人</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas.list %}
+			    	<tr>
+					 	<td>{{loop.index}}</td>
+					 	<td><a href="/merchant/refund/refundDetail?orderId={{item.order_id}}" style="color: #009688;">{{item.product_name}}</a></td>
+					 	<td>{{item.merchant_name}}</td>
+					 	<td>{{item.user_phone}}</td>
+					 	<td>{{item.refund_point||'--'}}</td>
+					 	<td>{{item.refund_point_time||'--'}}</td>
+					 	<td>{{item.refund_money/100|twoNumber||'--'}}</td>
+					 	<td>{{item.refund_money_time||'--'}}</td>
+					 	{% if item.order_status == 1 %}
+					 	<td>未付款</td>
+					 	{% elseif item.order_status == 2 %}
+					 	<td>已完成</td>
+					 	{% elseif item.order_status == 3 %}
+					 	<td>已取消</td>
+					 	{% elseif item.order_status == 4 %}
+					 	<td>已关闭</td>
+					 	{% elseif item.order_status == 5 %}
+					 	<td>兑换状态未知</td>
+					 	{% elseif item.order_status == 6 %}
+					 	<td>积分已支付现金未支付</td>
+					 	{% elseif item.order_status == 7 %}
+					 	<td>兑换失败</td>
+					 	{% elseif item.order_status == 8 %}
+					 	<td>已支付</td>
+					 	{% else %}
+					 	<td></td>
+					 	{% endif %}
+					 	{% if item.handle_user_name %}
+		         		<td>{{item.handle_user_name}}</td>
+		         		{% else %}
+		         		<td>系统自动</td>
+		         		{% endif %}
+					</tr>
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/refundRecord/index.js"></script>
+{% endblock %}
+

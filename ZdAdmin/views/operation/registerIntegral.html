@@ -1,0 +1,107 @@
+{% extends "./../layout.html"%}
+{% block title%}运营管理-注册送积分{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/task.css" />
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">注册送积分</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*注册用户赠送积分:</label>
+			    <div class="layui-input-inline" style="width: 210px;">
+			        <input type="text" class="layui-input points" value="{{data.data.points}}" placeholder="请输入积分数量" style="width: 180px;display: inline-block;margin-right: 5px;">
+			        <span>积分</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-points hide">请输入200字以内说明</span>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn save">保存</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		$(".points").on("blur", function() {
+			var message = ""
+			if(!$(".points").check().notNull()){
+				message = "请输入积分";
+				$(".tooltip-points").empty().html(message).show()
+			}else{
+				if(!$(".points").check().isNum()){
+					message = "只能输入数字";
+					$(".tooltip-points").empty().html(message).show()
+				}else{
+					if($(".points").val() < 0) {
+						message = "只能输入正数";
+						$(".tooltip-points").empty().html(message).show()
+					}else{
+						$(".tooltip-points").hide()
+					}
+						
+				}
+			}
+			
+		})
+		$(".save").on("click", function() {
+			var data = {points:$(".points").val()}
+			var message = ""
+			if(!$(".points").check().notNull()){
+				message = "请输入积分";
+				$(".tooltip-points").empty().html(message).show()
+				return;
+			}else{
+				if(!$(".points").check().isNum()){
+					message = "只能输入数字";
+					$(".tooltip-points").empty().html(message).show()
+					return;
+				}else{
+					if($(".points").val() < 0) {
+						message = "只能输入正数";
+						$(".tooltip-points").empty().html(message).show()
+						return
+					}else{
+						$(".tooltip-points").hide
+					}
+				}
+			}
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				url: "/admin/new/user/integral/manage/add.do",
+				data: data,
+				beforeSend:beforeSend(),
+				success: function(json) {
+					if(json.message == "成功") {
+						layer.msg('保存成功！', {
+							time: 1000, //1s后自动关闭
+							icon: 1
+						});
+					}else{
+						layer.msg(json.message)
+					}
+				},
+				error: function() {
+					layer.msg('保存失败！', {
+						time: 1000, //1s后自动关闭
+						icon: 2
+					});
+					
+				}
+			})
+		})
+	</script>
+{% endblock %}
+
+

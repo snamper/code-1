@@ -1,0 +1,85 @@
+{% extends "./../../layout.html"%} 
+{% block title%}运营管理-账号风险管理-设置邀请风险{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css"/> 
+<link rel="stylesheet" href="/css/accountRiskRating/setInvitationRisk.css" />
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">账号风险管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">设置邀请风险</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<section class="setInvitationRisk">
+	<form class="layui-form layuiRisks" action="">
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline setTimeBox">
+	 			<label class="layui-form-label"><span class="txt-impt">*</span>时间范围：</label>
+			    <div class="layui-input-inline">
+				    <div class="layui-btn-group">
+					    <a class="layui-btn layui-btn-primary layui-btn-small cutRisksBtn"><i class="layui-icon">-</i></a>
+					    {% if data.data.timeRange %}
+					    <input class="risksNumInpt timeRisksNumInpt" data-val="{{data.data.timeRange}}" value="{{data.data.timeRange}}" type="text" name="risksNum" autocomplete="off" placeholder="限大于0的整数"/>
+					    {% else %}
+					    <input class="risksNumInpt timeRisksNumInpt" data-val="" value="" type="text" name="risksNum" autocomplete="off" autocomplete="off" placeholder="限大于0的整数"/>
+					    {% endif %}
+					    <a class="layui-btn layui-btn-primary layui-btn-small addRisksBtn"><i class="layui-icon">+</i></a>　分钟内
+					</div>	
+					<span class="layui-tooltip tooltip-hints tooltip-times hide">请输入大于0的整数</span>
+			    </div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	 		<div class="layui-inline setInvitBox">
+	 			<label class="layui-form-label"><span class="txt-impt">*</span>邀请数量：</label>
+			    <div class="layui-input-inline">
+				    <div class="layui-btn-group">
+					    <a class="layui-btn layui-btn-primary layui-btn-small cutRisksBtn"><i class="layui-icon">-</i></a>
+					    {% if data.data.inviteAmount %}
+					    <input class="risksNumInpt invitRisksNumInpt" data-val="{{data.data.inviteAmount}}" value="{{data.data.inviteAmount}}" type="text" name="risksNum" autocomplete="off" placeholder="限大于0的整数"/>
+					    {% else %}
+					    <input class="risksNumInpt invitRisksNumInpt" data-val="" value="" type="text" name="risksNum" autocomplete="off" placeholder="限大于0的整数"/>
+					    {% endif %}
+					    <a class="layui-btn layui-btn-primary layui-btn-small addRisksBtn"><i class="layui-icon">+</i></a>　人
+					</div>
+					<span class="layui-tooltip tooltip-hints tooltip-invits hide">请输入大于0的整数</span>
+			    </div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item layui-form-deal">
+	 		<div class="layui-inline">
+	 			<label class="layui-form-label"><span class="txt-impt">*</span>处理方式：</label>
+			    <div class="layui-input-inline dealStyle">
+			    	{% if data.data.dealMethod == '1' %}
+				    <input name="like1[a]" lay-skin="primary" title="标记为高风险用户" type="checkbox" checked="checked">
+				    <input name="like1[b]" lay-skin="primary" title="封停账号" type="checkbox">
+				    {% elseif data.data.dealMethod == '2' %}
+				    <input name="like1[a]" lay-skin="primary" title="标记为高风险用户" type="checkbox">
+				    <input name="like1[b]" lay-skin="primary" title="封停账号" type="checkbox" checked="checked">
+				    {% elseif data.data.dealMethod == '3' %}
+				    <input name="like1[a]" lay-skin="primary" title="标记为高风险用户" type="checkbox" checked="checked">
+				    <input name="like1[b]" lay-skin="primary" title="封停账号" type="checkbox" checked="checked">
+				    {% else %}
+				    <input name="like1[a]" lay-skin="primary" title="标记为高风险用户" type="checkbox">
+				    <input name="like1[b]" lay-skin="primary" title="封停账号" type="checkbox">
+				    {% endif %}
+			    </div>
+		    </div>
+			<span class="layui-tooltip tooltip-hints tooltip-deals hide">请选择处理方式</span>
+	    </div>
+	    <div class="layui-form-item invitationRiskBox">
+	    	<a href="javascript:;" class="layui-btn invitationRiskBtn">保存</a>
+	    </div>
+	</form>
+</section>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/accountRisksManagement/setInvitationRisk.js"></script>
+{% endblock%}

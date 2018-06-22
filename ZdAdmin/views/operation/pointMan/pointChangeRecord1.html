@@ -1,0 +1,156 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {
+	    font-weight: 800;
+	    background-color: #ccc;
+	}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">积分管理</li>
+</ul>
+{%endblock%}
+{% block content%} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li><a href="/operation/pointMan">CPM积分模型</a></li>
+		<li><a href="/operation/pointMan/integralSet">内容发放积分模型</a></li>
+		<li><a href="/operation/pointMan/registerIntegral">注册积分模型</a></li>
+		<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+		<li><a href="/operation/pointMan/dayStayTotalMan">每日停留积分管理</a></li>
+		<li class="layui-this"><a href="/operation/pointMan/changeRecordCPM">积分模型变更记录</a></li>
+		<li><a href="/operation/pointMan/videoPoint">实时视频积分</a></li>
+	</ul>
+</div>
+{% if data.message =="成功"%}
+	 <form class="layui-form dataPlug" action="">
+	 	<div class="layui-form-item padding15" >
+	 		{% if page && page.productAdAttr && page.productAdAttr == 1 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="1">
+	        {% elseif page && page.productAdAttr && page.productAdAttr == 2 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="2">
+    		{% elseif page && page.productAdAttr && page.productAdAttr == 3 %}
+	    	<div class="layui-input-inline productAdAttr" data-productAdAttr="3">
+			{% else %}
+			<div class="layui-input-inline productAdAttr" data-productAdAttr="0">
+			{% endif %}
+		        <select name="productAdAttr" lay-filter="productAdAttr" lay-verify="required" lay-search="">
+		        	{% if page && page.productAdAttr && page.productAdAttr == 1 %}
+		        	<option value="0">CPM</option>
+		            <option value="1" selected="selected">内容</option>
+		            <option value="2">注册积分</option>
+		            <option value="3">邀请好友</option>
+		            {% elseif page && page.productAdAttr && page.productAdAttr == 2 %}
+		        	<option value="0">CPM</option>
+		            <option value="1">内容</option>
+		            <option value="2" selected="selected">注册积分</option>
+		            <option value="3">邀请好友</option>
+		            {% elseif page && page.productAdAttr && page.productAdAttr == 3 %}
+		        	<option value="0">CPM</option>
+		            <option value="1">内容</option>
+		            <option value="2">注册积分</option>
+		            <option value="3" selected="selected">邀请好友</option>
+		            {% else %}
+		            <option value="0" selected="selected">CPM</option>
+		            <option value="1">内容</option>
+		            <option value="2">注册积分</option>
+		            <option value="3">邀请好友</option>
+					{% endif %}
+		        </select>
+	     </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+     	{% if page && page.productAdAttr && page.productAdAttr == 1 %}
+	    	<tr>
+		     	<th>操作时间</th>
+		     	<th>登录获得</th>
+		     	<th>阅读比例</th>
+		     	<th>阅读次数</th>
+		     	<th>等级</th>
+		     	<th>操作者</th>
+		    </tr>
+		    <tbody id="htmlWrap">
+         	{% for item in data.data.datas %}
+	         	<tr>
+				 	<td>{{item.createTime}}</td>
+				 	<td>{{item.loginAcquireRaio}}</td>
+				 	<td>{{item.readAcquireRatio}}</td>
+				 	<td>{{item.readAcquireLimit}}</td>
+					<td>{{item.levelAcquireRatio}}</td>
+				 	<td>{{item.createUserName}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+	        {% elseif page && page.productAdAttr && page.productAdAttr == 2 %}
+	    	<tr>
+		     	<th>操作时间</th>
+		     	<th>注册积分</th>
+		     	<th>操作者</th>
+		    </tr>
+		    <tbody id="htmlWrap">
+	         	{% for item in data.data.datas %}
+	         	<tr>
+				 	<td>{{item.createTime}}</td>
+				 	<td>{{item.points}}</td>
+				 	<td>{{item.createId}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+    		{% elseif page && page.productAdAttr && page.productAdAttr == 3 %}
+	    	<tr>
+		     	<th>操作时间</th>
+		     	<th>邀请好友获得积分</th>
+		     	<th>填写邀请码获得积分</th>
+		     	<th>每日阅读获取积分向上返比例</th>
+		     	<th>操作者</th>
+		    </tr>
+		    <tbody id="htmlWrap">
+         	{% for item in data.data.datas %}
+	         	<tr>
+				 	<td>{{item.createTime}}</td>
+				 	<td>{{item.deductPercentagePointVal}}</td>
+				 	<td>{{item.friendPointVal}}</td>
+				 	<td>{{item.invitePointVal}}</td>
+					<td>{{item.createUserName}}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			{% else %}
+			<tr>
+		     	<th>操作时间</th>
+		     	<th>分段数</th>
+		     	<th>A积分比例</th>
+		     	<th>获取间隔</th>
+		     	<th>操作者</th>
+		    </tr>
+		    <tbody id="htmlWrap">
+	         	{% for item in data.data.datas %}
+	         	<tr>
+				 	<td>{{item.create_time}}</td>
+				 	<td>{{item.segment_number}}</td>
+				 	<td>{{item.point_proportion}}</td>
+				 	<td>{{item.time_interval}}</td>
+					<td>{{item.name}}</td>
+				</tr>
+				{% endfor %}
+		 	</tbody>
+		{% endif %}
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/pointManagement/pointChangeRecord.js"></script>
+{% endblock%}

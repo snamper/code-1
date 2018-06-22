@@ -1,0 +1,163 @@
+{% extends "./../../layout.html"%}
+{% block title%}评论管理-评论内容{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/criticism/index.css" />
+	<style type="text/css">
+		.txt-impt {
+		    display: inline-block;
+		    color: red;
+		    font-size: 16px;
+		    font-weight: bold;
+		    padding: 0 3px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+    <ul class="index_of_title">
+	    <li>评论管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">评论内容</li>
+	</ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+     <form class="layui-form criticismMan" action="" style="padding-top: 15px;">
+	 	<div class="layui-form-item">
+	 		<div class="layui-input-inline" style="margin-left: 20px;">
+				{% if page.status %}
+					<select name="type" lay-filter="status" lay-verify="require" data-status="{{page.status}}" class="status" lay-search>
+						<option value="">评论状态</option>
+						{% if page.status == 0 %}
+							<option selected="selected" value="0">正常</option>
+						{% else %}
+							<option value="0">正常</option>
+						{% endif %}
+						{% if page.status == -1 %}
+							<option selected="selected" value="-1">异常</option>
+						{% else %}
+							<option value="-1">异常</option>
+						{% endif %}
+					</select> 
+				{% else %}
+			 		<select name="type" lay-verify="require" data-status="" class="status"  lay-search lay-filter="status">
+						<option value="">评论状态</option>
+						<option value="0">正常</option>
+						<option value="-1">异常</option>
+					</select> 
+				{% endif %}
+			</div>
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">用户ID：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.userId %}
+			    	<input type="text"  value="{{page.userId}}"  class="layui-input userId">
+					{% else %}
+					<input type="text"  class="layui-input userId">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label" style="width: 40px;">IP:</label>
+                <div class="layui-input-inline">
+                	{% if page.startIp %}
+						<input class="layui-input startIp" type="text"  value="{{page.startIp}}">   
+					{% else %} 
+						<input class="layui-input startIp"  type="text" value="">  
+					{% endif %}
+                </div>
+                <div class="layui-input-inline">
+                	{% if page.endIp %}
+				    	<input class="layui-input endIp" type="text"  value="{{page.endIp}}">          
+				    {% else %}
+				    	<input class="layui-input endIp" type="text" value="">     
+				    {% endif %}
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	     <table class="layui-table table-width">
+		    <thead>
+			    <tr>
+			     	<th></th>
+			     	<th>用户ID</th>
+			     	<th>评论内容</th>
+			     	<th>状态</th>
+			     	<th>评论时间</th>
+			     	<th>操作</th>
+			    </tr>
+		    </thead>
+        	{% if data.data.totalRows || data.data.totalRows != 0 %}
+	        <tbody id="htmlWrap">
+	         	{% for item in data.data.datas %}
+	         	<tr class="checkedBoxTr" data-id="{{item.id}}">
+	         		<td><input name="" lay-filter="thisInpt" lay-skin="primary" type="checkbox" style="width: 16px;height: 16px;"></td>
+	         		{% if item.keywordNum > 5 %}
+	         		<td title="异常评论"><span class="txt-impt">!</span>{{item.userId}}</td>
+	         		{% else %}
+	         		<td>{{item.userId}}</td>
+	         		{% endif %}
+	         		{% if item.userId %}
+		         		{% if item.content %}
+	         			<td class="contTitle" title="{{item.content}}"><span class="limitText">{{item.content}}</span></td>
+		         		{% else %}
+	         			<td>--</td>
+		         		{% endif %}
+				 	<td>
+				 		{% if item.status == -1 %}
+				 			已删除 
+				 		{% else %}
+				 			正常
+				 		{% endif %}
+				 	</td>
+				 	<td>
+				 		{% if item.createTime %}
+				 			{{item.createTime}}
+				 		{% else %}
+				 			--
+				 		{% endif %}
+				 	</td>
+			 		<td>
+			 			{% if item.status != -1 %}
+			 				{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "删除" %}
+						    			<a class="layui-btn layui-btn-danger deleteOneWord" id="onlyDeleBtn" href="javascript:;" data-id="{{item.id}}">删除</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+					 	{% endif %}
+			 		</td>
+				 	{% else %}
+				 	<td></td>
+				 	<td></td>
+				 	<td></td>
+				 	<td></td>
+				 	{% endif %}
+				</tr>
+	         	{% endfor %}
+			 </tbody>
+			 {% endif %}
+		 </table>
+		 {% if data.data.totalRows || data.data.totalRows != 0 %}
+		 <div class="layui-inline allSelects" style="padding: 0 0 30px 55px;">
+		 	<input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox" style="width: 18px;height: 18px;vertical-align: middle;"> 全选　
+		 	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "删除" %}
+		    			<a class="layui-btn layui-btn-danger" id="deleBtn" href="javascript:;" data-id="{{lis.id}}">删除</a>
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}
+		 </div>
+		 {% endif %}
+	 </form>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/criticism/criticismManage/index.js"></script>
+{% endblock%}

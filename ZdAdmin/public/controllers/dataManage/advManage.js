@@ -1,0 +1,136 @@
+"use strict";
+layui.use(['element', 'paging', 'laydate', 'form'], function(){
+	var $ = layui.jquery;
+	var laydate = layui.laydate;
+	var form = layui.form();
+	
+	var systemType = getQueryString("systemType") || '', canalValue=getQueryString("channelCode") || '';
+	//切换平台查询(购买商品&广告商品)
+	form.on('select(systemType)', function(data){
+		$('.systemType').attr('data-systemType', data.value);
+	});
+	//切换广告主渠道
+	form.on('select(canalList)', function(data){
+		canalValue =  (data.value == "emptyAll" ? "" : data.value )
+	});
+	//查询
+	var search = function(pn) {
+		var $starTimes = $('#LAY_demorange_s').val()||'';//开始时间
+		var $endTimes = $('#LAY_demorange_e').val()||'';//截止时间
+		var advName = $("#advName").val()||'';
+		var systemType = $('.systemType').attr('data-systemType')||'';
+		systemType = (systemType == '0' ? '' : systemType);
+		var pageNo = pn;
+		var pageSize = $("#paging").attr("data-page-size");
+		window.location.search="?systemType="+escape(systemType)+"&startTime="+escape($starTimes)+"&endTime="+
+		escape($endTimes)+"&pageNo="+pageNo+"&pageSize="+escape(pageSize)+"&name="+escape(advName)+"&channelCode="+escape(canalValue);
+	}
+	$('#searchBtn').on('click', function (){//查询
+		var layLoad = layer.load(2,{
+			shade: 0.6
+		});//加载等待
+		search('1');
+	});	
+	
+	
+// 获取广告主渠道列表
+	function getChannel( value ) {
+		$.ajax({
+		     type:"get",
+		     dataType: "json",
+		     url: "/admin/index/recommended-bit/update/source/list.do?type=2",
+		     success:function(json){
+		     	if (json.message == '成功') {
+		     		var list = json.data;
+		     		var length = list.length;
+		     		var str = '<select name="canalList" lay-filter="canalList" id="canalList"><option value="emptyAll">选择广告主渠道</option>';
+		     		for ( var i=0 ; i<length ; i++ ) {
+		     			if ( value && list[i].code == value) {
+		     				str += '<option selected="selected" value="'+ list[i].code +'">' + list[i].name +'</option>'
+		     			}else {
+		     				str += '<option value="'+ list[i].code +'">' + list[i].name +'</option>'
+		     			}
+		     		}
+					str += '</select>'
+		     		$(".canalList").empty().append(str)
+		     		form.render('select')
+		     	}	
+		     }
+	   });
+	}
+	getChannel( canalValue )
+	
+//下载
+	$("#downLoadBtn").on("click", function() {
+	  	var id = getQueryString('id') ;
+	  	var $starTimes = $('#LAY_demorange_s').val() || '';//开始时间
+		var $endTimes = $('#LAY_demorange_e').val() || '';//截止时间
+		var name = $("#advName").val()||'';
+		var systemType = $('.systemType').attr('data-systemType')||'';
+		systemType = (systemType == '0' ? '' : systemType);
+		var channel = canalValue;
+		
+		var data = {
+			startTime: $starTimes,
+			endTime: $endTimes,
+			name: name,
+			channel:channel 
+		}
+		
+		var index = layer.load(2, {
+		  shade: [0.6,'#000'] //0.1透明度的白色背景
+		});
+   		$.ajax({
+			type: "post",
+			dataType: "json",
+			url: '/admin/ad/statistics/export.do',
+			data:data,
+			beforeSend:beforeSend(),
+			success: function(json) {
+				layer.close(index);
+				if(json.message == "成功") {
+					var realData = "data:application/vnd.ms-excel;base64,"+json.data;
+					var testUrl = realData;
+			        var url = URL.createObjectURL(dataURLtoBlob(testUrl));
+					$('body').find('#downloadFiles').attr('href',url).attr('download','下载结果.xlsx');
+					document.getElementById("downloadFiles").click();
+					layer.msg('下载成功！', {
+						time: 1000, //1s后自动关闭
+						icon: 1
+					});	
+				}else{
+					layer.msg(json.message+"，请重新下载！");
+				}
+			},
+			error: function(){
+				layer.msg('下载失败！', {
+					time: 1500, //1s后自动关闭
+					icon: 2
+				});
+				layer.close(index);
+			}
+		})
+	})
+	
+	//初始化日期组件
+	if($('.layui-form').eq(0).hasClass('dataPlug')){//判断数据是否请求成功
+		var opt = {
+			sMax: getQueryString("endTime") ? getQueryString("endTime") : laydate.now(),//开始日期的最大值
+			eMin: getQueryString("startTime") ? getQueryString("startTime") : '2017-01-01'//结束日期的最小值
+		};
+		var dateIint = new dateComponent(opt);
+	}
+	
+	//分页模块
+	var paging = layui.laypage({
+		pages: $("#paging").attr("data-page"), //分页数   总条数%单页显示条数  向上取整
+		cont: "paging", //组件容器
+		curr: $("#paging").attr("data-page-no"), //当前页
+		groups: $("#paging").attr("data-page-size"), //连续分页数
+		jump: function(obj, first) {
+			if(!first) {
+				jumpPage("pageSize=20&pageNo="+obj.curr);
+			}
+		}
+	});	
+});

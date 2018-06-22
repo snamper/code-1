@@ -1,0 +1,66 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-角色管理-编辑角色{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>角色管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">编辑角色</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addRoleSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">角色名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="roleName" value="{{data.data.name}}" lay-verify="required" placeholder="角色名称" autocomplete="off" class="layui-input roleName">
+			    </div>
+			    <span class="layui-tooltip tooltip-merchantCodeN hide">请输入角色名称</span>
+			</div>
+			<!--<div class="layui-form-item">
+			    <label class="layui-form-label">角色ID:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="roleCode" lay-verify="required|roleCode" value="{{data.data.code}}" placeholder="6位纯数字" autocomplete="off" class="layui-input roleCode">
+			    </div>
+			    <span class="layui-tooltip tooltip-roleCode hide">请输入角色编号</span>
+			</div>-->
+			<div class="layui-form-item">
+			    <label class="layui-form-label">备注:</label>
+			    <div class="layui-input-inline layui-input-width">
+			    	<textarea name="" value="{{data.data.remarks}}" rows="" cols="" class="roleText">{{data.data.remarks}}</textarea>
+			    </div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a class="layui-btn layui-save-btn" lay-submit lay-filter="saveUserAdd">保存</a>
+			    <a class="layui-btn layui-save-btn openModal">配置权限</a>
+			    <a class="layui-btn layui-btn-danger clearRoleMessage">重置</a>
+			</div>
+		</form>
+		<!--
+        	作者：刘熠
+        	时间：2017-07-26
+        	描述：权限管理弹窗
+        -->
+		<div id="goodsInfoBox" class="permissionTreeBox hide">
+			<div class="uploadBox clearfix">
+				<div class="modal-body">
+					<ul id="permissionTreeContent"></ul>
+				</div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn savePermissionMessage">保存</a>
+			    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/system/roleManagement/editRole.js"></script>
+{% endblock %}
+
+

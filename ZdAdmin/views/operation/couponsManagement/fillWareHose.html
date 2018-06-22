@@ -1,0 +1,107 @@
+{% extends "./../../layout.html"%}
+{% block title %}运营管理--优惠券管理--优惠券补录{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %}
+{% block indexTitle %}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>优惠券管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">优惠券补录</li>
+	 </ul>
+{% endblock %}
+{% block content %}
+	<form class="layui-form formPage site-demo-top40 addCoupons couponsCenter" action="">
+		<div class="layui-form-item" pane="">
+		    <label class="layui-form-label">优惠券类型:</label>
+		    {% if data.data.couponType == '1' %}
+		    <div class="layui-input-inline layui-input-checked getCoupIfy" data-useWay='1' style="width: 220px;">
+			    <input type="radio" name="useWay" value="1" title="指定商品券" checked="checked" disabled="disabled"/>
+		    </div>
+		    {% elseif data.data.couponType == '2' %}
+		    <div class="layui-input-inline layui-input-checked getCoupIfy" data-useWay='2' style="width: 220px;">
+			    <input type="radio" name="useWay" value="2" title="通用券" checked="checked" disabled="disabled"/>
+		    </div>
+		    {% endif %}
+		</div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>优惠券名称：</label>
+			    <div class="layui-input-inline fillCouponsNames">
+			    	<span>{{data.data.name}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    {% if data.data.couponType == '1' %}
+	    <div class="layui-form-item useWayDiffCont">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>选择商品：</label>
+			    <div class="layui-input-inline selCouponsGoods" data-id="{{data.data.productId}}">
+				    <span>{{data.data.productName}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    {% endif %}
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>额度(元)：</label>
+			    <div class="layui-input-inline selCouponsLimit" data-val="{{data.data.limitId}}">
+				    <span>{{data.data.rmbValue}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>数量(份)：</label>
+			    <div class="layui-input-inline fillCouponsNumber">
+				    {% if data.data.allCount %}
+				    <input type="text" name="fillCoupNum" class="layui-input fillCoupNum" value="{{data.data.allCount}}" lay-verify="required" placeholder="请输入优惠券数量" autocomplete="off">
+			    	{% else %}
+			    	<input type="text" name="fillCoupNum" class="layui-input fillCoupNum" lay-verify="required" placeholder="请输入优惠券数量" autocomplete="off">
+			    	{% endif %}
+			    </div>	
+			    <span class="layui-tooltip tooltip-fillCoupNum hide">请输入1~100000000的整数</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>有效期(天)：</label>
+			    <div class="layui-input-inline couponsPeriod">
+				    <span>{{data.data.useDays}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>活动时间：</label>
+                <div class="layui-input-inline getAutoUseTime">
+		    		<span class="coupUseTime_s">{{data.data.eventDateStart}}</span> ~
+			    	<span class="coupUseTime_e">{{data.data.eventDateEnd}}</span>	
+               </div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">优惠券使用时间：</label>
+			    <div class="layui-input-inline getAutoUseTime">
+			    	<span class="coupUseTime_s">{{data.data.eventDateStart}}</span> ~ 
+			    	<span class="coupUseTime_e">{{data.data.useDateEnd}}</span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item addBtnBox">
+			<div class="layui-inline">		
+            	<a class="layui-btn addCouponsSaveBtns" href="javascript:;">生成</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="/operation/couponsManagement/couponsMan" class="layui-btn">返回</a>
+        	</div>
+        </div>
+	 </form>
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/operation/couponsManagement/fillWareHose.js"></script>
+{% endblock%}

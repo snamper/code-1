@@ -1,0 +1,267 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/client/index.css" />
+	<link rel="stylesheet" href="/css/operation/actManagement.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>活动管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">渠道列表</li>
+    	{% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "创建" %}
+	    			<a href="/operation/actManagement/channelEdit" class="layui-btn" style="float:right;margin-right:40px;">创建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %} 
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				
+				<div class="layui-form-item layui-input-inline">
+					<div class="layui-input-inline" style="margin-left: 20px;">
+						{% if page.spreadType %}
+							<select name="type" data-type="{{page.spreadType}}" class="adverType" lay-search lay-filter="type">
+								<option value="">全部</option>
+								{% if page.spreadType == 2 %}
+									<option value="0">全部</option>
+									<option value="2" selected="selected">渠道</option>
+									<option value="1">活动</option>
+								{% elseif page.spreadType == 1  %}
+									<option value="0">全部</option>
+									<option value="2">渠道</option>
+									<option value="1" selected="selected">活动</option>
+								{% else %}
+									<option value="0" selected="selected">全部</option>
+									<option value="2">渠道</option>
+									<option value="1">活动</option>
+								{% endif %}
+							</select> 
+								
+						{% else %}
+					 		<select name="type" lay-verify="require" data-type="" class="adverType"  lay-search lay-filter="type">
+								<option value="0">全部</option>
+								<option value="2">渠道</option>
+								<option value="1">活动</option>
+							</select> 
+					 	{% endif %}
+					</div>
+					<div class="layui-input-inline" style="margin-left: 20px;">
+						{% if page.closed %}
+							<select name="status" data-status="{{page.closed}}"  lay-search lay-filter="status">
+								<option value="">状态</option>
+								{% if page.closed == 1 %}
+									<option value="2">状态</option>
+									<option value="0">进行中 </option>
+									<option selected="selected" value="1">已关闭</option>
+								{% elseif page.closed == 0 %}	
+									<option value="2">状态</option>
+									<option selected="selected" value="0">进行中</option>
+									<option value="1">已关闭 </option>
+								{% else %}
+						 			<option selected="selected" value="2">状态</option>
+									<option value="0">进行中</option>
+									<option value="1">已关闭</option>
+								{% endif %}
+							</select> 
+								
+						{% else %}
+					 		<select name="status" data-status="{{page.closed}}" class="Adverstatus"  lay-search lay-filter="status">
+					 			<option value="2">状态</option>
+								<option value="0">进行中</option>
+								<option value="1">已关闭</option>
+							</select> 
+					 	{% endif %}
+					</div>
+				    <label class="layui-form-label" style="width: 94px">活动/渠道名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.spreadName %}
+					 		<input type="text" id="merchantId" name="username" value={{page.spreadName}} lay-verify="required" placeholder="名称" autocomplete="off" class="layui-input queryByResourceName">
+					 	{% else %}
+					 		<input type="text" id="merchantId" name="username" lay-verify="required" placeholder="渠道或活动名称" autocomplete="off" class="layui-input queryByResourceName">
+					 	{% endif %}	
+				        
+				    </div>
+				    
+				</div>
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+                    </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+               </div>
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block" style="margin-left: 10px;"> 
+						<a  class="layui-btn right site-demo-right40 queryAdvertiser" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>	
+		<div class="layui-input-inline act-chart-main">
+	
+				<div class="act-chart act-chart-first">
+					<div class="circular">{{data.data.datas.datastastic.pointnum}}</div>
+					<p>发放积分</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.datas.datastastic.actnum}}</div>
+					<p>激活用户</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.datas.datastastic.regnum}}</div>
+					<p>注册用户</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.datas.datastastic.daynum}}</div>
+					<p>次日留存</p>
+				</div>
+				<div class="act-chart">
+					<div class="circular">{{data.data.datas.datastastic.weeknum}}</div>
+					<p>七日留存</p>
+				</div>
+		</div>
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>活动/渠道名称</th>
+		            <th>分享用户数</th>
+		            <th>激活用户数</th>
+		            <th>次日留存</th>
+		            <th>七日留存</th>
+		            <th>发放积分</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		 {% if data.data.datas.datalist && data.data.datas.datalist.length > 0  %}  
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas.datalist %}
+			    	<tr>
+			    		<td>{{page.pNo|sortNum(loop.index)}}</td>
+			    		
+			    		{% if item.spread_type == 2 %}
+			    			<td><a href="/operation/actManagement/channelDetail?id={{item.spread_id}}&pageNo=1&pageSize=10">{{item.spread_name}}</a></td>
+			    		{% else %}
+					 		<td><a href="/operation/actManagement/activeDetail?spreadEventId={{item.spread_id}}&pNo=1&pSize=10">{{item.spread_name}}</a></td>
+					 	{% endif %}
+			    		
+			    		{% if item.spread_type == 2 %}
+			    			<td>--</td>
+			    		{% else %}
+					 		<td>{{item.sharing_num}}</td>
+					 	{% endif %}
+			    		<td>{{item.activate_num}}</td>
+			    		<td>{{item.nextday_num}}</td>
+			    		<td>{{item.nextweek_num}}</td> 
+			    		{% if item.spread_type == 2 %}
+			    			<td>--</td>
+			    		{% else %}
+			    			<td>{{item.point_num}}</td>
+			    		{% endif %}
+			    		<td>
+			    			{% if item.spread_type == 2 %}
+			    				{% if menuCodeList %}
+							    	{% for code in menuCodeList %}
+							    		{% if unescape(code.name) == "编辑" %}
+							    			<a href="/operation/actManagement/reviseChannel?id={{item.spread_id}}&type={{item.spread_type}}"  class=" layui-btn disabledChannel">编辑</a>
+							    		{% endif %}
+							    	{% endfor %}
+							    {% endif %} 
+			    				{% if item.closed == 1 %}
+			    					{% if menuCodeList %}
+								    	{% for code in menuCodeList %}
+								    		{% if unescape(code.name) == "恢复" %}
+												<a data-id="{{item.spread_id}}" class=" layui-btn layui-btn-danger openChannel">恢复</a>
+								    		{% endif %}
+								    	{% endfor %}
+								    {% endif %}
+								{% else %}	
+									{% if menuCodeList %}
+								    	{% for code in menuCodeList %}
+								    		{% if unescape(code.name) == "关闭" %}
+												<a data-id="{{item.spread_id}}" class=" layui-btn layui-btn-danger closeChannel">关闭</a>
+								    		{% endif %}
+								    	{% endfor %}
+								    {% endif %}	
+								{% endif %}
+				    		{% else %}
+				    		
+				    			{% if menuCodeList %}
+							    	{% for code in menuCodeList %}
+							    		{% if unescape(code.name) == "编辑" %}
+											<a href="/operation/actManagement/reviseActive?spreadEventId={{item.spread_id}}&type={{item.spread_type}}"  class=" layui-btn disabledActive">编辑</a>
+							    		{% endif %}
+							    	{% endfor %}
+							    {% endif %}
+				    			{% if item.closed == 1 %}
+				    			
+				    				{% if menuCodeList %}
+								    	{% for code in menuCodeList %}
+								    		{% if unescape(code.name) == "恢复" %}
+												<a data-id="{{item.spread_id}}" data-state="0" class=" layui-btn layui-btn-danger openActive">恢复</a>
+								    		{% endif %}
+								    	{% endfor %}
+								    {% endif %}
+										
+								{% else %}
+								
+									{% if menuCodeList %}
+								    	{% for code in menuCodeList %}
+								    		{% if unescape(code.name) == "关闭" %}
+												<a data-id="{{item.spread_id}}" data-state="1" class=" layui-btn layui-btn-danger openActive">关闭</a>
+								    		{% endif %}
+								    	{% endfor %}
+								    {% endif %}
+								
+									
+								{% endif %}
+						 	{% endif %}
+							
+			    		</td>
+			    	</tr>
+		    	{% endfor%}
+		    	
+		    </tbody>
+		{% endif %}
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	
+	
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/actManagement/index.js"></script>
+{% endblock %}
+

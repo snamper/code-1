@@ -1,0 +1,53 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--账号风险管理--TOP3风险管理--单项高风险调整{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/risksMan.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>账号风险管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>TOP3风险管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">单项高风险调整</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	 <div class="layui-form-item handleBox" style="text-align: right;">
+	 	<a href="/operation/accountRiskRating/risksExplain" class="layui-btn risksExplain">风险解释</a>
+	 </div>
+	 <div class="layui-form-item" style="">
+	 	<p style="margin-left: 20px;">单项高风险</p>
+	 </div>
+	 <form class="layui-form layuiRisks" action="">
+	 	<div class="layui-form-item" style="padding-left: 50px;">
+	 	{% for item in data.data %}
+		 	<div class="layui-inline risksLisItems">
+		 		{% if item.singleHighRiskFlag %}
+		 		<input name="risksLis" class="risksNames" lay-skin="primary" data-id="{{item.id}}" data-value="{{item.name}}" title="{{item.name|hideFlow(16)}}" type="checkbox" checked="checked">
+		 		{% else %}
+		 		<input name="risksLis" class="risksNames" lay-skin="primary" data-id="{{item.id}}" data-value="{{item.name}}" title="{{item.name|hideFlow(16)}}" type="checkbox">
+		 		{% endif %}
+		 		<div class="layui-btn-group">
+				    <a class="layui-btn layui-btn-primary layui-btn-small cutRisksBtn"><i class="layui-icon">-</i></a>
+				    {% if item.singleHighRiskFlag %}
+				    <input class="risksNumInpt" data-val="{{item.floor}}" value="{{item.floor}}" type="text" name="risksNum" autocomplete="off"/>
+				    {% else %}
+				    <input class="risksNumInpt" data-val="" value="10" type="text" name="risksNum" autocomplete="off"/>
+				    {% endif %}
+				    <a class="layui-btn layui-btn-primary layui-btn-small addRisksBtn"><i class="layui-icon">+</i></a>
+				</div>
+		 	</div>
+	 	{% endfor %}
+	 	</div>
+ 	</form>
+	 <div class="layui-form-saveCloseBtn" pane="">
+	    <a class="layui-btn saveMoudelAdjust">保存设置</a>
+	</div>	 
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/accountRisksManagement/adjustMoudle.js"></script>
+{% endblock%}

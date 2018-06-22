@@ -1,0 +1,96 @@
+{% extends "./../../layout.html"%}
+{% block title%}客户管理--商户管理--编辑商户{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/client/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>客户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">编辑商户</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<div class="partLine">商户基本信息<i></i></div>
+	<form class="layui-form formPage site-demo-top40 editorTenants setMarCenter" action="">
+		<div class="layui-form-item" pane="">
+		    <label class="layui-form-label">发货方式:</label>
+		    <div class="layui-input-inline layui-input-checked" style="width: 220px;">
+		    	{%if data.data.deliver_way == "2"%}
+				<input type="radio" name="deliverWay" value="1" title="商家发货"/>
+			    <input type="radio" name="deliverWay" value="2" title="平台发货" checked="checked"/>
+				{% else%}
+				<input type="radio" name="deliverWay" value="1" title="商家发货" checked="checked"/>
+			    <input type="radio" name="deliverWay" value="2" title="平台发货"/>
+				{%endif%}  
+		    </div>
+	        <span class="layui-tooltip tooltip-salestyleN hide">请选择销售方式</span>
+		</div>
+		<div class="layui-form-item" pane="">
+		    <label class="layui-form-label">销售方式:</label>
+		    <div class="layui-input-inline layui-input-checked">
+				{% if data.data.sales_way == "2" %}
+				     <input type="radio" name="online" lay-skin="primary" title="线上" class="onlineInput saleChoose" />
+					 <input type="radio" name="offline" lay-skin="primary" title="线下" class="offlineInput saleChoose" checked="checked"/>
+				{% else %}
+				     <input type="radio" name="online" lay-skin="primary" title="线上" class="onlineInput saleChoose" checked="checked"/>
+					 <input type="radio" name="offline" lay-skin="primary" title="线下" class="offlineInput saleChoose"/>
+				{% endif %}       		        
+		    </div>
+	        <span class="layui-tooltip tooltip-salestyleN hide">请选择销售方式</span>
+		</div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>商户简称：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+				    <input type="text" name="flexImgName" id="shortName" value="{{data.data.short_name}}" lay-verify="required" placeholder="请输入8字以内的商户名称" autocomplete="off" class="layui-input">
+			    </div>	
+			    <span class="layui-tooltip tooltip-shortName hide">请输入8字以内的商户简称</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>商户全称：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+				    <input id="fullName" type="text" name="flexImgName" value="{{data.data.full_name}}" lay-verify="required" placeholder="请输入15字以内的商户名称" autocomplete="off" class="layui-input">
+			    </div>	
+			    <span class="layui-tooltip tooltip-tenantFullName hide">请输入15字以内的商户名称</span>
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="txt-impt">*</span>商户logo：</label>
+			<div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+			     <img src="{{data.data.logo}}" alt="" id="imgShow" style="width: 100px;height: 100px;"/>
+				 <input data-id="{{data.data.id}}" style="position:absolute;top:0;right:0;width:38px;line-height:38px;z-index:100000" name="file" class="layui-upload-file" id="addTenants" lay-title=" " type="file">
+				 <span class="copyUploadBtn">+</span>
+				 <span class="layui-tooltip" style="color: #ccc;">图片格式为JPG/JPEG/PNG,大小10M</span>
+		  	</div>
+		</div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商户描述：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+			    	{% if data.data.introduce %}
+				    <textarea class="layui-textarea" id="tenantInfo">{{data.data.introduce}}</textarea>
+					{% else %}
+					<textarea class="layui-textarea" id="tenantInfo"></textarea>
+					{% endif %}
+				    <span class="txt-impt">200字限制</span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a href="javascript:;" onclick="commitData()" class="layui-btn">保存</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="javascript:;" id="tenantsBackBtn" class="layui-btn">返回</a>
+        	</div>
+        </div>
+	 </form>
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/client/tenantManagement/editTenant.js"></script>
+{% endblock%}

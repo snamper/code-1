@@ -1,0 +1,161 @@
+{% extends "./../../layout.html"%}
+{% block title%}客户管理--商户管理--商户查看{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/client/index.css" />
+	<style type="text/css">
+		.tenantDetail .layui-input-inline{
+			line-height: 38px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>客户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">商户查看</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<div class="partLine">商户基本信息<i></i></div>
+	<form class="layui-form formPage site-demo-top40 tenantDetail setMarCenter" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">发货方式：</label>
+			    <div class="layui-input-inline">
+				    <span>
+				    	{% if data.data.deliver_way == '1' %}
+						商家发货
+				    	{% elseif data.data.deliver_way == '2' %}
+						平台发货
+						{% else %}
+						未知
+				    	{% endif %}
+				    </span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">商户状态：</label>
+			    <div class="layui-input-inline">
+				    <span>
+				    	{% if data.data.status == '0' %}
+						草稿箱
+				    	{% elseif data.data.status == '1' %}
+						待审核
+				    	{% elseif data.data.status == '2' %}
+						审核通过
+				    	{% elseif data.data.status == '3' %}
+						待修改
+				    	{% elseif data.data.status == '4' %}
+						已删除
+						{% else %}
+						--
+				    	{% endif %}
+				    </span>
+			    </div>	
+		    </div>
+	    </div>
+	    {% if data.data.status == '3' %}
+	    <div class="layui-form-item">
+		    <div class="layui-inline">
+			    <label class="layui-form-label">审核失败原因：</label>
+			    <div class="layui-input-inline">
+				    <span>
+				    {% if data.data.reason %}
+				    {{data.data.reason}}
+				    {% else %}
+				    --
+				    {% endif %}
+				    </span>
+			    </div>	
+		    </div>
+	    </div>
+	    {% endif %}
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">销售方式：</label>
+			    <div class="layui-input-inline">
+				     <span class="layui-input-inline">
+					     {% if data.data.sales_way == "1"%}
+						 线上
+                         {% elseif data.data.sales_way == "2"%}
+						 线下
+						 {% else %}
+						 未知
+                         {% endif %}						 
+					 </span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">商户编号：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.code}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+		    <div class="layui-inline">
+			    <label class="layui-form-label">商户简称：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.short_name}}</span>
+			    </div>	
+		    </div>
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商户全称：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.full_name}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+		    <div class="layui-inline">
+			    <label class="layui-form-label">创建人：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.creator_name}}</span>
+			    </div>	
+		    </div>
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">创建时间：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.create_time}}</span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商户logo：</label>
+			<div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+				 <img src="{{data.data.logo}}" alt="" style="width: 100px;height: 100px;"/>
+		  	</div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">商户描述：</label>
+		    <div class="layui-input-inline" style="width: 65%;">
+		    	<span>{{data.data.introduce}}</span>
+		    </div>	
+	   </div>
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a href="javascript:;" class="layui-btn tenantCloseBtn">关闭</a>
+        </div>
+        </div>
+	 </form>
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript">
+	//商户查看详情页关闭按钮
+	$('.tenantCloseBtn').on('click', function (){
+		var $search = window.location.search.length;
+		var $href = window.location.href.length;
+		var $subStrNum = Number($href) - Number($search);
+		var str = window.location.href.substring(0,$subStrNum);
+		var useStr = str.substring(str.length-11);
+		if(useStr == 'showTenants'){
+			window.location.href = '/client/tenantManagement/tenantList';
+		}else if(useStr == 'showTenantf'){
+			window.location.href = '/client/tenantManagement/tenantAuditList';
+		}
+	});
+</script>
+{% endblock%}
+

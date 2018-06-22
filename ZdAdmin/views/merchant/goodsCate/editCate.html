@@ -1,0 +1,89 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-商品分类{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>商品分类</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建分类</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection cateSection" data-message="{{page | json_encode}}">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">分类类型:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="cateType">
+			   		{% if page.sortType == 1 %}
+			        <input type="radio" name="goodsCate" disabled="disabled" readonly="readonly" value="1" lay-filter="cateType" checked="checked" title="一级分类">
+					 <input type="radio" name="goodsCate" disabled="disabled" readonly="readonly" value="2" lay-filter="cateType" title="二级分类">
+					{% else %}
+					<input type="radio" name="goodsCate" disabled="disabled" readonly="readonly" value="1" lay-filter="cateType"  title="一级分类">
+					 <input type="radio" name="goodsCate" disabled="disabled" readonly="readonly" value="2" lay-filter="cateType" checked="checked" title="二级分类">
+					{% endif %}
+			   </div>
+			</div>
+			
+			{% if page.sortType == 1 %}
+			<div class="layui-form-item ifShowPar" style="display: none;">
+			{% else %}
+			<div class="layui-form-item ifShowPar">
+			{% endif %}
+			    <label class="layui-form-label" >分类类型:</label>
+			    <div class="layui-input-inline resourceParent">
+			        <select name="parentResource" lay-verify="require" lay-filter="parentCate">
+			        	<option value="">请选择一级分类</option>
+				          	{% for item in data.data.datas%}
+				          	{% if page.sortType == 2 && page.fid == item.id %}
+							  <option data-parentId="{{item.id}}" selected="selected" value="{{item.id}}">{{item.sortName}}</option>
+							  {% else %}
+							  <option data-parentId="{{item.id}}"  value="{{item.id}}">{{item.sortName}}</option>
+							 {% endif %}
+						{% endfor%}
+					</select>				
+			    </div>
+			    <span class="layui-tooltip tooltip-cateType hide" >请选择一级分类</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">分类名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  lay-verify="required" value="{{unescape(page.name)}}" class="layui-input name">
+			    </div>
+			    <span class="layui-tooltip tooltip-name hide" >请输入4个字以内分类名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">排序:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="sort" lay-verify="required" value="{{page.sort}}" class="layui-input sort">
+			    </div>
+			    <span class="layui-tooltip tooltip-sort hide">请输入排序号</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">状态:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="status">
+			   		{% if page.status == 1 %}
+			        <input type="radio" name="status" value="1" lay-filter="status" checked="checked" title="启用">
+					 <input type="radio" name="status" value="2" lay-filter="status" title="禁用">
+					 {% else %}
+					 <input type="radio" name="status" value="1" lay-filter="status" title="启用">
+					 <input type="radio" name="status" value="2" lay-filter="status" checked="checked" title="禁用">
+					 {% endif %}
+			   </div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn saveCate" >保存</a>
+			    <a class="layui-btn layui-btn-danger" href="/merchant/goodsCate">返回</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/goodsCate/editCate.js"></script>
+{% endblock %}
+
+

@@ -1,0 +1,167 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-活动管理-活动编辑{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/advertising/index.css" />
+	<style type="text/css">
+		.choosePrize{
+			width: 600px !important;
+		    height: 38px;
+		    overflow-x: auto;
+		    border: 1px solid #ccc;
+		}
+		.choosePrize > span{
+		    display: block;
+		    float: left;
+		    margin-right: 10px;
+		    height: 38px;
+		    line-height: 38px;
+		    background: #ccc;
+		}
+		.choosePrize > span > i{
+		    cursor: pointer;
+		    font-size: 18px;
+    		margin: 0 5px;
+		}
+		#htmlWrap .layui-table td,#htmlWrap  .layui-table th{
+			padding: 3px 0 !important;
+		}
+		.layui-table tr.prize_choose:hover, .layui-table[lay-even] tr.prize_choose:nth-child(even){
+			background: #ccc !important;
+		}
+		.prize_choose{background: #ccc;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>活动管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">活动编辑</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="clearfix course_nr">
+				<ul class="course_nr2">
+					<li>
+						选择活动类型
+						<div class="shiji">
+							<h1>1</h1>
+							<p>选择活动类型</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						<div class="shiji">
+							<h1>2</h1>
+							<p>活动设置</p>
+						</div>
+					</li>
+					<li class="cpmoneshow">
+						保存完成
+						<div class="shiji">
+							<h1>3</h1>
+							<p>保存完成</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">  *活动名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" class="layui-input layui-input-inline activeName" value="{{data.data.activeName}}" name="platem" placeholder="名称不能超过15字" >
+			   </div>
+			   <span class="layui-tooltip tooltip-activeName hide">请输入15字内活动名称</span>
+			</div>
+			<div class="layui-form-item ifShowPar">
+			    <label class="layui-form-label"> *  活动时间:</label>
+			   	<div class="layui-input-inline" style="width: 360px;">
+			       <input class="layui-input layui-input-inline" style="width: 150px;" value="{{data.data.startTime}}" placeholder="开始时间" id="LAY_demorange_s"> 
+			       <div class="layui-input-inline" style="width: 20px;height: 38px;line-height: 38px;">&nbsp;&nbsp;至&nbsp;&nbsp;</div>
+			       <input class="layui-input layui-input-inline" style="width: 150px;" value="{{data.data.endTime}}" placeholder="截止时间" id="LAY_demorange_e">
+			    </div>
+			    <span class="layui-tooltip tooltip-time hide">请设置活动时间</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">*奖品类型:</label>
+			    <div class="layui-input-inline" >
+			    	<select name="" lay-verify="require"   lay-search lay-filter="type">
+			    		<option value="1">优惠券</option>
+					</select>    
+			    </div>
+			    <span class="layui-tooltip tooltip-short_name hide">请选择奖品类型</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">  *奖品设置:</label>
+			    <div class="layui-input-inline choosePrize" data-list="{{data.data.couponIds | json_encode}}">
+			        {% for item in data.data.couponIds %}
+			        	<span data-couponId="{{item.id}}"> {{item.name}} <i attr-couponId="{{item.id}}">x</i></span>
+			        {% endfor %}
+			   </div>
+			   <span class="layui-tooltip tooltip-choosePrize hide">请选择奖品</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">活动描述:</label>
+			    <div class="layui-input-inline">
+			    	<textarea name="" class="description" rows="" cols="" style="width: 100%;height: 100px;resize:none;" value="{{data.data.activeDescribe}}">{{data.data.activeDescribe}}</textarea>
+			    </div>
+			    <span class="layui-tooltip tooltip-description hide"></span>
+			</div>
+			
+			
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a class="layui-btn layui-save-btn save" >保存</a>
+			</div>
+			
+			
+			<div id="prizeBox" class="prize hide">
+				<div class="sec1ContMiddle" style="margin-top: 20px;margin-left: 20px;">
+					<form class="layui-form layui-form-position" action="">
+						<div class="layui-form-item layui-input-inline">
+						    <div class="layui-input-inline">
+							 	<input type="text"  name="name"  placeholder="请输入名称检索"  class="layui-input name">
+						    </div>
+						</div>
+						<div class="layui-form-referBtn layui-input-inline" style="margin-top: -16px;">	
+							 <div class="layui-input-block">
+								<a  class="layui-btn right site-demo-right40 queryAdver" >查询</a>
+							</div>
+						 </div>	
+					</form>
+				</div>
+			     <table class="layui-table table-width" style="width: 100%; width: 98%; margin: 15px auto; ">
+				     <tr>
+				     	<th>奖品ID</th>
+				     	<th>奖品名称</th>
+				     	<th>类型</th>
+				     	<th>有效期</th>
+				     	<th>可用/库存</th>
+				     	<th>操作</th>
+				     </tr>
+			         <tbody id="htmlWrap">
+			         	
+					 </tbody>	
+				 </table>
+			     <div id="paging" style="position: relative !important;margin: 0 0 20px 56px;" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	 
+				<form class="layui-form layui-form-position" action="">
+					
+					<div class="layui-form-referBtn layui-input-inline">	
+						 <div class="layui-input-block">
+						 	<a class="layui-btn confirmPrize" >确定</a>
+						 	<a class="layui-btn layui-btn-danger cancelPrize" >取消</a>
+						</div>
+					 </div>	
+				</form>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/actManagement/registerActiveEdit.js"></script>
+{% endblock %}
+
+
+

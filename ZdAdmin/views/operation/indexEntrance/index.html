@@ -1,0 +1,81 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-首页资源入口{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {font-weight: 800;background-color: #ccc;}
+	.position{
+		display: inline-block;
+	    width: 100%;
+	    height: 34px;
+	}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">首页资源入口</li>
+	{% if menuCodeList %}
+    	{% for code in menuCodeList %}
+    		{% if unescape(code.name) == "入口设置" %}
+    			<a href="/operation/indexEntrance/setEntrance" class="layui-btn" style="float:right;margin-right:10px;">入口设置</a>
+    		{% elseif unescape(code.name) == "应用配置" %}
+    			<a class="layui-btn apply" style="float:right;margin-right:10px;">应用配置</a>
+    		{% endif %}
+    	{% endfor %}
+    {% endif %}
+</ul>
+{%endblock%}
+{% block content%} 
+
+<table class="layui-table table-width" data-list="{{data.data | json_encode}}">
+	<thead>
+		<tr>
+			<th>资源入口位置</th>
+			<th>资源入口系统名称</th>
+			<th>资源入口自定义名称</th>
+			<th>入口图标</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in data.data %}
+		<tr>
+			<td>{{item.position}}</td>
+			<td>{{item.resourceName}}</td>
+			<td>{{item.customName}}</td>
+			<td><img style="max-width: 50px;" src="{{item.iconUrl}}" alt="" /></td>
+			<td>
+				{% if menuCodeList %}
+			    	{% for code in menuCodeList %}
+			    		{% if unescape(code.name) == "调整" %}
+			    			<a data-id="{{item.id}}" data-position="{{item.position}}" class="layui-btn layui-btn adjust">调整</a>
+			    		{% endif %}
+			    	{% endfor %}
+			    {% endif %}
+				
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<div id="adjustBox" class="adjustBox hide">
+	<div class="clearfix " style="width: 380px;margin: 10px;">
+		<select  class="position"  onchange="changePosition(this.value)">
+    		<!--<option value="">选择位置</option>-->
+    		{% for item in data.data%}
+				<option class="positionOption" value="{{item.position}}">{{item.resourceName}}</option>
+			{% endfor %}
+		</select>  
+		<span class="layui-tooltip">注:当前选择的资源入口将与原入口做替换</span>
+	</div>
+	<div class="layui-form-saveCloseBtn" style="margin-left: 130px;margin-top: 60px;">
+	    <a  class="layui-btn layui-save-btn savePosition">保存</a>
+	    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+	</div>
+</div>
+<!--<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>-->
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/indexEntrance/index.js"></script>
+{% endblock%}

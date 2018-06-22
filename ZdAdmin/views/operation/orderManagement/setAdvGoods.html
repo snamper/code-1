@@ -1,0 +1,327 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--设置销售信息{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	 <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">推荐设置</li>
+	 </ul>
+{%endblock%}
+{% block content%}       
+	<form class="layui-form formPage site-demo-top40 setManSort setMarCenter" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品标签:</label>
+			<div class="layui-input-inline">
+		    	{% if data.data.tag %}
+		        <input type="text" value="{{data.data.tag}}" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% else %}
+		        <input type="text" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% endif %}
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-btnsLabel hide">请输入1-4个字</span>
+		</div>
+		<div class="layui-form-item layui-index layuiFirst" data-select='0' data-index="1" style="margin-bottom: 0;">
+		    <label class="layui-form-label">CPS入口位置:</label>
+		    <div class="layui-input-inline" style="width: 280px;display:inline-block;">
+		    	{% if data.data.entranceMark[0] %}
+		        <input type="checkbox" data-cpsEntrance="0" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="首页" checked="checked" class="input-lineBtn homeBox">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="0" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="首页" class="input-lineBtn homeBox">
+		        {% endif %}
+		        {% if data.data.entranceMark[1] %}
+		        <input type="checkbox" data-cpsEntrance="1" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="商城页" checked="checked" class="input-lineBtn storeBox">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="1" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="商城页" class="input-lineBtn storeBox">
+		        {% endif %}
+		        {% if data.data.entranceMark[2] %}
+		        <input type="checkbox" data-cpsEntrance="2" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="卡包列表" checked="checked" class="input-lineBtn cardBox">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="2" name="homeBox" lay-filter="homeBox" lay-skin="primary" title="卡包列表" class="input-lineBtn cardBox">
+		        {% endif %}
+		    </div>
+		</div>
+		<div class="layui-form-item layui-index layuiSec" data-select='0' data-index="2" style="margin-bottom: 0;">
+		    <label class="layui-form-label"></label>
+		    <div class="layui-input-inline" style="width: 280px;display:inline-block;">
+		    	{% if data.data.entranceMark[3] %}
+		    	<input type="checkbox" data-cpsEntrance="3" name="buyPageBox" lay-filter="homeBox" lay-skin="primary" title="购买成功页" checked="checked" class="input-lineBtn buyPageBox">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="3" name="buyPageBox" lay-filter="homeBox" lay-skin="primary" title="购买成功页" class="input-lineBtn buyPageBox">
+		        {% endif %}
+		        {% if data.data.entranceMark[4] %}
+		        <input type="checkbox" data-cpsEntrance="4" name="buyPageBox" lay-filter="homeBox" lay-skin="primary" title="兑换成功页" checked="checked" class="input-lineBtn convertBox">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="4" name="buyPageBox" lay-filter="homeBox" lay-skin="primary" title="兑换成功页" class="input-lineBtn convertBox">
+		        {% endif %}
+		    </div>
+		</div>
+		<div class="layui-form-item layui-index layuiThird" data-select='0' data-index="3" style="margin-bottom: 0;">
+		    <label class="layui-form-label"></label>
+		    <div class="layui-input-inline" style="width: 280px;display:inline-block;">
+		    	{% if data.data.entranceMark[5] %}
+		    	<input type="checkbox" data-cpsEntrance="5" name="goodsDetial" lay-filter="homeBox" lay-skin="primary" title="商品详情页" checked="checked" class="input-lineBtn goodsDetial">
+		        {% else %}
+		        <input type="checkbox" data-cpsEntrance="5" name="goodsDetial" lay-filter="homeBox" lay-skin="primary" title="商品详情页" class="input-lineBtn goodsDetial">
+		        {% endif %}
+		    </div>
+		</div>
+		{% if data.data.entranceMark[0] || data.data.entranceMark[1] || data.data.entranceMark[2] %}
+		<div class="firstLine">
+		{% else %}
+		<div class="firstLine hide">
+		{% endif %}
+			<div class="layui-form-item layui-index-cont inletBtnItem">
+			    <label class="layui-form-label">入口类型：</label>
+			    <div class="layui-input-inline">
+			        <input type="radio" name="inletBtn" lay-filter="inletBtn" title="按钮入口" class="input-lineBtn" checked="checked" onclick="null" lay-skin="primary">
+			    </div>
+			</div>
+			<div class="layui-form-item layui-index-cont btnNameItem">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>按钮名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[0] || data.data.entranceMark[1] || data.data.entranceMark[2] %}
+			    		{% for lis1 in data.data.cpsEntranceList %}
+			    			{% if lis1.entranceCategory == 0 %}
+			    			<input type="text" value="{{lis1.entranceButtonName}}" name="btnsName" lay-filter="btnsName" class="layui-input btnsName" placeholder="请输入名称" lay-skin="primary">
+		    				{% endif %}
+			    		{% endfor %}
+					{% else %}
+					<input type="text" name="btnsName" lay-filter="btnsName" class="layui-input btnsName" placeholder="请输入名称" lay-skin="primary">
+					{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-btnsName hide">请输入1~10个字符</span>
+			</div>
+			<div class="layui-form-item layui-index-cont inletLinksItem">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>入口链接：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[0] || data.data.entranceMark[1] || data.data.entranceMark[2] %}
+			    		{% for lis1 in data.data.cpsEntranceList %}
+			    			{% if lis1.entranceCategory == 0 %}
+			    			<input type="text" value="{{lis1.entranceUrl}}" name="insLink" lay-filter="insLink" class="layui-input insLink" placeholder="请输入链接" lay-skin="primary">
+		    				{% endif %}
+			    		{% endfor %}
+					{% else %}
+					<input type="text" name="insLink" lay-filter="insLink" class="layui-input insLink" placeholder="请输入链接" lay-skin="primary">
+					{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-insLink hide">请输入以http开头的链接</span>
+			</div>
+		</div>
+		{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+		<div class="secLine">
+		{% else %}
+		<div class="secLine hide">
+		{% endif %}
+			<div class="layui-form-item layui-index-cont inletBtnItem2">
+			    <label class="layui-form-label">入口类型：</label>
+			    <div class="layui-input-block" style="width: 280px;">
+			    	{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+				    	{% for lis2 in data.data.cpsEntranceList %}
+			    			{% if lis2.entranceCategory == 1 && lis2.entranceType == '1' %}
+			    			<input type="radio" name="selType" lay-filter="inletBtn2" title="按钮入口" class="input-lineBtn" />
+			        		<input type="radio" name="selType" lay-filter="inletBtn2" title="图片入口" class="input-lineBtn" checked />
+			        		{% elseif lis2.entranceCategory == 1 && lis2.entranceType == '0' %}
+			        		<input type="radio" name="selType" lay-filter="inletBtn2" title="按钮入口" class="input-lineBtn" checked />
+			        		<input type="radio" name="selType" lay-filter="inletBtn2" title="图片入口" class="input-lineBtn" />
+		    				{% endif %}
+	    				{% endfor %}
+		    		{% else %}
+		    		<input type="radio" name="selType" lay-filter="inletBtn2" title="按钮入口" class="input-lineBtn" checked />
+			        <input type="radio" name="selType" lay-filter="inletBtn2" title="图片入口" class="input-lineBtn" />
+			    	{% endif %}
+			    </div>
+			</div>
+			{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+				{% for lis2 in data.data.cpsEntranceList %}
+					{% if lis2.entranceCategory == 1 && lis2.entranceType == '0' %}
+					<div class="layui-form-item layui-index-cont btnNameItem2">
+					{% elseif lis2.entranceCategory == 1 && lis2.entranceType == '1' %}
+					<div class="layui-form-item layui-index-cont btnNameItem2 hide">
+					{% endif %}
+				{% endfor %}
+    		{% else %}
+    		<div class="layui-form-item layui-index-cont btnNameItem2">
+	    	{% endif %}
+			    <label class="layui-form-label"><span class="txt-impt">*</span>按钮名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+			    	{% if data.data.cpsEntranceList.length %}
+				    	{% for lis2 in data.data.cpsEntranceList %}
+			    			{% if lis2.entranceCategory == 1 && lis2.entranceType == '0' %}
+			    			<input type="text" value="{{lis2.entranceButtonName}}" name="btnsName2" lay-filter="btnsName2" class="layui-input btnsName2" placeholder="请输入名称" lay-skin="primary">
+		    				{% elseif lis2.entranceCategory == 1 && lis2.entranceType == '1' %}
+		    				<input type="text" name="btnsName2" lay-filter="btnsName2" class="layui-input btnsName2" placeholder="请输入名称" lay-skin="primary">
+		    				{% endif %}
+	    				{% endfor %}
+    				{% else %}
+    				<input type="text" name="btnsName2" lay-filter="btnsName2" class="layui-input btnsName2" placeholder="请输入名称" lay-skin="primary">
+    				{% endif %}
+		    		{% else %}
+		    		<input type="text" name="btnsName2" lay-filter="btnsName2" class="layui-input btnsName2" placeholder="请输入名称" lay-skin="primary">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-btnsName2 hide">请输入1~10个字符</span>
+			</div>
+			{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+				{% for lis2 in data.data.cpsEntranceList %}
+					{% if lis2.entranceCategory == 1 && lis2.entranceType == '1' %}
+					<div class="layui-form-item layui-index-cont imgItem">
+					{% elseif lis2.entranceCategory == 1 && lis2.entranceType == '0' %}
+					<div class="layui-form-item layui-index-cont imgItem hide">
+					{% endif %}
+				{% endfor %}
+    		{% else %}
+    		<div class="layui-form-item layui-index-cont imgItem hide">
+	    	{% endif %}
+			    <label class="layui-form-label"><span class="txt-impt">*</span>图片：</label>
+			    <div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+			    	{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+				    	{% if data.data.cpsEntranceList.length > 0 %}
+					    	{% for lis22 in data.data.cpsEntranceList %}
+				    			{% if lis22.entranceCategory == 1 && lis22.entranceType == 1 %}
+				    			<img id="uploadgoodsShow" class="updataFileImgSize uploadgoodsShow" src="{{lis22.entrancePicUrl}}" data-host="" data-url="{{lis22.entrancePicUrl}}"/>
+			    				{% endif %}
+		    				{% endfor %}
+	    				{% endif %}
+			    	{% endif %}
+					<input name="file" class="layui-upload-file updataFileImgs" id="addGoodsImg" lay-title=" " type="file">
+					<span class="copyUploadBtn copyUploadBtn1" style="right: 0px;">+</span>
+			  	</div>
+		  		<span class="tooltip-addFlexImg">请上传10M以内的jpg/png/jpeg格式的图片</span>
+			    <span class="layui-tooltip tooltip-hints tooltip-uploadgoodsShow hide">请上传图片</span>
+			</div>
+			<div class="layui-form-item layui-index-cont inletLinksItem2">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>入口链接：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+				    	{% for lis2 in data.data.cpsEntranceList %}
+			    			{% if lis2.entranceCategory == 1 %}
+			    			<input type="text" value="{{lis2.entranceUrl}}" name="insLink2" lay-filter="insLink2" class="layui-input insLink2" placeholder="请输入链接" lay-skin="primary">
+		    				{% endif %}
+	    				{% endfor %}
+		    		{% else %}
+		    		<input type="text" name="insLink2" lay-filter="insLink2" class="layui-input insLink2" placeholder="请输入链接" lay-skin="primary">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-insLink2 hide">请输入以http开头的链接</span>
+			</div>
+		</div>
+		{% if data.data.entranceMark[5] %}
+		<div class="thirdLine">
+		{% else %}
+		<div class="thirdLine hide">
+		{% endif %}
+			<div class="layui-form-item layui-index-cont inletBtnItem3">
+			    <label class="layui-form-label">入口类型：</label>
+			    <div class="layui-input-block" style="width: 280px;">
+			    	{% if data.data.entranceMark[5] %}
+				    	{% for lis3 in data.data.cpsEntranceList %}
+			    			{% if lis3.entranceCategory == 2 && lis3.entranceType == '1' %}
+			    			<input type="radio" name="selType2" lay-filter="inletBtn3" title="按钮入口" class="input-lineBtn" />
+			        		<input type="radio" name="selType2" lay-filter="inletBtn3" title="图片入口" class="input-lineBtn" checked="checked" />
+			        		{% elseif lis3.entranceCategory == 2 && lis3.entranceType == '0' %}
+			        		<input type="radio" name="selType2" lay-filter="inletBtn3" title="按钮入口" class="input-lineBtn" checked="checked" />
+			        		<input type="radio" name="selType2" lay-filter="inletBtn3" title="图片入口" class="input-lineBtn" />
+		    				{% endif %}
+	    				{% endfor %}
+		    		{% else %}
+		    		<input type="radio" name="selType2" lay-filter="inletBtn3" title="按钮入口" class="input-lineBtn" checked="checked" />
+			        <input type="radio" name="selType2" lay-filter="inletBtn3" title="图片入口" class="input-lineBtn" />
+			    	{% endif %}
+			    </div>
+			</div>
+			{% if data.data.entranceMark[5] %}
+				{% for lis3 in data.data.cpsEntranceList %}
+					{% if lis3.entranceCategory == 2 && lis3.entranceType == '0' %}
+					<div class="layui-form-item layui-index-cont btnNameItem3">
+					{% elseif lis3.entranceCategory == 2 && lis3.entranceType == '1' %}
+					<div class="layui-form-item layui-index-cont btnNameItem3 hide">
+					{% endif %}
+				{% endfor %}
+    		{% else %}
+    		<div class="layui-form-item layui-index-cont btnNameItem3">
+	    	{% endif %}
+			    <label class="layui-form-label"><span class="txt-impt">*</span>按钮名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[5] %}
+				    	{% if data.data.cpsEntranceList.length %}
+					    	{% for lis3 in data.data.cpsEntranceList %}
+				    			{% if lis3.entranceCategory == 2 && lis3.entranceType == '0' %}
+				    			<input type="text" value="{{lis3.entranceButtonName}}" name="btnsName3" lay-filter="btnsName3" class="layui-input btnsName3" placeholder="请输入名称" lay-skin="primary">
+			    				{% elseif lis3.entranceCategory == 2 && lis3.entranceType == '1' %}
+			    				<input type="text" name="btnsName3" lay-filter="btnsName3" class="layui-input btnsName3" placeholder="请输入名称" lay-skin="primary">
+			    				{% endif %}
+		    				{% endfor %}
+	    				{% else %}
+	    				<input type="text" name="btnsName3" lay-filter="btnsName3" class="layui-input btnsName3" placeholder="请输入名称" lay-skin="primary">
+	    				{% endif %}
+		    		{% else %}
+		    		<input type="text" name="btnsName3" lay-filter="btnsName3" class="layui-input btnsName3" placeholder="请输入名称" lay-skin="primary">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-btnsName3 hide">请输入1~10个字符</span>
+			</div>
+			{% if data.data.entranceMark[5] %}
+				{% for lis3 in data.data.cpsEntranceList %}
+					{% if lis3.entranceCategory == 2 && lis3.entranceType == '1' %}
+					<div class="layui-form-item layui-index-cont imgItem2">
+					{% elseif lis3.entranceCategory == 2 && lis3.entranceType == '0' %}
+					<div class="layui-form-item layui-index-cont imgItem2 hide">
+					{% endif %}
+				{% endfor %}
+    		{% else %}
+    		<div class="layui-form-item layui-index-cont imgItem2 hide">
+	    	{% endif %}
+			    <label class="layui-form-label"><span class="txt-impt">*</span>图片：</label>
+			    <div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+			    	{% if data.data.entranceMark[5] %}
+				    	{% if data.data.cpsEntranceList.length > 0 %}
+					    	{% for lis32 in data.data.cpsEntranceList %}
+				    			{% if lis32.entranceCategory == 2 && lis32.entranceType == '1' %}
+				    			<img id="uploadgoodsShow2" class="updataFileImgSize uploadgoodsShow2" src="{{lis32.entrancePicUrl}}" data-host="" data-url="{{lis22.entrancePicUrl}}"/>
+			    				{% endif %}
+		    				{% endfor %}
+	    				{% endif %}
+			    	{% endif %}
+					<input name="file" class="layui-upload-file updataFileImgs" id="addGoodsImg2" lay-title=" " type="file">
+					<span class="copyUploadBtn copyUploadBtn2" style="right: 0px;">+</span>
+			  	</div>
+		  		<span class="tooltip-addFlexImg">请上传10M以内的jpg/png/jpeg格式的图片</span>
+			    <span class="layui-tooltip tooltip-hints tooltip-uploadgoodsShow2 hide">请上传图片</span>
+			</div>
+			<div class="layui-form-item layui-index-cont inletLinksItem3">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>入口链接：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.entranceMark[5] %}
+				    	{% for lis3 in data.data.cpsEntranceList %}
+			    			{% if lis3.entranceCategory == 2 %}
+			    			<input type="text" value="{{lis3.entranceUrl}}" name="insLink3" lay-filter="insLink3" class="layui-input insLink3" placeholder="请输入链接" lay-skin="primary">
+		    				{% endif %}
+	    				{% endfor %}
+		    		{% else %}
+		    		<input type="text" name="insLink3" lay-filter="insLink3" class="layui-input insLink3" placeholder="请输入链接" lay-skin="primary">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-insLink3 hide">请输入以http开头的链接</span>
+			</div>
+		</div>
+		<div class="layui-form-item nextBackBtn">
+		 	<div class="layui-inline">
+            	<a data-ruleId="{{data.data.base.rule_id}}" class="layui-btn setMessage">保存</a>
+        	</div>
+        	<!--{% if page && (!page.oSave || !page.online) %}
+		 	<div class="layui-inline">
+            	<a  class="layui-btn slaves">上架</a>
+        	</div>
+        	{% endif %}-->
+        </div>
+	 </form>      
+{% endblock %}
+{% block layui%}   
+<script src="/controllers/operation/orderManagement/setAdvGoods.js" type="text/javascript" charset="utf-8"></script>
+{% endblock%}

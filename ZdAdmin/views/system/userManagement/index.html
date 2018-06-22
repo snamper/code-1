@@ -1,0 +1,101 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-用户管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">用户管理</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建" %}
+	    			<a href="./userManage/addUser" class="layui-btn" style="float:right;margin-right:60px;">新建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="usersecion">
+		<div class="userSection">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline" style="margin-bottom: 0 !important;">
+				    <label class="layui-form-label">用户名:</label>
+				    <div class="layui-input-inline">
+				    	{% if page && page.userName %}
+				    		<input type="text"  name="username" value="{{page.userName}}" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input userName">
+				         {% else %}
+						 	<input type="text"  name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input userName">
+						 {% endif %}
+				        
+				    </div>
+				    <span class="layui-tooltip tooltip-hints tooltip-onlineMerchantCode hide">请输入用户名</span>
+				</div>
+				<div class="layui-inline">
+			        <label class="layui-form-label">日期</label>
+			        <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+	                </div>
+	                <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+						 {% endif %}                             
+	                </div>
+			    </div>
+				<div class="layui-form-referBtn layui-input-inline" style="margin-top:0 ;">
+					 <div class="layui-input-block">			    
+						 <a class="layui-btn right site-demo-right40 queryUser" >查询</a>
+					 </div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <!--<th>序号</th>-->
+		            <th>用户名</th>
+		            <th>姓名</th>
+		            <!--<th>创建时间</th>-->
+		            <th>角色名称</th>
+		            <th>创建人</th>
+		            <th>时间</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="userForm">
+		    	{% for item in data.data.datas.list%}
+			    	<tr>
+					 	<td>{{item.ename}}</td> 
+					 	<td>{{item.name}}</td>
+					 	<td>
+					 		{{item.role_name}}
+					 	</td>
+					 	<td>{{item.create_user}}</td>
+					 	<td>{{item.create_time}}</td>
+					 	<td>
+					 		<a href="./userManage/editUser?userId={{item.id}}" class="layui-btn ">编辑</a>
+					 		{% if item.type == 0 %}
+					 			<a data-resource="1" data-id="{{item.id}}" class="layui-btn  disabledUser ">启用</a>
+					 		{% else %}
+					 			<a data-resource="0" data-id="{{item.id}}" class="layui-btn layui-btn-danger disabledUser">封停</a>
+					 		{% endif %}
+					 	</td>				 	
+					 </tr>	
+				{% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/system/userManagement/index.js"></script>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--轮播图管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>轮播图管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">轮播图编辑</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+    {% if data.message =="成功"%}
+	<form class="layui-form formPage site-demo-top40 addFlexImgMan setMarCenter" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">轮播图名称：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+			    	{% if data.data.name %}
+				    <input type="text" name="flexImgName" id="flexImgName" value="{{data.data.name}}" placeholder="请输入长度不超过15字轮播图名称" lay-verify="required" autocomplete="off" class="layui-input">
+			    	{% else %}
+			    	<input type="text" name="flexImgName" id="flexImgName" placeholder="请输入长度不超过15字轮播图名称" lay-verify="required" autocomplete="off" class="layui-input">
+			    	{% endif %}
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-flexImgName hide">请输入长度不超过15字轮播图名称</span>
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="txt-impt">*</span>轮播图图片：</label>
+			<div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+				{% if data.data.image_url %}
+				<img id="uploadFlexShow" class="imgSize" src="{{data.data.image_url}}" data-url="{{data.data.image_url}}"/>
+		    	{% else %}
+		    	<img id="uploadFlexShow" src=" " data-url=""/>
+		    	{% endif %}
+				<input name="file" class="layui-upload-file" id="addFlexImg" lay-title=" " type="file">
+				<span class="copyUploadBtn">+</span>
+				{% if page && page.current == 'homePage' %}
+				<span class="layui-tooltip" style="color: #c1c1c1;">建议图片大小为750*178</span>
+				{% else %}
+				<span class="layui-tooltip" style="color: #c1c1c1;">建议图片大小为750*417</span>
+				{% endif %}
+		  		<span class="layui-tooltip tooltip-hints tooltip-addFlexImg hide">请上传10M以内的jpg/png/jpeg格式的图片</span>
+		  	</div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">资源链接:</label>
+		    <div class="layui-input-block">
+		    	{% if data.data.type == "1" %}
+		    	<input name="selectStatus" value="内部" title="内部" type="radio">
+				<input name="selectStatus" value="外部" title="外部" checked="" type="radio">
+		    	{% else %}
+				<input name="selectStatus" value="内部" title="内部" checked="" type="radio">
+				<input name="selectStatus" value="外部" title="外部" type="radio">
+		    	{% endif %}
+		    </div>
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">图片链接：</label>
+			    {% if data.data.type == "2" %}
+			    	{% if data.data.adName %}
+				    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlBox">
+				    	{% if data.data.adName %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrl" value="{{data.data.adName}}" data-id="{{data.data.ad_id}}" autocomplete="off" class="layui-input" disabled="">
+				    	{% else %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrl" autocomplete="off" class="layui-input" disabled="">
+				    	{% endif %}
+					    <a class="layui-btn selectBtnF" data-selType="{{data.data.link_type}}" href="javascript:;">选择链接</a>
+				    </div>
+				    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlOutBox hide">
+				    	{% if data.data.link_url %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" value="{{data.data.link_url}}" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+				    	{% else %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+				    	{% endif %}
+				    </div>
+					{% else %}    
+				    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlBox">
+				    	{% if data.data.full_name %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrl" value="{{data.data.full_name}}" data-id="{{data.data.goods_id}}" autocomplete="off" class="layui-input" disabled="">
+				    	{% else %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrl" autocomplete="off" class="layui-input" disabled="">
+				    	{% endif %}
+					    <a class="layui-btn selectBtnF" data-selType="{{data.data.link_type}}" href="javascript:;">选择链接</a>
+				    </div>
+				    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlOutBox hide">
+				    	{% if data.data.link_url %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" value="{{data.data.link_url}}" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+				    	{% else %}
+				    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+				    	{% endif %}
+				    </div>
+			    	{% endif %}
+			    {% else %}
+			    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlBox hide">
+			    	<input type="text" name="flexImgUrl" id="flexImgUrl" autocomplete="off" class="layui-input" disabled="">
+				    <a class="layui-btn selectBtnF" data-selType="{{data.data.link_type}}" href="javascript:;">选择链接</a>
+			    </div>
+			    <div class="layui-input-inline layui-input-CoverImg layui-input-pos flexImgUrlOutBox">
+			    	{% if data.data.link_url %}
+			    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" value="{{data.data.link_url}}" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+			    	{% else %}
+			    	<input type="text" name="flexImgUrl" id="flexImgUrlOut" placeholder="请输入以http://开头的URL" autocomplete="off" class="layui-input">
+			    	{% endif %}
+			    </div>
+			    {% endif %}
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-flexImgUrl hide">请以http开头,支持https</span>
+		    <span class="layui-tooltip tooltip-hints tooltip-flexImgUrlLink hide" style="margin-left: 75px;">请选择图片链接</span>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>排序号：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+			    	{% if data.data.sort %}
+			    	<input type="text" name="flexSort" id="flexSort" value="{{data.data.sort}}" autocomplete="off" class="layui-input hotLabel">
+			    	{% else %}
+			    	<input type="text" name="flexSort" id="flexSort" autocomplete="off" class="layui-input hotLabel">
+			    	{% endif %}
+			    </div>	
+			    <span class="layui-tooltip tooltip-hints tooltip-flexSort hide">请输入1-5的任意整数</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item getShowPlats">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>显示平台：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.platform == '2' %}
+				    <input name="like1[Android]" lay-skin="primary" title="安卓" type="checkbox" checked="checked">
+				    <input name="like1[IOS]" lay-skin="primary" title="IOS" type="checkbox">
+				    {% elseif data.data.platform == '1' %}
+				    <input name="like1[Android]" lay-skin="primary" title="安卓" type="checkbox">
+				    <input name="like1[IOS]" lay-skin="primary" title="IOS" type="checkbox" checked="checked">
+				    {% elseif data.data.platform == '0' %}
+				    <input name="like1[Android]" lay-skin="primary" title="安卓" type="checkbox" checked="checked">
+				    <input name="like1[IOS]" lay-skin="primary" title="IOS" type="checkbox" checked="checked">
+				    {% else %}
+				    <input name="like1[Android]" lay-skin="primary" title="安卓" type="checkbox">
+				    <input name="like1[IOS]" lay-skin="primary" title="IOS" type="checkbox">
+				    {% endif %}
+			    </div>
+		    </div>
+	    </div>
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a class="layui-btn" id="flexImgSave">保存</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a class="layui-btn" id="flexImgUp">上架</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="/operation/flexManagement/flexMan" class="layui-btn" id="flexImgBack">返回</a>
+        	</div>
+        </div>
+	 </form>
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/operation/flexManagement/addFlexImgMan.js"></script>
+{% endblock%}

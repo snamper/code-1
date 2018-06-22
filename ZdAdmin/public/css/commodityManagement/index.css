@@ -1,0 +1,316 @@
+/*
+ *商家管理-商品管理-新建商品-商品素材图
+*/
+i{
+	font-style: normal;
+}
+.clearfix:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.hide{display: none;}
+.goodsInfoBox,.goodsDetailsBox, .goodsLisBox{
+	position: relative;
+}
+.goodsLisBox{
+	margin-right: 30px;
+}
+.goodsDetailsBox, .goodsLisBox{
+	width: 200px;
+}
+.uploadBox .layui-upload-button{
+	width: 200px;
+}
+.uploadBox input{
+	width: 200px;
+	height: 38px;
+	z-index: 666;
+	position: relative;
+}
+.uploadBox{
+	padding: 15px 0 0 20px;
+}
+.goodsInfoBox .layui-upload-button{
+	opacity: 0.01;
+	z-index: 222;
+	cursor: pointer;
+}
+.goodsInfoBox .coverInputBtn{
+	display: inline-block;
+	font-size: 16px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+}
+.uploadImgList{
+	padding: 20px 30px;
+}
+.uploadImgItem{
+	position: relative;
+	margin: 0 20px 20px 0;
+}
+.uploadImgListEmpty{
+	font-size: 14px;
+	text-align: center;
+	color: #ccc;
+}
+.deleteUploadImg{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 20;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	cursor: pointer;
+	font-weight: bold;
+}
+.uploadImage{
+	width: 200px;
+	height: 112.5px;
+}
+.goodsCloseBigBtn{
+	display: block;
+	padding: 0;
+}
+.goodsCloseBigBtn a{
+	display: block;
+	text-align: center;
+	position: relative;
+}
+.goodsImgShowBox{
+	width: 640px;
+    margin: 15px 0 0 25%;
+    position: relative;
+}
+.goodsImgShowUl{
+	position: relative;
+	width: 640px;
+    overflow: hidden;
+}
+.goodsImgShow{
+	width: 1320px;
+	position: relative;
+	left: 0;
+	transition: 0.5s;
+}
+.hoverClickBtn{
+	position: absolute;
+	top: 0;
+    width: 58px;
+    height: 120px;
+	background: #ececec url(/images/left_right.png) no-repeat;
+	transition: 0.5s;
+	cursor: pointer;
+}
+.hoverClickBtnLeft{
+	background-position: 0 0;
+	left: -60px;
+	border-radius: 6px 0 0 6px;
+}
+.hoverClickBtnRight{
+	background-position: 0 -120px;
+	right: -60px;
+	border-radius: 0 6px 6px 0;
+}
+.hoverClickBtn:hover{
+	background-color: #d6d6d6;
+}
+.uploadImageText{
+	text-align: center;
+	line-height: 20px;
+}
+.formPage .convertBtn{
+	background-color: #fff;
+	color: gray;
+    line-height: 38px;
+}
+.layui-form-item .layui-batch{
+    position: absolute;
+    left: 0;
+}
+.layui-form-item .layui-uploadFile-style{
+	position: relative;
+	width: 92px;
+	height: 38px;
+	z-index: 223;
+}
+.layui-form-item .layui-uploadFile-showStyle{
+	margin: 10px 0;
+	opacity: 1;
+}
+
+#goodsImgShow .uploadImgItem{
+	position: relative;
+	width:200px;
+	height:120px;
+}
+#goodsImgShow .uploadImgItem .coverImg{
+	position:absolute;
+	display: block;
+	width:200px;
+	height:112.5px;
+	left: 0;
+	top:0;
+	z-index:10 !important;
+	cursor: pointer;
+}
+#previewImg{
+	position: absolute;
+	left: 0;
+	transition: 1s;
+}
+.adverAppView .goods_view_content{
+	width: 375px;
+	position: relative;
+	overflow: hidden;
+}
+.adverAppView .goods_view_content .goode_view_img{
+	height: 185px;
+	overflow: hidden;
+}
+.pvImgShow{
+	width: 375px;
+	height: 185px;
+	overflow: hidden;
+}
+
+
+.coverScreen{
+	width: 100%;
+	height: 100%;
+	z-index:100;
+	position: fixed;
+	left: 0;
+	top:0;
+	background: #333;
+	opacity: 0.3;
+}
+.goods_view_overControll{
+	height: 738px;
+	overflow-y: auto;
+}
+.goods_view_overControll::-webkit-scrollbar {display:none}
+.adverAppView{
+	width: 375px;
+	min-height:738px;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	top:10px;
+	margin-left:-185px;
+	z-index:102;
+	font-size: 12px;
+	color:#333
+}
+.closeAppView{
+	position: absolute;
+	right: -66px;
+	top:0;
+	z-index: 104 !important;
+}
+.goods_view_content{
+	height: 620px;
+	overflow-y: auto;
+}
+.goods_view_title{
+	width: 100%;
+	height: 40px;
+	background: #333;
+	color: #fff;
+	line-height: 40px;
+	font-size: 18px;
+	text-align: center;
+}
+.goode_view_img{
+	width: 100%;
+	height: 210px;
+	background: #333;
+}
+.goode_view_img img{
+	width: 100%;
+	height: 100%;
+}
+.view_content{
+	padding:0 14px
+}
+.view_content .view_title{
+	height:auto;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 15px;
+}
+.view_content .view_title h1{
+	font-weight: 800;
+	fonte-size: 16px;
+	margin:10px 0 10px 0;
+}
+.view_content .view_title > p:nth-child(1) .view_code {
+	float: left;
+}
+.view_content .view_title .view_code {
+	font-weight: 800;
+	margin-right: 8px;
+	font-size:16px;
+	color:red
+}
+.view_content .view_title .view_times {
+	float: right;
+}
+.view_content .view_title  p:nth-child(2){
+	margin-bottom: 10px;
+}
+.view_content .view_title  p:nth-child(3){
+	margin-bottom: 15px;
+}
+.view_content .view_title .view_money {
+	margin-right: 8px;
+}
+
+.view_message h3{
+	color: red;
+	margin-top:10px;
+	margin-bottom:6px;
+	font-size: 16px;
+}
+.view_message > p:nth-child(1){
+	font-size: 18px;
+	margin-top:11px;
+}
+.view_message ul li{
+	line-height: 18px;
+	text-indent: 30px;
+}
+.goods_view_bottom{
+	height: 64px;
+	border-top: 1px solid #ccc;
+	line-height: 64px;
+	font-size: 16px;
+	margin-top:8px;
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    clear: both;
+    width: 100%;
+}
+.goods_view_bottom p:nth-child(1) i {
+	color: #FF0000;
+}
+.goods_view_bottom p:nth-child(1){
+	float: left;
+	margin-left:14px
+}
+.goods_view_bottom p:nth-child(2) {
+	height: 100%;
+	float: right;
+	width: 35%;
+	text-align: center;
+	background: #FF0000;
+	color: #fff;
+	font-weight: 800;
+}
+
+
+.goods_view_content::-webkit-scrollbar {display:none}

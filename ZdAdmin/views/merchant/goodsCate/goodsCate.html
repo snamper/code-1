@@ -1,0 +1,143 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-商品分类{% endblock %}
+{% block head%}
+	<style type="text/css">
+		.layui-tab-title {
+			margin:0 20px;
+		}
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+    <ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">商品分类</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建" %}
+	    			<a href="/merchant/goodsCate/addCate" class="layui-btn " style="float:right;margin-right:60px;">新建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	</ul>
+{%endblock%}
+{% block content%}
+<section id="sec1">
+	<div class="layui-tab">
+		<ul class="layui-tab-title chooseLocation" data-location="{{page.location}}">
+			{% if page.location == 1 %}
+				<li data-location="1" class="layui-this">一级分类</li>
+				<li data-location="2" >二级分类</li>
+			{% else %}
+				<li data-location="1" >一级分类</li>
+				<li data-location="2" class="layui-this">二级分类</li>
+			{% endif %}
+		</ul>
+	</div>
+     <form class="layui-form criticismMan" action="" style="padding-top: 15px;">
+	 		<div class="layui-inline layui-form-item layui-input-inline">
+			 	<label class="layui-form-label" style="width: 100px;">商品分类名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.sortName %}
+			    	<input type="text"  value="{{page.sortName}}"  class="layui-input sortName">
+					{% else %}
+					<input type="text"  class="layui-input sortName">
+					{% endif %}
+			    </div>
+		    </div>
+		   <div class="layui-form-item layui-input-inline">
+                <label class="layui-form-label">时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+           </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	     <table class="layui-table table-width">
+		    <thead>
+			    <tr>
+			     	<th>排序</th>
+			     	<th>类别</th>
+			     	<th>商品分类名称</th>
+			     	<th>创建人</th>
+			     	<th>商品数量</th>
+			     	<th>创建时间</th>
+			     	<th>操作</th>
+			    </tr>
+		    </thead>
+		    {% if data.data.datas &&  data.data.datas.length > 0 %}
+	        <tbody id="htmlWrap">
+	         	{% for item in data.data.datas %}
+	         	<tr class="checkedBoxTr" data-id="{{item.id}}">
+	         		<td>{{item.sortOrder}}</td>
+	         		<td>
+	         			{% if item.sortType == 1 %}
+	         				一级分类
+	         			{% else %}
+	         				二级分类
+	         			{% endif %}
+	         		</td>
+	         		<td>{{item.sortName}}</td>
+	         		<td>{{item.creatorName}}</td>
+	         		<td>{{item.productUsedCount}}</td>
+				 	<td>{{item.createTime}}</td>
+				 	
+			 		<td>
+		 				{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "删除" && item.productUsedCount <= 0 %}
+					    			<a class="layui-btn layui-btn-danger delGoodsCate" href="javascript:;" data-id="{{item.id}}">删除</a>
+					    		{% elseif unescape(code.name) == "编辑" %}
+					    			<a class="layui-btn " href="/merchant/goodsCate/editCate?id={{item.id}}&location=1&sortType={{item.sortType}}&sort={{item.sortOrder}}&name={{escape(item.sortName)}}&pageNo=1&pageSize=100000000&fid={{item.fid}}&status={{item.enabled}}">编辑</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+			 		</td>
+				</tr>
+	         	{% endfor %}
+			 </tbody>
+			 {% endif %}
+		 </table>
+		 
+	 </form>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+
+     <div id="goodsCateBox" class="goodsCateBox hide">
+			<div class="layui-inline layui-form-item layui-input-inline" style="margin-top: 10px;">
+			 	<label class="layui-form-label" >商品分类：</label>
+			    <div class="layui-input-inline">
+			    	<input type="text"  placeholder="请输入商品分类名称"  class="layui-input goodsCateName">
+			    </div>
+			    <div class="layui-form-item " style="height:0;margin-left: 110px;">
+			    	<span class="layui-tooltip tooltip-goodsCateName hide"></span>
+			    </div>
+			    
+		    </div>
+		    
+			<div class="layui-form-saveCloseBtn" style="margin-left: 110px;margin-top: 15px;">
+			    <a  class="layui-btn layui-save-btn saveGoodsCate">保存</a>
+			    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+			</div>
+		</div>
+     
+</section>   
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/merchant/goodsCate/goodsCate.js"></script>
+{% endblock%}

@@ -1,0 +1,174 @@
+{% extends "./../../layout.html"%}
+{% block title%}客户管理--商户管理-商户待审核管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/client/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>客户管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li class="arrow-icon">商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">商户待审核管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+    {% if data.message =="成功"%}
+	<form class="layui-form tenantAuditMan" action="">
+	 	<div class="tabChange">
+		 	<div class="layui-tab">
+	 			{% if page && page.status == '1' %}
+		 			<ul data-status="1" class="layui-tab-title dataActiveUl">
+						<li data-status="1" class="layui-this">待审核</li>
+						<li data-status="5">已审核</li>
+					</ul>
+				{% elseif page && page.status == '5' %}
+					<ul data-status="1" class="layui-tab-title dataActiveUl">
+						<li data-status="1">待审核</li>
+						<li data-status="5" class="layui-this">已审核</li>
+					</ul>
+				{% else %}
+				<ul data-status="1" class="layui-tab-title dataActiveUl">
+					<li data-status="1" class="layui-this">待审核</li>
+					<li data-status="5">已审核</li>
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">商户名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if page && page.shortName %}
+					 <input type="text" name="title" id="shortName" value="{{page.shortName}}" lay-verify="text" autocomplete="off" class="layui-input">
+					 {% else %}
+					 <input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" class="layui-input">
+					 {% endif %} 
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label" style="width: 40px;">时间:</label>
+                <div class="layui-input-inline">
+				    {% if page && page.stDate %}
+					<input class="layui-input" placeholder="开始时间" value="{{page.stDate}}" id="LAY_demorange_s">
+					{% else %}
+					<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					{% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.enDate %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.enDate}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>商户名称</th>
+	     	<th>销售方式</th>
+	     	<th>创建人</th>
+	     	<th>商品数量</th>
+	     	{% if page && page.status == '1' %}
+	     	<th>提交时间</th>
+	     	<th>操作</th>
+	     	{% elseif page && page.status == '5' %}
+	     	<th>状态</th>
+	     	<th>审核时间</th>
+	     	{% else %}
+	     	<th>提交时间</th>
+	     	<th>操作</th>
+	     	{% endif %}
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.datas.list %}
+         	<tr>
+         		<td>{{loop.index}}</td>
+         		{% if lis.short_name %}
+			 	<td><a class="textLinks" href="/client/tenantManagement/showTenantf?merchantId={{lis.id}}" style="color: #009688;">{{lis.short_name}}</a></td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.sales_way == '1' %}
+			 	<td>线上</td>
+			 	{% elseif lis.sales_way == '2' %}
+			 	<td>线下</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.creator_name %}
+			 	<td>{{lis.creator_name}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.adcounts || lis.adcounts == '0' %}
+			 	<td>{{lis.adcounts}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if page && page.status == '1' %}
+			     	{% if lis.create_time %}
+				 	<td>{{lis.create_time}}</td>
+				 	{% else %}
+				 	<td>--</td>
+				 	{% endif %}
+				 	{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "审核" %}
+				    			<td><a href="/client/tenantManagement/showTenantsF?merchantId={{lis.id}}" class="layui-btn auditBtns">审核</a></td>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+		     	{% elseif page && page.status == '5' %}
+			     	{% if lis.status && lis.status == '0' %}
+				 	<td>草稿箱</td>
+				 	{% elseif lis.status && lis.status == '1' %}
+				 	<td>待审核</td>
+				 	{% elseif lis.status && lis.status == '2' %}
+				 	<td>审核通过</td>
+				 	{% elseif lis.status && lis.status == '3' %}
+				 	<td>待修改</td>
+				 	{% elseif lis.status && lis.status == '4' %}
+				 	<td>已删除</td>
+				 	{% elseif lis.status && lis.status == '5' %}
+				 	<td>已审核</td>
+				 	{% endif %}
+				 	{% if lis.handle_time %}
+				 	<td>{{lis.handle_time}}</td>
+				 	{% else %}
+				 	<td>--</td>
+				 	{% endif %}
+		     	{% else %}
+			     	{% if lis.create_time %}
+				 	<td>{{lis.create_time}}</td>
+				 	{% else %}
+				 	<td>--</td>
+				 	{% endif %}
+				 	<td>
+				 	{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "审核" %}
+				    			<a href="/client/tenantManagement/showTenantsF?merchantId={{lis.id}}" class="layui-btn auditBtns">审核</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				    </td>
+		     	{% endif %}
+			</tr>
+         	{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/client/tenantManagement/tenantAudit.js"></script>
+{% endblock%}

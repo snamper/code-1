@@ -1,0 +1,189 @@
+{% extends "./../../../layout.html"%} 
+{% block title%}运营管理-任务管理-抽奖任务设置{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" /> 
+<link rel="stylesheet" href="/css/operation/task.css" /> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">任务管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">抽奖任务设置</li>
+	<li class="lisFlBtn">
+		<a href="javascript:;" class="layui-btn posExampleBtn">奖品位置示例</a>
+	</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form" action="">
+	<table class="layui-table table-width" id="taskTable">
+		<tr>
+			<th>抽奖位置</th>
+			<th>奖项</th>
+			<th>商品</th>
+			<th>积分</th>
+			<th>中奖概率</br>0-100之间(可保留2位小数)</th>
+			<th>奖品图标</br>建议200*200</th>
+		</tr>
+		<tbody id="taskTbody">
+			{% if data.data.length %} 
+			{% for item in data.data %}
+			<tr>
+				<td>{{loop.index}}</td>
+				<td>
+					<div class="layui-input-inline selAwardsBox">
+						{% if item.type == '1' %}
+				        <select name="taskTypes" class="selTaskTypes" data-task="1" lay-filter="taskTypes" lay-verify="required" lay-search="">
+				        	<option value="0">奖品类型</option>
+				            <option value="1" selected="selected">积分奖励</option>
+				            <option value="2">商品</option>
+				            <option value="3">谢谢参与</option>
+				        </select>
+			        	{% elseif item.type == '2' %}
+				        <select name="taskTypes" class="selTaskTypes" data-task="2" lay-filter="taskTypes" lay-verify="required" lay-search="">
+				        	<option value="0">奖品类型</option>
+				            <option value="1">积分奖励</option>
+				            <option value="2" selected="selected">商品</option>
+				            <option value="3">谢谢参与</option>
+				        </select>
+				        {% elseif item.type == '3' %}
+				        <select name="taskTypes" class="selTaskTypes" data-task="3" lay-filter="taskTypes" lay-verify="required" lay-search="">
+				        	<option value="0">奖品类型</option>
+				            <option value="1">积分奖励</option>
+				            <option value="2">商品</option>
+				            <option value="3" selected="selected">谢谢参与</option>
+				        </select>
+			        	{% else %}
+				        <select name="taskTypes" class="selTaskTypes" data-task="0" lay-filter="taskTypes" lay-verify="required" lay-search="">
+				        	<option value="0" selected="selected">奖品类型</option>
+				            <option value="1">积分奖励</option>
+				            <option value="2">商品</option>
+				            <option value="3">谢谢参与</option>
+				        </select>
+			        	{% endif %}
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline selGoodsBox clearfix">
+						{% if item.type == '2' && item.lacky_draw %}
+						<input type="text" data-id="{{item.product_id}}" value="{{item.lacky_draw}}" name="selGoods" class="layui-input selGoodsInt" lay-verify="text" autocomplete="off" placeholder="请选择商品" disabled="disabled">
+						{% else %}
+						<input type="text" data-id="{{item.product_id}}" value="" name="selGoods" class="layui-input selGoodsInt" lay-verify="text" autocomplete="off" placeholder="请选择商品" disabled="disabled">
+						{% endif %}
+						<a href="javascript:;" data-id="{{item.product_id}}" class="layui-btn selGoodsBtn">选择商品</a>
+						{% if item.type == '2' %}
+						<i class="disUseBox hide"></i>
+						{% else %}
+						<i class="disUseBox"></i>
+						{% endif %}
+					</div>
+				</td>
+				<td class="adPoints">
+					<div class="layui-input-inline setPointsBox clearfix">
+					    <a class="layui-btn layui-btn-primary layui-btn-small cutPointsBtn"><i class="layui-icon">-</i></a>
+					    {% if item.type == '1' && item.lacky_draw %}
+					    <input class="pointsNumInpt" value="{{item.lacky_draw}}" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+						{% else %}
+						<input class="pointsNumInpt" data-val="1" value="1" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+						{% endif %}
+					    <a class="layui-btn layui-btn-primary layui-btn-small addPointsBtn"><i class="layui-icon">+</i></a>
+						{% if item.type == '1' %}
+						<i class="disUseBox hide"></i>
+						{% else %}
+						<i class="disUseBox"></i>
+						{% endif %}
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline getProbBox">
+						{% if item.probability %}
+						<input class="lottosNumInpt" data-val="{{item.probability|floatMul(100)}}" value="{{item.probability|floatMul(100)}}" placeholder="0-100" type="text" name="lottosNum" autocomplete="off"/>%
+						{% else %}
+						<input class="lottosNumInpt" data-val="0" value="0" placeholder="0-100" type="text" name="lottosNum" autocomplete="off"/>%
+						{% endif %}
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline getImgBox">
+						<div class="lottoryIconBox">
+							{% if item.draw_image %}
+							<img class="uploadLotteryIcon imgSize" src="{{item.draw_image}}" data-url="{{item.draw_image}}"/>
+					    	{% else %}
+					    	<img class="uploadLotteryIcon" src=" " data-url=""/>
+					    	{% endif %}
+					    	<div class="fileBtnBox">
+					    		<input name="file" class="layui-upload-file addLotteryIcon" title=" " lay-title=" " type="file">
+								<span class="copyUploadBtn">+</span>
+					    	</div>
+						</div>
+				  		<span class="layui-tooltip tooltip-hints tooltip-addLotteryIcon hide">请上传10M以内的jpg/png/jpeg格式的图片</span>
+					</div>
+				</td>
+			</tr>
+			{% endfor %} 
+			{% else %}
+			{% for item in [1,2,3,4,5,6,7,8] %}
+			<tr>
+				<td>{{loop.index}}</td>
+				<td>
+					<div class="layui-input-inline selAwardsBox">
+						<select name="taskTypes" class="selTaskTypes" data-task="0" lay-filter="taskTypes" lay-verify="required" lay-search="">
+				        	<option value="0" selected="selected">选择奖项</option>
+				            <option value="1">积分奖励</option>
+				            <option value="2">商品</option>
+				            <option value="3">谢谢参与</option>
+				        </select>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline selGoodsBox clearfix">
+						<input type="text" name="selGoods" class="layui-input selGoodsInt" lay-verify="text" autocomplete="off" placeholder="请选择商品" disabled="disabled">
+						<a href="javascript:;" class="layui-btn selGoodsBtn" data-id="">选择商品</a>
+						<i class="disUseBox"></i>
+					</div>
+				</td>
+				<td class="adPoints">
+					<div class="layui-input-inline setPointsBox clearfix">
+					    <a class="layui-btn layui-btn-primary layui-btn-small cutPointsBtn"><i class="layui-icon">-</i></a>
+					    <input class="pointsNumInpt" data-val="1" value="1" placeholder="1-1000" type="text" name="pointsNum" autocomplete="off"/>
+					    <a class="layui-btn layui-btn-primary layui-btn-small addPointsBtn"><i class="layui-icon">+</i></a>
+					    <i class="disUseBox"></i>
+				    </div>
+				</td>
+				<td>
+					<div class="layui-input-inline getProbBox">
+						<input class="lottosNumInpt" data-val="1" value="1" placeholder="0-100" type="text" name="lottosNum" autocomplete="off"/>%
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline getImgBox">
+						<div class="lottoryIconBox">
+				    		<img class="uploadLotteryIcon" src=" " data-url=""/>
+					    	<div class="fileBtnBox">
+					    		<input name="file" class="layui-upload-file addLotteryIcon" title=" " lay-title=" " type="file">
+								<span class="copyUploadBtn">+</span>
+					    	</div>
+				    	</div>
+				  		<span class="layui-tooltip tooltip-hints tooltip-addLotteryIcon hide">请上传10M以内的jpg/png/jpeg格式的图片</span>
+					</div>
+				</td>
+			</tr>
+			{% endfor %} 
+			{% endif %}
+		</tbody>
+	</table>
+</form>
+<div class="setPageBtnCenter">
+    <a href="javascript:;" class="layui-btn saveTaskSetBtn">保存</a>
+    <a href="/operation/taskManagement/lotteryTaskList" class="layui-btn taskBackBtn">返回</a>
+</div>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/taskManagement/setLotteryTask.js"></script>
+<script type="text/javascript" src="/controllers/operation/taskManagement/lotteryGoodsPopupSelFn.js"></script>
+{% endblock%}

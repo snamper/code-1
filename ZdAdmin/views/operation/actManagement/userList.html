@@ -1,0 +1,136 @@
+<!--{% extends "./../../layout.html"%}-->
+{% block title%}运营管理-活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/actManagement.css" />
+	<style type="text/css">
+		.layui-form-saveCloseBtn{
+			margin-left: 32%;
+		}
+		.uploadAdverLogo{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+	    #importAdverLogo{position:absolute;top:0;left:0;z-index:100;width:115px}	
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>渠道列表</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">活动效果</li>
+	</ul>
+{%endblock%}
+{% block content%}
+{% if data.message == "成功" %}
+	<section class="act-channel-detail">
+		<form class="layui-form layui-form-position layui-form-padding" style="width: 98%; margin: 10px 20px;" action="">
+			<div class="layui-form-item">
+				<div class="channel-detail-main">
+					<label class="layui-form-label">渠道名称:</label>
+					<span class="layui-form-label">{{data.data.datas.detail.channelName}}</span>	
+				</div>
+				<div class="channel-detail-main" style="margin: 0 30px;">
+					<span class="layui-form-label">{{page.regTime|dateSplit}}</span>
+				</div>
+				<div class="channel-detail-main">
+					<label class="layui-form-label">注册:</label>
+					<span class="layui-form-label">{{data.data.datas.stat.regnum}}</span>	
+				</div>
+				<div class="channel-detail-main">
+					<label class="layui-form-label">激活:</label>
+					<span class="layui-form-label">{{data.data.datas.stat.actnum}}</span>	
+				</div>
+				<div class="channel-detail-main">
+					<label class="layui-form-label">次日留存:</label>
+					<span class="layui-form-label">{{data.data.datas.stat.daynum}}</span>	
+				</div>
+				<div class="channel-detail-main">
+					<label class="layui-form-label">七日留存:</label>
+					<span class="layui-form-label">{{data.data.datas.stat.weeknum}}</span>	
+				</div>
+				
+			</div>	
+               <div class="layui-form-item">
+               	<table class="layui-table table-width" style="width: 100%; margin: 15px 0;">
+					    <thead>
+					        <tr>
+					            <th>序号</th>
+					            <th>用户帐号</th>
+					            <th>注册时间</th>
+					            <th>激活</th>
+					            <th>次日留存</th>
+					            <th>七日留存</th>
+					        </tr>
+					    </thead>
+					    <tbody id="resourceForm">
+					    {% for item in data.data.datas.list %}
+					    	<tr>
+					    		<td>{{page.pNo|sortNum(loop.index)}}</td>
+					    		<td>{{item.phone_num}}</td>
+					    		<td>{{item.regist_date|dateSplit}}</td>
+					    		{% if item.activated == 1 %}
+					    			<td>是</td> 
+					    		{% else %}
+					    			<td>否</td>
+					    		{% endif %}
+					    		{% if item.nextday_remained == 1 %}
+					    			<td>是</td> 
+					    		{% else %}
+					    			<td>否</td>
+					    		{% endif %}
+					    		{% if item.nextweek_remained == 1 %}
+					    			<td>是</td> 
+					    		{% else %}
+					    			<td>否</td>
+					    		{% endif %}
+					    	</tr>
+				    	{% endfor%}
+				    	
+				    </tbody>
+					    
+				</table>
+				<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>
+				<div class="layui-form-item">
+					<a href="/operation/actManagement/channelDetail?id={{page.id}}&pageNo=1&pageSize=10" class="layui-btn" style="margin: 0 auto;">返回</a>
+				</div>
+            </div>
+			
+		</form>
+	</section>
+{% endif %}
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		layui.use(['element', 'paging'], function(){
+			var pageNo = $("#paging").attr('data-page-no') ? $("#paging").attr('data-page-no') : "1";
+			var pageSize = $("#paging").attr('data-page-size') ? $("#paging").attr('data-page-size') : "10";
+			var pages = Math.ceil($("#paging").attr('data-page') / pageSize);
+			var search = function() {
+				var data = {
+					id: getQueryString("id"),
+					pageNo: $("#paging").attr("data-page-no"),
+					pageSize: $("#paging").attr("data-page-size"),
+					regTime: getQueryString("regTime"),
+				};
+				window.location.search="?id="+escape(data.id)+"&pNo="+escape(data.pageNo)+"&pSize="+escape(data.pageSize)+"&regTime="+escape(data.regTime);
+			}
+			var paging = layui.laypage({
+				pages: pages, //分页数   总条数%单页显示条数  向上取整
+				cont: "paging", //组件容器
+				curr: pageNo, //当前页
+				groups: pageSize, //连续分页数
+				jump: function(obj, first) {
+					//得到了当前页，用于向服务端请求对应数据
+					//var curr = obj.curr;
+					if(!first) {
+						$("#paging").attr('data-page-no',obj.curr)
+						jumpPage("pSize=10&pNo="+obj.curr);
+						
+					}
+				}
+			});
+		})
+	</script>
+{% endblock %}
+
+
+

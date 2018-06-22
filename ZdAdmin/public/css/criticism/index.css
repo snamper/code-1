@@ -1,0 +1,20 @@
+/*评论管理*/
+
+
+/*评论内容管理*/
+#htmlWrap .contTitle{
+    width: 230px;
+}
+#htmlWrap .limitText{
+	display: block;
+	width: 230px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.layui-form-item .replaceIcon{
+	color: #b9b8b8;
+    font-weight: bold;
+}
+#importCode{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;width: 92px;height: 38px;position: relative;z-index: 999;}
+#asImportCode{position:absolute;top:0;left:0;z-index:100}	

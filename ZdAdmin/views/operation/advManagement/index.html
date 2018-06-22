@@ -1,0 +1,122 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--广告管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>广告管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">待设置</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <form class="layui-form advManagement" action="" style="padding-top: 15px;">
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">广告文案：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.name %}
+			    	<input type="text" name="advName" id="advName" value="{{page.name}}" lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="advName" id="advName" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">开始时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>广告文案</th>
+	     	<th>广告主</th>
+	     	<th>投放类型</th>
+	     	<th>目标量</th>
+	     	<th>投放金额(元)</th>
+	     	<th>广告主价格(元)</th>
+	     	<th>广告封面图</th>
+	     	<th>时长</th>
+	     	<th>广告详情页链接</th>
+	     	<th>提交时间</th>
+	     	<th>操作</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.datas %}
+         	<tr>
+			 	<td><a class="textLinks" id="advNameLink" href="/operation/advManagement/showAdvDetailf?id={{lis.id}}" data-id="{{lis.id}}" style="color: #009688;">{{lis.name}}</a></td>
+			 	{% if lis.tAdvertiserName %}
+			 	<td>{{lis.tAdvertiserName}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.deliveryType == '1' %}
+			 	<td>CPM视频</td>
+			 	{% elseif lis.deliveryType == '2' %}
+			 	<td>CPC</td>
+			 	{% elseif lis.deliveryType == '3' %}
+			 	<td>CPM</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.targetNumber %}
+			 	<td>{{lis.targetNumber}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.amount %}
+			 	<td>{{lis.amount}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	{% if lis.advertiserUnitPrice %}
+			 	<td>{{lis.advertiserUnitPrice}}</td>
+			 	{% else %}
+			 	<td>--</td>
+			 	{% endif %}
+			 	<td><img src="{{lis.adHomepage}}" class="imgSize"/></td>
+			 	<td>{{lis.adLength|convertTime}}</td>
+			 	<td class="contTitle" title="{{lis.mobileVersionUrl}}"><span class="limitText">{{lis.mobileVersionUrl}}</span></td>
+				<td>{{lis.createTime}}</td>
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "设置" %}
+				    			<a class="layui-btn" href="/operation/advManagement/showAdvsMes?id={{lis.id}}" data-id="{{lis.id}}">设置</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+			</tr>
+         	{% endfor%}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+     {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/advManagement/index.js"></script>
+{% endblock%}

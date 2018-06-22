@@ -1,0 +1,118 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-查看兑换码{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<link rel="stylesheet" href="/css/commodityManagement/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">查看兑换码</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div>
+			<form class="layui-form layui-form-position" action="">
+				<div style="width: 100%;text-align: center;">
+					{% if data.data.datas && data.data.datas.length>0 %}
+						<span>{{data.data.datas[0].full_name}} &nbsp;--&nbsp; 兑换码</span>
+		    		{% endif %}
+		    	</div>
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">兑换码:</label>
+				    <div class="layui-input-inline">
+				    	{% if page.code %}
+					 		<input type="text" data-id="{{page.productId}}"  name="code" value={{page.code}} lay-verify="required" placeholder="" autocomplete="off" class="layui-input code">
+					 	{% else %}
+					 		<input type="text" data-id="{{page.productId}}"  name="code" lay-verify="required" placeholder="" autocomplete="off" class="layui-input code">
+					 	{% endif %}	
+				    </div>
+				</div>
+				<div class="layui-input-inline">
+		    		<a href="javascript:;" id="search"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    	</div>
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>序号</th>
+		            <th>兑换码</th>
+		            <th>购买状态</th>
+		            <th>兑换状态</th>
+		           	<th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+					 	<td>{{item.id}}</td>
+					 	<td>{{item.code}}</td>
+					 	<td>
+					 		{% if item.status == 0 %}
+					 			库存
+					 		{% elseif item.status == 1 %}
+					 			已售
+					 		{% elseif item.status == 4 %}
+					 			占用
+					 		{% endif %}
+					 	</td>
+					 	<td>
+					 		{% if item.exchange_status == -4 %}
+					 			兑换异常,运营已退积分
+					 		{% elseif item.exchange_status == -3 %}
+					 			未兑换
+					 		{% elseif item.exchange_status == -2 %}
+					 			兑换异常
+					 		{% elseif item.exchange_status == -1 %}
+					 			兑换失败，兑换码过期（已使用）
+					 		{% elseif item.exchange_status &&  item.exchange_status == 0 %}
+					 			兑换成功
+					 		{% elseif item.exchange_status == 1 %}
+					 			库存不足，无法兑换
+					 		{% elseif item.exchange_status == 2 %}
+					 			兑换失败，商品不存在
+					 		{% elseif item.exchange_status == 3 %}
+					 			兑换失败，商品已下架
+					 		{% elseif item.exchange_status == 4 %}
+					 			兑换失败，帐号状态异常
+					 		{% elseif item.exchange_status == 5 %}
+					 			兑换失败，指定帐号不存在
+					 		{% elseif item.exchange_status == "-5" %}
+					 			--
+					 		{% endif %}
+					 	</td>
+					 	
+					 	<td>
+					 		{% if item.status == 1 && item.exchange_status != 0 %}
+					 			<a data-id="{{item.id}}"  class="layui-btn changeType">改售出状态</a>
+					 		{% endif %}
+					 	</td>
+					 </tr>
+				 {% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	
+	
+	
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/commodityManagement/codeView.js"></script>
+{% endblock %}
+

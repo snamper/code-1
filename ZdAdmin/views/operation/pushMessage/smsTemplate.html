@@ -1,0 +1,114 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-消息中心-站内信{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-form-label{width: 150px;}
+		.layui-form-item .layui-input-inline{width: 250px;}
+		.layui-form-saveCloseBtn{margin: 20px 0 0 230px;}
+		#template{margin-top: 50px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li>消息中心</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">短信模板</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建模板" %}
+	    			<a class="layui-btn openSms" style="float:right;margin-right:10px;">新建模板</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label">模板名称:</label>
+					<div class="layui-input-inline">
+					     {% if page && page.modelName %}
+						 <input class="layui-input modelName" placeholder="" value="{{page.modelName}}" >
+						 {% else %}
+						 <input class="layui-input modelName" placeholder="" >
+						 {% endif %}                      
+                   </div>
+				</div>
+				
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="">
+						<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>模板名称</th>
+		            <th>模板ID</th>
+		            <th>模板内容</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas.list%}
+			    	<tr>
+			    		<td>{{item.model_name}}</td>
+			    		<td>{{item.model_id}}</td>
+			    		<td>{{item.model_info}}</td>
+			    		<td>
+			    			{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "删除" %}
+						    			<a data-id="{{item.id}}" class=" layui-btn layui-btn-danger delModal">删除</a>
+						    		{% elseif unescape(code.name) == "修改" %}
+						    			<a data-id="{{item.id}}" data-item="{{item | json_encode}}" class="openSms layui-btn">修改</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+			    		</td>
+			    	</tr>
+		    	{% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+	<div id="template" class="template hide">
+		<div class="layui-form-item ">
+			<label class="layui-form-label">模板名称:</label>
+			<div class="layui-input-inline">
+				<input class="layui-input name"  placeholder="" >
+			</div>
+			<span class="layui-tooltip tooltip-name hide">可输入汉字、字母、数字，限20字</span>
+		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label">模板ID:</label>
+			<div class="layui-input-inline">
+				<input class="layui-input tempalteId"  placeholder="" >
+			</div>
+			<span class="layui-tooltip tooltip-tempalteId hide">请输入6位纯数字</span>
+		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label">模板内容:</label>
+			<div class="layui-input-inline">
+				<textarea  class="content"  style="width: 100%;height: 100px;resize:none;"></textarea>
+			</div>
+			<span class="layui-tooltip tooltip-content hide">可输入汉字、字母、数字，限50字</span>
+		</div>
+		<div class="layui-form-saveCloseBtn" pane="">
+		    <a  class="layui-btn layui-save-btn saveTemplate">保存</a>
+		    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+		</div>
+	</div>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/pushMessage/smsTemplate.js"></script>
+{% endblock %}
+
+

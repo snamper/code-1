@@ -1,0 +1,181 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--内容管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/commodityManagement/index.css" />
+	<link rel="stylesheet" href="/css/contentManagement/index.css" />
+	<style type="text/css">
+		#previewImg{
+			position: absolute;
+			left: 0;
+			transition: 1s;
+		}
+		.adverAppView .goods_view_content{
+			width: 375px;
+			position: relative;
+			overflow: hidden;
+		}
+		.adverAppView .goods_view_content .goode_view_img{
+			height: 185px;
+			overflow: hidden;
+		}
+		.pvImgShow{
+			width: 375px;
+			height: 185px;
+			overflow: hidden;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li class="arrow-icon">内容管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">渠道内容列表</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+
+	 <form class="layui-form" action="">
+	 	<div class="tabChange">
+		 	<div class="layui-tab">
+		 		{% if tableList.length > 0 %}
+					<ul data-status="1" class="layui-tab-title chooseType oUl">
+						{% for item in tableList %}
+							{% if item.code != "self" %}
+						   		<li data-joinStatus="{{item.joinStatus}}" data-code="{{item.code}}" data-time="{{item.contentUpdateTime}}"  data-id="{{item.id}}">{{item.name}}</li>
+						   	{% endif %}
+					   	{% endfor %}
+					</ul>
+				{% endif %}
+				{% if menuCodeList %}
+			    	{% for code in menuCodeList %}
+			    		{% if unescape(code.name) == "新建渠道" %}
+			    			<a href="javascript:;" class="layui-btn addThis">新建渠道</a>
+			    		{% endif %}
+			    	{% endfor %}
+			    {% endif %}
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+     {% if data.message =="成功"%}
+	 	<div class="layui-form-item" style="padding-left: 20px;">
+	 		<div class="layui-inline layui-canal">
+			 	<label class="layui-form-label">内容名称：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.title %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="" class="layui-input" value="{{page.title}}" />
+					{% else %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="" class="layui-input" />
+					{% endif %}			     
+			    </div>
+			    
+		   </div>
+        	<div class="layui-input-inline categoryList selectStatus">
+        		<select name="categoryList" lay-filter="categoryList" id="categoryList">
+        			<option value=" ">选择内容类目</option>
+        		</select>
+        	</div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+		    {% if data.data.datas && data.data.datas.length > 0 %}
+			    <div class="layui-inline video-config">
+			    	{% if  page.thirdChannel != "eyepetizer" %} 
+				    	{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "获取配置" %}
+					    			<a href="javascript:;" class="layui-btn" id="getConfig">获取配置</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+			    	{% endif %}	
+			    	<p class="updateTime">将于--分--秒后自动更新视频信息</p>
+			    	{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "立即更新" %}
+				    			<a href="javascript:;" class="layui-btn nowUpdate">立即更新</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+			    </div>
+			{% else %}
+			    <div class="layui-inline video-config">
+			    	<h3 style="float: left; line-height: 38px; margin-right: 100px;">渠道尚未接入</h3>
+			    	{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "删除渠道" %}
+				    			<a href="javascript:;" class="layui-btn cannelDel">删除渠道</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+			    </div>
+			{% endif %}
+	    </div>
+	 
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>内容名称</th>
+	     	<th>内容类目</th>
+	     	<th>内容类型</th>
+	     	<th>视频封面横图</th>
+	     	<th>视频时长</th>
+	     	<th>平台点击数</th>
+	     </tr>
+         <tbody id="htmlWrap" class="htmlWrap">
+         	{% for item in data.data.datas %}
+         		<tr>
+         			<td>{{page.pageNo|sortNum(loop.index)}}</td>
+         			<td><a class="textLinks" href="/operation/contentManagement/videoInfo?id={{item.id}}" style="color: #009688;">{{item.title}}</a></td>
+         			<td>{{item.contentCategoryName}}</td>
+         			{% if  item.contentType == "1"%}
+         				<td>资讯</td>
+         			{% else %}
+         				<td>广告</td>
+         			{% endif %}
+         			<td><img src="{{item.thumbUrl}}" style="width: 110px;height: 80px;" alt="" /></td>
+         			<td>{{item.duration|conTime}}</td>
+         			<td>{{item.clicks}}</td>
+         		</tr>
+         	{% endfor %}
+         </tbody>
+	 </table>
+	 {%  if data.data.datas && !data.data.datas.length > 0   %}
+		<div id="noCannel" style="text-align: center;">
+		 	渠道尚未接入
+		</div>
+	{% else %}
+		<div id="noCannel" style="text-align: center;" class="hide">
+		 	渠道尚未接入
+		</div>
+	{% endif %}
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	     
+	     <div id="paging" data-page-no="1" data-page="0" data-page-size="10"></div>	
+	 {% endif%}
+	 
+	<div class="coverScreen hide"></div>
+	<div class="canal-getConfig configActive">
+		<h3>内容类目： 已选4个类目</h3>
+		<ul class="layui-tab configCategory"></ul>
+		<h3>每个类目每次获取的信息数：</h3>
+		<div class="layui-input-inline">
+			<input type="index" name="" id="infoNum" value="" placeholder="请输入25-1000的数" class="numInp layui-input" />
+		</div>
+		<div class="isNumInfo layui-input-inline" style="color: red;text-align: center; width: 100%;"></div>
+		<div class="layui-form-item">
+			<div class="layui-input-block layui-canal-config">
+				<a href="javascript:;" class="layui-btn layui-layer-close" id="configSure">保存</a>
+				<a href="javascript:;" class="layui-btn layui-btn-primary" id="configCancel">关闭</a>
+			</div>
+		</div>	
+	</div>
+	</form> 
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/contentManagement/canalList.js"></script>
+{% endblock%}

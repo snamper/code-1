@@ -1,0 +1,295 @@
+/*运营中心-商品管理*/
+.layui-input-inline{line-height:38px;}
+.layui-form-item .txt-impt{
+	display: inline-block;
+    color: red;
+    font-weight: bolder;
+}
+.setMarCenter{
+    width: 890px;
+    margin: 50px auto;
+}
+#setRechargeGoods{
+	width: auto;
+	min-width: 1010px;
+}
+#setOnlineRechargeGoods{
+	width: auto;
+	min-width: 1024px;
+}
+.hfScale input,.llScale input{width: 100px;display: inline-block;}
+.setMarCenter .hfScale,.setMarCenter .llScale{width: 300px;margin: 15px 0;}
+.setMarCenter .nextBackBtn{
+	width: 350px;
+	margin: 50px auto;
+}
+.setMarCenter .sortSide{
+	width: 90px;
+}
+.setMarCenter .sortSide, .setManSort .layui-form-checkbox, .layui-form-item .layui-form-checkbox[lay-skin=primary]{
+	margin: 0;
+}
+.tabChange{
+	margin: 0 25px 25px;
+	position: relative;
+}
+#secleUrl .flex-tabChange{
+	width: 90%;
+	margin: 10px auto;
+}
+.tabChange .layui-tab-title .layui-this {
+    background-color: #ccc;
+    font-weight: bold;
+}
+.setMarCenter .table-center{
+	width: 85px;
+	margin: 0 auto;
+}
+.layui-form-item .updataFileImgs{
+	width: 40px;
+	height: 40px;
+	vertical-align: top;
+	position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+}
+.layui-form-item .updataFileImgSize{
+	width: 280px;
+	height: 80px;
+}
+/*.layui-form-item .tooltip-addFlexImg{
+	color: #ccc;
+}*/
+#addFlexImg{position: absolute;right: 20px;top: 0;width: 40px;height: 40px;}
+#htmlWrap li{font-size: 16px;line-height: 30px;cursor: pointer;}
+#htmlWrap li:hover{background-color: #5FB878;}
+.selContBox{position: relative;width: 220px;}
+#htmlWrap .goodsItems,#htmlWrap .recGoodsItems{width:90%;position: absolute;left: 15px;top: 60px;z-index: 22;border: 1px solid #d2d0d0;background-color: #fff;max-height: 300px;overflow: auto;}
+#htmlWrap .inputIconBox,#htmlWrap .iptIconBox{position: relative;}
+#htmlWrap .layui-select-icon{position: absolute;right: 10px;top: 15px;width: 0px;height: 0px;border: 8px solid #fff;border-top: 8px solid #CCCCCC;}
+/*新手推荐商品选择*/
+
+/*运营中心-商户管理-推荐管理*/
+.tabChange .layui-tab-title-sec{
+	height: 30px;
+	border: none;
+}
+.tabChange .layui-tab-title-sec .layui-this{
+	background: none;
+	color: #1AA094;
+}
+.tabChange .layui-tab-title-sec .layui-this:after{
+	border: none;
+}
+.tabChange .layui-tab-title-sec li{
+	padding: 0;
+	line-height: 30px;
+	min-width: 50px;
+}
+.sortInputSize .layui-input{
+	width: auto;
+	padding: 0;
+	display: inline-block;
+}
+/*运营中心-商户管理-推荐设置*/
+.setManRef .hotLabel{
+	width: 280px;
+}
+.setManRef .layui-upload-button{
+	min-width: 50px;
+	width: 50px;
+	vertical-align: bottom;
+}
+.setMarCenter .layui-input-CoverImg{
+	width: 350px;
+	position:relative;
+}
+#htmlWrap .tenantsItems select{
+	height: 38px;
+}
+/*运营-广告-设置积分投放*/
+#setIntegral{
+	width: 100%;
+}
+.partLine{
+	width: 90%;
+	margin: 0 auto;
+	padding-bottom: 15px;
+	margin-bottom: 1px;
+}
+.partLine i{
+	display: inline-block;
+	width: 100%;
+	height: 1px;
+	background: #e2e2e2;
+}
+#setIntegral .item-adMes{
+	width: 50%;
+	min-width: 920px;
+	margin: 0 auto;
+}
+#setIntegral .item-adMes .perCent{
+	line-height: 38px;
+	color: #ababab;
+}
+.advReferMan .layui-status{
+	width: 45px;
+}
+.setIntegral #sureBtnFlex{
+	display: block;
+	position: absolute;
+}
+#htmlWrap .contTitle{
+    width: 150px;
+}
+#htmlWrap .limitText{
+	display: block;
+	width: 150px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+/*运营-轮播图*/
+.flexImgMan #layui-layer1{
+	min-width: 640px;
+}
+.flexImgMan .layui-form-label{
+	width: 100px;
+}
+.flexImgMan .addFlexBtn{
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.copyUploadBtn{
+	position: absolute;
+	right: 20px;
+	top: 0;
+	width: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	border: 1px solid #b5b3b3;
+	color: #b5b3b3;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+	cursor:pointer;
+}
+#addTenants{
+	position: absolute;
+	right: 20px;
+	top: 0;
+	width: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	border: 1px solid #b5b3b3;
+	color: #b5b3b3;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.3s;
+	z-index:10000;
+	cursor:pointer;
+}
+.addFlexImgMan .layui-input-pos:hover .copyUploadBtn{
+	border: 1px solid #1aa194;
+	color: #1aa194;
+}
+.addFlexImgMan .layui-input-pos{
+	position: relative;
+}
+.addFlexImgMan .layui-upload-button{
+	min-width: 40px;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: -40px;
+	top: 0;
+	z-index: 99;
+	opacity: 0.1;
+}
+.addFlexImgMan .selectBtnF{
+	position: absolute;
+	right: -95px;
+	top: 0;
+}
+/*.imgSize{
+	width: 200px;
+	height: 112.5px;
+}*/
+.imgSize{width: 120px;height: 60px;}
+/*弹窗选择图片链接*/
+#secleUrl .secleUrlTop,#secleUrl .secleUrlCont{
+	width: 90%;
+	margin: 0 auto;
+	position: relative;
+}
+#secleUrl .secleUrlCont{
+	height: 320px;
+}
+#secleUrl .secleUrlTop{
+	margin-top: 20px;
+}
+#urlSearchBtn{
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 999;
+}
+#secleUrl .urlContItem{
+	height: auto;
+	padding: 15px;
+}
+.urlContItem .urlContLis{
+	font-size: 16px;
+	line-height: 30px;
+	cursor: pointer;
+}
+/*.urlContItem .urlContLis:hover{
+	background: rgba(0, 150, 136 ,0.7);
+}*/
+.urlContItem .urlContLisHover{
+	background: rgba(0, 150, 136 ,0.7);
+}
+.layui-layer-content{
+	position: relative;
+}
+.layui-layer-content .marginAuto{
+	width: 150px;
+	/*margin: 0 auto;*/
+	padding: 20px 0;
+	position: relative;
+	bottom: 15px;
+	left: 0;
+	padding-left: 70px;
+}
+.marginAuto a{
+	position: relative;
+}
+.marginAuto #showNum{
+	position: absolute;
+    left: 52px;
+    top: -8px;
+	width: 18px;
+	height: 18px;
+	background: #393D49;
+	color: #fff;
+	text-align: center;
+	line-height: 18px;
+    border-radius: 50%;
+    font-style: normal;
+}
+#paging.pagings{
+	margin-bottom: 10px;
+}
+/*A积分模型管理*/
+#changeModelBtnBox .changeModelBtn{
+	margin: 10px 0 10px 20px;
+}
+.integralModelMan .modelName{
+	font-weight: bold;
+}
+/*商品分享管理*/
+.lisFlBtn{float: right;margin-right: 20px;}
+.lisFlBtn a{display: block;}
+.setPageBtnCenter{text-align: center;}

@@ -1,0 +1,84 @@
+{% extends "./../../layout.html"%}
+{% block title %}运营管理--优惠券管理--配置渠道优惠券{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<link rel="stylesheet" href="/css/operation/operationPublic.css" />
+{% endblock %}
+{% block indexTitle %}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>优惠券管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">配置渠道优惠券</li>
+	 </ul>
+{% endblock %}
+{% block content %}
+	<form class="layui-form formPage site-demo-top40 configChannelsCoup couponsCenter" action="">
+	    <div class="layui-form-item useWayDiffCont">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>选择渠道：</label>
+			    {% if data && data.data.id %}
+			    <div class="layui-input-inline selCouponsGoods" data-id="{{data.data.id}}">
+			    {% else %}
+			    <div class="layui-input-inline selCouponsGoods" data-id=" ">
+		    	{% endif %}
+		    		{% if page && page.couponChannelId %}
+		    		<span>{{data.data.channelName}}</span>
+		    		{% else %}
+				    <select name="coupGoods" class="couponsGoodsBox" lay-filter="coupGoods" lay-verify="required" lay-search="">
+				    	<option value=" ">请选择渠道</option>
+				    </select>
+				    {% endif %}
+			    </div>	
+			    <span class="layui-tooltip tooltip-coupGoods hide">请选择渠道</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>选择优惠券：</label>
+			    {% if data && data.data.couponIds %}
+			    <div class="layui-input-inline selCoupsItem" data-val="{{data.data.couponIds}}">
+			    	<input type="text" name="selCoupsInp" class="layui-input selCoupsInp" value="{{data.data.couponBaseList|couponIdStr}}" lay-verify="required" placeholder="请选择优惠券" autocomplete="off">
+			    {% else %}
+			    <div class="layui-input-inline selCoupsItem" data-val="">
+			    	<input type="text" name="selCoupsInp" class="layui-input selCoupsInp" lay-verify="required" placeholder="请选择优惠券" autocomplete="off">
+		    	{% endif %}
+				    <i class="layui-select-icon layui-icon">&#xe61a;</i>
+				    <div class="selCoupsContItem hide">
+				    	<ul class="selCoupsBox clearfix"></ul>
+				    	<div class="handleBtnBox">
+				    		<span class="handleBtns sureCoups">确定</span>
+				    		<span class="handleBtns resetBtn">取消</span>
+				    	</div>
+				    </div>
+			    </div>	
+			    <span class="layui-tooltip tooltip-selCoups hide">请选择优惠券</span>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label"><span class="txt-impt">*</span>优惠券数量：</label>
+			    <div class="layui-input-inline fillCouponsNumber">
+			    	{% if data && data.data.allCount %}
+				    <input type="text" name="fillCoupNum" class="layui-input fillCoupNum" value="{{data.data.allCount}}" lay-verify="required" placeholder="请输入优惠券数量" autocomplete="off">
+			    	{% else %}
+			    	<input type="text" name="fillCoupNum" class="layui-input fillCoupNum" lay-verify="required" placeholder="请输入优惠券数量" autocomplete="off">
+			    	{% endif %}
+			    </div>	
+			    <span class="layui-tooltip tooltip-fillCoupNum hide">请输入1~100000000的整数</span>
+		    </div>
+	    </div>
+		<div class="layui-form-item addBtnBox">
+			<div class="layui-inline">		
+            	<a class="layui-btn addCouponsSaveBtns" href="javascript:;">生成</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="/operation/couponsManagement/channelCoupon" class="layui-btn">返回</a>
+        	</div>
+        </div>
+	 </form>
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/operation/couponsManagement/configChannelsCoup.js"></script>
+{% endblock%}

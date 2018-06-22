@@ -1,0 +1,139 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--轮播图管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>轮播图管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">轮播图查看</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	<form class="layui-form formPage site-demo-top40 addFlexImgMan setMarCenter" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-form-item">
+				<label class="layui-form-label">轮播图位置：</label>
+				<div class="layui-input-inline">
+					{% if data.data.location_type == '1' %}
+					<span>首页轮播图</span>
+					{% elseif data.data.location_type == '2' %}
+					<span>商城轮播图</span>
+					{% else %}
+					<span></span>
+					{% endif %}
+			  	</div>
+			</div>
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">轮播图状态：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.status == '1' %}
+				    <span>待上架</span>
+				    {% endif %}
+				    {% if data.data.status == '2' %}
+				    <span>已上架</span>
+				    {% endif %}
+				    {% if data.data.status == '3' %}
+				    <span>已下架</span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+			    <label class="layui-form-label">创建时间：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.create_time %}
+				    <span>{{data.data.create_time}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+		    <div class="layui-inline">
+			    <label class="layui-form-label">轮播图名称：</label>
+			    <div class="layui-input-inline">
+				    {% if data.data.name %}
+				    <span>{{data.data.name}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    {% if data.data.status == '2' || data.data.status == '3' %}
+		    <div class="layui-inline">
+			    <label class="layui-form-label">上架时间：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.online_time %}
+				    <span>{{data.data.online_time}}</span>
+				    {% else %}
+				    <span></span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    {% endif %}
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">轮播图图片：</label>
+			<div class="layui-input-inline layui-input-pos layui-input-CoverImg">
+				 <img src="{{data.data.image_url}}" alt="" class="imgSize"/>
+		  	</div>
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">图片链接：</label>
+			    <div class="layui-input-inline layui-input-CoverImg layui-input-pos">
+			    	{% if data.data.type == '1' %}
+			    	<a href="{{data.data.link_url}}">{{data.data.link_url}}</a>
+			    	{% elseif data.data.type == '2' %}
+			    		{% if data.data.mobile_version_url %}
+			    		<a href="{{data.data.mobile_version_url}}">{{data.data.mobile_version_url}}</a>
+				    	{% else %}
+				    	{{data.data.full_name}}
+				    	{% endif %}
+			    	{% endif %}
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">排序号：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+				    <span>{{data.data.sort}}</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">显示平台：</label>
+			    <div class="layui-input-inline layui-input-CoverImg">
+				    <span>
+			    	{% if data.data.platform == '2' %}
+			    	安卓
+			    	{% elseif data.data.platform == '1' %}
+			    	IOS
+			    	{% elseif data.data.platform == '0' %}
+			    	全部
+			    	{% else %}
+			    	
+			    	{% endif %}
+				    </span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a href="/operation/flexManagement/flexMan" class="layui-btn">关闭</a>
+        	</div>
+        </div>
+	 </form>
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%} 
+{% endblock%}

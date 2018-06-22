@@ -1,0 +1,45 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--账号风险管理--TOP3风险管理--风险解释{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/risksMan.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>账号风险管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>TOP3风险管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">风险解释</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	 <div class="layui-form-item" style="">
+	 	<p style="margin-left: 20px;">风险解释</p>
+	 </div>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>风险名称</th>
+	     	<th>解释</th>
+	     	<th>风险度量</th>
+	     	<th>说明</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for item in data.data %}
+         	<tr>
+         		<td>{{item.name}}</td>
+         		<td>{{item.describe}}</td>
+         		<td>0-10</td>
+         		<td>数字越大风险越高</td>
+         	</tr>
+         	{% endfor %}
+		 </tbody>	
+	 </table>
+	 <div class="layui-form-saveCloseBtn" pane="">
+	    <a href="/operation/accountRiskRating/risksMan" class="layui-btn backRisksPage">返回</a>
+	</div> 
+{% endblock %}
+{% block layui%}
+{% endblock%}

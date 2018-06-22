@@ -1,0 +1,120 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告价值管理-广告价值录入{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" type="text/css" href="/css/commodityManagement/goodsView.css"/>-->
+	<style type="text/css">
+		section{width: 100%;}
+		form{width: 600px;margin: 40px auto;}
+		.layui-form-item label{min-width: 200px;max-width: 300px;}
+		.layui-input-inline{line-height: 38px;}
+		.layui-form-saveCloseBtn{margin-left: 240px;margin-top: 20px;}
+		.layui-input{width: 170px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>广告价值管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告价值录入</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section>
+		{% if page && page.id %}
+		<form  data-id="{{page.id}}" class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >选择日期:</label>
+					<div class="layui-input-inline">
+				        <input class="layui-input" placeholder="选择日期"  id="LAY_demorange_e" >
+				   </div>	
+				   <span class="layui-tooltip tooltip-time hide">请选择日期</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告渠道</label>
+				</div>
+			</div>
+			{% for item in data.data %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">{{item.name}}:</label>
+				    <div class="layui-input-inline">
+				       <input class="layui-input amount" data-id="{{item.id}}" style="display: inline-block;" placeholder="" >
+				       <span style="float: right;">￥</span>
+				    </div>
+				    <span class="layui-tooltip tooltip-amount hide"></span>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">总金额:</label>
+				    <div class="layui-input-inline">
+				        <input class="layui-input totalAmount" readonly="readonly" disabled="disabled" value="0" style="display: inline-block;" placeholder="" >
+				        <span style="float: right;">￥</span>
+				    </div>
+				</div>
+			</div>
+				
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a  class="layui-btn submit" data-id="{{page.id}}" data-source="edit">保存</a>
+			    <a href="/advertising/advertPrice" class="layui-btn layui-btn-danger">关闭</a>
+			</div>
+		</form>
+		{% else %}
+		
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >选择日期:</label>
+					<div class="layui-input-inline">
+				        <input class="layui-input" placeholder="选择日期" id="LAY_demorange_e" >
+				   </div>	
+				   <span class="layui-tooltip tooltip-time hide">请选择日期</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告渠道</label>
+				</div>
+			</div>
+			{% for item in data.data %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">{{item.name}}:</label>
+				    <div class="layui-input-inline">
+				       <input class="layui-input amount" data-id="{{item.id}}" style="display: inline-block;" placeholder="" >
+				       <span style="float: right;">￥</span>
+				    </div>
+				    <span class="layui-tooltip tooltip-amount hide"></span>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">总金额:</label>
+				    <div class="layui-input-inline">
+				        <input class="layui-input totalAmount" readonly="readonly" disabled="disabled" value="0" style="display: inline-block;" placeholder="" >
+				        <span style="float: right;">￥</span>
+				    </div>
+				</div>
+			</div>
+				
+			<div class="layui-form-saveCloseBtn"  pane="">
+				<a  class="layui-btn submit" data-source="add">保存</a>
+			    <a href="/advertising/advertPrice" class="layui-btn layui-btn-danger">关闭</a>
+			</div>
+		</form>
+		{% endif %}
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/advertising/advertPrice/advertPriceAdd.js"></script>
+{% endblock %}
+
+
+

@@ -1,0 +1,204 @@
+{% extends "./../layout.html"%}
+{% block title%}运营管理-邀请好友相关配置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/requestFriendConfig.css" />
+	
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">邀请好友相关配置</li>
+	    
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "应用配置" %}
+	    			<a href="javascript:;" class="layui-btn requestFrdConfig">应用配置</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	</ul>
+{%endblock%}
+{% block content%}
+	{% if data.data &&  data.data.length > 0 %}
+		<section class="addResourceSection">
+			{% for item in data.data %}
+				<div class="layui-form-item" style="">
+				    <div class="requestFriendName">{{item.name}}:</div>
+				    <div class="requestFriendValue">{{item.value}}{{item.unit}}</div>
+				    <div class="requestFriendBtn">
+				    	
+				    	{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "更改配置" %}
+					    			<a href="javascript:;" class="layui-btn changeConfig" data-unit="{{item.unit}}" data-code="{{item.code}}" data-id="{{item.id}}" data-value="{{item.value}}" data-name="{{item.name}}" >更改配置</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+				    	
+				    	
+				    </div>
+				</div>
+			{% endfor %}
+		</section>
+	{% endif %}
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		
+		layui.use(['element', 'form'], function(){
+			
+			$("body").find('.changeConfig').on('click', function (){
+				
+				var name = $(this).attr("data-name");
+				var val = $(this).attr("data-value");
+				var id = $(this).attr("data-id");
+				var code =  $(this).attr("data-code");
+				var unit = $(this).attr("data-unit")
+				layer.open({ //配置弹窗
+				  type: 1,
+				  skin: 'layui-layer-demo', //样式类名
+				  closeBtn: 0, //不显示关闭按钮
+				  anim: 2,
+				  shadeClose: false, //开启遮罩关闭
+				  area: ['400px', '200px'], //宽高
+				  title: [name, 'text-align: center; font-size: 16px;'],
+				  content: 
+					  '<div class="layui-form-item">' +
+					    '<label class="layui-form-label">配置参数</label>' +
+					    '<div class="layui-input-inline">' +
+					      '<input type="text" name="title" id="request-value" data-id='+ id +' class="layui-input" value='+ val +'>' +
+					    '</div>' +
+					    '<label class="layui-form-label" style="text-align: left;padding-left: 5px; width:50px">'+ unit +'</label>' +
+					  '</div>' +
+					  '<div class="requestInfo" style="text-align: center; color: red"></div>' +
+					   '<div class="layui-form-item" style="margin-top: 20px">' +
+						    '<div class="layui-input-block layui-canal">' +
+						      '<a href="javascript:;" class="layui-btn" id="requestSure" data-code='+ code +' data-id='+ id +'>确定</a>' +
+						      '<a href="javascript:;" class="layui-btn layui-layer-close layui-btn-primary" style="margin-left: 50px">关闭</a>' +
+						    '</div>' +
+						 '</div>' ,	
+				})
+			})
+			
+		})
+		
+		var flag = false;
+		$('body').delegate('#request-value', 'blur', function() {
+			
+			if($(this).attr("data-id") != 3) {
+				if(!$(this).check().notNull()){
+					message = "请输入积分";
+					$(".requestInfo").empty().html(message).show();
+					flag = true;
+				}else{
+					if(!$(this).check().isNum() || $(this).val() < 0 ){
+						message = "只能输入数字且数字不小于0";
+						$(".requestInfo").empty().html(message).show();
+						flag = true;
+					}else{
+						$(".requestInfo").hide()
+						flag = false;
+					}
+				}
+			}else {
+				
+				if(!$(this).check().notNull()){
+					message = "请输入比例大小";
+					$(".requestInfo").empty().html(message).show();
+					flag = true;
+				}else{
+					if(!$(this).check().isNum() || $(this).val() < 0 || $(this).val() > 100 ){
+						message = "只能输入数字且数字不小于0且不大于100";
+						$(".requestInfo").empty().html(message).show();
+						flag = true;
+					}else{
+						$(".requestInfo").hide()
+						flag = false;
+					}
+				}
+				
+			}
+			
+		})
+		
+		//更改配置
+		$('body').delegate('#requestSure', 'click', function() {
+			if( !flag ) {
+				var id = $(this).attr("data-id");
+				var code = $(this).attr("data-code");
+				var value = $("#request-value").val();
+				console.log(id,code,value)
+				var data = {
+					id:id,
+					code:code,
+					value:value
+				}
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: "/admin/invite/friend/config/update.do",
+					data: data,
+					beforeSend:beforeSend(),
+					success: function(json) {
+						if(json.message == "成功") {
+							layer.msg('保存成功！', {
+								time: 1000, //1s后自动关闭
+								icon: 1
+							});
+							window.location.href="/operation/requestFriendConfig";
+						}else{
+							layer.msg(json.message)
+						}
+					},
+					error: function() {
+						layer.msg('保存失败！', {
+							time: 1000, //1s后自动关闭
+							icon: 2
+						});
+						
+					}
+				})
+				
+				layer.closeAll()
+			}else {
+				layer.msg("填写类型不正确！", {
+						time: 1000, //1s后自动关闭
+						icon: 2
+				})
+			}
+		})
+		
+		
+		//应用配置
+		
+		$(".requestFrdConfig").on("click", function() {
+			
+			layer.confirm('您确定要应用配置吗？', {
+				btn: ['确认', '取消'] //按钮
+			}, function() {
+				$.ajax({
+					url:"/admin/invite/friend/config/apply.do",
+				    type:"post",
+					beforeSend:beforeSend(),
+					success: function(json) {
+						if(json.message == "成功") {
+							layer.msg('配置成功！', {
+								time: 1500, //1s后自动关闭
+								icon: 1
+							},function(){
+								window.location.href="/operation/requestFriendConfig";
+							});	
+						}else{
+						    layer.msg(json.message);
+						    return false;
+					    }
+					}
+				})
+			})
+		})
+		
+	</script>
+{% endblock %}
+
+

@@ -1,0 +1,173 @@
+{% extends "./../../../layout.html"%} 
+{% block title%}运营管理-任务管理-签到任务日志查看{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" /> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">任务管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">签到任务日志查看</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form" action="">
+ 	<div class="layui-form-item padding15">
+	    <div class="layui-inline">
+	        <div class="layui-input-inline">
+	        	{% if page && page.stDate %}
+				<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s" value="{{page.stDate}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+		    	{% endif %}
+		    </div>
+		    <div class="layui-input-inline">
+		    	{% if page && page.enDate %}
+				<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.enDate}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+		    	{% endif %}
+		    </div>
+	    </div>
+ 		<div class="layui-inline">
+		    <div class="layui-input-inline">
+			    {% if page && page.signDay == '1' %}
+		        <select name="taskStatus" class="selTaskStatus" data-task="1" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1" selected="selected">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+	        	{% elseif page && page.signDay == '2' %}
+		        <select name="taskStatus" class="selTaskStatus" data-task="2" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2" selected="selected">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+		        {% elseif page && page.signDay == '3' %}
+		        <select name="taskStatus" class="selTaskStatus" data-task="3" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3" selected="selected">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+	        	{% elseif page && page.signDay == '4' %}
+	        	<select name="taskStatus" class="selTaskStatus" data-task="4" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4" selected="selected">4</option>
+		            <option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+	        	{% elseif page && page.signDay == '5' %}
+	        	<select name="taskStatus" class="selTaskStatus" data-task="5" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5" selected="selected">5</option>
+		            <option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+		        {% elseif page && page.signDay == '6' %}
+	        	<select name="taskStatus" class="selTaskStatus" data-task="6" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+		            <option value="6" selected="selected">6</option>
+					<option value="7">7</option>
+		        </select>
+		        {% elseif page && page.signDay == '7' %}
+	        	<select name="taskStatus" class="selTaskStatus" data-task="7" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+		            <option value="6">6</option>
+					<option value="7" selected="selected">7</option>
+		        </select>
+	        	{% else %}
+		        <select name="taskStatus" class="selTaskStatus" data-task="0" lay-filter="taskStatus" lay-verify="required" lay-search="">
+		        	<option value="0" selected="selected">连续签到天数</option>
+		            <option value="1">1</option>
+		            <option value="2">2</option>
+		            <option value="3">3</option>
+		            <option value="4">4</option>
+		            <option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+		        </select>
+	        	{% endif %}			     
+		    </div>
+	    </div>
+ 		<div class="layui-inline">
+		 	<label class="layui-form-label">手机号：</label>
+		    <div class="layui-input-inline">
+			    {% if page && page.userPhone %}
+				<input type="text" name="taskPhone" id="taskPhone" class="layui-input" value="{{page.userPhone}}" lay-verify="text" autocomplete="off" placeholder="请输入手机号">
+				{% else %}
+				<input type="text" name="taskPhone" id="taskPhone" class="layui-input" lay-verify="text" autocomplete="off" placeholder="请输入手机号">
+				{% endif %}			     
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+    </div>
+    <div class="layui-form-item padding15">
+    	<span class="layui-inline">总计：{{data.data.allInfo.totalNum}}</span>
+    	<span class="layui-inline">累计发放积分：{{data.data.allInfo.signScoreAll}}</span>
+	</div>
+</form>
+<table class="layui-table table-width">
+	<tr>
+		<th>用户手机号</th>
+		<th>连续签到天数</th>
+		<th>发放积分</th>
+		<th>签到时间</th>
+	</tr>
+	<tbody>
+		{% if data.data.taskSignRecords.datas.length %} 
+		{% for item in data.data.taskSignRecords.datas %}
+		<tr>
+			<td>{{item.userPhone}}</td>
+			<td>{{item.signDay}}</td>
+			<td>{{item.signScore}}</td>
+			<td>{{item.signTime}}</td>
+		</tr>
+		{% endfor %} 
+		{% endif %}
+	</tbody>
+</table>
+<div id="paging" data-page-no={{data.data.taskSignRecords.pageNo}} data-page={{data.data.taskSignRecords.totalPage}} data-page-size={{data.data.taskSignRecords.pageSize}}></div>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/taskManagement/showCheckTaskList.js"></script>
+{% endblock%}

@@ -1,0 +1,69 @@
+{% extends "./../../layout.html"%}
+{% block title%}广告管理-广告价值管理-广告价值查看{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" type="text/css" href="/css/commodityManagement/goodsView.css"/>-->
+	<style type="text/css">
+		section{width: 100%;}
+		form{width: 600px;margin: 40px auto;}
+		.layui-form-item label{min-width: 200px;max-width: 300px;}
+		.layui-input-inline{line-height: 38px;}
+		.layui-form-saveCloseBtn{margin-left: 240px;margin-top: 20px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>广告管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>广告价值管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告价值查看</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+			<div class="layui-form-item layui-input-inline" >
+				 <label class="layui-form-label" >选择日期:</label>
+				<div class="layui-input-inline">
+			        {{data.data.input_time}}
+			   </div>				
+			</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">广告渠道</label>
+				</div>
+			</div>
+			{% for item in data.data.adProfitChannelList %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">{{item.name}}:</label>
+				    <div class="layui-input-inline">
+				        {{item.amount}}￥
+				    </div>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">总金额:</label>
+				    <div class="layui-input-inline">
+				        {{data.data.total_amount}}￥
+				    </div>
+				</div>
+			</div>
+				
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a href="/advertising/advertPrice" class="layui-btn">关闭</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	
+{% endblock %}
+
+
+

@@ -1,0 +1,77 @@
+{% extends "./../../../layout.html"%} 
+{% block title%}运营管理-任务管理-签到任务{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" /> 
+<link rel="stylesheet" href="/css/operation/task.css" /> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">任务管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">签到任务</li>
+	<li class="lisFlBtn">
+		{% if menuCodeList %} 
+			{% for code in menuCodeList %}
+				{% if unescape(code.name) == "签到任务日志" %}
+					<a href="/operation/taskManagement/showCheckTaskList" class="layui-btn novicesLogsBtn">签到任务日志</a>
+				{% endif %} 
+			{% endfor %} 
+		{% endif %}
+	</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<table class="layui-table table-width">
+	<tr>
+		<th>连续签到时间</th>
+		<th>奖励积分</th>
+		<th>抽奖次数限制</th>
+		<th>操作</th>
+	</tr>
+	<tbody>
+		{% if data.data.length %}
+		{% for lis in data.data %}
+		<tr>
+			<td>连续签到{{loop.index}}天</td>
+			<td>{{lis.signScore}}</td>
+			<td>{{lis.drawLimit}}</td>
+			<td>
+				{% if menuCodeList %} 
+					{% for code in menuCodeList %}
+						{% if unescape(code.name) == "设置" %}
+							<a class="layui-btn" href="/operation/taskManagement/setCheckTask">设置</a>
+						{% endif %} 
+					{% endfor %} 
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		{% for item in [1,2,3,4,5,6,7] %}
+		<tr class="initData">
+			<td>连续签到{{loop.index}}天</td>
+			<td>--</td>
+			<td>--</td>
+			<td>
+				{% if menuCodeList %} 
+					{% for code in menuCodeList %}
+						{% if unescape(code.name) == "设置" %}
+							<a class="layui-btn" href="/operation/taskManagement/setCheckTask">设置</a>
+						{% endif %} 
+					{% endfor %} 
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %} 
+		{% endif %}
+	</tbody>
+</table>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/taskManagement/checkTaskList.js"></script>
+{% endblock%}

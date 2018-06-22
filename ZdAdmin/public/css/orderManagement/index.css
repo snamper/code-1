@@ -1,0 +1,48 @@
+/*
+ *商家管理-订单管理
+ */
+.detailSection .boxSizing{
+	box-sizing: border-box;
+}
+.layui-form-item .layui-input-size{
+    width: 300px;
+}
+.layui-form-position{
+    position: relative;
+}
+.layui-form-referBtn{
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    top: 110px;
+}
+
+.detailSection .layui-elem-quote-bg{
+    background-color: #f6f6f6;
+}
+.detailSection .layui-form-label{
+    width: 100px;
+    padding: 9px 3px;
+}
+.detailSection .layui-form-item .layui-form-span{
+    float: left;
+    display: block;
+    padding: 9px 3px;
+    width: 150px;
+    font-weight: 400;
+    line-height: 20px;
+    position: relative;
+}
+.detailSection .layui-form-label-alignRight{
+    text-align: left;
+}
+.detailSection .layui-form-item-back{
+    padding: 20px 0;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+}
+.detailSection .layui-form-item-back .layui-btn{
+    display: block;
+    padding: 0 50px;
+    margin: 0 auto;
+}

@@ -1,0 +1,122 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--推荐管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/operation/recMall.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">推荐管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form dataPlug" action="">
+	 	<div class="tabChange">
+	 	{% if page.location %}
+	 		<ul class="layui-tab-title chooseType" data-location="{{page.location}}" style="margin-bottom:15px">
+	 	{% else %}
+	 		<ul class="layui-tab-title chooseType" data-location="1" style="margin-bottom:15px">
+	 	{% endif %}
+		    {% if page.location == "1" %}
+	 			<li data-location="1" class="layui-this">在售商品</li>
+		 	{% else %}
+		 		<li data-location="1">在售商品</li>
+		 	{% endif %}
+		 	{% if page.location == "2" %}
+	 			<li data-location="2" class="layui-this">首页</li>
+		 	{% else %}
+		 		<li data-location="2">首页</li>
+		 	{% endif %}
+		    {% if page.location == "3" %}
+	 			<li data-location="3" class="layui-this">新手推荐</li>
+		 	{% else %}
+		 		<li data-location="3">新手推荐</li>
+		 	{% endif %}
+		    {% if page.location == "4" %}
+	 			<li data-location="4" class="layui-this">商城全部</li>
+		 	{% else %}
+		 		<li data-location="4">商城全部</li>
+		 	{% endif %}
+		 	{% if page.location == "5" %}
+	 			<li data-location="5" class="layui-this">一级分类</li>
+		 	{% else %}
+		 		<li data-location="5">一级分类</li>
+		 	{% endif %}
+		 	{% if page.location == "6" %}
+	 			<li data-location="6" class="layui-this">二级分类</li>
+		 	{% else %}
+		 		<li data-location="6">二级分类</li>
+		 	{% endif %}
+	 		</ul>
+	 	</div>
+	 	<div class="layui-form-item" style="padding-left: 20px;">
+	 		{% if page && page.location != '4'  %}
+	    	<div class="layui-input-inline stairClassify" data-productAdAttr="">
+		        <select name="stairClassify" lay-filter="stairClassify" lay-verify="required" lay-search="">
+		        	<option value="0">一级分类</option>
+		        </select>
+	        </div>
+	        {% endif %}
+	        {% if page && page.location == '6'  %}
+	        <div class="layui-input-inline secondClassify" data-productAdAttr="">
+		        <select name="secondClassify" lay-filter="secondClassify" lay-verify="required" lay-search="">
+		        	<option value="">二级分类</option>
+		        </select>
+	        </div>
+	        {% endif %}
+        </div>
+	</form>
+    <table class="layui-table table-width">
+	    <tr>
+	     	<th>排序位置</th>
+	     	<th>商品简称</th>
+	     	<th>商品图</th>
+	     	<th>原价(元)</th>
+	     	<th>兑换积分</th>
+	     	<th>已售基数</th>
+	     	<th>实售数量</th>
+	     	<th>提交时间</th>
+	     	<th>商品广告属性</th>
+	     	<th>设置商品</th>
+	    </tr>
+        <tbody id="htmlWrap">
+		{% for item in [1,2,3,4,5,6,7,8] %}
+     	    <tr class="rowTr hide row{{item}}">
+     	    	<td class="posSord">{{item}}</td>
+     	    	<td class="posShortName">--</td>
+			 	<td class="posLogoImg">--</td>
+			 	<td class="posPrice">--</td>
+			 	<td class="posTatol">--</td>
+			 	<td class="posBase">--</td>
+			 	<td class="posReal">--</td>
+				<td class="posCreatTime">--</td>
+				<td class="posNature">--</td>
+				<td class="recMan_selHomeGoods selContBox clearfix">
+					<div class="inputIconBox">
+						<input class="layui-input getGoodsName" data-value="" value="" placeholder="请选择商品(支持搜索)" type="text" name=""/>
+						<i class="layui-select-icon"></i>
+					</div>
+					<div class="goodsItems hide">
+						<ul class="selGoodsBox selHomeGoodsBox">
+							<li value="0" data-id="--" data-name="" data-img="--" data-price="--" data-tatol="--" data-base="--" 
+         	     					data-real="--" data-time="--" data-nature="--">请选择商品</li>
+						</ul>
+     	     		</div>
+				</td>
+		    </tr>
+	    {% endfor %}
+		</tbody>	
+	</table>
+	<div id="paging" data-page-no=0 data-page=0 data-page-size=0></div>	
+	{% else %}
+	    <div style="text-align:center">{{data.message}}</div>
+	{% endif%}
+{% endblock %}
+{% block layui%}
+    <script type="text/javascript" src="/controllers/operation/orderManagement/recMallJs.js"></script>
+{% endblock%}

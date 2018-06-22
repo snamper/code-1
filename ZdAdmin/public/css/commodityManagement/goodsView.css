@@ -1,0 +1,99 @@
+form{margin-left:10%}
+		.legend{padding-left:30px;line-height:40px;font-weight: 800;}
+		.layui-form-saveCloseBtn{margin-left: 32%;}
+		.layui-form-item label{min-width:160px;}
+		.layui-form-item div{line-height:38px}
+		.layui-form-item  .layui-input-inline{max-width: 80%;min-width: 60%;}
+		.layui-form-item span{line-height:38px}
+		.goods_content>div{min-width: 500px;}
+		.goodsCloseBigBtn{
+	display: block;
+	padding: 0;
+}
+.goodsCloseBigBtn a{
+	display: block;
+	text-align: center;
+	position: relative;
+}
+		.goodsImgShowBox{
+			width: 640px;
+		    margin: 15px 0 0 270px;
+		    position: relative;
+		}
+		.goodsImgShowUl{
+			position: relative;
+			width: 640px;
+		    overflow: hidden;
+		}
+		.goodsImgShow{
+			width: 1320px;
+			position: relative;
+			left: 0;
+			transition: 0.5s;
+		}
+		.hoverClickBtn{
+			position: absolute;
+			top: 0;
+		    width: 58px;
+		    height: 120px;
+			background: #ececec url(/images/left_right.png) no-repeat;
+			transition: 0.5s;
+			cursor: pointer;
+		}
+		.hoverClickBtnLeft{
+			background-position: 0 0;
+			left: -60px;
+			border-radius: 6px 0 0 6px;
+		}
+		.hoverClickBtnRight{
+			background-position: 0 -120px;
+			right: -60px;
+			border-radius: 0 6px 6px 0;
+		}
+		.hoverClickBtn:hover{
+			background-color: #d6d6d6;
+		}
+		.uploadImageText{
+			text-align: center;
+			line-height: 20px;
+		}
+		.formPage .convertBtn{
+			background-color: #fff;
+			color: gray;
+		    line-height: 38px;
+		}
+		.layui-form-item .layui-batch{
+		    position: absolute;
+		    left: 0;
+		}
+		.layui-form-item .layui-uploadFile-style{
+			position: relative;
+			width: 92px;
+			height: 38px;
+			z-index: 223;
+		}
+		.layui-form-item .layui-uploadFile-showStyle{
+			margin: 10px 0;
+			opacity: 1;
+		}
+		
+		#goodsImgShow .uploadImgItem{
+			position: relative;
+			width:200px;
+			height:112.5px;
+			margin-right:20px
+		}
+		#goodsImgShow .uploadImgItem img{
+			width:200px;
+			height:112.5px;
+		}
+		#goodsImgShow .uploadImgItem .coverImg{
+			position:absolute;
+			display: block;
+			width:200px;
+			height:112.5px;
+			left: 0;
+			top:0;
+			z-index:10 !important;
+			cursor: pointer;
+		}

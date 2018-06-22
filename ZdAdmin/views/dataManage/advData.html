@@ -1,0 +1,79 @@
+{% extends "./../layout.html"%}
+{% block title%}数据统计--商品数据统计--订单数据{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+		 <li>数据统计</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品数据统计</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">订单数据</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.data.datas && data.data.datas.length > 0 %}
+	 <form class="layui-form dataPlug" action="">
+	 	
+	    <div class="layui-inline">
+	        <label class="layui-form-label">日期范围</label>
+	        <div class="layui-input-inline">
+	        	{% if page && page.startTime %}
+				<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s" value="{{page.startTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+		    	{% endif %}
+		    </div>
+		    <div class="layui-input-inline">
+		    	{% if page && page.endTime %}
+				<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+		    	{% endif %}
+		    </div>
+	   </div>
+	    <div class="layui-inline" style="margin-left: 10px;">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+	    <div class="layui-inline" style="float: right; margin-right: 20px;">
+	    	{% if menuCodeList %}
+		    	{% for code in menuCodeList %}
+		    		{% if unescape(code.name) == "下载" %}
+		    			<a href="javascript:;" id="downLoadBtn" class="layui-btn">下载</a>
+		    		{% endif %}
+		    	{% endfor %}
+		    {% endif %}
+	    </div>
+	    <a	id="downloadFiles" href="" download=""></a>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>时间</th>
+	     	<th>订单数量</th>
+	     	<th>成交数量</th>
+	     	<th>消耗积分</th>
+	     	<th>消耗金额</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for item in data.data.datas %}
+         	<tr>
+			 	<td>{{loop.index}}</td>
+			 	<td>{{item.createTimeString}}</td>
+			 	<td>{{item.orderVolume}}</td>
+				<td>{{item.tradingVolume}}</td>
+			 	<td>{{item.points}}</td>
+			 	<td>{{item.amounts}}</td>
+			</tr>
+			{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/dataManage/advData.js"></script>
+{% endblock%}

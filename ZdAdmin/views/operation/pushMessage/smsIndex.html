@@ -1,0 +1,172 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-消息中心-站内信{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+	<style type="text/css">
+		.layui-tab-title .layui-this{
+			font-weight: 800;
+			background-color: #ccc;
+		}
+		.layui-form-referBtn{
+			top:0
+		}
+		.layui-form-position{
+			margin-top:20px;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li>消息中心</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">短信</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建短信" %}
+	    			<a href="/operation/pushMessage/addSms" class="layui-btn" style="float:right;margin-right:10px;">新建短信</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="sec1">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+                    <label class="layui-form-label">发送时间:</label>
+                    <div class="layui-input-inline">
+					     {% if page && page.startTime %}
+						 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+						 {% else %}
+						 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+						 {% endif %}                      
+                   </div>
+                    <div class="layui-input-inline">
+					     {% if page && page.endTime %}
+						 <input class="layui-input" placeholder="结束时间" id="LAY_demorange_e" value="{{page.endTime}}">
+						 {% else %}
+						 <input class="layui-input" placeholder="结束时间" id="LAY_demorange_e">
+						 {% endif %}                             
+                    </div>
+              </div>
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label">当前状态:</label>
+					<div class="layui-input-inline">
+					<select name="sendStatus" data-type="{{page.sendStatus}}" class="sendStatus" lay-search lay-filter="sendStatus">
+						<option value=""></option>
+						{% if !page.sendStatus || page.sendStatus == 0 %}
+							<option value="0" selected="selected">全部</option>
+						{% else %}
+							<option value="0">全部</option>
+						{% endif %}
+						{% if page.sendStatus == 1 %}
+							<option value="1" selected="selected">已完成</option>
+						{% else %}
+							<option value="1">已完成</option>
+						{% endif %}
+						{% if page.sendStatus == 2 %}
+							<option value="2" selected="selected">已撤回</option>
+						{% else %}
+							<option value="2">已撤回</option>
+						{% endif %}
+						{% if page.sendStatus == 3 %}
+							<option value="3" selected="selected">预约中</option>
+						{% else %}
+							<option value="3">预约中</option>
+						{% endif %}
+					</select> 
+					</div>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label">用户范围:</label>
+					<div class="layui-input-inline">
+						<select name="scope" data-type="{{page.advType}}" class="scope" lay-search lay-filter="scope">
+						<option value=""></option>
+						{% if page.scope == 1 %}
+							<option value="1" selected="selected">全部</option>
+						{% else %}
+							<option value="1">全部</option>
+						{% endif %}
+						{% if page.scope == 2 %}
+							<option value="2" selected="selected">指定</option>
+						{% else %}
+							<option value="2">指定</option>
+						{% endif %}
+						{% if page.scope == 3 %}
+							<option value="3" selected="selected">部分</option>
+						{% else %}
+							<option value="3">部分</option>
+						{% endif %}
+					</select> 
+					</div>
+				</div>
+				
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="">
+						<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <th>内容</th>
+		            <th>用户范围</th>
+		            <th>发送时间</th>
+		            <th>当前状态</th>
+		            <th>发送</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="resourceForm">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+			    		<td>{{item.model_info}}</td>
+			    		<td>
+			    			{% if item.scope == 1 %}
+			    				全部用户
+			    			{% elseif item.scope == 2 %}
+			    				指定用户
+			    			{% elseif item.scope == 3 %}
+			    				部分用户
+			    			{% endif %}
+			    		</td>
+			    		<td>{{item.send_time}}</td>
+			    		
+			    		<td>
+			    			{% if item.send_status == 1 %}
+			    				已完成
+			    			{% elseif item.send_status == 2 %}
+			    				已撤回
+			    			{% elseif item.send_status == 3 %}
+			    				预约中
+			    			{% endif %}
+			    		</td>
+			    		<td>{{item.sendnum}}</td>
+			    		<td>
+			    			{% if menuCodeList %}
+						    	{% for code in menuCodeList %}
+						    		{% if unescape(code.name) == "撤回" && item.send_status == 3 %}
+						    			<a data-logid="{{item.log_id}}" class=" layui-btn layui-btn-danger widthdraw">撤回</a>
+						    		{% endif %}
+						    	{% endfor %}
+						    {% endif %}
+			    			<a  href="/operation/pushMessage/smsDetail?logId={{item.log_id}}&msgId={{item.id}}&status={{item.status}}&scope={{item.scope}}" class=" layui-btn">详细</a>
+			    		</td>
+			    	</tr>
+		    	{% endfor%}
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/pushMessage/smsIndex.js"></script>
+{% endblock %}
+
+

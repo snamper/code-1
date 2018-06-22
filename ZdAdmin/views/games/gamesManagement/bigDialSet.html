@@ -1,0 +1,152 @@
+{% extends "./../../layout.html"%} 
+{% block title%}小游戏管理-大转盘设置{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/games/index.css"/> 
+<!--<link rel="stylesheet" href="/css/advertising/index.css" />-->
+<style type="text/css">
+	.copyUploadBtn{
+		display: inline-block;
+		float: right;
+		width: 30px;
+		line-height: 30px;
+		font-size: 20px;
+		border: 1px solid #b5b3b3;
+		text-align: center;
+		cursor: pointer;
+		transition: 0.3s;
+		cursor:pointer;
+		margin-left: 10px;
+	}
+	.btn_active{
+		color: #333;
+		border-color: #333;
+	}
+	.btn-disabled{
+		color: #b5b3b3;
+		border-color: #b5b3b3;
+	}
+	.getProbBox  input{
+		display: inline-block;
+		width: 80px;
+	}
+</style>
+<style type="text/css">
+</style>
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>小游戏管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">大转盘设置</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form bigDialSet" action="">
+	<table class="layui-table table-width">
+		<tr>
+			<th>位置</th>
+			<th>展示类型</th>
+			<th>展示内容</th>
+			<th style="line-height: 38px;">
+				概率(%)( 0-100之间,可保留3位小数)
+				{% if data.data.gameLotteryList[0].winRateList.length <= 1 %}
+					<span class="copyUploadBtn delColumn btn-disabled" >-</span>
+				{% else %}
+					<span class="copyUploadBtn delColumn btn_active" >-</span>
+				{% endif %}
+				{% if data.data.gameLotteryList[0].winRateList.length <= 9 %}
+					<span class="copyUploadBtn addColumn btn_active">+</span>
+				{% else %}
+					<span class="copyUploadBtn addColumn btn-disabled">+</span>
+				{% endif %}
+			</th>
+			<th>游客默认(%)</th>
+		</tr>
+		<tbody id="bigDialTbody">
+			{% if data.data.gameLotteryList.length %}
+			{% for item in data.data.gameLotteryList %}
+				<tr>
+					<td>{{loop.index}}</td>
+					{% if item.type == '3' %}
+					<td>谢谢</td>
+					<td><span class="getDataLis" data-id="{{item.id}}" data-type="3" data-winScore="{{item.winScore}}">谢谢</span></td>
+					{% else %}
+					<td>积分</td>
+					<td><span class="getDataLis" data-id="{{item.id}}" data-type="1" data-winScore="{{item.winScore}}">{{item.winScore}}积分</span></td>
+					{% endif %}
+					<td>
+						<div class="layui-input-inline getProbBox" data-step="{{item.winRateList.length}}">
+							{% if item.winRateList && item.winRateList.length > 0 %}
+								{% for item1 in item.winRateList %}
+									<span class="colContainer" data-step="{{loop.index}}">
+										{% if loop.index > 1 && loop.index < item.winRateList.length + 1  %}
+											-
+										{% endif %}
+										<input class="layui-input probValBlur probVal" data-val="{{item1/1000}}" value="{{item1/1000}}" placeholder="" type="text" />
+										
+									</span>
+									
+								{% endfor %}
+							{% else %}
+							<input class="layui-input probValBlur probVal" data-val="" value="0" placeholder="" type="text" name="lottosNum" autocomplete="off"/>
+							{% endif %}
+						</div>
+					</td>
+					<td>
+						<div class="layui-input-inline touristProbBox">
+							{% if item.vistorWinRate %}
+							<input class="layui-input probValBlur touristProbVal" data-val="{{item.vistorWinRate/1000}}" value="{{item.vistorWinRate/1000}}" placeholder="0-100之间(可保留3位小数)" type="text" name="lottosNum" autocomplete="off"/>
+							{% else %}
+							<input class="layui-input probValBlur touristProbVal" data-val="" value="0" placeholder="0-100之间(可保留3位小数)" type="text" name="lottosNum" autocomplete="off"/>
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			{% endif %}
+		</tbody>
+	</table>
+</form>
+<div class="ticketsBox">
+	<div class="layui-inline">
+		<label class="layui-form-label" style="width: 45px;">门票：</label>
+		<div class="layui-input-inline selDataBtns">
+			{% if data.data.ticketScore %}
+			<input type="text" class="layui-input ticketPoint" value="{{data.data.ticketScore}}" autocomplete="off" placeholder="请输入1-10000的整数">积分
+			{% else %}
+			<input type="text" class="layui-input ticketPoint" value="" autocomplete="off" placeholder="请输入1-10000的整数">积分
+			{% endif %}
+		</div>
+		<span class="layui-tooltip tooltip-hints tooltip-tickets hide">请输入1-10000的整数</span>
+	</div>
+	
+	<div class="layui-inline">
+		<label class="layui-form-label">游客赔率：</label>
+		<div class="layui-input-inline selDataBtns">
+			<span>{{data.data.vistorWin}}</span>
+		</div>
+	</div>
+	<div >
+		<label class="layui-form-label">登陆赔率：</label>
+		<div class="layui-input-inline selDataBtns">
+			<ul>
+				{% if data.data.loginUserWinList && data.data.loginUserWinList.length > 0 %}
+					{% for item in data.data.loginUserWinList %}
+						<li>第{{loop.index}} 次&nbsp;&nbsp;赔率： {{item/100000}}</li>
+					{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="setPageBtnCenter">
+    <a href="javascript:;" class="layui-btn bigDialSetBtn">保存</a>
+    <a href="/games/gamesMan" class="layui-btn">返回</a>
+</div>
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/games/gamesManagement/bigDialSet.js"></script>
+{% endblock%}

@@ -1,0 +1,94 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商户管理--推荐管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">推荐设置</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<form class="layui-form formPage site-demo-top40 setManRef setMarCenter" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商户状态：</label>
+			    <div class="layui-input-inline">
+				    <span  id="merchantId" data-id="{{data.data.merchantId}}">
+			        {% if data.data.set_status == "0"%}
+					未设置
+					{% elseif  data.data.set_status == "1" %}
+					已设置
+					{% else %}
+					获取失败
+					{% endif%}
+					</span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">创建时间：</label>
+				<div class="layui-input-inline">
+	                <span>{{data.data.create_time}}</span>				 					 			 
+				</div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商户名称：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.short_name}}</span>
+			    </div>	
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商户logo：</label>
+			<div class="layui-input-inline">
+				<img src="{{data.data.logo}}" alt="" style="width: 110px;height: 80px;"/>
+		    </div>			 
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span class="txt-impt">*</span>商户封面图：</label>
+			<div class="layui-input-inline layui-input-CoverImg">			   
+				<img id="manCoverImg" src="{{data.data.home_image}}" alt="" style="width: 220px;height: 160px;"/>
+				<input name="file" class="layui-upload-file" id="addTenants" lay-title=" " type="file">
+			    <span class="copyUploadBtn">+</span>
+		    	<span class="layui-tooltip" style="color: #ccc;">图片格式为JPG/JPEG/PNG,大小10M</span>
+		   </div>
+		    <span class="layui-tooltip tooltip-manCover hide">请上传商户封面</span>
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">标签设置：</label>
+			    <div class="layui-input-inline">
+					 <input type="text" name="hotLabel" autocomplete="off" id="label" value="{{data.data.label}}" class="layui-input hotLabel">
+					 <span class="layui-tooltip tooltip-manLabel hide">请输入1-4个字符</span>
+			    </div>	
+		    </div>
+	    </div>
+	    <div class="layui-form-item platWayBox" pane="">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>显示平台:</label>
+		    <div class="layui-input-inline layui-input-checked" style="width: 220px;">
+		    	<input name="platWay" lay-skin="primary" data-value="ios" title="ios" type="checkbox" checked="checked">
+		    	<input name="platWay" lay-skin="primary" data-value="android" title="android" type="checkbox" checked="checked">
+		    </div>
+		</div>
+		<div class="layui-form-item nextBackBtn">
+			<div class="layui-inline">
+            	<a href="javascript:;" onclick="commitData(0)" class="layui-btn">保存</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="javascript:;" onclick="commitData(1)" class="layui-btn">上架</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="/operation/merManagement/tenantRefer" class="layui-btn">返回</a>
+        	</div>
+        </div>
+	 </form>        
+{% endblock %}
+{% block layui%} 
+<script type="text/javascript" src="/controllers/operation/merManagement/setManRefer.js"></script>
+{% endblock%}

@@ -1,0 +1,31 @@
+.addResourceSection {
+	margin-top: 40px;
+}
+.layui-form-item {
+	margin-top: 10px;
+}
+.requestFriendName {
+	min-width: 500px;
+	float: left;
+	line-height: 38px;
+    font-weight: 400;
+    text-align: right;
+}
+.requestFriendValue {
+	width: 500px;
+	float: left;
+	line-height: 38px;
+    font-weight: 400;
+    text-align: center;
+}
+.requestFriendBtn {
+	width: 100px;
+	float: left;
+    font-weight: 400;
+    text-align: center;
+}
+.requestFrdConfig {
+	float: right;
+	margin-right: 50px;
+}
+

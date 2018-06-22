@@ -1,0 +1,121 @@
+{% extends "./../../layout.html"%}
+{% block title%}客户管理-广告主管理-广告主审核{% endblock %}
+{% block head%}
+	<!--<link rel="stylesheet" href="/css/advertising/index.css" />-->
+	<style type="text/css">
+		.layui-form-saveCloseBtn{margin-left: 32%;}
+		.layui-form-item{margin-left:20%;}
+		.layui-form-item label{min-width:100px;}
+		.layui-form-item div{
+			line-height:38px
+		}
+		.layui-form-item span{
+			line-height:38px
+		}
+		.failCause{
+			width: 80%;
+			height: 90px;
+			margin:20px 10% 20px 10%;
+		}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>客户管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>广告主管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">广告主审核</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			
+			<div class="layui-form-item layui-input-inline" style="width: 256px">
+				 <label class="layui-form-label" style="width: 30%;">广告主分类:</label>
+				 {% if data.data.type == 1 %}
+					<span>直客</span>
+				{% else %}
+					<span>代理</span>
+				{% endif %}
+				
+			</div>
+			<div class="layui-form-item layui-input-inline" style="width: 300px;margin-left:5%">
+			    <label class="layui-form-label">广告主编号:</label>
+			    <span>
+				       20180815-001
+				</span>
+			</div>
+			<div class="layui-form-item " >
+			    <label class="layui-form-label">广告主名称:</label>
+			    <div class="layui-input-inline">
+			        {{data.data.full_name}}
+			    </div>
+			</div>
+			<div class="layui-form-item layui-input-inline" >
+			    <label class="layui-form-label">创建人:</label>
+			    <span>
+			       	{{data.data.name}}
+			    </span>
+			</div>
+			<div class="layui-form-item layui-input-inline" style="width: 300px;margin-left:10%">
+			    <label class="layui-form-label">创建时间:</label>
+			    <span>
+			        {{data.data.create_time}}
+			    </span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">广告主LOGO:</label>
+			    <div class="layui-input-inline">
+			       <img width="200" height="112" src='{{data.data.logo}}' alt="" />
+			    </div>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">广告主描述:</label>
+			    <div class="layui-input-inline">
+			        {{data.data.introduce}}
+			    </div>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a data-id="{{data.data.id}}" data-type="审核通过" class="layui-btn audit">审核通过</a>
+			    <a data-id="{{data.data.id}}" data-type="审核失败" class="layui-btn layui-btn-danger audit" >审核失败</a>
+			</div>
+			
+		</form>
+		
+		<div id="failCause" class=" hide">
+			<div class="uploadBox clearfix">
+				<div class="modal-body">
+					<textarea class="failCause" ></textarea>
+				</div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn failSubmit">提交</a>
+			    <a class="layui-btn layui-btn-danger layui-layer-close">关闭</a>
+			</div>
+		</div>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript">
+		$(".closePage").on("click", function() {
+			var _url = window.location.href;
+			var source = "";
+			if(_url.indexOf("&source=")){
+				source = _url.split("&source=")[1];	
+			}
+			if(source){
+				window.location.href = source
+			}else{
+				window.location.href = "/client/advertiserManage"
+			}
+		})
+	</script>
+{% endblock %}
+
+{% block layui %}
+	<script type="text/javascript" src="/controllers/client/auditManagement/audit.js"></script>
+{% endblock %}

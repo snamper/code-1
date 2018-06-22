@@ -1,0 +1,152 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--活动管理--活动管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>活动管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">活动管理</li>
+	     
+		<a href="/operation/actManagement/chooseActive" class="layui-btn" style="float:right;margin-right:40px;">新增活动</a>
+	 </ul>
+{%endblock%}
+{% block content%}
+	 <div class="sec1ContMiddle">
+		<form class="layui-form layui-form-position" action="">
+			<div class="layui-form-item layui-input-inline">
+			    <label class="layui-form-label">活动名称:</label>
+			    <div class="layui-input-inline">
+			    	{% if page.name %}
+				 		<input type="text" name="name" value={{unescape(page.name)}} class="layui-input name">
+				 	{% else %}
+				 		<input type="text"  name="name"    class="layui-input name">
+				 	{% endif %}	
+			    </div>
+			</div>
+			<div class="layui-form-item layui-input-inline">
+				<select lay-filter="status" class="status" data-status="{{page.status}}">
+		    		<option value="">活动状态</option>
+		    		{% if !page.status %}
+		    			<option value="-1" selected="selected">全部</option>
+		    		{% else %}
+		    			<option value="-1">全部</option>
+		    		{% endif %}
+		    		{% if page.status == "1" %}
+		    			<option value="1" selected="selected">进行中</option>
+		    		{% else %}
+		    			<option value="1">进行中</option>
+		    		{% endif %}
+		    		{% if page.status == "2" %}
+		    			<option value="2" selected="selected">已下线</option>
+		    		{% else %}
+		    			<option value="2">已下线</option>
+		    		{% endif %}
+		    		{% if page.status == "3" %}
+		    			<option value="3" selected="selected">已结束</option>
+		    		{% else %}
+		    			<option value="3">已结束</option>
+		    		{% endif %}
+		    		{% if page.status && page.status == "0" %}
+		    			<option value="0" selected="selected">未开始</option>
+		    		{% else %}
+		    			<option value="0">未开始</option>
+		    		{% endif %}
+				</select> 
+			</div>
+			<div class="layui-form-referBtn layui-input-inline" style="margin-top: -16px;">	
+				 <div class="layui-input-block">
+					<a  class="layui-btn right site-demo-right40 queryAdver" >查询</a>
+				</div>
+			 </div>	
+		</form>
+	</div>
+     <table class="layui-table table-width" style="width: 100%; width: 98%; margin: 15px auto; ">
+	     <tr>
+	     	<th>活动ID</th>
+	     	<th>活动名称</th>
+	     	<th>类型</th>
+	     	<th>创建时间</th>
+	     	<th>有效期</th>
+	     	<th>状态</th>
+	     	<th>奖品详情</th>
+	     	<th>操作</th>
+	     </tr>
+	     {% if data.data.datas.length && data.data.datas.length > 0 %}
+         <tbody id="htmlWrap">
+         	{% for item in data.data.datas %}
+         	<tr>
+         		<td>{{item.id}}</td>
+         		<td>{{item.active_name}}</td>
+         		<td>
+         			{% if item.active_type == 1 %}
+         				新用户注册
+         			{% endif %}
+         		</td>
+         		<td>{{item.create_time}}</td>
+         		<td>{{item.start_time}} - {{item.end_time}}</td>
+         		<td>
+         			{% if item.status == 1 %}
+         				进行中
+         			{% elseif item.status == 2 %}
+         				已下线
+         			{% elseif item.status == 3 %}
+         				已结束
+         			{% else %}
+         				未开始
+         			{% endif %}
+         		</td>
+         		<td style="cursor: pointer;color: blue;" class="showPrize" data-id="{{item.id}}">查看</td>
+         		<td>
+         			{% if !item.status ||  item.status == 2 %}
+         				<a class="layui-btn" href="/operation/actManagement/registerActiveEdit?id={{item.id}}">编辑</a>
+						<a href="javascript:;" class="layui-btn lineopration" data-status="1" data-id="{{item.id}}">上线</a>
+					{% endif %}
+					{% if item.status == 1 %}
+						<a href="javascript:;" class="layui-btn layui-btn-danger lineopration" data-status="2" data-id="{{item.id}}">下线</a>
+					{% endif %}
+         		</td>
+         	</tr>
+         	{% endfor %}
+		 </tbody>	
+		 {% endif %}
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+     
+     
+	<div id="prizeBox" class="prize hide">
+		<!--<div class="sec1ContMiddle" style="margin-top: 20px;margin-left: 20px;">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <div class="layui-input-inline">
+					 	<input type="text"  name="name"  placeholder="请输入名称检索"  class="layui-input name">
+				    </div>
+				</div>
+				<div class="layui-form-referBtn layui-input-inline" style="margin-top: -16px;">	
+					 <div class="layui-input-block">
+						<a  class="layui-btn right site-demo-right40 query" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>-->
+	     <table class="layui-table table-width" style="width: 100%; width: 98%; margin: 15px auto; ">
+		     <tr>
+		     	<th>奖品对应ID</th>
+		     	<th>奖品名称</th>
+		     	<th>类型</th>
+		     	<th>有效期</th>
+		     	<th>可用/库存</th>
+		     </tr>
+	         <tbody id="prizeTable">
+	         	
+			 </tbody>	
+		 </table>
+	</div>
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/actManagement/activeList.js"></script>
+{% endblock%}

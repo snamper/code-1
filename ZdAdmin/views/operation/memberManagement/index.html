@@ -1,0 +1,69 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--会员管理--会员管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>会员管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">会员管理列表</li>
+	     {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建" %}
+	    			 <a href="/operation/memberManagement/equitySet" class="layui-btn" style="float:right;margin-right:60px;">新建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "成长值设置" %}
+	    			<a href="/operation/memberManagement/growSet" class="layui-btn" style="float:right;margin-right: 10px;">成长值设置</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	     
+	 </ul>
+{%endblock%}
+{% block content%}
+	 
+     <table class="layui-table table-width sortInputSize">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>会员等级</th>
+	     	<th>平台广告上限</th>
+	     	<!--<th>三方dsp数量</th>-->
+	     	<th>购买折扣</th>
+	     	<th>操作</th> 
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for item in data.data %}
+         	<tr>
+         		<td>{{item.sort}}</td>
+         		<td>{{item.name}}</td>
+         		<td>{{item.cpmWatchCeil}}</td>
+         		<td>{{item.discount}}%</td>
+         		<td>
+         			{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "设置" %}
+				    			<a href="/operation/memberManagement/equitySet?id={{item.id}}" class="layui-btn" >设置</a>
+				    		{% elseif unescape(code.name) == "删除" && item.sort != 0 %}
+				    			<!--<a data-id="{{item.id}}" class="layui-btn deleteMember" >删除</a>-->
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+         		</td>
+         	</tr>
+         	{% endfor %}
+         	
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/memberManagement/index.js"></script>
+{% endblock%}

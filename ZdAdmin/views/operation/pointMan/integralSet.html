@@ -1,0 +1,96 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-积分管理{% endblock %}
+{% block head%}
+	<style type="text/css">
+		.layui-input{width: 240px;}
+		.layui-form-label{min-width: 140px;}
+		.layui-form-saveCloseBtn{margin-left: 220px;margin-top: 40px;}
+		.addUserSection form{margin-left: 0;position: absolute;left: 50%;margin-left: -470px;margin-top: 40px;}
+		.layui-tab-title .layui-this {font-weight: 800; background-color: #ccc;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>运营管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>积分管理</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addUserSection">
+		<div class="layui-tab padding15">
+			<ul class="layui-tab-title chooseType">
+				<li><a href="/operation/pointMan">CPM积分模型</a></li>
+				<li class="layui-this"><a href="/operation/pointMan/integralSet">内容发放积分模型</a></li>
+				<li><a href="/operation/pointMan/registerIntegral">注册积分模型</a></li>
+				<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+				<li><a href="/operation/pointMan/dayStayTotalMan">每日停留积分管理</a></li>
+				<li><a href="/operation/pointMan/changeRecordCPM">积分模型变更记录</a></li>
+				<li><a href="/operation/pointMan/videoPoint">实时视频积分</a></li>
+			</ul>
+		</div>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">登录获得:</label>
+			    <div class="layui-input-inline" style="width: 270px;">
+			    	<input type="text" placeholder="请输入获取比例" value=""  class="layui-input loginAcquire" style="width: 240px;float: left;">	
+			        <span style="line-height: 38px;margin-left: 10px;">%</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-loginAcquire hide">请输入获取比例</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">阅读内容次数:</label>
+			    <div class="layui-input-inline" style="width: 270px;">
+			    	
+			        	<input type="text"  name=""   placeholder="请输入获取比例" value="" class="layui-input readAcquireCode" style="width: 240px;float: left;">
+			       		
+			       <span style="line-height: 38px;margin-left: 10px;">%</span>
+			    </div>
+			    <div class="layui-input-inline" style="width: 270px;">
+			        <input type="text"  name=""   placeholder="请输入次数" value="" class="layui-input readAcquireNum" style="width: 240px;float: left;">
+			        <span style="line-height: 38px;margin-left: 10px;">次</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-readAcquireCode hide">请输入获取比例</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label"></label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="flag" style="min-width: 550px;color: #ccc;">
+			       超出阅读次数的用户将平分奖励，阅读次数的计算以观看超过十秒才算一次有效阅读次数
+			   </div>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">用户等级</label>
+			</div>
+			{% for item in data.data %}
+				<div class="layui-form-item vipRankInfoViewList">
+					<label class="layui-form-label">{{item.name}}</label>
+					<div class="layui-input-inline" style="width: 270px;">
+						<input data-attrid="{{item.id}}" type="text" value="" placeholder="请输入获取比例"  style="width: 240px;float: left;" class="layui-input vipRankInfo">
+						<span style="line-height: 38px;margin-left: 10px;">%</span>
+					</div>
+					<span class="layui-tooltip tooltip-vipRankInfo hide">请输入获取比例</span>
+				</div>
+			{% endfor %}
+			<div class="layui-form-item userFlagChoose" >
+			    <label class="layui-form-label"></label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="flag" style="min-width: 300px;color: red;">
+			        <span class="totalCode"></span>
+			   </div>
+			</div>
+			<div class="layui-form-item userFlagChoose" >
+			    <label class="layui-form-label"></label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="flag" style="min-width: 450px;color: #ccc;">
+			       不填写或默认零默认不发放奖励，全部奖励相加不可超过100%。
+			   </div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			    <a  class="layui-btn layui-save-btn saveCode">保存</a>
+			</div>
+		</form>
+	</section>
+	<input type="hidden" class="memberRankList" data-value="{{data.data | json_encode}}" />
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/operation/pointManagement/intergralSet.js"></script>
+{% endblock %}
+

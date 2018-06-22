@@ -1,0 +1,610 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--商品查看{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/commodityManagement/goodsView.css" />
+	<link rel="stylesheet" href="/css/operation/setRechargeGoods.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">商品查看</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<div class="legend">商品基本信息</div><hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			{% if data.data.productAdAttr == 3 %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label">充值商家请求比例:</label>
+					<div class="layui-input-inline askScale">
+						<input name="scaleFilter" value="1" title="话费" type="radio" lay-filter="scaleFilter" checked="checked">
+						<input name="scaleFilter" value="2" title="流量" type="radio" lay-filter="scaleFilter">
+				    	<div class="layui-input-inline scalesBox hfScale" style="width: 220px;">
+					    	{% if data.data.billSendRatioList.length %}
+					    	{% for bills in data.data.billSendRatioList %}
+					    	{% if bills.merchanEname == '19e' %}
+					    	{% if bills.ratio || bills.ratio == '0' %}
+					        <span>19e：</span><span>{{bills.ratio}}%</span>
+					        {% else %}
+					        <span>19e：</span>
+					        {% endif %}
+					    	{% else %}
+					    	{% if bills.ratio || bills.ratio == '0' %}
+					        <span>　　欧飞：</span><span>{{bills.ratio}}%</span>
+					        {% else %}
+					        <span>　　欧飞：</span>
+					        {% endif %}
+					    	{% endif %}
+					    	{% endfor %}
+					    	{% else %}
+					    	<span>19e：</span>
+					    	<span>　　欧飞：</span>
+					    	{% endif %}
+					    </div>
+					    <div class="layui-input-inline scalesBox llScale hide" style="width: 220px;">
+					    	{% if data.data.flowSendRatioList.length %}
+					    	{% for flows in data.data.flowSendRatioList %}
+					    	{% if flows.merchanEname == '19e' %}
+					    	{% if flows.ratio || flows.ratio == '0' %}
+					        <span>19e：</span><span>{{flows.ratio}}%</span>
+					        {% else %}
+					        <span>19e：</span>
+					        {% endif %}
+					    	{% else %}
+					    	{% if flows.ratio || flows.ratio == '0' %}
+					        <span>　　欧飞：</span><span>{{flows.ratio}}%</span>
+					        {% else %}
+					        <span>　　欧飞：</span>
+					        {% endif %}
+					    	{% endif %}
+					    	{% endfor %}
+					    	{% else %}
+					    	<span>19e：</span>
+					    	<span>　　欧飞：</span>
+					    	{% endif %}
+					    </div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label">商品状态:</label>
+		            {% if data.data.productState == "1" %}
+				 		<span>待上架（未设置）</span>
+				 	{% elseif data.data.productState == "2" %}
+				 		<span>待上架（已設置） </span>
+				 	{% elseif data.data.productState == "3" %}
+				 		<span>已下架  </span>
+				 	{% elseif data.data.productState == "0" || data.data.productState == "-1" || data.data.productState == "-2" %}
+				 		<span>草稿  </span>
+				 	{% elseif data.data.productState == "4" %}
+				 		<span>已上架</span>
+				 	{% elseif data.data.productState == "5" %}
+				 		<span>待审核</span>
+				 	{% elseif data.data.productState == "6" %}
+				 		<span>审核失败</span>
+				 	{% endif %}	
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品编号:</label>
+				    <span>{{data.data.id}}</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label">商品类型:</label>
+					 {% if data.data.productType == "1" %}
+						<span>虚拟</span>
+					{%else%}
+						<span>实物</span>
+					{%endif%}
+					
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商户:</label>
+				    <span>{{data.data.merchantShortName}}</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >兑换方式:</label>
+					<span>
+					{% if data.data.exchangeMethods == '1' %}
+						手动
+					{% elseif data.data.exchangeMethods == '2' %}
+						H5链接
+					{% elseif data.data.exchangeMethods == '3' %}
+						API接口
+					{% else %}
+						--
+					{% endif %}
+					</span>
+				</div>
+				{% if data.data.exchangeMethods == '3' %}
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">账号类型:</label>
+				    <span>
+				    	{% if data.data.accountType == '1' %}
+				    	手机号类型
+					    {% elseif data.data.accountType == '2' %}
+				    	其他
+					    {% else %}
+					    --
+					    {% endif %}
+					</span>
+				</div>
+				{% endif %}
+			</div>
+			{% if data.data.exchangeMethods == '2' %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >H5链接形式:</label>
+					<span>
+					{% if data.data.dataTransfer == 1 %}
+					手机号模式
+					{% elseif data.data.dataTransfer == 2 %}
+					兑换码模式
+					{% else %}
+					--
+					{% endif %}
+					</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">兑换链接:</label>
+				    <span>
+				    	{% if data.data.exchangeUrl %}
+				    	{{data.data.exchangeUrl}}
+					    {% else %}
+					    --
+					    {% endif %}
+					</span>
+				</div>
+			</div>
+			{% endif %}
+			{% if data.data.productAdAttr == 1 %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">有无兑换码:</label>
+				    <span>
+				    	{% if data.data.hasExchangeCode == '1' %}
+				    	有
+				    	{% elseif data.data.hasExchangeCode == '2' %}
+				    	无
+				    	{% else %}
+				    	{% endif %}
+				    </span>
+				</div>
+			</div>
+			{% endif %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品分类:</label>
+				    <span>{{data.data.productSortName}}</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品标签:</label>
+				    <span>{{data.data.tag}}</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品名称:</label>
+				    <span>{{data.data.fullName}}</span>
+				</div>
+				{% if data.data.specialOfferFlag %}
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品属性:</label>
+				    <span>特价商品</span>
+				</div>
+				{% endif %}
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">商品广告属性:</label>
+				    <span>
+				    	{% if data.data.productAdAttr == 1 %}
+				    	购买商品
+				    	{% elseif data.data.productAdAttr == 2 %}
+				    	广告商品
+				    	{% elseif data.data.productAdAttr == 3 %}
+				    	充值商品
+				    	{% endif %}
+				    </span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">创建人:</label>
+				    <span>
+				       	{{data.data.createName}}
+				    </span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">创建时间:</label>
+				    <span>
+				        {{data.data.createTime}}
+				    </span>
+				</div>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">商品列表图:</label>
+			    <div class="layui-input-inline">
+			       <img style="width: 200px;height: 112px;" src='{{data.data.listImage}}' alt="" />
+			    </div>
+			</div>
+			{% if data.data.productAdAttr != 3 %}
+			<div class="layui-form-item">
+				<label class="layui-form-label"> * 商品详情图:</label>
+				 <div class="goodsImgShowBox">
+					<div class="goodsImgShowUl">
+						<div class="site-demo-upload hide" >
+						    <input type="file" class="layui-upload-images updataGoodsImg"/>
+						</div>
+						<ul id="goodsImgShow" class="goodsImgShow clearfix">
+							{% for item in data.data.detailImages%}
+							<li class="uploadImgItem left">
+								<img src='{{item.imageUrl}}' alt="" class="uploadImage"/>
+								<span class="coverImg"></span>
+							</li>
+							{% endfor%}
+						</ul>
+					</div>
+					<span class="hoverClickBtn hoverClickBtnLeft hide"></span>
+					<span class="hoverClickBtn hoverClickBtnRight hide"></span>
+				</div>
+			</div>
+			{% endif %}
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">商品描述	:</label>
+			    <div class="layui-input-inline">
+			        {{data.data.productDescribe}}
+			    </div>
+			</div>
+		</form>
+		<div class="legend">额度和积分配置</div><hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content" id="limitTatolConfig">
+				<div class="layui-form-item navTabHeader" >
+					<ul class="layui-tab-title selTabItems" data-payType="1">
+			    		<li data-payType="1" class="layui-this">充话费</li>
+				 		<li data-payType="2">移动流量</li>
+				 		<li data-payType="3">联通流量</li>
+				 		<li data-payType="4">电信流量</li>
+			 		</ul>
+				</div>
+				<div class="layui-form-item navTabCont">
+				    <ul class="navTabContLis tariffeItem">
+				    	{% if data.data.billList.length %}
+					    	{% for tar in data.data.billList %}
+					    	<li class="markLis">
+					    		{% if tar.status == "0" %}
+					    		<i class="stickShow">维护中</i>
+					    		{% endif %}
+					    		<span>{{tar.amount}}元</span>
+					    		<span>{{tar.point}}积分</span>
+					    	</li>
+					    	{% endfor %}
+				    	{% else %}
+				    		<li>暂无设置项</li>
+				    	{% endif %}
+				    </ul>
+				    <ul class="navTabContLis flowItemM hide">
+				    	{% if data.data.mobileList.length %}
+					    	{% for cm in data.data.mobileList %}
+					    	<li class="markLis">
+					    		{% if cm.status == "0" %}
+					    		<i class="stickShow">维护中</i>
+					    		{% endif %}
+					    		<span>{{cm.flow}}M</span>
+					    		<span>{{cm.point}}积分</span>
+					    	</li>
+					    	{% endfor %}
+				    	{% else %}
+				    		<li>暂无设置项</li>
+				    	{% endif %}
+				    </ul>
+				    <ul class="navTabContLis flowItemU hide">
+				    	{% if data.data.unicomList.length %}
+					    	{% for un in data.data.unicomList %}
+					    	<li class="markLis">
+					    		{% if un.status == "0" %}
+					    		<i class="stickShow">维护中</i>
+					    		{% endif %}
+					    		<span>{{un.flow}}M</span>
+					    		<span>{{un.point}}积分</span>
+					    	</li>
+					    	{% endfor %}
+				    	{% else %}
+				    		<li>暂无设置项</li>
+				    	{% endif %}
+				    </ul>
+				    <ul class="navTabContLis flowItemC hide">
+				    	{% if data.data.telecomList.length %}
+					    	{% for ct in data.data.telecomList %}
+					    	<li class="markLis">
+					    		{% if ct.status == "0" %}
+					    		<i class="stickShow">维护中</i>
+					    		{% endif %}
+					    		<span>{{ct.flow}}M</span>
+					    		<span>{{ct.point}}积分</span>
+					    	</li>
+					    	{% endfor %}
+				    	{% else %}
+				    		<li>暂无设置项</li>
+				    	{% endif %}
+				    </ul>
+				</div>
+			</div>
+		</form>	
+		{% if data.data.productAdAttr != 3 %}
+		<div class="legend">商品进货信息</div><hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >进货数量:</label>
+					<span>{{data.data.productNum}}</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">进货总价:</label>
+				    <span>
+					    {{data.data.totalPrice}}元
+					</span>
+				</div>
+			</div>
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					 <label class="layui-form-label" >成本价:</label>
+					<span>{{data.data.costPrice}}元</span>
+					
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">零售价:</label>
+				    <span>
+				      	{{data.data.retailPrice}}元
+					</span>
+				</div>
+			</div>
+		</form>	
+		{% endif %}
+		<div class="legend">
+			商品销售信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >销售数量:</label>
+					<span>{{data.data.soldNumber}}</span>
+				</div>
+				{% if data.data.productAdAttr != 3 %}
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">库存数量:</label>
+				    <span>
+					    {{data.data.stockNum}}
+					</span>
+				</div>
+				{% endif %}
+			</div>
+			{% if data.data.productAdAttr != 3 %}
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" >兑换积分:</label>
+				<span>{{data.data.productRule.exchangePoints}}积分</span>
+			</div>
+			{% endif %}
+		</form>
+		<div class="legend">
+			运营设置信息
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			{% for seatLis in data.data.recommendList %}
+			{% if seatLis.location == 1 %}
+			<div class="goods_content">
+				<div class="layui-form-item layui-input-inline" >
+					<label class="layui-form-label" >排序号:</label>
+					<span>{{seatLis.sord}}</span>
+				</div>
+				<div class="layui-form-item layui-input-inline" >
+				    <label class="layui-form-label">推荐位置:</label>
+				    <span>频道页</span>
+				</div>
+			</div>
+			{% elseif seatLis.location == 2 %}
+				{% if seatLis.sord %}
+				<div class="goods_content">
+					<div class="layui-form-item layui-input-inline" >
+						<label class="layui-form-label" >排序号:</label>
+						<span>{{seatLis.sord}}</span>
+					</div>
+					<div class="layui-form-item layui-input-inline" >
+					    <label class="layui-form-label">推荐位置:</label>
+					    <span>首页</span>
+					</div>
+				</div>
+				{% endif %}
+			{% endif %}
+			{% endfor %}
+			<div class="layui-form-item " >
+				<label class="layui-form-label" >CPS入口:</label>
+				<span>
+					{% if data.data.entranceMark[0] %}
+					首页　
+					{% endif %}
+					{% if data.data.entranceMark[1] %}
+					商城页　
+					{% endif %}
+					{% if data.data.entranceMark[2] %}
+					卡包列表　
+					{% endif %}
+					{% if data.data.entranceMark[3] %}
+					购买成功页　
+					{% endif %}
+					{% if data.data.entranceMark[4] %}
+					兑换成功页　
+					{% endif %}
+					{% if data.data.entranceMark[5] %}
+					商品详情页　
+					{% endif %}
+				</span>
+			</div>
+			{% if data.data.entranceMark[0] || data.data.entranceMark[1] || data.data.entranceMark[2] %}
+			<div class="layui-form-item " >
+				<label class="layui-form-label" >入口类型:</label>
+				<span>按钮入口</span>
+			</div>
+			{% for showCpsLis in data.data.cpsEntranceList %}
+				{% if showCpsLis.entranceCategory == 0 %}
+				<div class="layui-form-item " >
+					<label class="layui-form-label" >入口名称:</label>
+					<span>{{showCpsLis.entranceButtonName}}</span>
+				</div>
+				<div class="layui-form-item " >
+					<label class="layui-form-label" >入口链接:</label>
+					<span>{{showCpsLis.entranceUrl}}</span>
+				</div>
+				{% endif %}
+			{% endfor %}
+			{% endif %}
+			{% if data.data.entranceMark[3] || data.data.entranceMark[4] %}
+			{% for showCpsLis in data.data.cpsEntranceList %}
+				{% if showCpsLis.entranceCategory == 1 %}
+					{% if showCpsLis.entranceType == 0 %}
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >入口类型:</label>
+						<span>按钮入口</span>
+					</div>
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >入口名称:</label>
+						<span>{{showCpsLis.entranceButtonName}}</span>
+					</div>
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >入口链接:</label>
+						<span>{{showCpsLis.entranceUrl}}</span>
+					</div>
+					{% elseif showCpsLis.entranceType == 1 %}
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >入口类型:</label>
+						<span>图片入口</span>
+					</div>
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >图片:</label>
+						<img src="{{showCpsLis.entrancePicUrl}}" style="width: 280px;height: 80px;" />
+					</div>
+					<div class="layui-form-item " >
+						<label class="layui-form-label" >入口链接:</label>
+						<span>{{showCpsLis.entranceUrl}}</span>
+					</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+			{% endif %}
+			{% if data.data.entranceMark[5] %}
+			<div class="layui-form-item " >
+				<label class="layui-form-label" >入口类型:</label>
+				<span>图片入口</span>
+			</div>
+			{% for showCpsLis in data.data.cpsEntranceList %}
+				{% if showCpsLis.entranceCategory == 2 %}
+				<div class="layui-form-item " >
+					<label class="layui-form-label" >图片:</label>
+					<img src="{{showCpsLis.entrancePicUrl}}" style="width: 280px;height: 80px;" />
+				</div>
+				<div class="layui-form-item " >
+					<label class="layui-form-label" >入口链接:</label>
+					<span>{{showCpsLis.entranceUrl}}</span>
+				</div>
+				{% endif %}
+			{% endfor %}
+			{% endif %}
+		</form>
+		<div class="legend">
+			商品兑换方式
+		</div>
+		<hr>
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" style="color:red">商品30天购买次数:</label>
+				<span>{{data.data.numberPurchasedIn30Days}}</span>
+			</div>
+			{% if data.data.productAdAttr != 3 %}
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" >使用有效期:</label>
+				 {% for item in data.data.productExtendedDetailList%}
+				 	{% if item.attrDicName  == "usefulTime" %}
+						<span>{{item.detailDesc}}</span>
+					{% endif %}
+				{% endfor%}
+				
+			</div>
+			<div class="layui-form-item " >
+				 <label class="layui-form-label">注意事项:</label>
+				<div class="layui-input-inline">
+					{% for item in data.data.productExtendedDetailList%}
+					 	{% if item.attrDicName  == "announcements" %}
+							<span>{{item.detailDesc}}</span>
+						{% endif %}
+					{% endfor%}
+				</div>
+			</div>
+			<div class="layui-form-item " >
+				 <label class="layui-form-label">使用流程:</label>
+				<div class="layui-input-inline">
+					{% for item in data.data.productExtendedDetailList%}
+					 	{% if item.attrDicName  == "useFlow" %}
+							<span>{{item.detailDesc}}</span>
+						{% endif %}
+					{% endfor%}
+				</div>
+			</div>
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" >法律声明:</label>
+				<div class="layui-input-inline">
+					{% for item in data.data.productExtendedDetailList%}
+					 	{% if item.attrDicName  == "statement" %}
+							<span>{{item.detailDesc}}</span>
+						{% endif %}
+					{% endfor%}
+				</div>
+			</div>
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" style="color:red;">购买成功文案:</label>
+				 {% for item in data.data.productExtendedDetailList%}
+				 	{% if item.attrDicName  == "purchaseSucceedsMsg" %}
+						<div class="layui-input-inline">{{item.detailDesc}}</div>
+					{% endif %}
+				{% endfor%}
+			</div>
+			{% endif %}
+			{% if data.data.productAdAttr == 3 %}
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" style="color:red;">话费充值说明:</label>
+				 {% for item in data.data.productExtendedDetailList%}
+				 	{% if item.attrDicName  == "prepaidRefillMsg" %}
+						<div class="layui-input-inline">{{item.detailDesc}}</div>
+					{% endif %}
+				{% endfor%}
+			</div>
+			<div class="layui-form-item " >
+				 <label class="layui-form-label" style="color:red;">流量充值说明:</label>
+				 {% for item in data.data.productExtendedDetailList%}
+				 	{% if item.attrDicName  == "flowRechargeMsg" %}
+						<div class="layui-input-inline">{{item.detailDesc}}</div>
+					{% endif %}
+				{% endfor%}
+			</div>
+			{% endif %}
+			<div class="layui-form-saveCloseBtn"  pane="">
+			    <a class="layui-btn closeCurPage" >关闭</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui%} 
+<script src="/controllers/operation/orderManagement/showTrades.js" type="text/javascript" charset="utf-8"></script>
+{% endblock%}

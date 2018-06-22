@@ -1,0 +1,256 @@
+{% extends "./../../layout.html"%} 
+{% block title%}运营管理-账号风险管理-异常用户记录{% endblock %} {% block head%}
+<link rel="stylesheet" href="/css/operation/index.css"/> 
+{% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="arrow-icon">账号风险管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">异常用户记录</li>
+</ul>
+{%endblock%} 
+{% block content%}
+{% if data.message =="成功"%}
+<form class="layui-form lagLibrary" action="">
+ 	<div class="layui-form-item padding15">
+	    <div class="layui-inline">
+		    {% if page.type == '1' %}
+	    	<div class="layui-input-inline selectStatus" data-type="1">
+			{% elseif page.type == '2' %}
+	    	<div class="layui-input-inline selectStatus" data-type="2">
+	        {% elseif page.type == '3' %}
+	    	<div class="layui-input-inline selectStatus" data-type="3">
+    		{% elseif page.type == '4' %}
+	    	<div class="layui-input-inline selectStatus" data-type="4">
+    		{% elseif page.type == '5' %}
+	    	<div class="layui-input-inline selectStatus" data-type="5">
+    		{% elseif page.type == '6' %}
+	    	<div class="layui-input-inline selectStatus" data-type="6">
+    		{% elseif page.type == '7' %}
+	    	<div class="layui-input-inline selectStatus" data-type="7">
+	        {% else %}
+	    	<div class="layui-input-inline selectStatus" data-type="0">
+			{% endif %}
+		        <select name="tenantStatus" lay-filter="tenantStatus" lay-verify="required" lay-search="">
+		        	{% if page.type == '1' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1" selected="selected">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+					{% elseif page.type == '2' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2" selected="selected">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+		            {% elseif page.type == '3' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3" selected="selected">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+		            {% elseif page.type == '4' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4" selected="selected">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+		            {% elseif page.type == '5' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5" selected="selected">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+		            {% elseif page.type == '6' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6" selected="selected">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+		            {% elseif page.type == '7' %}
+		        	<option value="0">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7" selected="selected">同ip注册数量超过限制</option>
+		            {% else %}
+		        	<option value="0" selected="selected">异常原因</option>
+		            <option value="1">多账号同ip段</option>
+		            <option value="2">多账号同设备登录</option>
+		            <option value="3">单账号多设备登陆</option>
+		            <option value="4">后台手动封停</option>
+		            <option value="5">超过指定时间内邀请好友上限</option>
+		            <option value="6">三天邀请积分超过指定数量</option>
+		            <option value="7">同ip注册数量超过限制</option>
+					{% endif %}
+		        </select>
+	        </div>
+        </div>
+ 		<div class="layui-inline">
+		 	<label class="layui-form-label">手机号：</label>
+		    <div class="layui-input-inline">
+			    {% if page && page.telNum %}
+				<input type="text" name="userId" id="userId" class="layui-input" value="{{page.telNum}}" lay-verify="text" autocomplete="off" placeholder="请输入用户手机号">
+				{% else %}
+				<input type="text" name="userId" id="userId" class="layui-input" lay-verify="text" autocomplete="off" placeholder="请输入用户手机号">
+				{% endif %}			     
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<label class="layui-form-label">标记时间：</label>
+	        <div class="layui-input-inline">
+	        	{% if page && page.startTime %}
+				<input class="layui-input" placeholder="开始日" id="LAY_demorange_s" value="{{page.startTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+		    	{% endif %}
+		    </div>
+		    <div class="layui-input-inline">
+		    	{% if page && page.endTime %}
+				<input class="layui-input" placeholder="截止日" id="LAY_demorange_e" value="{{page.endTime}}">
+				{% else %}
+		    	<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+		    	{% endif %}
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+	    </div>
+    </div>
+	<table class="layui-table table-width">
+		<thead>
+			<tr>
+				<th></th>
+				<th>序号</th>
+				<th>用户手机号</th>
+				<th>标记时间</th>
+				<th>异常原因</th>
+				<th>异常设备ID</th>
+				<th>异常登录IP</th>
+				<th>登录设备数</th>
+				<th>积分状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody id="htmlWrap">
+			{% if data.data.datas.length %} 
+			{% for item in data.data.datas %}
+			<tr>
+				<td>
+					{% if item.tel_num %}
+					<input name="" lay-filter="tagLis" lay-skin="primary" type="checkbox" style="width: 16px;height: 16px;">
+					{% endif %}
+				</td>
+				<td class="orderN">{{loop.index}}</td>
+				<td class="tagNames" data-id="{{item.user_id}}">{{item.tel_num}}</td>
+				<td>{{item.create_time}}</td>
+				<td>
+					{% if item.type == '1' %}
+					多账号同ip段
+					{% elseif item.type == '2' %}
+					多账号同设备登录
+					{% elseif item.type == '3' %}
+					单账号多设备登陆
+					{% elseif item.type == '4' %}
+					后台手动封停
+					{% elseif item.type == '5' %}
+					超过指定时间内邀请好友上限
+					{% elseif item.type == '6' %}
+					三天邀请积分超过指定数量
+					{% elseif item.type == '7' %}
+					同ip注册数量超过限制
+					{% else %}
+					--
+					{% endif %}
+				</td>
+				<td>{{item.device_id}}</td>
+				<td>{{item.login_ip}}</td>
+				<td>{{item.device_count}}</td>
+				<td>
+					{% if item.score_status && item.score_status == '1' %}
+					正常
+					{% elseif item.score_status && item.score_status == '0' %}
+					冻结
+					{% else %}{% endif %}
+				</td>
+				<td >
+					{% if item.tel_num %}
+					{% if menuCodeList %} 
+						{% for code in menuCodeList %} 
+							{% if unescape(code.name) == "启用" %}
+								{% if item.login_status && item.login_status == '-1' %}
+									<a class="layui-btn disabelTask" href="javascript:;" data-id="{{item.user_id}}" data-status="0" data-allSta="0">启用</a>
+								{% endif %}
+							{% elseif unescape(code.name) == "停用" %}
+								{% if item.login_status == '0' || item.login_status == '' || item.login_status == '1' %}
+									<a class="layui-btn layui-btn-danger disabelTask" href="javascript:;" data-id="{{item.user_id}}" data-status="-1" data-allSta="-1">停用</a>
+								{% endif %}
+							{% elseif unescape(code.name) == "冻结积分" %}
+								{% if item.score_status && item.score_status == '1'  %}
+								<a class="layui-btn layui-btn-warm frostRelieveBtn" data-id="{{item.user_id}}" data-status="0" data-allSta="0" href="javascript:;">冻结积分</a>
+								{% endif %}
+							{% elseif unescape(code.name) == "解除冻结" %}
+								{% if item.score_status && item.score_status == '0'  %}
+								<a class="layui-btn layui-btn-normal frostRelieveBtn" data-id="{{item.user_id}}" data-status="1" data-allSta="1" href="javascript:;">解除冻结</a>
+								{% endif %}
+							{% endif %} 
+						{% endfor %} 
+					{% endif %}
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %} 
+			{% endif %}
+		</tbody>
+	</table>
+	{% if data.data.datas.length %}
+	<div class="layui-inline fnBtns" style="padding: 0 0 30px 55px;">
+	 	<input name="" lay-skin="primary" lay-filter="allChoose" type="checkbox" style="width: 18px;height: 18px;vertical-align: middle;"> 全选　
+	 	{% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "启用" %}
+	    			<a class="layui-btn batchTagsBtns batchUserStatus" id="enableBtn" href="javascript:;" data-id="{{lis.id}}" data-btnStatus="0">启用</a>
+				{% elseif unescape(code.name) == "停用" %}
+					<a class="layui-btn layui-btn-danger batchTagsBtns batchUserStatus" id="disableBtn" href="javascript:;" data-id="{{lis.id}}" data-btnStatus="-1">停用</a>
+				{% elseif unescape(code.name) == "冻结积分" %}
+					<a class="layui-btn layui-btn-warm batchTagsBtns batchSourceStatus" id="frostIntegralBtn" href="javascript:;" data-id="{{lis.id}}" data-btnStatus="0">冻结积分</a>
+				{% elseif unescape(code.name) == "解除冻结" %}
+					<a class="layui-btn layui-btn-normal batchTagsBtns batchSourceStatus" id="relieveIntegralBtn" href="javascript:;" data-id="{{lis.id}}" data-btnStatus="1">解除冻结</a>
+				{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	</div>
+	{% endif %}
+ </form>
+<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/accountRisksManagement/abUserRecord.js"></script>
+{% endblock%}

@@ -1,0 +1,72 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理-商品分类{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>商品管理</li>
+		<li class="arrow-icon">>></li>
+	    <li>商品分类</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">新建分类</li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="addResourceSection">
+		<form class="layui-form layui-form-position layui-form-padding" action="">
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">分类类型:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="cateType">
+			        <input type="radio" name="goodsCate" value="1" lay-filter="cateType" checked="checked" title="一级分类">
+					 <input type="radio" name="goodsCate" value="2" lay-filter="cateType" title="二级分类">
+			   </div>
+			</div>
+			
+			
+			<div class="layui-form-item ifShowPar" style="display: none;">
+			    <label class="layui-form-label">分类类型:</label>
+			    <div class="layui-input-inline resourceParent">
+			        <select name="parentResource" lay-verify="require" lay-filter="parentCate">
+			        	<option value="">请选择一级分类</option>
+				          {% for item in data.data.datas%}
+							  <option data-parentId="{{item.id}}"  value="{{item.id}}">{{item.sortName}}</option>
+						{% endfor%}
+					</select>				
+			    </div>
+			    <span class="layui-tooltip tooltip-cateType hide" >请选择一级分类</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">分类名称:</label>
+			    <div class="layui-input-inline">
+			        <input type="text"  lay-verify="required" class="layui-input name">
+			    </div>
+			    <span class="layui-tooltip tooltip-name hide" >请输入4个字以内分类名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label">排序:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="sort" lay-verify="required" class="layui-input sort">
+			    </div>
+			    <span class="layui-tooltip tooltip-sort hide">请输入排序号</span>
+			</div>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label">状态:</label>
+			   	<div class="layui-input-inline layui-input-checked" lay-filter="status">
+			        <input type="radio" name="status" value="1" lay-filter="status" checked="checked" title="启用">
+					 <input type="radio" name="status" value="2" lay-filter="status" title="禁用">
+			   </div>
+			</div>
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn saveCate" >保存</a>
+			    <a class="layui-btn layui-btn-danger" href="/merchant/goodsCate">返回</a>
+			</div>
+		</form>
+		
+	</section>
+{% endblock %}
+{% block layui %}
+	<script type="text/javascript" src="/controllers/merchant/goodsCate/addCate.js"></script>
+{% endblock %}
+
+

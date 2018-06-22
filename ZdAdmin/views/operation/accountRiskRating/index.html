@@ -1,0 +1,48 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营中心--帐号风险管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<link rel="stylesheet" href="/css/accountRiskRating/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>帐号风险管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">综合评分风险管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	 <div class="layui-form-item" style="">
+	 	<a href="/operation/accountRiskRating/changeMoudle" class="layui-btn changeMoudle">更改模型</a>
+	 </div>
+	 <div class="layui-form-item" style="">
+	 	<p style="margin-left: 20px;">当前模型</p>
+	 </div>
+     <table class="layui-table table-width" style="width: 60%; margin-left: 20px;">
+	     <tr>
+	     	<th>风险等级</th>
+	     	<th>分段</th>
+	     	<th>监测周期/天</th>
+	     </tr>
+         <tbody id="htmlWrap">
+         	<tr>
+         		<td>高风险</td>
+         		<td>{{data.data.highRiskRangeStart}} - {{data.data.highRiskRangeEnd}}</td>
+         		<td>{{data.data.highRiskDetectCycle}}</td>
+         	</tr>
+         	<tr>
+         		<td>低风险</td>
+         		<td>{{data.data.lowRiskRangeStart}} - {{data.data.lowRiskRangeEnd}}</td>
+         		<td>{{data.data.lowRiskDetectCycle}}</td>
+         	</tr>
+         	<tr>
+         		<td>无风险</td>
+         		<td>{{data.data.riskFreeRangeStart}} - {{data.data.riskFreeRangeEnd}}</td>
+         		<td>{{data.data.riskFreeDetectCycle}}</td>
+         	</tr>
+		 </tbody>	
+	 </table>
+{% endblock %}
+

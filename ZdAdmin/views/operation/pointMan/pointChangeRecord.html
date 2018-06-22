@@ -1,0 +1,59 @@
+{% extends "./../../layout.html"%} {% block title%}运营管理-积分管理{% endblock %} 
+{% block head%}
+<link rel="stylesheet" href="/css/operation/index.css" />
+<style type="text/css">
+	.layui-tab-title .layui-this {
+	    font-weight: 800;
+	    background-color: #ccc;
+	}
+</style>
+ {% endblock %} 
+{%block indexTitle%}
+<ul class="index_of_title">
+	<li>运营管理</li>
+	<li class="arrow-icon">>></li>
+	<li class="onIndexOf">积分管理</li>
+</ul>
+{%endblock%}
+{% block content%} 
+{% if data.message =="成功"%}
+<div class="layui-tab padding15">
+	<ul class="layui-tab-title chooseType">
+		<li><a href="/operation/pointMan/requestFriendConfig">邀请好友积分模型</a></li>
+		<li class="layui-this"><a href="/operation/pointMan/changeRecordNVITE">积分模型变更记录</a></li>
+	</ul>
+</div>
+{% if data.message =="成功"%}
+     <table class="layui-table table-width">
+     	<thead>
+     		<tr>
+		     	<th>操作时间</th>
+		     	<th>邀请好友获得积分</th>
+		     	<th>填写邀请码获得积分</th>
+		     	<th>每日阅读获取积分向上返比例</th>
+		     	<th>操作者</th>
+		    </tr>
+     	</thead>
+	    <tbody id="htmlWrap">
+     	{% for item in data.data.datas %}
+         	<tr>
+			 	<td>{{item.createTime}}</td>
+			 	<td>{{item.deductPercentagePointVal}}</td>
+			 	<td>{{item.friendPointVal}}</td>
+			 	<td>{{item.invitePointVal}}</td>
+				<td>{{item.createUserName}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% else %}
+<div style="text-align:center">{{data.message}}</div>
+{% endif%} 
+{% endblock %} 
+{% block layui%}
+<script type="text/javascript" src="/controllers/operation/pointManagement/pointChangeRecord.js"></script>
+{% endblock%}

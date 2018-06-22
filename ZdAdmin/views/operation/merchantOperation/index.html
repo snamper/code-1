@@ -1,0 +1,77 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理-商家运营{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/merOperation.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title clearfix">
+	    <li>运营管理</li>
+	    <li class="arrow-icon">>></li>
+	    <li class="onIndexOf">商家运营</li>
+		<li class="lisFlBtn moreFlBtn fr"><a href="javascript:;" class="layui-btn useConfigBtns">应用配置</a></li>
+	</ul>
+{%endblock%}
+{% block content%}
+	<section class="merOperationSec padding15">
+		<div class="layui-tab">
+			<ul class="layui-tab-title chooseSec" selType="1">
+				{% if data.data.length %}
+				<li class="layui-this"><a href="/operation/merchantOperation/wishList" data-id='1' data-type="1">{{data.data[0].moduleName}}</a></li>
+				<li><a href="/operation/merchantOperation/recBoutique" data-type="2" data-id='2'>{{data.data[1].moduleName}}</a></li>
+				{% else %}
+				<li class="layui-this"><a href="/operation/merchantOperation/wishList" data-id='1' data-type="1">心愿单</a></li>
+				<li><a href="/operation/merchantOperation/recBoutique" data-type="2" data-id='2'>精品推荐</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		<form class="layui-form layui-form-position layui-form-padding merOperationItem" action="">
+			<div class="layui-form-item">
+			    <label class="layui-form-label labelWidth"><span class="txt-impt">*</span>模块名称:</label>
+			    <div class="layui-input-inline" style="width: 210px;">
+			        <input type="text" class="layui-input moduleName" value="{{data.data[0].moduleName}}" placeholder="4个汉字以内">
+			    </div>
+			    <span class="layui-tooltip tooltip-moduleName hide">请输入4个汉字以内</span>
+			    <span class="layui-tooltip tooltip-moduleNameNull hide">请填写资源名称</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label labelWidth"><span class="txt-impt">*</span>推荐商品数量:</label>
+			    <div class="layui-input-inline" style="width: 210px;">
+			        <input type="text" class="layui-input recGoodNum" value="{{data.data[0].productCount}}" placeholder="请输入大于0的整数">
+			    </div>
+			    <span class="layui-tooltip tooltip-recGoodNum hide">请输入大于0的整数</span>
+			</div>
+			<div class="layui-form-item">
+			    <label class="layui-form-label labelWidth"><span class="txt-impt">*</span>模块排序:</label>
+			    <div class="layui-input-inline" style="width: 210px;">
+			        <input type="text" class="layui-input moduleSort" value="{{data.data[0].moduleOrder}}" placeholder="请输入大于0的整数">
+			    </div>
+			    <span class="layui-tooltip tooltip-moduleSort hide">请输入大于0的整数</span>
+			</div>
+			<div class="layui-form-item modStatusBox">
+			    <label class="layui-form-label labelWidth"><span class="txt-impt">*</span>开启状态:</label>
+			    <div class="layui-input-inline" style="width: 210px;">
+			    	{% if data.data[0].enabled == 1 %}
+			        <input type="radio" name="modStatus" value="1" title="启用" checked="checked"/>
+			    	<input type="radio" name="modStatus" value="2" title="禁用"/>
+			    	{% elseif data.data[0].enabled == 2 %}
+			    	<input type="radio" name="modStatus" value="1" title="启用"/>
+			    	<input type="radio" name="modStatus" value="2" title="禁用" checked="checked"/>
+			    	{% else %}
+			    	<input type="radio" name="modStatus" value="1" title="启用" checked="checked"/>
+			    	<input type="radio" name="modStatus" value="2" title="禁用"/>
+			    	{% endif %}
+			    </div>
+			</div>
+			
+			<div class="layui-form-saveCloseBtn" pane="">
+			     <a class="layui-btn layui-save-btn moduleSaveBtn">保存</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block layui %}
+<script type="text/javascript" src="/controllers/operation/merchantOperation/index.js"></script>
+<script type="text/javascript" src="/controllers/operation/merchantOperation/comMethods.js"></script>
+{% endblock %}
+
+

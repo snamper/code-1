@@ -1,0 +1,136 @@
+{% extends "./../../layout.html"%}
+{% block title%}商品管理--积分卡管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+	<style type="text/css">
+		#importCode {position: absolute; left:0; top: 0; z-index: -100; opacity: 0; width: 140px; height: 38px;}
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>积分卡管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">积分卡生成记录</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	{% if data.message =="成功"%}
+	 <form class="layui-form advManagement" action="" style="padding-top: 15px;">
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 85px;">积分卡名称：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.name %}
+			    	<input type="text" name="pointName" id="pointName" value="{{page.name}}" lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="pointName" id="pointName" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+			 	<label class="layui-form-label" style="width: 85px;">积分卡额度：</label>
+			    <div class="layui-input-inline">
+			    	{% if page.score %}
+			    	<input type="text" name="pointLimit" id="pointLimit" value="{{page.score}}" lay-verify="text" autocomplete="off" class="layui-input">
+					{% else %}
+					<input type="text" name="pointLimit" id="pointLimit" lay-verify="text" autocomplete="off" class="layui-input">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">创建时间:</label>
+                <div class="layui-input-inline">
+				     {% if page && page.stDate %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.stDate}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.enDate %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.enDate}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:;" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>序号</th>
+	     	<th>积分卡名称</th>
+	     	<th>额度(积分)</th>
+	     	<th>生成时间</th>
+	     	<th>生成人</th>
+	     	<th>生成数量(个)</th>
+	     	<th>商家</th>
+	     	<th>操作</th>
+	     	
+	     </tr>
+         <tbody id="htmlWrap">
+         {% if data.data.totalRows != "0" %}
+         	{% for lis in data.data.datas %}
+         	<tr>
+			 	<td>{{loop.index}}</td>
+			 	<td>{{lis.name}}</td>
+			 	<td>{{lis.score}}</td>
+			 	<td>{{lis.createTime}}</td>
+			 	<td>{{lis.creatorName}}</td>
+			 	<td>{{lis.genCount}}</td>
+			 	<td>{{lis.buyerName}}</td>
+			 	<td>
+				{% if lis.state == 0 %}
+					{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "暂停充值" %}
+				    			<a href="javascript:;" data-state="1" data-id="{{lis.id}}" class="layui-btn layui-btn-danger suspend">暂停充值</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}	
+			 		
+			 	{% elseif lis.state == 1 %}
+				 	{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "恢复充值" %}
+					    			<a href="javascript:;" data-state="0" data-id="{{lis.id}}" class="layui-btn layui-btn-normal suspend">恢复充值</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}		
+				 	{% endif %}
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "作废" %}
+				    			<a href="javascript:;" class="layui-btn layui-btn-warm toVoid" data-state="{{lis.state}}" data-id="{{lis.id}}">作废</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}	
+			 		<input type="file" name="excelfile" id="importCode"/>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "查看充值码" %}
+				    			<a href="/merchant/pointCard/seeEcharge?scorecardRecordId={{lis.id}}&pNo=1&pSize=15&pointName={{escape(lis.name)}}&buyerName={{escape(lis.buyerName)}}" class="layui-btn">查看充值码</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}	
+			 		
+			 	</td>
+			</tr>
+         	{% endfor%}
+         {% endif %}
+		 </tbody>	
+	 </table>
+	 <a	id="downloadFiles" href="" download=""></a>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	
+     {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+    <script type="text/javascript" src="/controllers/merchant/pointCard/pointCardRecord.js"></script>
+{% endblock%}

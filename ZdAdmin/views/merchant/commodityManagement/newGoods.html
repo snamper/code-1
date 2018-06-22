@@ -1,0 +1,219 @@
+{% extends "./../../layout.html"%}
+{% block title%}商家管理--商品管理--新建商品{% endblock %}
+{% block head%}
+	<link rel="stylesheet" type="text/css" href="/css/commodityManagement/index.css"/>
+	<style type="text/css">	     
+	     #importCode{opacity:0;-webkit-opacity:0;-moz-opacity:0;filter:alpha(opacity=0);-khtml-opacity:0;}
+	     #asImportCode{position:absolute;top:0;left:0;z-index:100}		 
+	</style>
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>商家管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">新建商品</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<form class="layui-form formPage site-demo-top40">
+	     <div class="layui-form-item">
+		     <label class="layui-form-label">商户简称：</label>
+		     <div class="layui-input-inline" id="shortNameSelect">
+			     <select name="shortName" id="shortName" lay-filter="merchantId" lay-verify="required">
+				     <option value=""></option>
+                     {% for item in data.data.merchantList%}
+					     <option value={{item.id}}>{{item.short_name}}</option>
+					 {% endfor%}
+                 </select>	
+		     </div>	
+		     <span class="layui-tooltip tooltip-shortName hide">请选择商户</span>
+	     </div>
+	     <div class="layui-form-item">
+		     <label class="layui-form-label">商品类型：</label>
+			 <div class="layui-input-block">			    
+				 <input type="checkbox" id="goodsTypeVirtual" name="goodsType[virtual]" title="虚拟" checked="" />
+				 <input type="checkbox" name="goodsType[entity]" title="实物" disabled/>				 
+			 </div>
+		 </div>	
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">商品编号：</label>
+			 <div class="layui-input-inline">
+			     <input type="text" name="productId" id="productId" lay-verify="text" autocomplete="off" placeholder="请输入商品编号" class="layui-input" disabled="" value={{data.data.code}}>
+		     </div>	
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">商品名称：</label>
+			 <div class="layui-input-inline">
+			     <input type="text" name="longName" id="longName" lay-verify="text" autocomplete="off" placeholder="请输入商品名称" class="layui-input">
+		     </div>	
+		     <span class="layui-tooltip tooltip-longName hide">请规范输入商品名称(汉字/字母/数字)</span>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">商品描述：</label>
+			 <div class="layui-input-block editor_width">
+				<textarea class="layui-textarea" name="content" lay-verify="content" id="productDescribe"></textarea>
+			 	<span class="layui-tooltip tooltip-textareas hide">请规范输入商品描述(不超过500字)</span>
+			 </div>	
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">商品素材图：</label>
+			 <div class="layui-input-block btnIwidth">			    
+				 <span class="layui-btn editorMatterBtn">编辑素材图</span>
+				 <span class="layui-tooltip tooltip-matterImg hide">请上传素材图</span>
+			 </div>	
+			 <div class="goodsImgShowBox">
+				<div class="goodsImgShowUl">
+					<ul id="goodsImgShow" class="goodsImgShow clearfix">
+						
+					</ul>
+				</div>
+				<span class="hoverClickBtn hoverClickBtnLeft hide"></span>
+				<span class="hoverClickBtn hoverClickBtnRight hide"></span>
+			</div>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">成本价：</label>
+			 <div class="layui-input-inline">
+			     <input type="text" name="truePrice" id="costPrice" lay-verify="text" autocomplete="off" placeholder="￥0.00" class="layui-input">
+		     </div>	
+		     <span class="layui-tooltip tooltip-costPrice hide">请规范输入价格(例：999.99)</span>
+		 </div>	
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">零售价：</label>
+			 <div class="layui-input-inline">
+			     <input type="text" name="price" id="retailPrice" lay-verify="text" autocomplete="off" placeholder="￥0.00" class="layui-input">
+		     </div>
+		     <span class="layui-tooltip tooltip-retailPrice hide">请规范输入价格 (例：999.99),不得低于成本价</span>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">商品数量：</label>
+			 <div class="layui-input-inline">
+			     <input type="text" name="numbers" id="productNum" lay-verify="text" autocomplete="off" placeholder="请输入商品数量" class="layui-input">
+		     </div>	
+		     <span class="layui-tooltip tooltip-goodsNum hide">请规范输入数量(1-9999999)</span>
+		 </div>		
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">积分消耗方式：</label>
+			 <div class="layui-input-inline">
+				 <!--<input type="text" name="numbers" lay-verify="text" autocomplete="off" value="兑换码方式" class="layui-input" disabled/>-->
+				 <span class="layui-form-span" style="line-height: 38px;color: #757575;">兑换码方式</span>
+			 </div>		 
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">兑换码：</label>
+			 <div class="layui-input-inline btnIwidth">	                 				    
+			     <input type="file" name="excelfile" id="importCode" style="width: 108px;"/>					 	              				  				  
+				 <span class="layui-btn coverInputBtn coverInputBtnLeft" id="asImportCode">导入兑换码</span>							 	 
+			 </div>		 
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">使用有效期：</label>
+			<div class="layui-input-inline">
+				<input type="text" name="date" id="date" lay-verify="date" placeholder="3个月" autocomplete="off" class="layui-input" />
+			</div>	
+			<span class="layui-tooltip tooltip-indate hide">请规范输入有效期(例：20天、3个月)</span>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">注意事项：</label>
+			 <div class="layui-input-block editor_width">
+				<textarea class="layui-textarea" name="content" lay-verify="content" id="editor_needing_attention"></textarea>	
+			 	<span class="layui-tooltip tooltip-notice hide">请规范输入内容(50字以内)</span>
+			 </div>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">使用流程：</label>
+			 <div class="layui-input-block editor_width">
+				<textarea class="layui-textarea" name="content" lay-verify="content" id="editor_using_process"></textarea>	
+			 	<span class="layui-tooltip tooltip-usepro hide">请规范输入内容(500字以内)</span>
+			 </div>
+		 </div>
+		 <div class="layui-form-item">
+			<label class="layui-form-label">法律声明：</label>
+			<div class="layui-input-block editor_width">
+				<textarea class="layui-textarea" name="content" lay-verify="content" id="editor_legal_notices"></textarea>	
+			 	<span class="layui-tooltip tooltip-lawInfo hide">请规范输入内容(200字以内)</span>
+			</div>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label">会员注册按钮描述：</label>
+			 <div class="layui-input-block">
+			     <input style="display:inline;width:190px" type="text" name="btnName" id="btnName" lay-verify="text" autocomplete="off" placeholder="注册按钮名" class="layui-input">
+				 <span>例如：</span>				 
+				 <span class="layui-btn" disabled>注册成为爱奇艺会员</span>
+			 	<span class="layui-tooltip tooltip-btnInf hide">请规范输入内容(10字以内)</span>
+			 </div>
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label"></label>
+			 <div class="layui-input-inline">
+				 <input  name="loginUrl"  lay-verify="text" autocomplete="off" id="btnUrl" placeholder="URL链接" class="layui-input">
+			 </div>	
+			 <span class="layui-tooltip tooltip-btnUrl hide">请规范输入内容</span>	 
+		 </div>
+		 <div class="layui-form-item">
+			 <label class="layui-form-label"></label>
+			 <div class="layui-input-block site-demo-bottom40">
+				 <span class="layui-btn" id="submitData" onclick="submitData('1', 'new')">提交</span>
+				 <span class="layui-btn layui-btn-normal" id="saveData" onclick="submitData('2', 'new')">存草稿</span>
+			 </div>		 
+		 </div>
+	 </form>
+	<!--弹出商品详情管理-->
+	<div id="goodsInfoBox" class="goodsInfoBox hide">
+		<div class="uploadBox clearfix">
+			<div class="goodsLisBox left">
+				<input type="file" name="file" class="layui-upload-file" id="goodsLis">
+				<span class="layui-btn coverInputBtn coverInputBtnLeft">请上传商品列表图(<i class="limitNumLeft">0</i>/1)</span>
+			</div>
+			<div class="goodsDetailsBox left">
+				<input type="file" name="file" class="layui-upload-file" id="goodsDetails">
+				<span class="layui-btn coverInputBtn coverInputBtnRight">请上传商品详情图(<i class="limitNumRight">0</i>/5)</span>
+			</div>
+		</div>
+		<div id="uploadImgList" class="uploadImgList clearfix">
+			<p class="uploadImgListEmpty hide">还没有上传相关图片</p>
+			<ul class="upLoadImgAlls clearfix">
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img id="onlyImg" sort="0" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品列表图</span>
+				</li>
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img sort="1" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品详情图</span>
+				</li>
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img sort="1" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品详情图</span>
+				</li>
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img sort="1" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品详情图</span>
+				</li>
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img sort="1" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品详情图</span>
+				</li>
+				<li class="uploadImgItem left">
+					<span class="deleteUploadImg inline_display">X</span>
+					<img sort="1" src="" alt="" class="uploadImage"/>
+					<span class="uploadImageText block_display">商品详情图</span>
+				</li>
+			</ul>
+            <span class="layui-btn layui-btn-primary layui-btn-big goodsCloseBigBtn">
+            	<a class="layui-layer-close layui-layer-close1" href="javascript:;" onclick="layerCloseImg()">关闭</a>
+            </span>
+		</div>
+	</div>
+	<!--页码加载-->
+    <div id="paging"></div>	 
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/merchant/commodityManagement/newGoods.js"></script>
+{% endblock%}

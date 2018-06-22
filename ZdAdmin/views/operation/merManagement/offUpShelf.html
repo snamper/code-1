@@ -1,0 +1,217 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商户管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li class="arrow-icon">商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">上下架管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form dataPlug" action="">
+	 	<div class="tabChange">
+		 	<div class="layui-tab">
+				<ul class="layui-tab-title">
+				    {% if page.status == "0"%}
+				    	{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "待上架" %}
+					    			<li data-status="">全部</li>
+								     <li data-status="0" class="layui-this">待上架</li>
+								     <li data-status="1">已上架</li>
+								     <li data-status="2">已下架</li>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					{% elseif page.status == "1"%}
+						{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "已上架" %}
+					    			<li data-status="">全部</li>
+								     <li data-status="0">待上架</li>
+								     <li data-status="1" class="layui-this">已上架</li>
+								     <li data-status="2">已下架</li>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					{% elseif page.status == "2"%}
+						{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "已下架" %}
+					    			<li data-status="">全部</li>
+								     <li data-status="0">待上架</li>
+								     <li data-status="1" >已上架</li>
+								     <li data-status="2" class="layui-this">已下架</li>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					{% else %}
+						{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "全部" %}
+					    			<li data-status="" class="layui-this">全部</li>
+								    <li data-status="0">待上架</li>
+								    <li data-status="1">已上架</li>
+								    <li data-status="2">已下架</li>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+					{% endif %}			
+				</ul>
+			</div>
+		</div>
+	 	<div class="layui-form-item">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">商户简称：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.shortName %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商户简称" class="layui-input" value="{{page.shortName}}">
+					{% else %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商户简称" class="layui-input">
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">日期范围</label>
+		        <div class="layui-input-inline">
+			    	{% if page && page.startTime%}
+			    	<input class="layui-input" placeholder="开始日" value="{{page.startTime}}" id="LAY_demorange_s">
+					{% else %}
+					<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+					{% endif %}
+			    </div>
+			    <div class="layui-input-inline">
+			    	{% if page && page.endTime%}  
+			    	<input class="layui-input" value="{{page.endTime}}" placeholder="截止日" id="LAY_demorange_e">
+					{% else %}
+					<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+					{% endif %}
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:void(0)" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width">
+	     <tr>
+	     	<th>商户简称</th>
+	     	<th>logo</th>
+			{% if page.status == "0" %}
+			     <th>创建时间</th>
+			{% elseif page.status == "1" %}
+			     <th>上架时间</th>
+			{% elseif page.status == "2" %}
+			     <th>下架时间</th>
+			{% else%}
+			     <th>上架时间</th>
+			{% endif %}
+	     	<th>状态</th>
+	     	<th>排序号</th>
+	     	<th>推荐位置</th>
+	     	<th>标签</th>
+	     	<th>操作</th>
+	     </tr>
+         <tbody id="htmlWrap">
+		     {% for item in data.data.datas.list %}
+			     <tr>
+				     <td>{{item.short_name}}</td>
+				     <td><img src="{{item.logo}}" style="width: 110px;height: 80px;" alt="" /></td>
+					 <td>
+					     {% if page.status == "0" %}						    
+							 {{item.create_time}}								                     
+			             {% elseif page.put_time == "1" %}		                     
+							 {{item.put_time}}
+			             {% elseif page.status == "2" %}			                 
+							 {{item.last_modify_time}}							
+			             {% else %}
+			                 {% if item.status == "0"%}
+						     --
+						     {% elseif item.status == "1"%}
+						     {{item.put_time}}		
+						     {% elseif item.status == "2"%}
+						     {{item.put_time}}		
+						     {% else %}
+						     --
+						     {% endif%}
+			             {% endif %}
+					 </td>
+					 <td>
+					     {% if item.status == "0"%}
+						     待上架
+						 {% elseif item.status == "1"%}
+						     已上架
+						 {% elseif item.status == "2"%}
+						     已下架
+						 {% else %}
+						     获取失败
+						 {% endif%}
+					 </td>
+					 <td class="dataSord">
+					 	{% if item.sord %}
+							{{item.sord}}
+						{% else %}
+							--
+						{% endif %}
+					 </td>
+					 <td>
+					     {% if item.location=="1" %}
+						     频道页
+					     {% elseif item.location=="2" %}
+						     首页
+					     {% elseif item.location=="3" %}
+						     首页
+						 {% else %}
+						     获取失败
+						 {% endif%}
+					 </td>
+					 <td>
+					    {% if item.label %}
+					    {{item.label}}
+					    {% else %}
+					    --
+					    {% endif %}
+					 </td>
+					 {% if item.status != "2" %}
+					 <td>
+					     {% if item.status == "1"%}
+					     {% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "下架" %}
+					    			<a class="layui-btn" data-recId="{{item.rec_id}}" href="javascript:void(0)" data-active="undercarriage" data-merchant-id="{{item.id}}" data-sord="{{item.sord}}" data-location="{{item.location}}">下架</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+						{% elseif item.status == "0" %}
+						{% if menuCodeList %}
+					    	{% for code in menuCodeList %}
+					    		{% if unescape(code.name) == "编辑" %}
+					    			<a class="layui-btn" href="/operation/merManagement/editorManReferLink?merchantId={{item.id}}">编辑</a>
+					     		{% elseif unescape(code.name) == "上架" %}
+						     		<a class="layui-btn slavesBtn" data-recId="{{item.rec_id}}" data-label="{{item.label}}" data-homeImg="{{item.logo}}" data-status="{{item.status}}" data-merchant-id="{{item.id}}" data-sord="{{item.sord}}" data-location="{{item.location}}" href="javascript:;">上架</a>
+					    		{% endif %}
+					    	{% endfor %}
+					    {% endif %}
+						{% else%}{% endif%}					   
+					 </td>
+					 {% else %}
+					 <td></td>
+					 {% endif %}
+				 </tr>
+			 {% endfor%}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/merManagement/offUpShelf.js"></script>
+{% endblock%}

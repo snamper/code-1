@@ -1,0 +1,333 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--广告管理--积分投放设置{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>广告管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">积分投放设置</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+<section class="advIntegralSets">
+	<form class="layui-form formPage site-demo-top40 setIntegral setMarCenter" action="" id="setIntegral">
+		<div class="partLine">广告信息<i></i></div>
+		<div class="item-adMes">
+			<div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label">广告文案：</label>
+				    <div class="layui-input-inline">
+				    	{% if data.data.name %}
+					    <span>{{data.data.name}}</span>
+					    {% else %}
+					    <span></span>
+					    {% endif %}
+				    </div>	
+			    </div>
+			    <div class="layui-inline">
+			    	<label class="layui-form-label">广告主名称：</label>
+					<div class="layui-input-inline">
+						{% if data.data.tAdvertiserName %}
+			    		<span>{{data.data.tAdvertiserName}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+					</div>
+			    </div>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label">投放目标量：</label>
+				    <div class="layui-input-inline">
+				    	{% if data.data.targetNumber %}
+			    		<span class="targetNum">{{data.data.targetNumber}}</span>
+				    	{% else %}
+				    	<span class="targetNum">0</span>
+				    	{% endif %}
+				    </div>	
+			    </div>
+			    <div class="layui-inline">
+				    <label class="layui-form-label">广告主投放金额：</label>
+				    <div class="layui-input-inline">
+				    	{% if data.data.amount %}
+			    		<span class="throwMoney">{{data.data.amount}}</span>元
+				    	{% else %}
+				    	<span class="throwMoney">0</span>元
+				    	{% endif %}
+				    </div>	
+			    </div>
+		    </div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">投放效果：</label>
+					<div class="layui-input-inline">
+						{% if data.data.timesOfPlay %}
+			    		<span>{{data.data.timesOfPlay}}</span>
+				    	{% else %}
+				    	<span>0</span>
+				    	{% endif %}
+				    </div>
+			   </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">创建人：</label>
+					<div class="layui-input-inline">
+						{% if data.data.manageUser.name %}
+			    		<span>{{data.data.manageUser.name}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>
+			    </div>
+				<div class="layui-inline">
+					<label class="layui-form-label">创建时间：</label>
+					<div class="layui-input-inline">
+						{% if data.data.createTime %}
+			    		<span>{{data.data.createTime}}</span>
+				    	{% else %}
+				    	<span>0</span>
+				    	{% endif %}
+				    </div>
+			   </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">广告类型：</label>
+					<div class="layui-input-inline">
+						{% if data.data.deliveryType == '1' %}
+			    		<span>CPM视频</span>
+			    		{% elseif data.data.deliveryType == '2' %}
+			    		<span>CPC</span>
+			    		{% elseif data.data.deliveryType == '3' %}
+			    		<span>CPM</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>
+			    </div>
+			    {% if data.data.deliveryType == '2' || data.data.deliveryType == '3' %}
+			    <div class="layui-inline">
+					<label class="layui-form-label">单日投放上限：</label>
+					<div class="layui-input-inline">
+						{% if data.data.dayBudgetCeiling %}
+			    		<span>{{data.data.dayBudgetCeiling}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>
+			    </div>
+			    {% endif %}
+		    </div>
+			<div class="layui-form-item">
+			    <div class="layui-inline">
+				    <label class="layui-form-label">投放周期：</label>
+				    <div class="layui-input-inline" style="width:auto;">
+				    	{% if data.data.cycleStartTime && data.data.cycleEndTime %}
+			    		<span>{{data.data.cycleStartTime}}~{{data.data.cycleEndTime}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>	
+			    </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					{% if data.data.deliveryType == '2' || data.data.deliveryType == '3' %}
+					<label class="layui-form-label">落地页链接：</label>
+					{% else %}
+					<label class="layui-form-label">广告链接：</label>
+					{% endif %}
+					<div class="layui-input-inline" style="width:auto;">
+						{% if data.data.mobileVersionUrl %}
+			    		<span>{{data.data.mobileVersionUrl}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>	
+			   </div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">广告描述：</label>
+					<div class="layui-input-inline" style="width:auto;">
+						{% if data.data.description %}
+			    		<span>{{data.data.description}}</span>
+				    	{% else %}
+				    	<span></span>
+				    	{% endif %}
+				    </div>	
+			    </div>
+			</div>
+		</div>
+		{% if data.data.deliveryType == '2' || data.data.deliveryType == '3' %}
+		<div class="partLine">报价信息<i></i></div>
+		<div class="item-adMes">
+			<div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label">广告主单价：</label>
+				    <div class="layui-input-inline">
+				    	<span>{{data.data.advertiserUnitPrice}}元</span>
+				    </div>	
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-onePlayBonus hide">请输入大于等于0的整数</span>
+		    </div>
+	    </div>
+		<div class="partLine">广告信息<i></i></div>
+		<div class="item-adMes">
+			<div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>点击奖励：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" data-advUserPrice="{{data.data.advertiserUnitPrice}}" name="onePlayBonus" id="onePlayBonus" lay-verify="text" autocomplete="off" class="layui-input">
+				    </div>
+				    <span class="perCent">积分</span>	
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-onePlayBonus hide">请输入大于等于0的整数</span>
+		    </div>
+	    </div>
+	    <div class="item-adMes">
+	    	<div class="layui-form-item nextBackBtn">
+				<div class="layui-inline">
+		        	<a href="javascript:;" id="integralPutSave" class="layui-btn">保存</a>
+		    	</div>
+			 	<div class="layui-inline">
+		        	<a href="javascript:;" id="integralUpOneStep" class="layui-btn" data-type="oneStep">上架</a>
+		    	</div>
+			 	<div class="layui-inline">
+		        	<a href="/operation/advManagement/advMan" id="integralPutBack" class="layui-btn">返回</a>
+		    	</div>
+		    </div>
+	    </div>
+		{% else %}
+	    <div class="partLine">广告积分设置<i></i></div>
+	    <div class="item-adMes">
+	    	<div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>A类积分占比：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="integralA" id="integralA" lay-verify="text" autocomplete="off" class="layui-input">
+				    </div>
+				    <span class="perCent">%</span>
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-integralA hide">请输入0-100的数字，保留小数点2位数</span>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>B类积分占比：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="integralB" id="integralB" lay-verify="text" autocomplete="off" class="layui-input">
+				    </div>
+				    <span class="perCent">%</span>	
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-integralB hide">请输入0-100的数字，保留小数点2位数</span>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>平台毛利占比：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="grossScale" id="grossScale" lay-verify="text" autocomplete="off" class="layui-input">
+				    </div>
+				    <span class="perCent">%</span>	
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-grossScale hide">请输入0-100的数字，保留小数点2位数</span>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>单次播放奖励：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="playAward" id="playAward" lay-verify="text" autocomplete="off" class="layui-input">
+				    </div>
+				    <span class="perCent">积分</span>	
+			    </div>
+			    <span class="layui-tooltip tooltip-hints tooltip-playAward hide">请输入1~9位的整数</span>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>总计投放A积分：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="allIntegralA" id="allIntegralA" placeholder="系统自动计算" lay-verify="text" autocomplete="off" class="layui-input" disabled="">
+				    </div>
+				    <span class="perCent">积分</span>	
+			    </div>
+		    </div>
+		    <div class="layui-form-item">
+		    	<div class="layui-inline">
+				    <label class="layui-form-label"><span class="txt-impt">*</span>平台补贴金额：</label>
+				    <div class="layui-input-inline">
+					    <input type="text" name="subsidySum" id="subsidySum" placeholder="系统自动计算" lay-verify="text" autocomplete="off" class="layui-input" disabled="">
+				    </div>
+				    <span class="perCent">元　1元=100积分</span>	
+			    </div>
+		    </div>
+	    </div>
+	    <div class="partLine">广告推荐<i></i></div>
+	    <div class="item-adMes">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">相关广告推荐:</label>
+			    <div class="layui-input-inline">
+			        <input type="text" name="chooseAdv" id="chooseAdv" lay-verify="required" placeholder="请选择广告文案" autocomplete="off" class="layui-input" disabled="">
+			    </div>
+			    <a href="javascript:;" data-nums="" id="selectAdvsBtn" class="layui-btn">选择广告</a>
+			</div>
+	    </div>
+	    <div class="item-adMes">
+	    	<div class="layui-form-item nextBackBtn">
+				<div class="layui-inline">
+		        	<a href="javascript:;" id="integralPutSave" class="layui-btn">保存</a>
+		    	</div>
+			 	<div class="layui-inline">
+		        	<a href="javascript:;" id="integralPutNext" class="layui-btn">下一步</a>
+		    	</div>
+			 	<div class="layui-inline">
+		        	<a href="/operation/advManagement/advMan" id="integralPutBack" class="layui-btn">返回</a>
+		    	</div>
+		    </div>
+	    </div>
+	    {% endif %}
+	</form>
+	{% if data.data.deliveryType == '1' %}
+	<form class="layui-form formPage site-demo-top40 setManSort setMarCenter hide" id="setSortNext" action="">
+		<div class="layui-form-item sortHome">
+		    <label class="layui-form-label">广告推荐位置:</label>
+		    <div class="layui-input-inline sortSide">
+		        <input type="checkbox" name="home" lay-skin="primary" title="首页" class="input-lineBtn">
+		    </div>
+		    <div class="layui-input-inline">
+		        <input type="text" name="username" class="sortHomeVal" lay-verify="required" placeholder="设置排序号(1-4)" autocomplete="off" class="layui-input">
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-sortHome hide">请勾选位置并正确输入排序号</span>
+		</div>
+		<div class="layui-form-item sortChannel">
+		    <label class="layui-form-label">广告推荐位置:</label>
+		    <div class="layui-input-inline sortSide">
+		        <input type="checkbox" name="channel" lay-skin="primary" title="频道页" class="input-lineBtn" checked="checked" disabled="disabled">
+		    </div>
+		    <div class="layui-input-inline">
+		        <input type="text" name="username" class="sortChannelVal" lay-verify="required" placeholder="设置排序号(1-8)" autocomplete="off" class="layui-input">
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-sortChannel hide">请勾选位置并正确输入排序号</span>
+		</div>
+		<div class="layui-form-item nextBackBtn">
+		 	<div class="layui-inline">
+            	<a href="javascript:;" id="integralSortSave" class="layui-btn">保存</a>
+        	</div>
+		 	<div class="layui-inline">
+            	<a href="javascript:;" id="integralSortUp" class="layui-btn">上架</a>
+        	</div>
+        	<div class="layui-inline">
+            	<a href="javascript:;" id="integralSortPre" class="layui-btn">上一步</a>
+        	</div>
+        </div>
+	</form> 
+	{% endif %}
+ </section>
+{% endblock %}
+{% block layui%} 
+     <script type="text/javascript" src="/controllers/operation/advManagement/setIntegralPut.js"></script>
+     <script type="text/javascript" src="/controllers/operation/advManagement/advPopupSelFn.js"></script>
+{% endblock%}

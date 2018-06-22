@@ -1,0 +1,84 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商户管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+     <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+		 <li>商户管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">待设置管理</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+     {% if data.message =="成功"%}
+	 <form class="layui-form dataPlug merManRefer" action="">
+	 	<div class="layui-form-item" style="padding-top: 15px;">
+	 		<div class="layui-inline">
+			 	<label class="layui-form-label">商户简称：</label>
+			    <div class="layui-input-inline">
+				    {% if page && page.shortName %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商户简称" class="layui-input" value="{{page.shortName}}">
+					{% else %}
+					<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="请输入商户简称" class="layui-input">
+					{% endif %}			     
+			    </div>
+		    </div>
+		    <div class="layui-inline">
+		        <label class="layui-form-label">日期范围</label>
+		        <div class="layui-input-inline">
+				     {% if page && page.startTime %}
+					 <input class="layui-input" placeholder="开始时间" value="{{page.startTime}}" id="LAY_demorange_s">
+					 {% else %}
+					 <input class="layui-input" placeholder="开始时间" id="LAY_demorange_s">
+					 {% endif %}                      
+                </div>
+                <div class="layui-input-inline">
+				     {% if page && page.endTime %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e" value="{{page.endTime}}">
+					 {% else %}
+					 <input class="layui-input" placeholder="截止时间" id="LAY_demorange_e">
+					 {% endif %}                             
+                </div>
+		    </div>
+		    <div class="layui-inline">
+		    	<a href="javascript:queryClick()" id="searchBtn"><i class="layui-icon" style="font-size: 28px;font-weight: bold;">&#xe615;</i></a>
+		    </div>
+	    </div>
+	 </form>
+     <table class="layui-table table-width sortInputSize">
+	     <tr>
+	     	<th>商户简称</th>
+	     	<th>logo</th>
+	     	<th>提交时间</th>
+	     	<th>操作</th> 
+	     </tr>
+         <tbody id="htmlWrap">
+         	{% for lis in data.data.datas.list %}
+         	<tr>
+			 	<td>{{lis.short_name}}</td>
+			 	<td><img src="{{lis.logo}}" style="width: 110px;height: 80px;" alt="" /></td>
+				<td>{{lis.create_time}}</td>
+			 	<td>
+			 		{% if menuCodeList %}
+				    	{% for code in menuCodeList %}
+				    		{% if unescape(code.name) == "设置" %}
+				    			<a class="layui-btn" data-id="{{lis.id}}" href="/operation/merManagement/setManReferLink?merchantId={{lis.id}}">设置</a>
+				    		{% endif %}
+				    	{% endfor %}
+				    {% endif %}
+				</td>
+			</tr>
+         	{% endfor %}
+		 </tbody>	
+	 </table>
+     <div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalPage}} data-page-size={{data.data.pageSize}}></div>	 
+	 {% else %}
+	     <div style="text-align:center">{{data.message}}</div>
+	 {% endif%}
+{% endblock %}
+{% block layui%}
+     <script type="text/javascript" src="/controllers/operation/merManagement/index.js"></script>
+{% endblock%}

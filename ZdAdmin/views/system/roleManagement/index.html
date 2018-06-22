@@ -1,0 +1,75 @@
+{% extends "./../../layout.html"%}
+{% block title%}系统管理-角色管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/system/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	<ul class="index_of_title">
+	    <li>系统管理</li>
+		<li class="arrow-icon">>></li>
+	    <li class="onIndexOf">角色管理</li>
+	    {% if menuCodeList %}
+	    	{% for code in menuCodeList %}
+	    		{% if unescape(code.name) == "新建" %}
+	    			<a href="./roleManage/addRole" class="layui-btn" style="float:right;margin-right:60px;">新建</a>
+	    		{% endif %}
+	    	{% endfor %}
+	    {% endif %}
+	</ul>
+{%endblock%}
+{% block content%}
+	<section id="addRoleMainSection">
+		<div class="sec1ContMiddle">
+			<form class="layui-form layui-form-position" action="">
+				<div class="layui-form-item layui-input-inline">
+				    <label class="layui-form-label">角色名称:</label>
+				    <div class="layui-input-inline">
+				    	{% if page && page.name %}
+					     	<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="" value="{{page.name}}" class="layui-input queryByRoleName">
+				         {% else %}
+						 	<input type="text" name="title" id="shortName" lay-verify="text" autocomplete="off" placeholder="" class="layui-input queryByRoleName">
+						 {% endif %}
+				    </div>
+				    <span class="layui-tooltip tooltip-hints tooltip-onlineMerchantCode hide">请输入角色名</span>
+				</div>
+				
+				<div class="layui-form-referBtn layui-input-inline">	
+					 <div class="layui-input-block">
+						 <a  class="layui-btn right site-demo-right40 queryRole" >查询</a>
+					</div>
+				 </div>	
+			</form>
+		</div>		
+		<table class="layui-table table-width">
+		    <thead>
+		        <tr>
+		            <!--<th>角色编号</th>-->
+		            <th>角色名称</th>
+		            <th>角色ID</th>
+		            <th>创建人</th>
+		            <th>创建时间</th>
+		            <th>操作</th>
+		        </tr>
+		    </thead>
+		    <tbody id="htmlWrap">
+		    	{% for item in data.data.datas%}
+			    	<tr>
+					 	<td>{{item.name}}</td>
+					 	<td>{{item.roleId}}</td>
+					 	<td>{{item.createUserName}}</td>
+					 	<td>{{item.createTime}}</td>		
+					 	<td>
+						    <a href="./roleManage/editRole?roleId={{item.roleId}}" class="layui-btn">设置权限</a>
+					 	</td>		 	
+					 </tr>	
+				{% endfor%}
+				 
+		    </tbody>
+		</table>
+		<div id="paging" data-page-no={{data.data.pageNo}} data-page={{data.data.totalRows}} data-page-size={{data.data.pageSize}}></div>	
+	</section>
+{% endblock %}
+{% block layui %}	
+	<script type="text/javascript" src="/controllers/system/roleManagement/index.js"></script>
+{% endblock %}
+

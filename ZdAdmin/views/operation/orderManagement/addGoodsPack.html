@@ -1,0 +1,173 @@
+{% extends "./../../layout.html"%}
+{% block title%}运营管理--商品管理--打包商品管理{% endblock %}
+{% block head%}
+	<link rel="stylesheet" href="/css/operation/index.css" />
+{% endblock %}
+{%block indexTitle%}
+	 <ul class="index_of_title">
+	     <li>运营管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li>商品管理</li>
+	     <li class="arrow-icon">>></li>
+	     <li>打包商品管理</li>
+		 <li class="arrow-icon">>></li>
+	     <li class="onIndexOf">创建商品包</li>
+	 </ul>
+{%endblock%}
+{% block content%}
+	<form class="layui-form formPage" action="">
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商品状态：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.base.product_state == 0 %}
+				    <span>草稿</span>
+				    {% elseif data.data.base.product_state == 1 || data.data.base.product_state == 2 %}
+				    <span>待上架</span>
+				    {% elseif data.data.base.product_state == 3 %}
+				    <span>已下架</span>
+				    {% elseif data.data.base.product_state == 4 %}
+				    <span>已上架</span>
+				    {% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">创建时间：</label>
+				<div class="layui-input-inline">
+	                <span>{{data.data.base.create_time}}</span>				 					 			 
+				</div>
+		    </div>
+	    </div>
+	    <div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">商品名称：</label>
+			    <div class="layui-input-inline">
+				    <span>{{data.data.base.full_name}}</span>
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">零售价：</label>
+				<div class="layui-input-inline retail_price" data-price="{{data.data.base.retail_price}}">
+	                <span>{{data.data.base.retail_price}}</span>				 					 			 
+				</div>
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">商品详情链接：</label>
+			<div class="layui-input-inline">
+				<a href="/operation/opMerMan/showTrades1?productId={{data.data.base.id}}" target="_blank">查看详情</a>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品列表图：</label>
+			<div class="layui-input-inline">
+				<img src="{{data.data.base.image_url}}" alt="" style="width: 220px;height: 160px;"/>
+		    </div>			 
+		</div>
+		<div class="layui-form-item">
+	    	<div class="layui-inline">
+			    <label class="layui-form-label">已售数量：</label>
+			    <div class="layui-input-inline">
+			    	{% if data.data.base.sale_count %}
+			    		<span>{{data.data.base.sale_count}}</span>
+			    	{% else %}
+			    		<span>0</span>
+			    	{% endif %}
+			    </div>	
+		    </div>
+		    <div class="layui-inline">
+		    	<label class="layui-form-label">库存数量：</label>
+				<div class="layui-input-inline">
+					{% if data.data.base.stock_num %}
+					<span>{{data.data.base.stock_num}}</span>
+					{% else %}
+					<span>0</span>
+					{% endif %}
+				</div>
+		    </div>
+	    </div>
+	    {% if page && page.online %}
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">已售基数:</label>
+		    <div class="layui-input-inline" style="width: 280px;">
+		    	{% if data.data.base.base %}
+		        <input type="text" value="{{data.data.base.base}}" class="layui-input saleBase" style="width: 200px;float: left;" disabled="disabled">
+		        {% else %}
+		        <input type="text" value="0" class="layui-input saleBase" style="width: 200px;float: left;" disabled="disabled">
+		        {% endif %}
+		        <span style="float: left;">（件）</span>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">兑换积分:</label>
+		    <div class="layui-input-inline" style="width: 300px;">
+		    	{% if data.data.base.exchange_points %}
+		        <input type="text" value="{{data.data.base.exchange_points}}" class="layui-input changeCode" style="width: 200px;float: left;" disabled="disabled">
+		        {% else %}
+		        <input type="text" value="0" class="layui-input changeCode" style="width: 200px;float: left;" disabled="disabled">
+		        {% endif %}
+		        <span style="float: left;">&nbsp;1元=100积分</span>
+		    </div>
+		</div>
+	    {% else %}
+		<div class="layui-form-item">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>已售基数:</label>
+		    <div class="layui-input-inline" style="width: 280px;">
+		    	{% if data.data.base.base %}
+		        <input type="text" value="{{data.data.base.base}}" class="layui-input saleBase" style="width: 200px;float: left;">
+		        {% else %}
+		        <input type="text" value="0" class="layui-input saleBase" style="width: 200px;float: left;">
+		        {% endif %}
+		        <span style="float: left;">（件）</span>
+		    </div>
+		     <span class="layui-tooltip tooltip-saleBase hide">必须为大于等于0的数字</span>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label"><span class="txt-impt">*</span>兑换积分:</label>
+		    <div class="layui-input-inline" style="width: 300px;">
+		    	{% if data.data.base.exchange_points %}
+		        <input type="text" value="{{data.data.base.exchange_points}}" class="layui-input changeCode" style="width: 200px;float: left;">
+		        {% else %}
+		        <input type="text" value="0" class="layui-input changeCode" style="width: 200px;float: left;">
+		        {% endif %}
+		        <span style="float: left;">&nbsp;1元=100积分</span>
+		    </div>
+		     <span class="layui-tooltip tooltip-changeCode hide">必须为大于等于0的数字</span>
+		</div>
+		{% endif %}
+		<div class="layui-form-item">
+			<label class="layui-form-label">商品标签:</label>
+			<div class="layui-input-inline">
+		    	{% if data.data.base.tag %}
+		        <input type="text" value="{{data.data.base.tag}}" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% else %}
+		        <input type="text" name="homeBox" lay-skin="primary" class="layui-input goodsLabel" placeholder="1-4个字,非必填">
+		        {% endif %}
+		    </div>
+		    <span class="layui-tooltip tooltip-hints tooltip-btnsLabel hide">请输入1-4个字</span>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">特价商品:</label>
+		    <div class="layui-input-inline selSpecialBtn" style="width: 300px;">
+		    	{% if data.data.base.specialOfferlag %}
+		        <input type="checkbox" name="specialGoods" checked="checked" title="设为特价商品" class="layui-input specialGoods">
+		        {% else %}
+		        <input type="checkbox" name="specialGoods" title="设为特价商品" class="layui-input specialGoods">
+		        {% endif %}
+		    </div>
+		</div>
+		<div class="layui-form-item nextBackBtn">
+		 	<div class="layui-inline">
+            	<a data-ruleId="{{data.data.base.rule_id}}" class="layui-btn setMessage">保存</a>
+        	</div>
+        	{% if page && !page.online %}
+		 	<div class="layui-inline">
+            	<a class="layui-btn slaves">上架</a>
+        	</div>
+        	{% endif %}
+        </div>
+	 </form>        
+{% endblock %}
+{% block layui%}   
+<script src="/controllers/operation/orderManagement/setBuyGoods.js" type="text/javascript" charset="utf-8"></script>
+{% endblock%}
